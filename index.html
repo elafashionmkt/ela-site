@@ -1,174 +1,61 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-br">
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>elã fashion mkt</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    /* reset básico */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
-                   Helvetica, Arial, sans-serif;
-      background-color: #f4e9e6;
-      color: #3a3838;
-      line-height: 1.6;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    /* layout */
-    .container {
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 96px 24px;
-    }
-
-    section {
-      margin-bottom: 120px;
-    }
-
-    /* tipografia */
-    h1 {
-      font-size: 40px;
-      font-weight: 400;
-      letter-spacing: -0.02em;
-      max-width: 820px;
-      margin-bottom: 24px;
-    }
-
-    h2 {
-      font-size: 22px;
-      font-weight: 500;
-      margin-bottom: 16px;
-    }
-
-    p {
-      max-width: 720px;
-      font-size: 16px;
-    }
-
-    /* hero */
-    .hero {
-      display: flex;
-      flex-direction: column;
-      gap: 32px;
-    }
-
-    .hero span {
-      color: #791815;
-    }
-
-    /* botões */
-    .buttons {
-      display: flex;
-      gap: 16px;
-      margin-top: 24px;
-    }
-
-    .btn {
-      padding: 12px 24px;
-      border: 1px solid #3a3838;
-      font-size: 14px;
-      transition: all 0.2s ease;
-    }
-
-    .btn:hover {
-      background-color: #3a3838;
-      color: #f4e9e6;
-    }
-
-    .btn.primary {
-      border-color: #791815;
-      color: #791815;
-    }
-
-    .btn.primary:hover {
-      background-color: #791815;
-      color: #f4e9e6;
-    }
-
-    /* listas */
-    ul {
-      list-style: none;
-      margin-top: 16px;
-    }
-
-    li {
-      margin-bottom: 8px;
-    }
-
-    /* rodapé */
-    footer {
-      border-top: 1px solid #4a2c2a;
-      padding: 48px 24px;
-      font-size: 14px;
-      color: #4a2c2a;
-    }
-
-    footer a {
-      border-bottom: 1px solid transparent;
-    }
-
-    footer a:hover {
-      border-color: #4a2c2a;
-    }
-
-    /* responsivo */
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 30px;
-      }
-
-      section {
-        margin-bottom: 80px;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
+  <header class="top">
+    <div class="wrap">
+      <a class="brand" href="#top">elã</a>
 
-  <main class="container">
+      <nav class="nav" aria-label="menu">
+        <a href="#servicos">serviços</a>
+        <a href="#contato">contato</a>
+      </nav>
+    </div>
+  </header>
 
+  <main id="top" class="wrap">
     <!-- hero -->
     <section class="hero">
-      <h1>
-        elã fashion mkt <br>
-        posicionamento, direção criativa e marketing
-        para moda e lifestyle
-      </h1>
+      <div class="hero__text">
+        <h1 class="h1">
+          elã fashion mkt<br />
+          posicionamento, direção criativa e marketing<br />
+          para moda e lifestyle
+        </h1>
 
-      <p>
-        construímos consistência de marca e imagem com olhar editorial,
-        processos claros e execução leve.
-      </p>
+        <p class="lead">
+          construímos consistência de marca e imagem com olhar editorial,
+          processos claros e execução leve.
+        </p>
 
-      <div class="buttons">
-        <a href="#servicos" class="btn primary">arquitetura de serviços</a>
-        <a href="#contato" class="btn">quero conversar</a>
+        <div class="actions">
+          <a class="btn btn--primary" href="#servicos">arquitetura de serviços</a>
+          <a class="btn" href="#contato">quero conversar</a>
+        </div>
       </div>
+
+      <figure class="hero__media">
+        <img src="assets/hero-1.jpg" alt="imagem editorial elã" />
+      </figure>
     </section>
 
     <!-- o que fazemos -->
-    <section>
-      <h2>o que nós resolvemos.</h2>
-      <p>
-        da clareza de posicionamento à comunicação do dia a dia.
-        organizamos a marca por dentro e tornamos isso visível por fora —
-        no conteúdo, nas campanhas e na forma de apresentar o produto.
+    <section class="block">
+      <h2 class="h2">o que nós resolvemos.</h2>
+
+      <p class="p">
+        da clareza de posicionamento à comunicação do dia a dia. organizamos a marca por dentro
+        e tornamos isso visível por fora — no conteúdo, nas campanhas e na forma de apresentar o produto.
       </p>
 
-      <ul>
+      <ul class="list">
         <li>posicionamento e narrativa</li>
         <li>direção criativa e editorial</li>
         <li>comunicação e marketing com rotina</li>
@@ -176,10 +63,10 @@
     </section>
 
     <!-- para quem -->
-    <section>
-      <h2>para marcas que…</h2>
+    <section class="block">
+      <h2 class="h2">para marcas que…</h2>
 
-      <ul>
+      <ul class="list">
         <li>têm bom produto, mas querem imagem e mensagem no mesmo nível</li>
         <li>precisam de consistência, não de ideias soltas</li>
         <li>querem vender com posicionamento claro, sem barulho</li>
@@ -187,29 +74,94 @@
       </ul>
     </section>
 
-    <!-- serviços -->
-    <section id="servicos">
-      <h2>arquitetura de serviços.</h2>
+    <!-- imagens editoriais (opcional) -->
+    <section class="gallery" aria-label="imagens editoriais">
+      <figure class="gallery__item">
+        <img src="assets/editorial-1.jpg" alt="imagem editorial elã" />
+      </figure>
 
-      <ul>
-        <li>diagnóstico & posicionamento</li>
-        <li>direção criativa</li>
-        <li>social & conteúdo</li>
-        <li>influência & colabs</li>
-        <li>lançamentos & coleções</li>
-        <li>acompanhamento de performance</li>
+      <figure class="gallery__item">
+        <img src="assets/editorial-2.jpg" alt="imagem editorial elã" />
+      </figure>
+    </section>
+
+    <!-- fluxo -->
+    <section class="block">
+      <h2 class="h2">nosso fluxo.</h2>
+
+      <ul class="steps">
+        <li>
+          <span>leitura de marca</span>
+          <small>diagnóstico, contexto e objetivos</small>
+        </li>
+        <li>
+          <span>direção</span>
+          <small>posicionamento, linguagem e guias</small>
+        </li>
+        <li>
+          <span>ativação</span>
+          <small>conteúdo, campanhas, influência e lançamentos</small>
+        </li>
       </ul>
     </section>
 
+    <!-- serviços -->
+    <section id="servicos" class="block">
+      <h2 class="h2">arquitetura de serviços.</h2>
+
+      <div class="cards">
+        <article class="card card--focus">
+          <h3 class="h3">diagnóstico & posicionamento</h3>
+          <p class="p p--muted">
+            quando a marca está boa, mas ainda não está nítida: organizamos essência, linguagem e direção.
+          </p>
+        </article>
+
+        <article class="card card--focus">
+          <h3 class="h3">social & conteúdo</h3>
+          <p class="p p--muted">
+            conteúdo com intenção, estética e cadência — para o social ter cara de marca, não de tendência.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3 class="h3">direção criativa</h3>
+        </article>
+
+        <article class="card">
+          <h3 class="h3">influência & colabs</h3>
+        </article>
+
+        <article class="card">
+          <h3 class="h3">lançamentos & coleções</h3>
+        </article>
+
+        <article class="card">
+          <h3 class="h3">acompanhamento de performance</h3>
+        </article>
+      </div>
+    </section>
+
+    <!-- contato -->
+    <section id="contato" class="contact">
+      <h2 class="h2">sua marca se identificou com a elã?</h2>
+
+      <div class="contact__row">
+        <a class="btn btn--primary" href="mailto:contato@elafashionmkt.com.br">vamos conversar</a>
+
+        <div class="contact__meta">
+          <a href="mailto:contato@elafashionmkt.com.br">contato@elafashionmkt.com.br</a>
+          <a href="#" aria-label="instagram elã">instagram</a>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <footer id="contato">
-    <p>
-      sua marca se identificou com a elã?<br>
-      <a href="mailto:contato@ela.com.br">contato@ela.com.br</a> ·
-      <a href="#">instagram</a>
-    </p>
+  <footer class="footer">
+    <div class="wrap">
+      <p>elã fashion mkt</p>
+      <p class="small">posicionamento, direção criativa e marketing para moda e lifestyle.</p>
+    </div>
   </footer>
-
 </body>
 </html>
