@@ -238,3 +238,81 @@ body{ margin:0; background: var(--white); }
 body { min-width: 1440px; }
 .page, .container-1440 { width: 1440px; margin: 0 auto; }
 
+/* ===== ABOUT (HOME) — versão blindada ===== */
+.about-new{
+  background:#fff;
+  position:relative;
+  padding: 80px 0 60px;
+}
+
+.about-new__wrap{
+  width:1440px;
+  margin:0 auto;
+  padding:0 80px;
+  position:relative;
+}
+
+.about-new__watermark{
+  position:absolute;
+  left:80px;
+  top:40px;
+  width:980px;
+  opacity:0.05;
+  pointer-events:none;
+  user-select:none;
+}
+
+.about-new__grid{
+  display:grid;
+  grid-template-columns: 631px 606px;
+  column-gap:43px;
+  align-items:start;
+  position:relative;
+  z-index:1;
+}
+
+.about-new__title{
+  margin:0 0 18px;
+  font-family:"novantique-serif", sans-serif;
+  font-weight:700;
+  font-style:italic;
+  font-size:80px;
+  line-height:0.95;
+  color:#791815;
+}
+
+.about-new__p{
+  margin:0 0 18px;
+  font-family:"Inter Tight", sans-serif;
+  font-size:25px;
+  font-weight:400;
+  line-height:1.25;
+  letter-spacing:0.02em;
+  color:#791815;
+}
+
+.about-new__p--bold{ font-weight:700; }
+.about-new__p strong{ font-weight:700; }
+
+.about-new__manifesto{
+  margin: 90px 0 0;
+  color:#791815;
+  text-align:right;
+  line-height:1.05;
+  white-space:normal;
+}
+
+.about-new__manifesto .m-nov{
+  font-family:"novantique-serif", sans-serif;
+  font-weight:700;
+  font-style:italic;
+  font-size:73px;
+}
+
+.about-new__manifesto .m-inter{
+  font-family:"Inter Tight", sans-serif;
+  font-weight:400;
+  font-size:54px;
+}
+
+
