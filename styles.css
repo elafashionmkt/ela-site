@@ -113,4 +113,15 @@ main {
   color: var(--accent);
   text-decoration: none;
   font-size: 14px;
+
+  .footer {
+  text-align: center;
+  padding: 24px;
+}
+
+.footer img {
+  width: 22px;
+  opacity: 0.9;
+}
+
 }
