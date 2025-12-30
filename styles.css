@@ -1,6 +1,6 @@
 :root {
-  --bg: #ffffff;   /* fundo do site (branco) */
-  --soft: #f4e9e6; /* rosé claro pra blocos */
+  --bg: #ffffff;   /* fundo branco */
+  --soft: #ffcccc;
   --accent: #791815;
   --ink: #3a3838;
 }
@@ -16,6 +16,7 @@ body {
   background: var(--bg);
   color: var(--ink);
   line-height: 1.6;
+  margin: 0;
 }
 
 img {
