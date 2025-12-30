@@ -1,164 +1,325 @@
-<!doctype html>
-<html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>elã — direção</title>
+:root{
+  --font-serif: "novantique-serif", serif;
+  --font-sans: "Inter Tight", sans-serif;
 
-    <!-- Novantique (Adobe Typekit) -->
-    <link rel="stylesheet" href="https://use.typekit.net/yzo1wyz.css" />
+  --bg: #f5f5f5;
+  --paper: #ffffff;
+  --wine: #791815;
+  --soft-pink: #f2c7c4;
+  --soft-card: #f6dada;
 
-    <!-- Inter Tight (Google) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap"
-      rel="stylesheet"
-    />
+  --page-w: 1440px;
+  --page-h: 2357px;
 
-   <link rel="stylesheet" href="./style.css" />
-  </head>
+  --pad-x: 80px;
+  --hero-h: 283px;
 
-  <body>
-    <main class="site" id="home">
-      <div class="page">
-        <!-- HEADER -->
-        <header class="header">
-          <nav class="nav">
-            <a href="#home">home</a>
-            <a href="#sobre">sobre nós</a>
-            <a href="#servicos">arquitetura de serviços</a>
-            <a href="#contato">fale com a gente</a>
-          </nav>
+  --bar-h: 60px;
+}
 
-          <a class="brand" href="#home" aria-label="elã">
-            <img src="assets/logo-ela.svg" alt="elã" />
-          </a>
-        </header>
+*{ box-sizing: border-box; }
+html{ scroll-behavior: smooth; }
 
-        <!-- HERO -->
-        <section class="hero" aria-label="Imagem editorial de moda">
-          <img
-            src="assets/hero-image.jpg"
-            alt="Imagem editorial de moda"
-            loading="eager"
-          />
-        </section>
+body{
+  margin: 0;
+  background: var(--bg);
+  color: var(--wine);
+  font-family: var(--font-sans);
+}
 
-        <!-- ABOUT -->
-        <section class="about" id="sobre">
-          <div class="about-watermark" aria-hidden="true"></div>
+.page{
+  width: var(--page-w);
+  min-height: var(--page-h);
+  margin: 0 auto;
+  background: var(--paper);
+  position: relative;
+}
 
-          <div class="about-inner">
-            <div class="about-left">
-              <h2 class="about-title">sobre a elã</h2>
+/* HEADER */
+.header{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  padding: 40px var(--pad-x) 18px;
+}
 
-              <p class="about-lead">
-                <strong>somos um estúdio que trabalha marca como ecossistema,</strong>
-                não como ação isolada.
-              </p>
+.nav{
+  display:flex;
+  gap: 18px;
+  flex-wrap: wrap;
+}
 
-              <p class="about-body">
-                <strong>a gente começa pelo que vem antes do conteúdo:</strong>
-                posicionamento e direção. entendemos o momento da marca, o que ela
-                sustenta hoje, o que precisa ser ajustado e quais escolhas vão
-                deixar tudo mais coerente.
-              </p>
+.nav-link{
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--wine);
+  text-decoration: none;
+}
 
-              <p class="about-body">
-                atuamos a partir do posicionamento, da narrativa e da imagem,
-                conectando números pra guiar e feeling pra criar. isso vira
-                direção criativa, editorial, social e influência com o mesmo
-                norte: <strong>consistência no tempo.</strong>
-              </p>
-            </div>
+.nav-link:hover{
+  text-decoration: underline;
+}
 
-            <div class="about-right">
-              <p class="manifesto">
-                <span class="manifesto-nov">marcas</span>
-                <span class="manifesto-inter"
-                  >precisam de<br />um norte. antes de<br />conteúdo, vem</span
-                >
-                <span class="manifesto-nov">direção.</span>
-              </p>
-            </div>
-          </div>
-        </section>
+.logo img{
+  display:block;
+  height: 42px;
+  width: auto;
+}
 
-        <!-- SERVICES -->
-        <section class="services" id="servicos">
-          <div class="services-bar">
-            <p>arquitetura de serviços</p>
-          </div>
+/* HERO */
+.hero{
+  width: 100%;
+  height: var(--hero-h);
+  overflow: hidden;
+}
 
-          <div class="services-inner">
-            <div class="service-grid">
-              <div class="service-card">
-                <p>diagnóstico &amp;<br />posicionamento</p>
-              </div>
+.hero img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display:block;
+}
 
-              <div class="service-card">
-                <p>social &amp;<br />conteúdo</p>
-              </div>
+/* ABOUT */
+.about{
+  position: relative;
+  padding: 60px var(--pad-x) 0;
+}
 
-              <div class="service-card">
-                <p>influência &amp;<br />relações</p>
-              </div>
+.about-grid{
+  display:grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 60px;
+  align-items: start;
+  position: relative;
+  z-index: 1;
+}
 
-              <div class="service-card">
-                <p>direção criativa &amp;<br />de arte</p>
-              </div>
+.about-title{
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 700;
+  font-size: 80px;
+  line-height: 100%;
+  margin: 0 0 18px 0;
+}
 
-              <div class="service-card">
-                <p>arquitetura<br />completa</p>
-              </div>
-            </div>
+.about-lead{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 25px;
+  line-height: 110%;
+  margin: 0 0 18px 0;
+  max-width: 631px;
+}
 
-            <p class="services-phrase">
-              <span class="phrase-inter">números pra</span>
-              <span class="phrase-nov">guiar</span><span class="phrase-inter">.</span>
-              <span class="phrase-inter">feeling pra</span>
-              <span class="phrase-nov">criar</span><span class="phrase-inter">.</span>
-              <span class="phrase-inter">direção pra</span>
-              <span class="phrase-nov">sustentar</span><span class="phrase-inter">.</span>
-            </p>
-          </div>
-        </section>
+.about-body{
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 25px;
+  line-height: 110%;
+  margin: 0 0 16px 0;
+  max-width: 631px;
+}
 
-        <!-- CTA -->
-        <section class="cta" id="contato">
-          <div class="cta-inner">
-            <div class="cta-left">
-              <p class="cta-eyebrow">conteúdo sem direção não sustenta.</p>
+.about-right{
+  display:flex;
+  justify-content: flex-start;
+  padding-top: 40px;
+}
 
-              <p class="cta-text">
-                nosso trabalho começa entendendo o que sustenta o seu
-                posicionamento e o que precisa ser ajustado.
-              </p>
+.manifesto{
+  margin: 0;
+  max-width: 606px;
+  text-align: left;
+}
 
-              <p class="cta-strong">vamos conversar sobre a sua marca?</p>
+.m-serif{
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 700;
+}
 
-              <a class="cta-button" href="#" aria-label="Agendar">agendar :)</a>
-            </div>
+.m-sans{
+  font-family: var(--font-sans);
+  font-style: normal;
+}
 
-            <div class="cta-right" aria-label="Imagem de direção e pesquisa">
-              <img src="assets/cta-image.jpg" alt="" loading="lazy" />
-            </div>
-          </div>
-        </section>
+.m-73{ font-size: 73px; line-height: 72.2px; }
+.m-54{ font-size: 54px; line-height: 72.2px; font-weight: 700; }
 
-        <!-- FOOTER -->
-        <footer class="footer">
-          <div class="footer-top">
-            <img src="assets/instagram.svg" alt="" aria-hidden="true" />
-            <a href="#" class="footer-ig">@elafashionmkt</a>
-          </div>
+/* watermark */
+.about-watermark{
+  position:absolute;
+  left: 50%;
+  top: 30px;
+  transform: translateX(-50%);
+  width: 900px;
+  height: 700px;
+  background: url("assets/logo-bg.svg") no-repeat center/contain;
+  opacity: 0.05;
+  pointer-events:none;
+  z-index: 0;
+}
 
-          <p class="footer-text">
-            elã fashion mkt — direção para marcas de moda: posicionamento • editorial • social • influência
-          </p>
-        </footer>
-      </div>
-    </main>
-  </body>
-</html>
+/* SERVICES */
+.services{
+  padding: 40px var(--pad-x) 0;
+}
+
+.services-bar{
+  height: var(--bar-h);
+  background: var(--wine);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.services-bar span{
+  color: #ffffff;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 700;
+  font-size: 24px;
+}
+
+.services-grid{
+  display:grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 60px;
+  padding: 28px 0 18px;
+}
+
+.service-card{
+  background: var(--soft-card);
+  border-radius: 6px;
+  padding: 18px 14px;
+  min-height: 92px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+
+.service-title{
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 120%;
+  color: var(--wine);
+}
+
+/* phrase */
+.services-phrase{
+  margin: 18px 0 0 0;
+  padding: 18px 0 0 0;
+  font-weight: 400;
+}
+
+.p-serif{
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 700;
+}
+
+.p-sans{
+  font-family: var(--font-sans);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.p-57{ font-size: 57px; line-height: 110%; }
+.p-43{ font-size: 43px; line-height: 110%; }
+
+/* CTA */
+.cta{
+  margin-top: 60px;
+  background: var(--soft-pink);
+  padding: 36px var(--pad-x) 28px;
+}
+
+.cta-inner{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.cta-eyebrow{
+  margin: 0 0 12px 0;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 110%;
+}
+
+.cta-content{
+  margin: 0 0 14px 0;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 25px;
+  line-height: 110%;
+  max-width: 460px;
+}
+
+.cta-question{
+  margin: 0 0 18px 0;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 25px;
+  line-height: 110%;
+}
+
+.cta-button{
+  display:inline-block;
+  background: var(--wine);
+  color: #fff;
+  text-decoration:none;
+  border-radius: 10px;
+  padding: 12px 22px;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 100%;
+}
+
+.cta-right img{
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display:block;
+  border-radius: 6px;
+}
+
+.cta-social{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap: 10px;
+  padding-top: 18px;
+  color: var(--wine);
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.cta-social img{
+  width: 16px;
+  height: 16px;
+  display:block;
+}
+
+/* FOOTER */
+.footer{
+  padding: 18px var(--pad-x) 24px;
+  text-align:center;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--wine);
+}
+
+/* (opcional) segurança pra telas menores */
+@media (max-width: 1500px){
+  .page{ width: 100%; }
+}
