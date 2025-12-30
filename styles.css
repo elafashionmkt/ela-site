@@ -1,8 +1,13 @@
 :root {
-  --bg: #ffffff;   /* fundo branco */
-  --soft: #ffcccc;
-  --accent: #791815;
+  --bg: #ffffff;
+  --soft: #f4e9e6;   /* rosa bem suave (cards) */
+  --soft2: #ffd2d0;  /* rosa do bloco CTA */
+  --accent: #791815; /* vinho */
   --ink: #3a3838;
+
+  --radius: 16px;
+  --max: 980px;
+  --pad: 16px;
 }
 
 * {
@@ -11,118 +16,222 @@
   box-sizing: border-box;
 }
 
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
 body {
   font-family: "Inter", sans-serif;
   background: var(--bg);
   color: var(--ink);
   line-height: 1.6;
-  margin: 0;
 }
 
-img {
-  width: 100%;
-  display: block;
+.page {
+  max-width: var(--max);
+  margin: 0 auto;
+  background: #fff;
 }
 
-/* header */
-.header {
+/* TOPO */
+.top {
+  height: 64px;
+  padding: 0 var(--pad);
   display: flex;
-  justify-content: flex-end;
-  padding: 20px 24px;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.header img {
+.menu {
+  border: 0;
+  background: transparent;
+  padding: 6px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.menu img {
+  width: 28px;
   height: 28px;
 }
 
-/* layout base */
-main {
-  padding: 0 24px;
+.brand img {
+  height: 36px; /* aumenta o logo */
+  width: auto;
 }
 
-/* hero */
-.hero {
-  margin-bottom: 48px;
-}
-
+/* HERO */
 .hero img {
-  border-radius: 4px;
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
-/* manifesto */
+/* MANIFESTO */
+.manifesto {
+  padding: 22px var(--pad) 10px;
+}
+
 .manifesto h1 {
-  font-family: "novantique-serif", serif;
+  font-family: "Novantique Serif", "Times New Roman", serif;
   color: var(--accent);
-  font-size: 36px;
-  line-height: 1.1;
-  margin-bottom: 64px;
+  font-size: 34px;
+  line-height: 1.05;
+  font-weight: 600;
 }
 
-/* serviços */
-.servicos {
-  margin-bottom: 64px;
+.serif {
+  font-family: "Novantique Serif", "Times New Roman", serif;
 }
 
-.servicos h2 {
-  font-family: "novantique-serif", serif;
-  color: var(--accent);
-  font-size: 20px;
-  margin-bottom: 24px;
+.italic {
+  font-style: italic;
 }
 
-.servicos ul {
+/* SERVIÇOS */
+.services {
+  padding-top: 10px;
+}
+
+.services-bar {
+  margin: 10px var(--pad) 0;
+  background: var(--accent);
+  border-radius: 0;
+  padding: 10px var(--pad);
+}
+
+.services-bar p {
+  font-family: "Novantique Serif", "Times New Roman", serif;
+  font-style: italic;
+  color: #f5f5f5;
+  font-size: 16px;
+}
+
+.cards {
   list-style: none;
+  padding: 16px var(--pad) 18px;
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* mobile 2x2 */
+  gap: 14px;
 }
 
-.servicos li {
+.card {
   background: var(--soft);
-  padding: 16px;
-  border-radius: 8px;
-  margin-bottom: 12px;
-  font-size: 14px;
+  border-radius: 10px;
+  padding: 18px 12px;
+  text-align: center;
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 1.2;
 }
 
-/* cta */
+/* CTA */
 .cta {
-  background: var(--soft);
-  padding: 32px;
-  border-radius: 8px;
-  margin-bottom: 64px;
+  background: var(--soft2);
+  padding: 18px var(--pad);
 }
 
-.cta p {
-  margin-bottom: 16px;
+.cta-inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  align-items: center;
 }
 
-.button {
+.cta-text {
+  color: var(--accent);
+}
+
+.cta-small {
+  font-size: 12px;
+  line-height: 1.25;
+  margin-bottom: 8px;
+}
+
+.cta-title {
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.btn {
   display: inline-block;
   background: var(--accent);
   color: #fff;
   text-decoration: none;
-  padding: 10px 22px;
-  border-radius: 20px;
-  font-size: 14px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 12px;
 }
 
-/* footer */
+.cta-media img {
+  width: 100%;
+  border-radius: 14px;
+}
+
+/* FOOTER */
 .footer {
-  text-align: center;
-  padding: 24px;
+  padding: 18px var(--pad) 32px;
+  display: flex;
+  justify-content: center;
 }
 
-.footer a {
+.ig {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   color: var(--accent);
   text-decoration: none;
-  font-size: 14px;
-
-  .footer {
-  text-align: center;
-  padding: 24px;
+  font-weight: 500;
 }
 
-.footer img {
-  width: 22px;
-  opacity: 0.9;
+.ig-icon {
+  width: 28px;
+  height: 28px;
 }
 
+/* ====== WEB (como seu Figma “home — web”) ====== */
+@media (min-width: 900px) {
+  .top {
+    height: 76px;
+  }
+
+  .brand img {
+    height: 42px;
+  }
+
+  .manifesto {
+    padding: 26px var(--pad) 8px;
+    text-align: center;
+  }
+
+  .manifesto h1 {
+    font-size: 22px;
+    line-height: 1.2;
+  }
+
+  .manifesto h1 br {
+    display: none; /* no web vira uma linha */
+  }
+
+  .services-bar {
+    margin: 12px var(--pad) 0;
+  }
+
+  .cards {
+    grid-template-columns: repeat(4, 1fr); /* web 4 colunas */
+  }
+
+  .card {
+    padding: 22px 14px;
+    font-size: 12px;
+  }
+
+  .cta-inner {
+    grid-template-columns: 1fr 1.1fr; /* texto + imagem */
+    gap: 20px;
+  }
 }
