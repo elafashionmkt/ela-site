@@ -1,73 +1,97 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>elã — fashion mkt</title>
 
-  <title>elã — fashion mkt</title>
+    <!-- Inter (Google Fonts) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
 
-  <!-- inter -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <!-- Novantique (Adobe Fonts) -->
+    <!-- TROQUE o XXXXXXX pelo seu kit do Adobe Fonts (Typekit) -->
+    <!-- Exemplo real costuma ser algo tipo: https://use.typekit.net/abcd123.css -->
+    <link rel="stylesheet" href="https://use.typekit.net/XXXXXXX.css" />
 
-  <!-- novantique (adobe fonts) -->
-  <!-- substitua XXXXXXX pelo código do seu projeto no adobe fonts -->
-  <link rel="stylesheet" href="https://use.typekit.net/XXXXXXX.css">
+    <link rel="stylesheet" href="styles.css" />
+  </head>
 
-  <link rel="stylesheet" href="styles.css">
-</head>
+  <body>
+    <div class="page">
+      <header class="top" id="topo">
+        <button class="menu" type="button" aria-label="Abrir menu">
+          <img src="assets/menu.svg" alt="" />
+        </button>
 
-<body>
+        <a class="brand" href="#topo" aria-label="Página inicial">
+          <img src="assets/logo/logo-ela.svg" alt="elã" />
+        </a>
+      </header>
 
-<header class="header">
-  <img src="assets/logo/logo-ela.svg" alt="elã">
-</header>
+      <main>
+        <section class="hero" aria-label="Imagem principal">
+          <img src="assets/images/hero.jpg" alt="" />
+        </section>
 
-<main>
+        <section class="manifesto" aria-label="Manifesto">
+          <h1>
+            <span class="serif">marcas precisam</span><br />
+            <span class="serif">de um norte.</span><br />
+            <span class="serif">antes de conteúdo,</span><br />
+            <span class="serif italic">vem direção.</span>
+          </h1>
+        </section>
 
-  <section class="hero">
-    <img src="assets/images/hero.jpg" alt="">
-  </section>
+        <section class="services" id="servicos" aria-label="Arquitetura de serviços">
+          <div class="services-bar">
+            <p>arquitetura de serviços</p>
+          </div>
 
-  <section class="manifesto">
-    <h1>
-      marcas precisam<br>
-      de um norte.<br>
-      antes de conteúdo,<br>
-      vem direção.
-    </h1>
-  </section>
+          <ul class="cards" role="list">
+            <li class="card">diagnóstico &amp;<br />posicionamento</li>
+            <li class="card">social &amp;<br />conteúdo</li>
+            <li class="card">influência &amp;<br />relações</li>
+            <li class="card">direção criativa<br />&amp; de arte</li>
+          </ul>
+        </section>
 
-  <section class="servicos" id="servicos">
-    <h2>arquitetura de serviços</h2>
+        <section class="cta" id="contato" aria-label="Chamada para ação">
+          <div class="cta-inner">
+            <div class="cta-text">
+              <p class="cta-small">
+                toda marca precisa de<br />
+                direção antes de<br />
+                pedir conteúdo.
+              </p>
 
-    <ul>
-      <li>diagnóstico & posicionamento</li>
-      <li>social & conteúdo</li>
-      <li>influência & relações</li>
-      <li>direção criativa & de arte</li>
-    </ul>
-  </section>
+              <p class="cta-title">vamos bater um papo?</p>
 
-  <section class="cta" id="contato">
-    <p>
-      toda marca precisa de direção<br>
-      antes de pedir conteúdo.
-    </p>
+              <a class="btn" href="mailto:contato@elafashionmkt.com">agendar :)</a>
+            </div>
 
-    <a href="mailto:contato@elafashionmkt.com" class="button">
-      agendar
-    </a>
-  </section>
+            <div class="cta-media" aria-hidden="true">
+              <img src="assets/images/cta.jpg" alt="" />
+            </div>
+          </div>
+        </section>
+      </main>
 
-</main>
-
-<footer class="footer">
-  <a href="https://instagram.com/elafashionmkt" target="_blank" class="instagram">
-    <img src="assets/icons/instagram.svg" alt="instagram elã">
-  </a>
-</footer>
-
-</body>
+      <footer class="footer">
+        <a
+          class="ig"
+          href="https://instagram.com/elafashionmkt"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img class="ig-icon" src="instagram.svg" alt="" />
+          <span>elafashionmkt</span>
+        </a>
+      </footer>
+    </div>
+  </body>
 </html>
