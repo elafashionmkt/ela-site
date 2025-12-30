@@ -233,3 +233,8 @@ body{ margin:0; background: var(--white); }
   font-weight: 400;
   line-height: 1;
 }
+
+/* ===== Desktop fixo (1440) ===== */
+body { min-width: 1440px; }
+.page, .container-1440 { width: 1440px; margin: 0 auto; }
+
