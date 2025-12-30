@@ -1,3 +1,4 @@
+/* ELÃ • CLEAN BUILD • if you see this, you're NOT on the Pixso export */
 /* elã • base */
 :root{
   --bg: #ffffff;
@@ -277,7 +278,3 @@ img{ max-width: 100%; display: block; }
   .accordion-header{ font-size: 20px; padding: 18px 18px; }
   .service-list{ font-size: 20px; }
 }
-
-
-/* safety: prevent mid-word breaks */
-.big-phrase, .h1, .h2, .accordion-header, .accordion-title { overflow-wrap: normal; word-break: normal; hyphens: none; }
