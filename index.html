@@ -13,129 +13,124 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
+  <!-- Seu CSS (tem que ser exatamente "style.css") -->
   <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
-  <div class="page">
+  <main class="page" id="home">
 
     <!-- HEADER -->
     <header class="header">
-      <nav class="nav">
-        <a href="#home" class="nav-link">home</a>
-        <a href="#sobre" class="nav-link">sobre nós</a>
-        <a href="#servicos" class="nav-link">arquitetura de serviços</a>
-        <a href="#contato" class="nav-link">fale com a gente</a>
+      <nav class="nav" aria-label="Navegação principal">
+        <a class="nav__link" href="#home">home</a>
+        <a class="nav__link" href="#sobre">sobre nós</a>
+        <a class="nav__link" href="#servicos">arquitetura de serviços</a>
+        <a class="nav__link" href="#contato">fale com a gente</a>
       </nav>
 
-      <a class="logo" href="#home" aria-label="elã">
-        <img src="assets/logo-ela.svg" alt="elã" />
+      <a class="brand" href="#home" aria-label="Ir para o topo">
+        <img class="brand__logo" src="assets/logo-ela.svg" alt="elã" />
       </a>
     </header>
 
-    <!-- HERO IMAGE -->
-    <section id="home" class="hero">
-      <img src="assets/hero.jpg" alt="Imagem editorial de moda" />
+    <!-- HERO (283px) -->
+    <section class="hero" aria-label="Imagem editorial">
+      <img class="hero__img" src="assets/hero.jpg" alt="Imagem editorial de moda" />
     </section>
 
-    <!-- ABOUT + MANIFESTO -->
-    <section id="sobre" class="about">
-      <div class="about-watermark" aria-hidden="true"></div>
+    <!-- ABOUT -->
+    <section class="about" id="sobre" aria-label="Sobre a elã">
+      <!-- watermark (logo-bg) -->
+      <div class="about__watermark" aria-hidden="true"></div>
 
-      <div class="about-grid">
-        <div class="about-left">
-          <h2 class="about-title">sobre a elã</h2>
+      <div class="about__grid">
+        <div class="about__left">
+          <h1 class="about__title">sobre a elã</h1>
 
-          <p class="about-lead">
+          <p class="about__lead">
             somos um estúdio que trabalha marca como ecossistema, não como ação isolada.
           </p>
 
-          <p class="about-body">
+          <p class="about__body">
             a gente começa pelo que vem antes do conteúdo: posicionamento e direção. entendemos o momento da marca,
             o que ela sustenta hoje, o que precisa ser ajustado e quais escolhas vão deixar tudo mais coerente.
           </p>
 
-          <p class="about-body">
+          <p class="about__body">
             atuamos a partir do posicionamento, da narrativa e da imagem, conectando números pra guiar e feeling pra criar.
             isso vira direção criativa, editorial, social e influência com o mesmo norte: <strong>consistência no tempo.</strong>
           </p>
         </div>
 
-        <div class="about-right">
+        <div class="about__right">
           <p class="manifesto">
-            <span class="m-serif m-73">marcas precisam de</span><br>
-            <span class="m-sans m-54">um norte.</span>
-            <span class="m-serif m-73"> antes de</span><br>
-            <span class="m-sans m-54">conteúdo,</span>
-            <span class="m-serif m-73"> vem</span><br>
-            <span class="m-sans m-54">direção.</span>
+            <span class="manifesto__serif">marcas precisam de</span><br>
+            <span class="manifesto__serif">um norte.</span>
+            <span class="manifesto__serif"> antes de</span><br>
+            <span class="manifesto__sans">conteúdo,</span>
+            <span class="manifesto__serif"> vem</span><br>
+            <span class="manifesto__sans">direção.</span>
           </p>
         </div>
       </div>
     </section>
 
     <!-- SERVICES -->
-    <section id="servicos" class="services">
-      <div class="services-bar">
-        <span>arquitetura de serviços</span>
+    <section class="services" id="servicos" aria-label="Arquitetura de serviços">
+      <div class="services__bar">
+        <span class="services__barText">arquitetura de serviços</span>
       </div>
 
-      <div class="services-grid">
-        <div class="service-card">
-          <div class="service-title">diagnóstico &amp;<br>posicionamento</div>
-        </div>
-        <div class="service-card">
-          <div class="service-title">social &amp;<br>conteúdo</div>
-        </div>
-        <div class="service-card">
-          <div class="service-title">influência &amp;<br>relações</div>
-        </div>
-        <div class="service-card">
-          <div class="service-title">direção criativa &amp;<br>de arte</div>
-        </div>
-        <div class="service-card">
-          <div class="service-title">arquitetura<br>completa</div>
-        </div>
+      <div class="services__row" aria-label="Lista de serviços">
+        <div class="serviceCard"><span>diagnóstico &amp;<br>posicionamento</span></div>
+        <div class="serviceCard"><span>social &amp;<br>conteúdo</span></div>
+        <div class="serviceCard"><span>influência &amp;<br>relações</span></div>
+        <div class="serviceCard"><span>direção criativa &amp;<br>de arte</span></div>
+        <div class="serviceCard"><span>arquitetura<br>completa</span></div>
       </div>
 
-      <p class="services-phrase">
-        <span class="p-serif p-57">números pra guiar.</span>
-        <span class="p-sans p-43"> feeling pra criar.</span>
-        <span class="p-serif p-57"> direção pra sustentar.</span>
+      <p class="services__phrase" aria-label="Frase da elã">
+        <span class="phrase__serif">números pra guiar.</span>
+        <span class="phrase__sans"> feeling pra criar.</span>
+        <span class="phrase__serif"> direção pra sustentar.</span>
       </p>
     </section>
 
     <!-- CTA -->
-    <section id="contato" class="cta">
-      <div class="cta-inner">
-        <div class="cta-left">
-          <h3 class="cta-eyebrow">conteúdo sem direção não sustenta.</h3>
+    <section class="cta" id="contato" aria-label="Chamada para ação">
+      <div class="cta__inner">
+        <div class="cta__left">
+          <h2 class="cta__eyebrow">conteúdo sem direção não sustenta.</h2>
 
-          <p class="cta-content">
+          <p class="cta__content">
             nosso trabalho começa entendendo o que sustenta o seu posicionamento e o que precisa ser ajustado.
           </p>
 
-          <p class="cta-question">vamos conversar sobre a sua marca?</p>
+          <p class="cta__question">vamos conversar sobre a sua marca?</p>
 
-          <a class="cta-button" href="#contato">agendar ;)</a>
+          <a class="cta__button" href="#contato" aria-label="Agendar conversa">agendar ;)</a>
         </div>
 
-        <div class="cta-right">
-          <img src="assets/cta.jpg" alt="Imagem editorial em preto e branco" />
+        <div class="cta__right" aria-label="Imagem do CTA">
+          <img class="cta__img" src="assets/cta.jpg" alt="Imagem editorial em preto e branco" />
         </div>
-      </div>
-
-      <div class="cta-social">
-        <img src="assets/instagram.svg" alt="" aria-hidden="true" />
-        <span>@elafashionmkt</span>
       </div>
     </section>
 
+    <!-- SOCIAL (no branco, abaixo do CTA) -->
+    <div class="social" aria-label="Instagram">
+      <img class="social__icon" src="assets/instagram.svg" alt="" aria-hidden="true" />
+      <span class="social__handle">@elafashionmkt</span>
+    </div>
+
     <!-- FOOTER -->
-    <footer class="footer">
-      <p>elã fashion mkt | direção para marcas de moda: posicionamento • editorial • social • influência</p>
+    <footer class="footer" aria-label="Rodapé">
+      <p class="footer__text">
+        elã fashion mkt | direção para marcas de moda: posicionamento • editorial • social • influência
+      </p>
     </footer>
 
-  </div>
+  </main>
 </body>
 </html>
