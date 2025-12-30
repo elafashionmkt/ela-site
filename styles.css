@@ -1,8 +1,8 @@
 :root {
-  --bg: #ffffff;        /* fundo do site */
-  --soft: #f4e9e6;      /* rosé claro para blocos */
-  --accent: #791815;    /* vinho */
-  --ink: #3a3838;       /* texto */
+  --bg: #ffffff;   /* fundo do site (branco) */
+  --soft: #f4e9e6; /* rosé claro pra blocos */
+  --accent: #791815;
+  --ink: #3a3838;
 }
 
 * {
