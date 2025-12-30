@@ -1,4 +1,4 @@
-<!-- ELÃ • CLEAN BUILD • if you see this, you're NOT on the Pixso export -->
+<!-- ELÃ • CLEAN BUILD -->
 <!doctype html>
 <html lang="pt-BR">
 <head>
@@ -18,7 +18,6 @@
   <header class="site-header" id="topo">
     <div class="container header-inner">
       <a class="brand" href="#topo" aria-label="Voltar ao topo">
-        <!-- Ajuste o caminho se necessário -->
         <img class="brand-logo" src="image/Frame_2008_85.png" alt="elã" />
       </a>
 
@@ -54,8 +53,7 @@
         </div>
 
         <div class="hero-media">
-          <!-- Ajuste o caminho se necessário -->
-          <img class="img rounded" src="image/fcdfcf5d6f69671f1750041cf7baf29baa683655.png" alt="referências e recortes do processo" />
+          <img class="img rounded hero-img" src="image/fcdfcf5d6f69671f1750041cf7baf29baa683655.png" alt="referências e recortes do processo" />
         </div>
       </div>
     </section>
@@ -85,19 +83,19 @@
         </div>
 
         <div class="manifesto-right">
-          <p class="p center strong">
+          <p class="p strong manifesto-paragraph">
             módulos de serviço são ativados como peças de uma arquitetura: diagnóstico e posicionamento, direção criativa e editorial,
             social e conteúdo, influência e relações, lançamentos e acompanhamento de performance. não é um pacote engessado,
             é um sistema que se adapta ao seu momento e ao que a marca precisa sustentar agora.
           </p>
 
-          <p class="p center">
+          <p class="p manifesto-paragraph">
             a gente começa pelo essencial, define prioridades e só então expande para execução contínua.
             cada módulo conversa com o outro para evitar ações soltas: o que nasce no posicionamento vira direção,
             que vira conteúdo, que vira influência e presença, com consistência.
           </p>
 
-          <p class="p center">
+          <p class="p manifesto-paragraph">
             o acompanhamento entra como bússola: <span class="strong">números pra guiar</span>, <span class="strong">feeling pra criar</span>.
             rotina de alinhamento, aprovações objetivas e ajustes finos mantêm o norte sem perder leveza.
           </p>
@@ -113,7 +111,7 @@
     <section id="modulos" class="section section-modules">
       <div class="container modules-grid">
         <div class="modules-left">
-          <h2 class="h1 serif italic">módulos de serviço</h2>
+          <h2 class="h1 serif italic modules-title">módulos de serviço</h2>
 
           <p class="p">
             por aqui, os <span class="strong">serviços não são escolhas soltas</span>. eles funcionam como um ecossistema, porque
@@ -138,7 +136,7 @@
             <span class="italic">por acaso</span>
           </p>
 
-          <img class="img rounded modules-photo" src="image/Rectangle_13_18.png" alt="processo de trabalho em equipe" />
+          <!-- REMOVIDO: foto grande do layout (a que você marcou com X) -->
         </div>
 
         <div class="modules-right">
@@ -146,7 +144,6 @@
             <div class="accordion-item is-open">
               <button class="accordion-header" type="button" aria-expanded="true">
                 <span class="accordion-title"><span class="strong">fundação</span>: o que organiza a marca por dentro e define direção</span>
-                <span class="accordion-icon" aria-hidden="true">+</span>
               </button>
               <div class="accordion-content">
                 <ul class="service-list">
@@ -159,7 +156,6 @@
             <div class="accordion-item">
               <button class="accordion-header" type="button" aria-expanded="false">
                 <span class="accordion-title"><span class="strong">desejo</span>: o que constrói imagem, linguagem e vontade de pertencer</span>
-                <span class="accordion-icon" aria-hidden="true">+</span>
               </button>
               <div class="accordion-content">
                 <ul class="service-list">
@@ -174,7 +170,6 @@
             <div class="accordion-item">
               <button class="accordion-header" type="button" aria-expanded="false">
                 <span class="accordion-title"><span class="strong">alcance</span>: o que coloca a marca em circulação com contexto</span>
-                <span class="accordion-icon" aria-hidden="true">+</span>
               </button>
               <div class="accordion-content">
                 <ul class="service-list">
@@ -189,7 +184,6 @@
             <div class="accordion-item">
               <button class="accordion-header" type="button" aria-expanded="false">
                 <span class="accordion-title"><span class="strong">decisão</span>: o que organiza criativos para guiar a decisão de compra</span>
-                <span class="accordion-icon" aria-hidden="true">+</span>
               </button>
               <div class="accordion-content">
                 <ul class="service-list">
@@ -200,17 +194,17 @@
           </div>
 
           <div class="modules-notes">
-            <p class="p small center">
+            <p class="p small">
               os módulos estão organizados por etapa. fundação, desejo, alcance e decisão. você não precisa fazer tudo pra começar.
               o ponto de partida depende do que está travando hoje.
             </p>
 
-            <p class="p small center">
+            <p class="p small">
               faremos a leitura do que vem primeiro, do que constrói desejo, do que amplia com consistência e do que melhora a decisão.
               nós ajudaremos a conectar as frentes para manter uma linha única do conceito ao dia a dia.
             </p>
 
-            <p class="p small center">
+            <p class="p small">
               você não precisa escolher sozinho. nós indicaremos os módulos que sua empresa precisa agora.
               e a cada rodada do projeto, eles serão ajustados ao momento da marca, sem excesso e sem improviso.
             </p>
@@ -227,7 +221,7 @@
     <section id="cafe" class="section section-cta">
       <div class="container cta-grid">
         <div class="cta-left">
-          <h2 class="h1 serif italic">vamos tomar um café?</h2>
+          <h2 class="h1 serif italic cta-title">vamos tomar um café?</h2>
 
           <p class="p">
             a conversa começa simples. <span class="strong">um café ajuda</span>, mas <span class="strong">a tela também resolve</span>.
@@ -283,13 +277,11 @@
 
       header.addEventListener('click', () => {
         const isOpen = item.classList.contains('is-open');
-
         items.forEach(closeItem);
         if (!isOpen) openItem(item);
       });
     });
 
-    // Recalcula alturas no resize (importante para responsivo)
     window.addEventListener('resize', () => {
       items.forEach((item) => {
         const content = item.querySelector('.accordion-content');
