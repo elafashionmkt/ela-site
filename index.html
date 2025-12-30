@@ -3,95 +3,59 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>sobre — elã fashion mkt</title>
+  <title>elã fashion mkt</title>
 
-  <!-- Novantique (Adobe Typekit) -->
+  <!-- Fontes -->
   <link rel="stylesheet" href="https://use.typekit.net/yzo1wyz.css">
-  <!-- Inter Tight (Google) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
-  <!-- seu CSS global (se existir) -->
-  <link rel="stylesheet" href="./style.css?v=20251230-6" />
-  <!-- CSS específico desta página -->
-  <link rel="stylesheet" href="./sobre.css?v=20251230-6" />
+  <link rel="stylesheet" href="./style.css?v=20251230-elite" />
 </head>
 
 <body>
-  <div class="page page--sobre" id="topo">
+  <div class="page" id="top">
 
-    <!-- marca d’água (logo transparente) -->
-    <img class="sobre-watermark" src="./assets/logo-bg.svg" alt="" aria-hidden="true">
+    <!-- HEADER -->
+    <header class="header">
+      <nav class="nav" aria-label="Navegação">
+        <a class="nav__link is-active" href="#top">home</a>
+        <a class="nav__link" href="#sobre">sobre nós</a>
+        <a class="nav__link" href="#servicos">arquitetura de serviços</a>
+        <a class="nav__link" href="#contato">fale com a gente</a>
+      </nav>
 
-    <!-- foto lateral direita (encostada) -->
-    <div class="sobre-hero" aria-hidden="true"></div>
-
-    <!-- logo topo -->
-    <a class="sobre-logo" href="./index.html" aria-label="Voltar para a home">
-      <img src="./assets/logo-ela.svg" alt="elã" />
-    </a>
-
-    <!-- menu (fonte -40%) -->
-    <nav class="sobre-nav" aria-label="Navegação">
-      <a class="sobre-nav__link" href="#sobre">sobre</a>
-      <a class="sobre-nav__link" href="#metodologia">metodologia</a>
-      <a class="sobre-nav__link" href="#modulos">módulos de serviço</a>
-      <a class="sobre-nav__link" href="#cafe">marcar um café</a>
-    </nav>
-
-    <!-- conteúdo (posições fiéis ao export Pixso) -->
-    <main class="sobre-content" aria-label="Conteúdo">
-
-      <!-- SOBRE (texto esquerdo) -->
-     <section id="sobre" class="about-new">
-  <div class="about-new__wrap">
-    <img class="about-new__watermark" src="./assets/logo-bg.svg" alt="" aria-hidden="true">
-
-    <div class="about-new__grid">
-      <div class="about-new__left">
-        <h2 class="about-new__title">sobre a elã</h2>
-
-        <p class="about-new__p about-new__p--bold">
-          somos um estúdio que trabalha marca como ecossistema, não como ação isolada.
-        </p>
-
-        <p class="about-new__p">
-          <strong>a gente começa pelo que vem antes do conteúdo:</strong>
-          posicionamento e direção. entendemos o momento da marca, o que ela sustenta hoje,
-          o que precisa ser ajustado e quais escolhas vão deixar tudo mais coerente.
-        </p>
-
-        <p class="about-new__p">
-          atuamos a partir do <strong>posicionamento</strong>, da <strong>narrativa</strong> e da
-          <strong>imagem</strong>, conectando números pra guiar e feeling pra criar. isso vira direção criativa,
-          editorial, social e influência com o mesmo norte: <strong>consistência no tempo.</strong>
-        </p>
-      </div>
-
-      <div class="about-new__right">
-        <p class="about-new__manifesto">
-          <span class="m-nov">marcas</span>
-          <span class="m-inter"> precisam de um </span><span class="m-nov">norte</span><span class="m-inter">. antes de</span><br>
-          <span class="m-nov">conteúdo</span><span class="m-inter">, vem </span><span class="m-nov">direção</span><span class="m-inter">.</span>
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-
-    </main>
-
-    <!-- rodapé (texto central + instagram alinhado) -->
-    <footer class="sobre-footer" id="cafe" aria-label="Rodapé">
-      <p class="sobre-footer__tagline">elã fashion mkt | direção para marcas de moda: posicionamento • editorial • social • influência</p>
-
-      <a class="sobre-footer__ig" href="https://instagram.com/elafashionmkt" target="_blank" rel="noopener">
-        <span class="sobre-footer__ig-icon" aria-hidden="true"></span>
-        <span class="sobre-footer__ig-text">elafashionmkt</span>
+      <a class="brand" href="#top" aria-label="Voltar ao topo">
+        <img src="./assets/logo-ela.svg" alt="elã">
       </a>
-    </footer>
+    </header>
 
-  </div>
-</body>
-</html>
+    <!-- HERO (283px) -->
+    <section class="hero" aria-label="Imagem hero">
+      <img class="hero__img" src="./assets/hero.jpg" alt="">
+    </section>
+
+    <!-- ABOUT -->
+    <section class="about" id="sobre" aria-label="Sobre a elã">
+      <img class="about__watermark" src="./assets/logo-bg.svg" alt="" aria-hidden="true">
+
+      <div class="about__grid">
+        <div class="about__left">
+          <h2 class="about__title">sobre a elã</h2>
+
+          <p class="about__p about__p--bold">
+            somos um estúdio que trabalha marca como ecossistema, não como ação isolada.
+          </p>
+
+          <p class="about__p">
+            <strong>a gente começa pelo que vem antes do conteúdo:</strong>
+            posicionamento e direção. entendemos o momento da marca, o que ela sustenta hoje,
+            o que precisa ser ajustado e quais escolhas vão deixar tudo mais coerente.
+          </p>
+
+          <p class="about__p">
+            atuamos a partir do <strong>posicionamento</strong>, da <strong>narrativa</strong> e da <strong>imagem</strong>,
+            conectando números pra guiar e feeling pra criar. isso vira direção criativa, editorial, social e influência
+            com o mesmo norte: <strong>consistência no tempo.</strong>
+          </
