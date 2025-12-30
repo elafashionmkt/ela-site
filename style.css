@@ -4,22 +4,21 @@
   --white: #FFFFFF;
   --wine: #791815;
 
-  /* do layout Pixso */
   --pink: #F8CCCC;
   --pink-50: rgba(248, 204, 204, 0.5);
 
   --pad: 80px;
+  --content: 1280px; /* 1440 - 80 - 80 */
 
   --hero-h: 283px;
 
   /* pedido: menu -40% */
   --menu-fs: 21px;
 
-  /* tipografia base */
   --p: 25px;
   --about-title: 80px;
 
-  /* services bar pedido: DOBRO */
+  /* pedido: barra dobrada */
   --bar-h: 120px;
 
   --btn-w: 316.8px;
@@ -62,12 +61,10 @@ img{ display:block; max-width:100%; height:auto; }
   gap: 39px;
   align-items:center;
   white-space:nowrap;
-
   font-size: var(--menu-fs);
   line-height: 1.1;
   color: var(--wine);
 }
-
 .nav__link{ font-weight: 400; }
 .nav__link--active{ font-weight: 700; }
 
@@ -95,18 +92,17 @@ img{ display:block; max-width:100%; height:auto; }
   overflow: hidden;
 }
 
-/* (2) logo transparente: marca d'água grande, bem suave */
+/* logo transparente grande (seu asset já é leve; aqui garantimos que aparece) */
 .about__bg-logo{
   position:absolute;
   left: 52%;
   top: 46%;
   transform: translate(-50%, -50%);
   width: 1024px;
-  opacity: 0.05;
+  opacity: 0.08; /* ligeiramente mais visível */
   pointer-events:none;
   user-select:none;
   z-index: 0;
-  mix-blend-mode: multiply;
 }
 
 .about__grid{
@@ -119,9 +115,7 @@ img{ display:block; max-width:100%; height:auto; }
   align-items:start;
 }
 
-.about__left{
-  position: relative;
-}
+.about__left{ position: relative; }
 
 .about__title{
   font-family:"novantique-serif", sans-serif;
@@ -133,7 +127,7 @@ img{ display:block; max-width:100%; height:auto; }
   margin-bottom: 22px;
 }
 
-/* marca d'água abaixo do título (5% opacidade) */
+/* marca d'água abaixo do título */
 .about__watermark{
   position:absolute;
   left: 0;
@@ -143,7 +137,6 @@ img{ display:block; max-width:100%; height:auto; }
   pointer-events:none;
   user-select:none;
   z-index: 0;
-  mix-blend-mode: multiply;
 }
 
 .about__text{
@@ -194,8 +187,6 @@ img{ display:block; max-width:100%; height:auto; }
 .services__bar{
   height: var(--bar-h);
   background: var(--wine);
-
-  /* (3) centralizar no MEIO */
   display:flex;
   align-items:center;
   justify-content:center;
@@ -204,10 +195,7 @@ img{ display:block; max-width:100%; height:auto; }
 .services__title{
   display:inline-flex;
   align-items: baseline;
-
-  /* (3) espaço depois de "arquitetura" */
-  gap: 12px;
-
+  gap: 12px; /* espaço depois de "arquitetura" */
   margin:0;
   white-space:nowrap;
 }
@@ -239,14 +227,11 @@ img{ display:block; max-width:100%; height:auto; }
   height: 151.43px;
   border-radius: 8.91px;
   background: var(--pink-50);
-
   display:flex;
   align-items:center;
   justify-content:center;
   text-align:center;
-
   color: var(--wine);
-  font-family:"Inter Tight", sans-serif;
   font-size: 19.8px;
   font-weight: 700;
   line-height: 1.2;
@@ -275,68 +260,70 @@ img{ display:block; max-width:100%; height:auto; }
   font-size: 57px;
 }
 
-/* ================= CTA ================= */
+/* ================= CTA (CORRIGIDO) ================= */
 .cta{
   background: var(--pink);
   height: 460px;
-}
-
-.cta__inner{
-  height: 100%;
-  padding: 94px var(--pad);
   display:flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 43px;
+  align-items:center; /* centraliza o bloco no rosa */
 }
 
+/* Aqui está o segredo: CTA usa a largura útil (1280) */
+.cta__inner{
+  width: var(--content);
+  margin: 0 auto;
+  display:grid;
+  grid-template-columns: 631px 606px; /* cabe certinho no 1280 */
+  column-gap: 43px;
+  align-items:start;
+}
+
+/* Texto todo em bold (sem depender de <strong>) */
 .cta__copy{
-  width: 631px;
   color: var(--wine);
   font-size: 30px;
   font-weight: 700;
   line-height: 1.21;
-
-  /* (4) impede sobreposição: fluxo normal */
   display:flex;
-  flex-direction: column;
+  flex-direction:column;
   gap: 28px;
 }
+.cta__copy p{
+  font-weight: 700;
+}
 
+/* botão SEMPRE no fluxo (nada de absolute) */
 .btn{
+  position: static;
   width: var(--btn-w);
   height: var(--btn-h);
   border-radius: var(--btn-radius);
   background: var(--wine);
   color: var(--pink);
-
   display:flex;
   align-items:center;
   justify-content:center;
-
   font-size: var(--btn-fs);
   font-weight: 700;
-
-  /* garante que não “invada” texto */
   margin-top: 6px;
+  align-self: flex-start;
 }
-
 .btn:focus-visible{
   outline: 2px solid var(--wine);
   outline-offset: 4px;
 }
 
+/* Imagem dentro do grid (não encosta na lateral) */
 .cta__image-wrap{
-  width: 672.96px;
+  width: 606px;
   height: 350.22px;
-
   transform: rotate(0.704915deg);
+  transform-origin: center;
   border: 1px solid var(--wine);
   border-radius: 9px 0 0 9px;
   overflow:hidden;
   background: var(--pink);
-
-  margin-top: 0;
+  justify-self: end; /* fica colada no fim da coluna, mas dentro do 1280 */
 }
 
 .cta__image{
@@ -346,9 +333,7 @@ img{ display:block; max-width:100%; height:auto; }
 }
 
 /* ================= FOOTER ================= */
-.footer{
-  background: var(--white);
-}
+.footer{ background: var(--white); }
 
 .footer__inner{
   width: var(--w);
@@ -357,42 +342,39 @@ img{ display:block; max-width:100%; height:auto; }
   position: relative;
 }
 
-/* texto central */
 .footer__tagline{
   position:absolute;
   left:50%;
   top:50%;
   transform: translate(-50%,-50%);
-  width: 1280px;
+  width: var(--content);
   text-align:center;
-
   font-size: 25px;
   font-weight: 300;
   color: var(--wine);
 }
 
-/* (4) instagram: centralizado em altura/largura e icon+texto alinhados */
+/* Instagram alinhado (ícone + texto centralizados entre si) */
 .footer__ig{
   position:absolute;
   right: var(--pad);
   top:50%;
   transform: translateY(-50%);
-
   display:flex;
   align-items:center;
-  justify-content:center;
   gap: 14px;
-
   color: var(--wine);
 }
 
 .footer__ig-icon{
   width: 46px;
   height: 46px;
+  flex: 0 0 auto;
 }
 
 .footer__ig-text{
   font-size: 25px;
   font-weight: 400;
   line-height: 1;
+  display:block;
 }
