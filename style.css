@@ -1,5 +1,4 @@
-/* ELÃ • CLEAN BUILD • if you see this, you're NOT on the Pixso export */
-/* elã • base */
+/* ELÃ • CLEAN BUILD */
 :root{
   --bg: #ffffff;
   --wine: #791815;
@@ -71,7 +70,7 @@ img{ max-width: 100%; display: block; }
   text-decoration: none;
   font-size: 18px;
   font-weight: 400;
-  opacity: 0.8;
+  opacity: 0.85;
 }
 .nav-link:hover{ opacity: 1; }
 .nav-link.is-active{ font-weight: 700; opacity: 1; }
@@ -97,7 +96,6 @@ img{ max-width: 100%; display: block; }
   font-size: 20px;
   margin: 0 0 18px;
 }
-.p.center{ text-align: center; }
 .p.small{ font-size: 18px; }
 
 .strong{ font-weight: 700; }
@@ -111,7 +109,7 @@ img{ max-width: 100%; display: block; }
   align-items: start;
 }
 .hero-copy{ max-width: 560px; }
-.hero-media{ align-self: start; }
+.hero-img{ width: 100%; height: auto; }
 
 .rounded{
   border-radius: 10px;
@@ -138,7 +136,15 @@ img{ max-width: 100%; display: block; }
   margin: 0 0 16px;
   font-size: 20px;
 }
-.manifesto-right{ padding-top: 10px; }
+
+/* >>> correção: coluna direita alinhada à esquerda (igual print) */
+.manifesto-right{
+  padding-top: 10px;
+  text-align: left;
+}
+.manifesto-paragraph{
+  text-align: left;
+}
 
 /* modules */
 .modules-grid{
@@ -147,13 +153,11 @@ img{ max-width: 100%; display: block; }
   gap: 64px;
   align-items: start;
 }
-.modules-photo{
-  margin-top: 28px;
-  border-radius: 10px;
-}
+
+/* >>> correção: frase grande com “diagramação” mais próxima do Pixso */
 .big-phrase{
   margin: 36px 0 0;
-  font-size: 86px;
+  font-size: 72px;
   line-height: 0.92;
   letter-spacing: -0.02em;
 }
@@ -184,14 +188,13 @@ img{ max-width: 100%; display: block; }
   font-weight: 400;
   line-height: 1.25;
 }
-.accordion-title{ display: inline-block; max-width: 520px; }
 
-.accordion-icon{
-  position: absolute;
-  right: 18px;
-  top: 18px;
-  font-size: 22px;
-  opacity: 0.8;
+/* >>> correção: remove o “+” (não existe mais ícone) */
+.accordion-icon{ display: none !important; }
+
+.accordion-title{
+  display: inline-block;
+  max-width: 560px;
 }
 
 .accordion-content{
@@ -202,8 +205,7 @@ img{ max-width: 100%; display: block; }
   background: rgba(247,203,204,0.20);
 }
 
-.accordion-item.is-open .accordion-icon{ transform: rotate(45deg); }
-
+/* >>> correção: lista com “>” igual layout */
 .service-list{
   margin: 0;
   padding: 18px 0 22px;
@@ -215,12 +217,23 @@ img{ max-width: 100%; display: block; }
   font-weight: 700;
 }
 .service-list li{
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 10px;
+  font-weight: 700;
+}
+.service-list li::before{
+  content: ">";
   font-weight: 700;
 }
 
+/* >>> correção: notas alinhadas à esquerda (igual print) */
 .modules-notes{
   margin-top: 34px;
+  text-align: left;
 }
+.modules-notes .p{ text-align: left; }
 
 /* cta */
 .cta-grid{
@@ -229,6 +242,7 @@ img{ max-width: 100%; display: block; }
   gap: 64px;
   align-items: end;
 }
+
 .btn{
   display: inline-flex;
   align-items: center;
@@ -255,17 +269,33 @@ img{ max-width: 100%; display: block; }
 .ig:hover{ opacity: 0.9; }
 .ig-icon{ width: 22px; height: 22px; }
 
+/* ======== ajustes “Pixso-like” no desktop ======== */
+@media (min-width: 1100px){
+  .hero-grid{ grid-template-columns: 520px 1fr; }
+  .manifesto-grid{ grid-template-columns: 592px 1fr; }
+  .modules-grid{ grid-template-columns: 592px 1fr; }
+  .cta-grid{ grid-template-columns: 592px 1fr; }
+
+  /* títulos em 1 linha (igual Pixso) */
+  .modules-title,
+  .cta-title{
+    white-space: nowrap;
+  }
+}
+
 /* responsive */
 @media (max-width: 980px){
   .h2{ font-size: 64px; }
   .h1{ font-size: 56px; }
-  .big-phrase{ font-size: 64px; }
+  .big-phrase{ font-size: 56px; }
+
   .hero-grid,
   .manifesto-grid,
   .modules-grid,
   .cta-grid{
     grid-template-columns: 1fr;
   }
+
   .ig{ justify-content: flex-start; }
   .site-header{ position: relative; }
 }
@@ -275,6 +305,7 @@ img{ max-width: 100%; display: block; }
   .h2{ font-size: 46px; }
   .h1{ font-size: 44px; }
   .p{ font-size: 18px; }
+
   .accordion-header{ font-size: 20px; padding: 18px 18px; }
   .service-list{ font-size: 20px; }
 }
