@@ -1,315 +1,219 @@
+/*
+  SOBRE (web) — baseado no export do Pixso (1440 x 1694)
+  - usa os assets já existentes no repo (./assets/...)
+*/
+
 :root{
-  --w: 1440px;
-
-  --white:#FFFFFF;
   --wine:#791815;
-
-  --pink:#F8CCCC;
-  --pink-50: rgba(248, 204, 204, 0.5);
-
-  --pad: 80px;
-
-  --hero-h: 283px;
-
-  /* menu -40% */
-  --menu-fs: 21px;
-
-  /* services bar dobrada */
-  --bar-h: 120px;
+  --white:#FFFFFF;
 }
 
-*{ box-sizing:border-box; margin:0; padding:0; }
-html,body{ background: var(--white); }
-body{
-  font-family:"Inter Tight", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-a{ color:inherit; text-decoration:none; }
-img{ display:block; max-width:100%; height:auto; }
+body{ margin:0; background: var(--white); }
 
-.page{
-  width: var(--w);
-  margin: 0 auto;
-  background: var(--white);
-}
-
-/* HEADER */
-.header{ padding: 60px var(--pad) 0; }
-.nav{
-  height: 74px;
-  display:flex;
-  align-items:center;
-  justify-content: space-between;
-}
-.nav__links{
-  list-style:none;
-  display:flex;
-  gap: 39px;
-  align-items:center;
-  white-space:nowrap;
-  font-size: var(--menu-fs);
-  line-height: 1.1;
-  color: var(--wine);
-}
-.nav__link{ font-weight: 400; }
-.nav__link--active{ font-weight: 700; }
-.nav__logo img{ height: 74px; width:auto; }
-
-/* HERO */
-.hero{ margin-top: 66px; height: var(--hero-h); }
-.hero__img{ width:100%; height:100%; object-fit: cover; }
-
-/* ABOUT */
-.about{
-  position: relative;
-  padding-top: 144px;
-  padding-bottom: 130px;
-  overflow: hidden;
-}
-.about__bg-logo{
-  position:absolute;
-  left: 52%;
-  top: 46%;
-  transform: translate(-50%, -50%);
-  width: 1024px;
-  opacity: 0.08;
-  pointer-events:none;
-  user-select:none;
-  z-index: 0;
-}
-.about__grid{
-  position: relative;
-  z-index: 1;
-  padding: 0 var(--pad);
-  display:grid;
-  grid-template-columns: 631px 606px;
-  gap: 43px;
-  align-items:start;
-}
-.about__left{ position: relative; }
-
-.about__title{
-  font-family:"novantique-serif", sans-serif;
-  font-size: 80px;
-  font-style: italic;
-  font-weight: 700;
-  letter-spacing: -0.04em;
-  color: var(--wine);
-  margin-bottom: 22px;
-}
-.about__watermark{
-  position:absolute;
-  left: 0;
-  top: 88px;
-  width: 631px;
-  opacity: 0.05;
-  pointer-events:none;
-  user-select:none;
-  z-index: 0;
-}
-.about__text{ position: relative; z-index: 1; }
-.about__text p{
-  font-size: 25px;
-  line-height: 1.42;
-  font-weight: 300;
-  color: var(--wine);
-}
-.about__text p + p{ margin-top: 28px; }
-.about__text strong{ font-weight: 700; }
-
-.about__right{ display:flex; justify-content:flex-end; }
-.manifesto{ width: 612px; text-align:right; }
-.manifesto__nov{
-  font-family:"novantique-serif", sans-serif;
-  font-size: 73px;
-  font-weight: 700;
-  line-height: 72px;
-  color: var(--wine);
-}
-.manifesto__inter{
-  font-family:"Inter Tight", sans-serif;
-  font-size: 54px;
-  font-weight: 700;
-  line-height: 72px;
-  color: var(--wine);
-}
-
-/* SERVICES */
-.services{ padding-bottom: 72px; }
-.services__bar{
-  height: var(--bar-h);
-  background: var(--wine);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-.services__title{
-  display:inline-flex;
-  align-items: baseline;
-  gap: 12px;
-  white-space: nowrap;
-}
-.services__title-nov{
-  font-family:"novantique-serif", sans-serif;
-  font-size: 50px;
-  font-weight: 700;
-  color: var(--pink);
-}
-.services__title-inter{
-  font-family:"Inter Tight", sans-serif;
-  font-size: 40px;
-  font-weight: 700;
-  color: var(--pink);
-}
-.services__cards{
-  margin-top: 86px;
-  padding: 0 var(--pad);
-  display:flex;
-  gap: 49.5px;
-  justify-content: center;
-}
-.service-card{
-  width: 230.61px;
-  height: 151.43px;
-  border-radius: 8.91px;
-  background: var(--pink-50);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  color: var(--wine);
-  font-size: 19.8px;
-  font-weight: 700;
-  line-height: 1.2;
-}
-.service-card--last{
-  width: 228.25px;
-  height: 149.88px;
-  border-radius: 8.82px;
-}
-.services__phrase{
-  margin-top: 86px;
-  text-align:center;
-  color: var(--wine);
-  font-weight: 700;
-}
-.services__phrase-inter{ font-size: 43px; }
-.services__phrase-nov{
-  font-family:"novantique-serif", sans-serif;
-  font-size: 57px;
-}
-
-/* ================= CTA (IGUAL AO PIXSO) ================= */
-.cta{
-  position: relative;
+/* isola estilos para não “quebrar” a home */
+.page--sobre{
   width: 1440px;
-  height: 460px;
-  background: var(--pink);
-}
-
-/* bloco de texto: left 95 / top 94.736 / width 631 */
-.cta__copy{
-  position:absolute;
-  left: 95px;
-  top: 94.7361px;
-  width: 631px;
-
-  font-size: 30px;
-  line-height: 36.3068px;
-  color: var(--wine);
-}
-
-/* texto padrão LIGHT */
-.cta__p{ font-weight: 300; }
-.cta__p--bold{ font-weight: 700; }
-
-/* espaçamento entre os parágrafos (igual sensação do handoff) */
-.cta__p + .cta__p{ margin-top: 36.3068px; }
-
-/* botão: left 95 / top 313.736 / size 316.8x66 */
-.btn{
-  position:absolute;
-  left: 95px;
-  top: 313.7361px;
-  width: 316.8px;
-  height: 66px;
-
-  background: var(--wine);
-  border-radius: 19.8px;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  font-size: 31.68px;
-  font-weight: 700;
-  color: var(--pink);
-}
-
-/* imagem: stroke-wrapper left 769.1288 / top 62.1264 / w 672.964 / h 350.219 / rotate */
-.cta__image-wrap{
-  position:absolute;
-  left: 769.1288px;
-  top: 62.1264px;
-  width: 672.9639px;
-  height: 350.2195px;
-
-  transform: rotate(0.704915deg);
-  transform-origin: center;
-
-  border: 1px solid var(--wine);
-  border-radius: 9px 0 0 9px;
+  height: 1694px;
+  margin: 0 auto;
+  position: relative;
+  background: var(--white);
   overflow: hidden;
-  background: var(--pink);
 }
 
-.cta__image{
+.page--sobre *{ box-sizing: border-box; }
+
+/* marca d’água grande */
+.sobre-watermark{
+  position: absolute;
+  left: -360px;
+  top: 590px;
+  width: 980px;
+  opacity: 0.05;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* foto direita (encostada) */
+.sobre-hero{
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 640px;
+  height: 826px;
+  background-image: url("./assets/hero.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* logo topo */
+.sobre-logo{
+  position: absolute;
+  left: 126px;
+  top: 124px;
+  width: 114px;
+  height: 72px;
+  display: block;
+}
+
+.sobre-logo img{
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 
-/* ================= FOOTER (IGUAL AO PIXSO) ================= */
-.footer{ background: var(--white); }
+/* menu topo (tamanho -40% vs o menu anterior) */
+.sobre-nav{
+  position: absolute;
+  left: 132px;
+  top: 255px;
+  width: 611.2727px;
+  height: 16px;
 
-.footer__inner{
-  width: 1440px;
-  height: 120px;
-  position: relative;
-  margin: 0 auto;
-}
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
-.footer__tagline{
-  position:absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%,-50%);
-  width: 1438px;
-  text-align:center;
-  font-size: 25px;
+  font-family: "Inter Tight", sans-serif;
+  font-size: 20.4546px;
   font-weight: 300;
+  line-height: 16px;
   color: var(--wine);
 }
 
-/* grupo instagram: width 257 height 46, central +295.98 */
-.footer__ig{
-  position:absolute;
+.sobre-nav__link{ color: var(--wine); text-decoration: none; }
+.sobre-nav__link:hover{ text-decoration: underline; }
+
+/* container de conteúdo */
+.sobre-content{
+  position: absolute;
+  left: 123px;
+  top: 330px;
+  width: 1210px;
+  height: 1047px;
+}
+
+/* bloco de texto “sobre” */
+.sobre-copy{
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 434px;
+
+  font-family: "Inter Tight", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24.2046px;
+  letter-spacing: 0.02em;
+  color: var(--wine);
+}
+
+.sobre-copy strong{ font-weight: 700; }
+
+/* manifesto */
+.sobre-manifesto{
+  position: absolute;
+  left: 0;
+  top: 422px;
+  width: 434px;
+  color: var(--wine);
+}
+
+.sobre-manifesto__line{
+  margin: 0;
+  padding: 0;
+}
+
+.sobre-manifesto__inter-heavy{
+  font-family: "Inter Tight", sans-serif;
+  font-size: 51.6693px;
+  font-weight: 900;
+  line-height: 54px;
+}
+
+.sobre-manifesto__inter-bold{
+  font-family: "Inter Tight", sans-serif;
+  font-size: 51.6693px;
+  font-weight: 700;
+  line-height: 54px;
+}
+
+.sobre-manifesto__nov{
+  font-family: "novantique-serif", sans-serif;
+  font-size: 69.4149px;
+  font-weight: 700;
+  line-height: 70px;
+  letter-spacing: -0.07em;
+}
+
+/* caixas inferiores (metodologia e módulos) */
+.sobre-box{
+  position: absolute;
+  font-family: "Inter Tight", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24.2046px;
+  letter-spacing: 0.02em;
+  color: var(--wine);
+  text-align: right;
+}
+
+.sobre-box strong{ font-weight: 700; }
+
+.sobre-box--metodologia{
+  left: 3px;
+  top: 812px;
+  width: 429px;
+}
+
+.sobre-box--modulos{
+  left: 582px;
+  top: 702px;
+  width: 628px;
+}
+
+/* rodapé */
+.sobre-footer{
+  position: absolute;
+  left: 2px;
+  top: 1503px;
+  width: 1438px;
+  height: 97px;
+}
+
+.sobre-footer__tagline{
+  position: absolute;
   left: 50%;
-  top: 50%;
-  transform: translate(calc(-50% + 295.9819px), -50%);
+  top: 79px;
+  transform: translateX(-50%);
+  width: 1438px;
+
+  font-family: "Inter Tight", sans-serif;
+  font-size: 25px;
+  font-weight: 300;
+  line-height: 28px;
+  text-align: center;
+  color: var(--wine);
+}
+
+.sobre-footer__ig{
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(calc(-50% + 295.4819px));
+
   width: 257px;
   height: 46px;
-
-  display:flex;
-  align-items:center;
+  display: flex;
+  align-items: center;
   gap: 14px;
 
   color: var(--wine);
+  text-decoration: none;
 }
 
-/* usa background-image para “ignorar” whitespace do svg */
-.footer__ig-icon{
+/* ícone via background-image (evita "espaço" interno do SVG) */
+.sobre-footer__ig-icon{
   width: 48px;
   height: 46px;
   background-image: url("./assets/instagram.svg");
@@ -319,10 +223,12 @@ img{ display:block; max-width:100%; height:auto; }
   flex: 0 0 auto;
 }
 
-.footer__ig-text{
+.sobre-footer__ig-text{
   height: 46px;
-  display:flex;
-  align-items:center;
+  display: flex;
+  align-items: center;
+
+  font-family: "Inter Tight", sans-serif;
   font-size: 25px;
   font-weight: 400;
   line-height: 1;
