@@ -22,8 +22,12 @@ html{ scroll-behavior:smooth; }
   html{ scroll-behavior:auto; }
 }
 
-body{
+html, body{
   margin:0;
+  padding:0;
+}
+
+body{
   font-family:"Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   background:var(--bg);
   color:var(--text);
@@ -31,6 +35,7 @@ body{
 
 img{ display:block; max-width:100%; height:auto; }
 a{ color:inherit; text-decoration:none; }
+a:visited{ color:inherit; }
 
 /* container do frame */
 .container{
@@ -80,6 +85,8 @@ a.btn{
 ========================================================= */
 .header{
   position:relative;
+  margin:0;
+  padding:0;
 }
 
 /* respiro branco removido */
@@ -93,6 +100,7 @@ a.btn{
   top:0;
   height:var(--bar-h);
   background:var(--wine);
+  overflow:hidden;
   z-index:1000;
 }
 
@@ -163,6 +171,7 @@ a.btn{
   position:fixed;
   left:0;
   right:0;
+  top:var(--bar-h);
   background:var(--wine);
   z-index:999;
   opacity:0;
