@@ -30,7 +30,6 @@ body{
 img{ display:block; max-width:100%; height:auto; }
 a{ color:inherit; text-decoration:none; }
 
-/* container do frame */
 .container{
   max-width: var(--container);
   margin: 0 auto;
@@ -77,7 +76,7 @@ a.btn{
   height:var(--bar-h);
   background:var(--wine);
   z-index:1000;
-  overflow:hidden; /* garante que o logo não “vaze” */
+  overflow:hidden;
 }
 
 .header-content{
@@ -100,7 +99,6 @@ a.btn{
   letter-spacing:0.05em;
 }
 
-/* hamburger (mobile) */
 .hamburger{
   display:none;
   width:44px;
@@ -128,7 +126,6 @@ a.btn{
   .hamburger span{ transition:none; }
 }
 
-/* logo topo (dentro do box vinho; mantém alinhamento horizontal pelo gutter) */
 .logo-topo{
   position:absolute;
   right:var(--gutter);
@@ -142,7 +139,7 @@ a.btn{
 }
 
 .logo-img{
-  height:151px; /* conforme print (150.99px) */
+  height:151px;
   width:auto;
 }
 
@@ -219,7 +216,7 @@ section{ padding: 72px 0; }
 /* HERO */
 .hero{
   padding-top: 53px;
-  padding-bottom: 0; /* sobe o bloco "sobre nós" */
+  padding-bottom: 0;
 }
 
 .hero-right{
@@ -248,7 +245,7 @@ section{ padding: 72px 0; }
 /* SOBRE */
 .sobre{
   padding-top: 0;
-  margin-top: -30px; /* +20% de subida */
+  margin-top: -18px;
 }
 
 .sobre-grid{
@@ -302,9 +299,17 @@ section{ padding: 72px 0; }
   letter-spacing:0;
   color:var(--wine);
   font-weight:400;
+
+  text-align:left;
 }
 
-.acc-label{ display:block; }
+.acc-label{
+  display:block;
+  flex:1;
+  min-width:0;
+  text-align:left;
+}
+
 .acc-prefix{ font-weight:700; }
 .acc-desc{ font-weight:400; }
 
@@ -339,7 +344,7 @@ section{ padding: 72px 0; }
   color:var(--text);
 }
 
-.acc-inner p{ margin:0 0 28px; }
+.acc-inner p{ margin:0 0 57.6px; }
 .acc-inner p:last-child{ margin-bottom:0; }
 
 /* CTA */
@@ -350,7 +355,7 @@ section{ padding: 72px 0; }
 }
 
 .cafe-title{
-  margin:0 0 18px;
+  margin:0 0 21px;
   font-size:60px;
   line-height:40px;
   font-weight:700;
@@ -464,3 +469,15 @@ section{ padding: 72px 0; }
 
   .footer-grid{
     grid-template-columns: 1fr;
+    text-align:left;
+  }
+
+  .footer-right{
+    justify-self:start;
+    text-align:left;
+  }
+
+  .logo-img{
+    height:96px;
+  }
+}
