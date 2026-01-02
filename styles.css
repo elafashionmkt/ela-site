@@ -247,7 +247,8 @@ section{ padding: 72px 0; }
 
 /* SOBRE */
 .sobre{
-  padding-top: 0; /* sobe o início do "sobre nós" para começar mais acima */
+  padding-top: 0;
+  margin-top: -30px; /* +20% de subida */
 }
 
 .sobre-grid{
@@ -355,7 +356,6 @@ section{ padding: 72px 0; }
   font-weight:700;
   text-align:right;
   color:var(--wine);
-
   max-width:520px;
 }
 
@@ -453,6 +453,10 @@ section{ padding: 72px 0; }
     max-width:none;
   }
 
+  .sobre{
+    margin-top: 0;
+  }
+
   .sobre-grid{
     grid-template-columns: 1fr;
     gap: 28px;
@@ -460,15 +464,3 @@ section{ padding: 72px 0; }
 
   .footer-grid{
     grid-template-columns: 1fr;
-    text-align:left;
-  }
-
-  .footer-right{
-    justify-self:start;
-    text-align:left;
-  }
-
-  .logo-img{
-    height:96px;
-  }
-}
