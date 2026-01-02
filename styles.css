@@ -14,7 +14,7 @@
   --line:#FFCCCC;
 
   --frame:1440px;     /* largura do frame desktop do Figma */
-  --logo-x:1000px;     /* X do Figma: início do logo (alinha à esquerda dos textos) */
+  --logo-x:990px;     /* X do Figma: início do logo (alinha à esquerda dos textos) */
 
   --title-gap: 18px; /* padrão do /02 */
 
