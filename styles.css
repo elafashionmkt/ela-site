@@ -500,7 +500,7 @@ section{ padding: 72px 0; }
 /* FORCE: tipografia do conteúdo aberto do acordeão */
 #accordion .acc-panel,
 #accordion .acc-panel *{
-  font-size: 18px !important;
+  font-size: 17px !important;
   line-height: 28.8px !important;
   letter-spacing: 0 !important;
 }
