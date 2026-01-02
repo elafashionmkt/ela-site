@@ -496,3 +496,16 @@ section{ padding: 72px 0; }
     height:96px;
   }
 }
+
+/* FORCE: tipografia do conteúdo aberto do acordeão */
+#accordion .acc-panel,
+#accordion .acc-panel *{
+  font-size: 18px !important;
+  line-height: 28.8px !important;
+  letter-spacing: 0 !important;
+}
+
+#accordion .acc-service strong{
+  font-weight: 700 !important;
+}
+
