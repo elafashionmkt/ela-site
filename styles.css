@@ -14,7 +14,7 @@
   --line:#FFCCCC;
 
   --frame:1440px;     /* largura do frame desktop do Figma */
-  --logo-x:918px;     /* X do Figma: início do logo (alinha à esquerda dos textos) */
+  --logo-x:935px;     /* X do Figma: início do logo (alinha à esquerda dos textos) */
 }
 
 *{ box-sizing:border-box; }
