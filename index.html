@@ -1,3 +1,4 @@
+<!-- index.html -->
 <!doctype html>
 <html lang="pt-br">
 <head>
@@ -14,11 +15,11 @@
 </head>
 
 <body>
-  <!-- HEADER (respiro branco + barra vinho) -->
+  <!-- HEADER (respiro branco + barra vinho sticky) -->
   <header class="header" role="banner">
     <div class="header-gap" aria-hidden="true"></div>
 
-    <div class="header-bar">
+    <div class="header-bar" id="header-bar">
       <div class="container header-content">
         <nav class="menu" aria-label="menu">
           <a class="link" href="#sobre" data-text="sobre nós">sobre nós</a>
@@ -26,21 +27,21 @@
           <a class="link" href="#cafe" data-text="vai um café?">vai um café?</a>
         </nav>
 
+        <!-- logo topo (mantém tamanho 150px e “sangria” via clip no box vinho) -->
+        <a class="logo-topo" href="#top" aria-label="voltar ao topo">
+          <img
+            src="assets/logo_ela_topo.svg"
+            data-fallback="assets/logo.svg"
+            alt="elã"
+            class="logo-img"
+          />
+        </a>
+
         <button class="hamburger" id="hamburger" type="button" aria-label="abrir menu" aria-controls="mobile-menu" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
       </div>
     </div>
-
-    <!-- logo topo: 150px, posicionado no desktop (x=918 / y=96) -->
-    <a class="logo-topo" href="#top" aria-label="voltar ao topo">
-      <img
-        src="assets/logo_ela_topo.svg"
-        data-fallback="assets/logo.svg"
-        alt="elã"
-        class="logo-img"
-      />
-    </a>
 
     <!-- MENU MOBILE -->
     <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
@@ -127,7 +128,7 @@
       </div>
     </section>
 
-    <!-- CTA /04  (alinhado à esquerda como /03, pedido #6) -->
+    <!-- CTA /04 -->
     <section id="cafe" class="cafe">
       <div class="container grid-2col">
         <div class="col-left">
@@ -148,7 +149,7 @@
     </section>
   </main>
 
-  <!-- FOOTER (grid 1fr auto 1fr, ícones à direita) -->
+  <!-- FOOTER -->
   <footer class="footer" role="contentinfo">
     <div class="container footer-grid">
       <nav class="footer-menu" aria-label="links do rodapé">
@@ -166,20 +167,18 @@
         />
       </div>
 
+      <!-- contatos alinhados à direita (sem ícones) -->
       <div class="footer-right">
         <a class="contact" href="https://www.instagram.com/elafashionmkt/" target="_blank" rel="noopener">
           <span class="contact-text" data-text="elafashionmkt">elafashionmkt</span>
-          <img src="assets/instagram.svg" alt="instagram" class="contact-ico" />
         </a>
 
         <a class="contact" href="https://wa.me/5522936182313" target="_blank" rel="noopener">
           <span class="contact-text" data-text="+55 22 93618-2313">+55 22 93618-2313</span>
-          <img src="assets/whatsapp.svg" alt="whatsapp" class="contact-ico" />
         </a>
 
         <a class="contact" href="mailto:contato@elafashionmkt.com.br">
           <span class="contact-text" data-text="contato@elafashionmkt.com.br">contato@elafashionmkt.com.br</span>
-          <img src="assets/e-mail.svg" data-fallback="assets/email.svg" alt="e-mail" class="contact-ico" />
         </a>
       </div>
     </div>
