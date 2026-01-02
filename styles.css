@@ -13,8 +13,8 @@
   --col-left:247px;   /* 120 + 247 = 367 */
   --line:#FFCCCC;
 
-  --frame:1440px;   /* largura do frame desktop do Figma */
-  --logo-x:918px;    /* X do Figma: início do logo */
+  --frame:1440px;     /* largura do frame desktop do Figma */
+  --logo-x:918px;     /* X do Figma: início do logo (alinha à esquerda dos textos) */
 }
 
 *{ box-sizing:border-box; }
@@ -80,7 +80,7 @@ a.btn{
   height:var(--bar-h);
   background:var(--wine);
   z-index:1000;
-  overflow:hidden; /* garante que o logo não “vaze” */
+  overflow:hidden; /* recorta o logo para “sangrar” dentro da faixa */
 }
 
 .header-content{
@@ -131,22 +131,25 @@ a.btn{
   .hamburger span{ transition:none; }
 }
 
-/* logo topo (dentro do box vinho; alinhado à coluna do texto no desktop) */
+/* logo topo:
+   - alinhado à esquerda na mesma coluna dos textos (X do Figma)
+   - centrado verticalmente na faixa para “sangrar” (overflow recorta)
+*/
 .logo-topo{
   position:absolute;
   left: calc(50% - (var(--frame) / 2) + var(--logo-x));
-  top: 0;
+  top: 50%;
+  transform: translateY(-50%);
   right:auto;
-  transform:none;
   display:flex;
-  align-items:flex-start;
+  align-items:center;
   justify-content:flex-start;
   height:auto;
   z-index:1;
 }
 
 .logo-img{
-  height:151px; /* conforme print (150.99px) */
+  height:151px; /* conforme Figma (150.99px) */
   width:auto;
 }
 
@@ -223,7 +226,7 @@ section{ padding: 72px 0; }
 /* HERO */
 .hero{
   padding-top: 73px;
-  padding-bottom: 72px; /* mantém o respiro padrão */
+  padding-bottom: 72px;
 }
 
 .hero-right{
@@ -249,7 +252,7 @@ section{ padding: 72px 0; }
   letter-spacing:0.05em;
 }
 
-/* SOBRE (ajuste: subir o bloco para o topo da foto encostar na linha ciano) */
+/* SOBRE */
 .sobre{
   margin-top:-36px;
 }
@@ -288,9 +291,9 @@ section{ padding: 72px 0; }
 
 .acc-btn{
   width:100%;
-  height:50.01px;                 /* altura entre as linhas */
+  height:50.01px;
   display:flex;
-  align-items:center;             /* texto “entre as linhas” */
+  align-items:center;
   justify-content:space-between;
   gap:18px;
 
@@ -300,13 +303,13 @@ section{ padding: 72px 0; }
   cursor:pointer;
 
   font-family:inherit;
-  font-size:20px;                 /* tipografia conforme Figma */
+  font-size:20px;
   line-height:28.8px;
   letter-spacing:0;
   color:var(--wine);
   font-weight:400;
 
-  text-align:left;                /* texto à esquerda */
+  text-align:left;
 }
 
 .acc-label{
@@ -352,7 +355,7 @@ section{ padding: 72px 0; }
 }
 
 .acc-service{
-  margin:0 0 57.6px;              /* “pula 2 parágrafos” entre blocos */
+  margin:0 0 57.6px;
 }
 
 .acc-service:last-child{
@@ -371,7 +374,7 @@ section{ padding: 72px 0; }
 }
 
 .cafe-title{
-  margin:0 0 21px;                /* +15% de respiro vs 18px */
+  margin:0 0 21px;
   font-size:60px;
   line-height:40px;
   font-weight:700;
@@ -448,7 +451,7 @@ section{ padding: 72px 0; }
 }
 
 /* =========================================================
-   RESPONSIVO (não quebrar desktop)
+   RESPONSIVO
 ========================================================= */
 @media (max-width: 980px){
   :root{
