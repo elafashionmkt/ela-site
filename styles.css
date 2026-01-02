@@ -348,7 +348,7 @@ section{ padding: 72px 0; }
 }
 
 .acc-service{
-  margin:0 0 57.6px;              /* “pula 2 parágrafos” entre blocos */
+  margin:0 0 30px;              /* “pula 1.5 parágrafos” entre blocos */
 }
 
 .acc-service:last-child{
