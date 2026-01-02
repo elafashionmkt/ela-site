@@ -15,7 +15,8 @@
 
   --frame:1440px;     /* largura do frame desktop do Figma */
   --logo-x:1000px;    /* X do Figma: início do logo */
-  --title-gap:18px;   /* padrão do /02 (sobre nós) */
+  --title-gap:18px;   /* gap “padrão” do /02 */
+  --head-row-h:110px; /* altura do bloco título+número (referência /02) */
 }
 
 *{ box-sizing:border-box; }
@@ -81,7 +82,7 @@ a.btn{
   height:var(--bar-h);
   background:var(--wine);
   z-index:1000;
-  overflow:hidden; /* recorta o logo para “sangrar” dentro da faixa */
+  overflow:hidden; /* recorta o logo dentro da faixa */
 }
 
 .header-content{
@@ -132,25 +133,20 @@ a.btn{
   .hamburger span{ transition:none; }
 }
 
-/* logo topo:
-   - alinhado à esquerda na mesma coluna dos textos (X do Figma)
-   - centrado verticalmente na faixa para “sangrar” (overflow recorta)
-*/
+/* logo topo (dentro do box vinho; alinhado pelo X do Figma) */
 .logo-topo{
   position:absolute;
   left: calc(50% - (var(--frame) / 2) + var(--logo-x));
   top: 50%;
   transform: translateY(-50%);
-  right:auto;
   display:flex;
   align-items:center;
   justify-content:flex-start;
-  height:auto;
   z-index:1;
 }
 
 .logo-img{
-  height:151px; /* conforme Figma (150.99px) */
+  height:151px; /* Figma (150.99px) */
   width:auto;
 }
 
@@ -206,6 +202,7 @@ section{ padding: 72px 0; }
 
 .sec-num{ width:110px; height:auto; }
 
+/* título padrão */
 .title{
   margin: 0 0 var(--title-gap);
   font-size:60px;
@@ -214,29 +211,27 @@ section{ padding: 72px 0; }
   color:var(--wine);
 }
 
+/* corpo */
 .copy{
   font-size:16px;
   line-height:25px;
   font-weight:400;
   letter-spacing:0.05em;
 }
-
 .copy p{ margin:0 0 16px; }
 .copy strong{ font-weight:700; }
 
-/* HERO */
+/* =========================================================
+   HERO (/01)
+========================================================= */
 .hero{
   padding-top: 73px;
   padding-bottom: 72px;
 }
 
-/* /01 alinhado como referência do Figma */
-.hero .col-left{
-  padding-top: 0;
-}
-.hero .sec-num{
-  margin-top: -6px;
-}
+/* alinhar /01 como referência */
+.hero .col-left{ padding-top: 0; }
+.hero .sec-num{ margin-top: -6px; }
 
 .hero-right{
   display:flex;
@@ -261,10 +256,10 @@ section{ padding: 72px 0; }
   letter-spacing:0.05em;
 }
 
-/* SOBRE */
-.sobre{
-  margin-top:-36px;
-}
+/* =========================================================
+   SOBRE (/02)
+========================================================= */
+.sobre{ margin-top:-36px; }
 
 .sobre-grid{
   display:grid;
@@ -275,26 +270,35 @@ section{ padding: 72px 0; }
 
 .sobre-img img{ width:100%; height:auto; }
 
+/* este bloco é a referência do espaçamento */
 .sobre-head{
   display:flex;
   align-items:flex-start;
   justify-content:space-between;
   gap:24px;
+
+  min-height: var(--head-row-h);
   margin-bottom: var(--title-gap);
 }
 
-.sobre-head .title{
-  margin-bottom:0; /* gap do /02 vem do wrapper */
-}
+.sobre-head .title{ margin-bottom:0; }
 
 .num-right{ width:110px; }
 
-/* ARQUITETURA */
-.arq-copy{ margin-bottom: 30px; }
+/* =========================================================
+   ARQUITETURA (/03) - igualar distância do /02
+========================================================= */
+/* cria o mesmo “bloco de cabeçalho” (título+número) do /02 */
+.arquitetura .col-right > .title{
+  min-height: var(--head-row-h);
+  margin-bottom: var(--title-gap);
+}
 
 /* =========================================================
    ACORDEÃO (ARQUITETURA DE SERVIÇOS)
 ========================================================= */
+.arq-copy{ margin-bottom: 30px; }
+
 .accordion{
   border-top: 1px solid var(--line);
   margin-top: 0;
@@ -367,19 +371,13 @@ section{ padding: 72px 0; }
   color:var(--text);
 }
 
-.acc-service{
-  margin:0 0 57.6px;
-}
+.acc-service{ margin:0 0 57.6px; }
+.acc-service:last-child{ margin-bottom:0; }
+.acc-service strong{ font-weight:700; }
 
-.acc-service:last-child{
-  margin-bottom:0;
-}
-
-.acc-service strong{
-  font-weight:700;
-}
-
-/* CTA */
+/* =========================================================
+   CAFÉ (/04) - igualar distância do /02
+========================================================= */
 .cafe-right{
   display:flex;
   flex-direction:column;
@@ -388,6 +386,8 @@ section{ padding: 72px 0; }
 
 .cafe-title{
   margin: 0 0 var(--title-gap);
+  min-height: var(--head-row-h);
+
   font-size:60px;
   line-height:40px;
   font-weight:700;
@@ -419,7 +419,9 @@ section{ padding: 72px 0; }
   filter:brightness(1.05);
 }
 
-/* FOOTER */
+/* =========================================================
+   FOOTER
+========================================================= */
 .footer{
   background: var(--wine);
   color:#fff;
@@ -467,9 +469,7 @@ section{ padding: 72px 0; }
    RESPONSIVO
 ========================================================= */
 @media (max-width: 980px){
-  :root{
-    --gutter: 24px;
-  }
+  :root{ --gutter: 24px; }
 
   .logo-topo{
     left:auto;
@@ -502,9 +502,7 @@ section{ padding: 72px 0; }
     width:auto;
   }
 
-  .sobre{
-    margin-top:0;
-  }
+  .sobre{ margin-top:0; }
 
   .sobre-grid{
     grid-template-columns: 1fr;
@@ -521,13 +519,13 @@ section{ padding: 72px 0; }
     text-align:left;
   }
 
-  .logo-img{
-    height:96px;
-  }
+  .logo-img{ height:96px; }
 
-  .hero .sec-num{
-    margin-top: 0;
-  }
+  .hero .sec-num{ margin-top: 0; }
+
+  .sobre-head{ min-height: 0; }
+  .arquitetura .col-right > .title{ min-height: 0; }
+  .cafe-title{ min-height: 0; }
 }
 
 /* FORCE: tipografia do conteúdo aberto do acordeão */
@@ -537,7 +535,6 @@ section{ padding: 72px 0; }
   line-height: 28.8px !important;
   letter-spacing: 0 !important;
 }
-
 #accordion .acc-service strong{
   font-weight: 700 !important;
 }
