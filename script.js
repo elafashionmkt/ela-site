@@ -1,6 +1,6 @@
 // script.js
 (() => {
-  // fallback para assets (logo topo/footer e email)
+  // fallback para assets (logo topo e footer)
   document.querySelectorAll("img[data-fallback]").forEach((img) => {
     img.addEventListener("error", () => {
       const fb = img.getAttribute("data-fallback");
@@ -8,7 +8,7 @@
     });
   });
 
-  // garante data-text em links de texto (para hover sem “pulo”)
+  // garante data-text em links de texto (para hover sem pulo)
   document.querySelectorAll("a:not(.btn)").forEach((a) => {
     if (a.classList.contains("logo-topo")) return;
     if (a.hasAttribute("data-text")) return;
@@ -30,6 +30,7 @@
   };
 
   const openMenu = () => {
+    if (!hamburger || !mobileMenu) return;
     positionMobileMenu();
     hamburger.classList.add("open");
     mobileMenu.classList.add("active");
@@ -38,16 +39,19 @@
   };
 
   const closeMenu = () => {
+    if (!hamburger || !mobileMenu) return;
     hamburger.classList.remove("open");
     mobileMenu.classList.remove("active");
     hamburger.setAttribute("aria-expanded", "false");
     mobileMenu.setAttribute("aria-hidden", "true");
   };
 
-  hamburger?.addEventListener("click", () => {
-    const isOpen = hamburger.classList.contains("open");
-    isOpen ? closeMenu() : openMenu();
-  });
+  if (hamburger) {
+    hamburger.addEventListener("click", () => {
+      const isOpen = hamburger.classList.contains("open");
+      isOpen ? closeMenu() : openMenu();
+    });
+  }
 
   mobileLinks.forEach((a) => a.addEventListener("click", closeMenu));
 
@@ -58,17 +62,21 @@
   window.addEventListener(
     "scroll",
     () => {
-      if (hamburger?.classList.contains("open")) positionMobileMenu();
+      if (hamburger && hamburger.classList.contains("open")) positionMobileMenu();
     },
     { passive: true }
   );
 
   window.addEventListener("resize", () => {
-    if (window.innerWidth > 768) closeMenu();
-    if (hamburger?.classList.contains("open")) positionMobileMenu();
+    if (hamburger && hamburger.classList.contains("open")) positionMobileMenu();
   });
 
-  // acordeão (multi-open) - inicia com TODOS fechados
+  // ao voltar para desktop/tablet, garantir menu fechado
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 768) closeMenu();
+  });
+
+  // acordeão (multi-open) inicia com TODOS fechados
   const DATA = [
     {
       etapa: "fundação",
@@ -138,13 +146,33 @@
   const root = document.getElementById("accordion");
   if (!root) return;
 
-  const esc = (s) =>
-    String(s)
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
+  const escMap = {
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#039;"
+  };
+
+  const esc = (s) => String(s).replace(/[&<>"']/g, (ch) => escMap[ch] || ch);
+
+  const syncOpenHeights = () => {
+    root.querySelectorAll(".acc-item").forEach((item) => {
+      const panel = item.querySelector(".acc-panel");
+      const btn = item.querySelector(".acc-btn");
+      if (!panel) return;
+
+      if (item.dataset.open === "true") {
+        panel.style.maxHeight = panel.scrollHeight + "px";
+        if (btn) btn.setAttribute("aria-expanded", "true");
+        panel.setAttribute("aria-hidden", "false");
+      } else {
+        panel.style.maxHeight = "0px";
+        if (btn) btn.setAttribute("aria-expanded", "false");
+        panel.setAttribute("aria-hidden", "true");
+      }
+    });
+  };
 
   const build = () => {
     const frag = document.createDocumentFragment();
@@ -211,24 +239,6 @@
 
     root.appendChild(frag);
     requestAnimationFrame(syncOpenHeights);
-  };
-
-  const syncOpenHeights = () => {
-    root.querySelectorAll(".acc-item").forEach((item) => {
-      const panel = item.querySelector(".acc-panel");
-      const btn = item.querySelector(".acc-btn");
-      if (!panel) return;
-
-      if (item.dataset.open === "true") {
-        panel.style.maxHeight = panel.scrollHeight + "px";
-        btn?.setAttribute("aria-expanded", "true");
-        panel.setAttribute("aria-hidden", "false");
-      } else {
-        panel.style.maxHeight = "0px";
-        btn?.setAttribute("aria-expanded", "false");
-        panel.setAttribute("aria-hidden", "true");
-      }
-    });
   };
 
   build();
