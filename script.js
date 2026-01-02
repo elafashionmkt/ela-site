@@ -1,47 +1,81 @@
-// whatsapp (botão do cta + link do footer usam o mesmo)
-const WHATS_NUMBER = "5522936182313"; // +55 22 93618-2313
-const WHATS_TEXT = encodeURIComponent("oi! quero agendar um café e conversar sobre a elã :)");
-const WHATS_URL = `https://wa.me/${WHATS_NUMBER}?text=${WHATS_TEXT}`;
+// script.js
+(function () {
+  const body = document.body;
 
-const whatsLink = document.getElementById("whatsLink");
-const ctaAgendar = document.getElementById("ctaAgendar");
-if (whatsLink) whatsLink.href = WHATS_URL;
-if (ctaAgendar) ctaAgendar.href = WHATS_URL;
+  // ---------- mobile menu ----------
+  const hamburger = document.querySelector(".hamburger");
+  const mobileMenu = document.getElementById("mobileMenu");
+  const mobileLinks = document.querySelectorAll(".mobile-link");
 
-// instagram
-const instagramLink = document.getElementById("instagramLink");
-if (instagramLink) instagramLink.href = "https://instagram.com/elafashionmkt";
+  function openMenu() {
+    if (!hamburger || !mobileMenu) return;
+    body.classList.add("menu-open");
+    mobileMenu.hidden = false;
+    hamburger.setAttribute("aria-expanded", "true");
+  }
 
-// hamburger: abre/fecha com animação leve
-const toggle = document.querySelector(".nav-toggle");
-const nav = document.querySelector(".nav");
+  function closeMenu() {
+    if (!hamburger || !mobileMenu) return;
+    body.classList.remove("menu-open");
+    hamburger.setAttribute("aria-expanded", "false");
+    window.setTimeout(() => {
+      if (!body.classList.contains("menu-open")) mobileMenu.hidden = true;
+    }, 250);
+  }
 
-function closeMenu(){
-  nav?.classList.remove("is-open");
-  toggle?.classList.remove("is-open");
-  toggle?.setAttribute("aria-expanded", "false");
-}
+  if (hamburger && mobileMenu) {
+    hamburger.addEventListener("click", () => {
+      const isOpen = body.classList.contains("menu-open");
+      isOpen ? closeMenu() : openMenu();
+    });
 
-if (toggle && nav) {
-  toggle.addEventListener("click", () => {
-    const open = nav.classList.toggle("is-open");
-    toggle.classList.toggle("is-open", open);
-    toggle.setAttribute("aria-expanded", String(open));
+    mobileMenu.addEventListener("click", (e) => {
+      if (e.target === mobileMenu) closeMenu();
+    });
+
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeMenu();
+    });
+
+    mobileLinks.forEach((a) => a.addEventListener("click", () => closeMenu()));
+  }
+
+  // ---------- accordion (abre vários) ----------
+  const items = document.querySelectorAll("[data-acc]");
+
+  function setPanelHeight(panel, open) {
+    panel.style.overflow = "hidden";
+    panel.style.transition = "max-height 220ms ease";
+    panel.style.maxHeight = open ? panel.scrollHeight + "px" : "0px";
+  }
+
+  items.forEach((item) => {
+    const trigger = item.querySelector(".accordion-trigger");
+    const panel = item.querySelector(".accordion-panel");
+    if (!trigger || !panel) return;
+
+    panel.hidden = false; // anima via max-height
+    panel.setAttribute("aria-hidden", "true");
+    setPanelHeight(panel, false);
+
+    trigger.addEventListener("click", () => {
+      const isOpen = item.classList.contains("open");
+
+      if (isOpen) {
+        item.classList.remove("open");
+        trigger.setAttribute("aria-expanded", "false");
+        panel.setAttribute("aria-hidden", "true");
+        setPanelHeight(panel, false);
+      } else {
+        item.classList.add("open");
+        trigger.setAttribute("aria-expanded", "true");
+        panel.setAttribute("aria-hidden", "false");
+        setPanelHeight(panel, true);
+      }
+    });
+
+    window.addEventListener("resize", () => {
+      setPanelHeight(panel, item.classList.contains("open"));
+    });
   });
-
-  // fecha ao clicar em link
-  nav.querySelectorAll("a").forEach(a => {
-    a.addEventListener("click", closeMenu);
-  });
-
-  // fecha ao clicar fora
-  document.addEventListener("click", (e) => {
-    const t = e.target;
-    if (!t) return;
-    const clickedInside = nav.contains(t) || toggle.contains(t);
-    if (!clickedInside) closeMenu();
-  });
-}
-
-// accordion: abre vários (sem lógica de fechar outros)
-// (não precisa JS, <details> já faz)
+})();
