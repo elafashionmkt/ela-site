@@ -231,7 +231,7 @@ section{ padding: 72px 0; }
 
 /* alinhar /01 como referência */
 .hero .col-left{ padding-top: 0; }
-.hero .sec-num{ margin-top: -6px; }
+.hero .sec-num{ margin-top: 10px; }
 
 .hero-right{
   display:flex;
