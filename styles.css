@@ -13,7 +13,7 @@ index 4a7fd03e77349c472e982af4d5eb8cd23c2ff877..b73008ea740a46bd935901827669a394
    --line:#FFCCCC;
  
    --frame:1440px;     /* largura do frame desktop do Figma */
-   --logo-x:1000px;    /* X do Figma: início do logo */
+   --logo-x:1150px;    /* X do Figma: início do logo */
    --title-gap:18px;   /* gap “padrão” do /02 */
    --head-row-h:110px; /* altura do bloco título+número (referência /02) */
  }
