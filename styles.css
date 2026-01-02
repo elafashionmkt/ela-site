@@ -1,3 +1,9 @@
+ (cd "$(git rev-parse --show-toplevel)" && git apply --3way <<'EOF' 
+diff --git a/styles.css b/styles.css
+index 4a7fd03e77349c472e982af4d5eb8cd23c2ff877..a7514e4e979411ff5733b9c7a2fa3efb4ba6923a 100644
+--- a/styles.css
++++ b/styles.css
+@@ -8,50 +8,51 @@
    --container:1280px;
    --gutter:120px;
  
@@ -49,7 +55,7 @@
    content: attr(data-text);
    font-weight:700;
    height:0;
-@@ -212,72 +213,88 @@ section{
+@@ -212,72 +213,81 @@ section{
    font-size:60px;
    line-height:40px;
    font-weight:700;
@@ -79,7 +85,8 @@
 +.hero-grid{
    grid-template-columns: 1fr auto;
    column-gap: 158px;
-   align-items:start;
+-  align-items:start;
++  align-items:flex-start;
  }
  
  .hero .col-left{
@@ -108,13 +115,6 @@
    flex-direction:column;
    align-items:flex-start;
 +  align-self:flex-start;
-+}
-+
-+@media (min-width: 1025px){
-+  .hero-right{
-+    position:relative;
-+    top:-4px;
-+  }
  }
  
  .hero-title{
@@ -140,7 +140,7 @@
     SOBRE (/02)
  ========================================================= */
  .sobre{ margin-top:-36px; }
-@@ -345,50 +362,51 @@ section{
+@@ -345,50 +355,51 @@ section{
    letter-spacing:0;
    color:var(--wine);
    font-weight:400;
@@ -192,7 +192,7 @@
  }
  
  .acc-service{ margin:0 0 57.6px; }
-@@ -481,185 +499,193 @@ section{
+@@ -481,185 +492,193 @@ section{
    text-align:right;
    font-size:20px;
    line-height:25px;
@@ -420,7 +420,7 @@
  
    .footer-grid{
      grid-template-columns: 1fr;
-@@ -667,52 +693,52 @@ section{
+@@ -667,52 +686,52 @@ section{
      align-items:start;
    }
  
