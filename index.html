@@ -1,294 +1,260 @@
-<!-- ELÃ • CLEAN BUILD -->
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>elã — elafashionmkt</title>
+  <title>elã | fashion mkt</title>
+  <meta name="description" content="marcas não precisam de mais posts. precisam de direção." />
 
-  <!-- Fonts (Google) -->
+  <!-- inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,200..900;1,9..144,200..900&family=Inter:wght@100..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
+  <!-- header -->
   <header class="site-header" id="topo">
     <div class="container header-inner">
-      <a class="brand" href="#topo" aria-label="Voltar ao topo">
-        <img class="brand-logo" src="image/Frame_2008_85.png" alt="elã" />
-      </a>
+      <button class="nav-toggle" aria-label="abrir menu" aria-expanded="false" aria-controls="nav">
+        <span></span><span></span><span></span>
+      </button>
 
-      <nav class="nav" aria-label="Navegação principal">
-        <a class="nav-link is-active" href="#sobre">sobre</a>
-        <a class="nav-link" href="#modulos">módulos de serviço</a>
-        <a class="nav-link" href="#cafe">vai um café?</a>
+      <nav class="nav" id="nav" aria-label="menu principal">
+        <a class="nav-link" href="#sobre">sobre nós</a>
+        <a class="nav-link" href="#arquitetura">arquitetura de serviços</a>
+        <a class="nav-link" href="#cta">vai um café?</a>
       </nav>
+
+      <a class="brand" href="#topo" aria-label="voltar ao topo">
+        <img src="assets/logo.svg" alt="elã" />
+      </a>
     </div>
   </header>
 
   <main>
-    <!-- SOBRE -->
-    <section id="sobre" class="section section-hero">
+    <!-- hero -->
+    <section class="section section-hero" id="inicio">
       <div class="container hero-grid">
-        <div class="hero-copy">
-          <h1 class="h1 serif italic">sobre nós</h1>
+        <div class="hero-left">
+          <img class="section-mark" src="assets/01.svg" alt="/01" />
+        </div>
 
-          <p class="p strong">
+        <div class="hero-right">
+          <h1 class="hero-title">
+            marcas <strong>não precisam</strong> de mais<br />
+            posts. <strong>precisam de direção.</strong>
+          </h1>
+          <p class="hero-sub">
+            estratégia de marca, conteúdo e<br />
+            influência com intenção.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- sobre -->
+    <section class="section section-sobre" id="sobre">
+      <div class="container sobre-grid">
+        <div class="sobre-media">
+          <img class="sobre-img" src="assets/ela-final.jpg" alt="moodboard editorial elã" />
+        </div>
+
+        <div class="sobre-text">
+          <div class="sobre-head">
+            <h2 class="section-title">sobre nós</h2>
+            <img class="section-mark small" src="assets/02.svg" alt="/02" />
+          </div>
+
+          <p>
             somos um estúdio que trabalha marca como ecossistema, não como ação isolada.
+            a gente começa pelo que vem antes do conteúdo: <strong>posicionamento e direção.</strong>
           </p>
-
-          <p class="p">
-            <span class="strong">a gente começa pelo que vem antes do conteúdo</span>: posicionamento e direção.
-            entendemos o momento da marca, o que ela sustenta hoje, o que precisa ser ajustado e quais escolhas vão deixar tudo mais coerente.
+          <p>
+            entendemos o momento da marca, o que ela sustenta hoje, o que precisa ser ajustado
+            e quais escolhas vão deixar tudo mais coerente.
           </p>
-
-          <p class="p">
-            atuamos a partir do <span class="strong">posicionamento</span>, da <span class="strong">narrativa</span> e da <span class="strong">imagem</span>,
-            conectando números pra guiar e feeling pra criar. isso vira direção criativa, editorial, social e influência com o mesmo norte:
-            <span class="strong">consistência no tempo</span>.
+          <p>
+            atuamos a partir do posicionamento, da narrativa e da imagem, conectando números pra guiar
+            e feeling pra criar.
           </p>
-        </div>
-
-        <div class="hero-media">
-          <img class="img rounded hero-img" src="image/fcdfcf5d6f69671f1750041cf7baf29baa683655.png" alt="referências e recortes do processo" />
+          <p>
+            isso vira direção criativa, editorial, social e influência com o mesmo norte:
+            <strong>consistência no tempo.</strong>
+          </p>
         </div>
       </div>
     </section>
 
-    <!-- MANIFESTO / METODOLOGIA + ARQUITETURA -->
-    <section class="section section-manifesto" aria-label="metodologia e arquitetura">
-      <div class="container manifesto-grid">
-        <div class="manifesto-left">
-          <h2 class="h2">
-            marcas precisam<br>
-            de <span class="serif italic">um norte</span> que<br>
-            vem <span class="serif italic">antes</span><br>
-            do <span class="serif italic">conteúdo</span>
-          </h2>
-
-          <div class="micro">
-            <p class="micro-title strong">metodologia é a forma como a gente dá direção</p>
-            <p class="micro-text">
-              direção: começamos lendo o que a marca sustenta hoje: produto, imagem, discurso e números.
-            </p>
-
-            <p class="micro-text">
-              definimos o norte e traduzimos isso em escolhas claras: o que dizer, como dizer e onde aparecer.
-              por fim, organizamos o calendário e as prioridades para que cada ação some no mesmo sentido: consistência no tempo.
-            </p>
-          </div>
-        </div>
-
-        <div class="manifesto-right">
-          <p class="p strong manifesto-paragraph">
-            módulos de serviço são ativados como peças de uma arquitetura: diagnóstico e posicionamento, direção criativa e editorial,
-            social e conteúdo, influência e relações, lançamentos e acompanhamento de performance. não é um pacote engessado,
-            é um sistema que se adapta ao seu momento e ao que a marca precisa sustentar agora.
-          </p>
-
-          <p class="p manifesto-paragraph">
-            a gente começa pelo essencial, define prioridades e só então expande para execução contínua.
-            cada módulo conversa com o outro para evitar ações soltas: o que nasce no posicionamento vira direção,
-            que vira conteúdo, que vira influência e presença, com consistência.
-          </p>
-
-          <p class="p manifesto-paragraph">
-            o acompanhamento entra como bússola: <span class="strong">números pra guiar</span>, <span class="strong">feeling pra criar</span>.
-            rotina de alinhamento, aprovações objetivas e ajustes finos mantêm o norte sem perder leveza.
-          </p>
-        </div>
-      </div>
-
+    <!-- arquitetura -->
+    <section class="section section-arquitetura" id="arquitetura">
       <div class="container">
-        <div class="divider" aria-hidden="true"></div>
+        <div class="section-head">
+          <img class="section-mark" src="assets/03.svg" alt="/03" />
+          <h2 class="section-title">arquitetura de serviços</h2>
+        </div>
+
+        <div class="section-body">
+          <p>
+            nossa metodologia é a forma como damos direção. começamos lendo o que a marca sustenta hoje
+            para definir um norte e transformá-lo em escolhas claras: o que dizer, como dizer e onde aparecer.
+            a partir disso, organizamos prioridades e calendário para construir consistência no tempo.
+          </p>
+          <p>
+            os módulos entram como peças de uma arquitetura — não é um pacote engessado, é um sistema
+            que se adapta ao seu momento, conectando posicionamento, direção e execução para evitar ações soltas.
+          </p>
+          <p class="muted">
+            o acompanhamento funciona como bússola: <strong>números pra guiar, feeling pra criar.</strong>
+          </p>
+        </div>
+
+        <!-- accordion (baseado no seu csv) -->
+        <div class="accordion">
+          <!-- fundação -->
+          <details class="acc-item">
+            <summary class="acc-summary">
+              <span class="acc-title">
+                <strong>fundação</strong>: o que organiza a marca por dentro e define direção
+              </span>
+              <span class="acc-icon" aria-hidden="true"></span>
+            </summary>
+
+            <div class="acc-content">
+              <p class="acc-service">
+                <strong>planejamento estratégico de comunicação</strong>:
+                estruturamos o plano do período a partir de uma leitura profunda da marca, do produto, do discurso e dos números.
+                definimos pilares, mensagens e prioridades que dão direção e consistência ao que a marca comunica.
+              </p>
+              <p class="acc-service">
+                <strong>calendário de campanhas e lançamentos</strong>:
+                montamos um calendário macro que organiza lançamentos, campanhas e sazonalidades,
+                alinhando comunicação e vendas para evitar ações isoladas e garantir coerência ao longo do tempo.
+              </p>
+            </div>
+          </details>
+
+          <!-- desejo -->
+          <details class="acc-item">
+            <summary class="acc-summary">
+              <span class="acc-title">
+                <strong>desejo</strong>: o que constrói imagem, linguagem e vontade de pertencer
+              </span>
+              <span class="acc-icon" aria-hidden="true"></span>
+            </summary>
+
+            <div class="acc-content">
+              <p class="acc-service">
+                <strong>direção criativa e produção executiva</strong>:
+                traduzimos o norte em conceito e direção: linguagem visual, referências, casting, styling e produção.
+                garantimos execução fiel e uma logística que sustenta a estética sem ruído.
+              </p>
+              <p class="acc-service">
+                <strong>social media e editorial de conteúdo</strong>:
+                definimos a linha editorial e a presença da marca nas redes: pauta, formatos e ritmo.
+                do feed aos detalhes, construímos consistência estética e narrativa no tempo.
+              </p>
+              <p class="acc-service">
+                <strong>produção de conteúdo em foto e vídeo</strong>:
+                criamos e dirigimos foto e vídeo com intenção: conteúdos para campanhas e rotina que humanizam a marca
+                e sustentam seu universo visual de forma contínua.
+              </p>
+              <p class="acc-service">
+                <strong>marketing sensorial</strong>:
+                desenhamos a experiência da marca nos pontos de contato físicos: embalagem, texto, materiais, loja e envio —
+                tudo coerente com o dna e a percepção de valor.
+              </p>
+            </div>
+          </details>
+
+          <!-- relacionamento -->
+          <details class="acc-item">
+            <summary class="acc-summary">
+              <span class="acc-title">
+                <strong>relacionamento</strong>: o que coloca a marca em circulação com contexto e parceria
+              </span>
+              <span class="acc-icon" aria-hidden="true"></span>
+            </summary>
+
+            <div class="acc-content">
+              <p class="acc-service">
+                <strong>marketing de influência</strong>:
+                mapeamos, prospectamos e gerimos influenciadoras com critério,
+                cuidando de acordos, entregas e acompanhamento, sempre orientados por posicionamento e resultado.
+              </p>
+              <p class="acc-service">
+                <strong>gestão de collabs entre marcas</strong>:
+                estruturamos collabs com marcas complementares, da proposta à execução,
+                criando valor simbólico, contexto e alcance com sentido.
+              </p>
+              <p class="acc-service">
+                <strong>ativações e eventos de experiência</strong>:
+                planejamos e produzimos ativações, lançamentos e encontros que materializam a marca
+                e geram conteúdo, relacionamento e repercussão.
+              </p>
+            </div>
+          </details>
+        </div>
       </div>
     </section>
 
-    <!-- MÓDULOS DE SERVIÇO -->
-    <section id="modulos" class="section section-modules">
-      <div class="container modules-grid">
-        <div class="modules-left">
-          <h2 class="h1 serif italic modules-title">módulos de serviço</h2>
-
-          <p class="p">
-            por aqui, os <span class="strong">serviços não são escolhas soltas</span>. eles funcionam como um ecossistema, porque
-            <span class="strong">uma etapa sustenta a outra</span>. quando a base não é sólida, o conteúdo vira esforço demais para pouco retorno.
-            quando a <span class="strong">direção está clara</span>, tudo fica mais simples de decidir, produzir e <span class="strong">repetir com consistência</span>.
-          </p>
-
-          <p class="p">
-            é por isso que a gente não trabalha com pacote pronto.
-            <span class="strong">cada proposta nasce de uma leitura do seu momento de marca</span>.
-            o que já existe, o que está faltando, o que precisa ser ajustado antes de crescer.
-          </p>
-
-          <p class="p">
-            a partir daí, <span class="strong">montamos um recorte sob medida</span>, com prioridade, ritmo e um plano que caiba na rotina real da marca.
-            sem excesso e promessas irreais.
-          </p>
-
-          <p class="big-phrase serif">
-            consistência<br>
-            não acontece<br>
-            <span class="italic">por acaso</span>
-          </p>
-
-          <!-- REMOVIDO: foto grande do layout (a que você marcou com X) -->
-        </div>
-
-        <div class="modules-right">
-          <div class="accordion" aria-label="módulos">
-            <div class="accordion-item is-open">
-              <button class="accordion-header" type="button" aria-expanded="true">
-                <span class="accordion-title"><span class="strong">fundação</span>: o que organiza a marca por dentro e define direção</span>
-              </button>
-              <div class="accordion-content">
-                <ul class="service-list">
-                  <li>planejamento de comunicação</li>
-                  <li>planejamento comercial</li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="accordion-item">
-              <button class="accordion-header" type="button" aria-expanded="false">
-                <span class="accordion-title"><span class="strong">desejo</span>: o que constrói imagem, linguagem e vontade de pertencer</span>
-              </button>
-              <div class="accordion-content">
-                <ul class="service-list">
-                  <li>direção criativa e direção de arte</li>
-                  <li>produção executiva</li>
-                  <li>social media e editorial de conteúdo</li>
-                  <li>produção de conteúdo audiovisual</li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="accordion-item">
-              <button class="accordion-header" type="button" aria-expanded="false">
-                <span class="accordion-title"><span class="strong">alcance</span>: o que coloca a marca em circulação com contexto</span>
-              </button>
-              <div class="accordion-content">
-                <ul class="service-list">
-                  <li>marketing de influência</li>
-                  <li>relações públicas</li>
-                  <li>colaborações entre marcas</li>
-                  <li>ativações e experiências de marca</li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="accordion-item">
-              <button class="accordion-header" type="button" aria-expanded="false">
-                <span class="accordion-title"><span class="strong">decisão</span>: o que organiza criativos para guiar a decisão de compra</span>
-              </button>
-              <div class="accordion-content">
-                <ul class="service-list">
-                  <li>plano de criativos e conteúdo para performance</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div class="modules-notes">
-            <p class="p small">
-              os módulos estão organizados por etapa. fundação, desejo, alcance e decisão. você não precisa fazer tudo pra começar.
-              o ponto de partida depende do que está travando hoje.
-            </p>
-
-            <p class="p small">
-              faremos a leitura do que vem primeiro, do que constrói desejo, do que amplia com consistência e do que melhora a decisão.
-              nós ajudaremos a conectar as frentes para manter uma linha única do conceito ao dia a dia.
-            </p>
-
-            <p class="p small">
-              você não precisa escolher sozinho. nós indicaremos os módulos que sua empresa precisa agora.
-              e a cada rodada do projeto, eles serão ajustados ao momento da marca, sem excesso e sem improviso.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div class="container">
-        <div class="divider" aria-hidden="true"></div>
-      </div>
-    </section>
-
-    <!-- CTA -->
-    <section id="cafe" class="section section-cta">
+    <!-- cta -->
+    <section class="section section-cta" id="cta">
       <div class="container cta-grid">
-        <div class="cta-left">
-          <h2 class="h1 serif italic cta-title">vamos tomar um café?</h2>
-
-          <p class="p">
-            a conversa começa simples. <span class="strong">um café ajuda</span>, mas <span class="strong">a tela também resolve</span>.
-            nós abrimos espaço para ouvir, entender o momento da sua marca e pensar nos <span class="strong">próximos passos</span> com clareza.
-          </p>
-
-          <a class="btn" target="_blank" rel="noopener"
-             href="https://wa.me/5522936182313?text=Oi%2C%20eu%20vim%20do%20site!%20Gostaria%20de%20saber%20mais%20sobre%20voc%C3%AAs!">
-            marcar conversa
-          </a>
+        <div class="cta-head">
+          <h2 class="cta-title">vamos tomar um café?</h2>
+          <img class="section-mark" src="assets/04.svg" alt="/04" />
         </div>
 
-        <div class="cta-right">
-          <a class="ig" href="https://instagram.com/elafashionmkt" target="_blank" rel="noopener">
-            <img class="ig-icon" src="image/Frame_18_10.png" alt="" aria-hidden="true" />
-            <span>elafashionmkt</span>
-          </a>
-        </div>
+        <p class="cta-text">
+          um convite simples pra conversar sobre a sua marca, entender o momento e pensar juntos os próximos passos.
+        </p>
+        <p class="cta-text strong">sem roteiro engessado, sem pressão.</p>
+
+        <!-- sem efeito hover (css mantém estático) -->
+        <a class="cta-button" id="ctaAgendar" href="#" aria-label="agendar no whatsapp">agendar</a>
       </div>
     </section>
   </main>
 
-  <script>
-    // Accordion: abre um por vez
-    const items = Array.from(document.querySelectorAll('.accordion-item'));
+  <!-- footer -->
+  <footer class="site-footer" id="contato">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <img class="footer-logo" src="assets/logo.svg" alt="elã" />
+      </div>
 
-    function closeItem(item) {
-      item.classList.remove('is-open');
-      const btn = item.querySelector('.accordion-header');
-      const content = item.querySelector('.accordion-content');
-      if (btn) btn.setAttribute('aria-expanded', 'false');
-      if (content) content.style.maxHeight = '0px';
-    }
+      <div class="footer-links">
+        <a class="footer-link" href="#sobre">sobre nós</a>
+        <a class="footer-link" href="#arquitetura">arquitetura de serviços</a>
+        <a class="footer-link" href="#cta">agende um café</a>
+      </div>
 
-    function openItem(item) {
-      item.classList.add('is-open');
-      const btn = item.querySelector('.accordion-header');
-      const content = item.querySelector('.accordion-content');
-      if (btn) btn.setAttribute('aria-expanded', 'true');
-      if (content) content.style.maxHeight = content.scrollHeight + 'px';
-    }
+      <div class="footer-contact">
+        <a class="footer-contact-row" id="instagramLink" href="#" target="_blank" rel="noopener">
+          <span>elafashionmkt</span>
+          <img src="assets/instagram.svg" alt="" />
+        </a>
 
-    // Inicializa alturas
-    items.forEach((item) => {
-      const content = item.querySelector('.accordion-content');
-      if (!content) return;
-      content.style.maxHeight = item.classList.contains('is-open') ? (content.scrollHeight + 'px') : '0px';
-    });
+        <a class="footer-contact-row" id="whatsLink" href="#" target="_blank" rel="noopener">
+          <span>+55 22 93618-2313</span>
+          <img src="assets/whatsapp.svg" alt="" />
+        </a>
 
-    items.forEach((item) => {
-      const header = item.querySelector('.accordion-header');
-      if (!header) return;
+        <a class="footer-contact-row" href="mailto:contato@elafashionmkt.com.br">
+          <span>contato@elafashionmkt.com.br</span>
+          <img src="assets/e-mail.svg" alt="" />
+        </a>
+      </div>
+    </div>
 
-      header.addEventListener('click', () => {
-        const isOpen = item.classList.contains('is-open');
-        items.forEach(closeItem);
-        if (!isOpen) openItem(item);
-      });
-    });
+    <div class="container footer-bottom">
+      <span>© elã 2026. todos os direitos reservados.</span>
+    </div>
+  </footer>
 
-    window.addEventListener('resize', () => {
-      items.forEach((item) => {
-        const content = item.querySelector('.accordion-content');
-        if (!content) return;
-        content.style.maxHeight = item.classList.contains('is-open') ? (content.scrollHeight + 'px') : '0px';
-      });
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
