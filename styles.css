@@ -12,6 +12,10 @@
 
   --col-left:247px;   /* 120 + 247 = 367 */
   --line:#FFCCCC;
+
+    --frame: 1440px;      /* largura do frame do Figma (desktop) */
+  --logo-x: 918px;      /* X do Figma: onde começa o logo */
+
 }
 
 *{ box-sizing:border-box; }
@@ -131,13 +135,19 @@ a.btn{
 /* logo topo (dentro do box vinho; mantém alinhamento horizontal pelo gutter) */
 .logo-topo{
   position:absolute;
-  right:var(--gutter);
-  top:50%;
-  transform:translateY(-50%);
+
+  /* alinha o canto ESQUERDO do logo no X do Figma */
+  left: calc(50% - (var(--frame) / 2) + var(--logo-x));
+  right: auto;
+
+  /* alinha o topo do logo no Y do Figma */
+  top: 96px;
+
+  transform:none;
   display:flex;
-  align-items:center;
-  justify-content:center;
-  height:100%;
+  align-items:flex-start;
+  justify-content:flex-start;
+  height:auto;
   z-index:1;
 }
 
