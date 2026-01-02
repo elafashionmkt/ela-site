@@ -1,182 +1,160 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>elã | fashion mkt</title>
-  <meta name="description" content="estratégia de marca, conteúdo e influência com intenção." />
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ela Fashion Marketing</title>
+  <!-- Fonte Inter do Google Fonts (pesos 300,400,500,700) -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="styles.css" />
+  <!-- Arquivo de estilos externo -->
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-  <!-- header fixo -->
-  <header class="site-header" role="banner">
-    <div class="container header-inner">
-      <nav class="nav-desktop" aria-label="menu">
-        <a class="nav-link" href="#sobre"><span class="stable-bold" data-text="sobre nós">sobre nós</span></a>
-        <a class="nav-link" href="#arquitetura"><span class="stable-bold" data-text="arquitetura de serviços">arquitetura de serviços</span></a>
-        <a class="nav-link" href="#cafe"><span class="stable-bold" data-text="vai um café?">vai um café?</span></a>
+  <!-- Cabeçalho fixo com menu -->
+  <header class="header">
+    <div class="container header-content">
+      <!-- Logo topo (para fundo vinho, provavelmente versão branca do logo) -->
+      <a href="#" class="logo"><img src="assets/logo_ela_topo.svg" alt="Logomarca Elã Fashion Marketing"></a>
+      <!-- Menu de navegação desktop -->
+      <nav class="menu">
+        <a href="#sobre" data-text="sobre nós">sobre nós</a>
+        <a href="#arquitetura" data-text="arquitetura de serviços">arquitetura de serviços</a>
+        <a href="#cafe" data-text="vai um café?">vai um café?</a>
       </nav>
-
-      <button class="hamburger" type="button"
-        aria-label="abrir menu"
-        aria-controls="mobile-menu"
-        aria-expanded="false">
-        <span class="hamburger-lines" aria-hidden="true"></span>
-      </button>
-
-      <!-- logo grande à direita (recortado pela barra) -->
-      <a class="brand" href="#top" aria-label="voltar ao topo">
-        <img src="assets/logo.svg" alt="elã" class="brand-logo invert-on-wine" />
-      </a>
-    </div>
-
-    <!-- menu mobile -->
-    <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
-      <nav class="mobile-nav" aria-label="menu mobile">
-        <a class="nav-link mobile-link" href="#sobre"><span class="stable-bold" data-text="sobre nós">sobre nós</span></a>
-        <a class="nav-link mobile-link" href="#arquitetura"><span class="stable-bold" data-text="arquitetura de serviços">arquitetura de serviços</span></a>
-        <a class="nav-link mobile-link" href="#cafe"><span class="stable-bold" data-text="vai um café?">vai um café?</span></a>
-      </nav>
+      <!-- Ícone de menu hamburger (visível em mobile) -->
+      <div class="hamburger" id="hamburger">
+        <span></span><span></span><span></span>
+      </div>
     </div>
   </header>
 
-  <main id="top">
+  <!-- Seção Hero /01 -->
+  <section class="hero">
+    <div class="container">
+      <!-- Número seccional decorativo /01 -->
+      <img src="assets/01.svg" alt="01" class="section-number section-number-left">
+      <h1 class="hero-title">
+        marcas não precisam de mais<br>posts. precisam de direção.
+      </h1>
+      <p class="hero-subtitle">
+        estratégia de marca, conteúdo e influência com intenção.
+      </p>
+    </div>
+  </section>
 
-    <!-- hero /01 -->
-    <section class="section hero" id="hero">
-      <div class="container section-grid">
-        <div class="section-col-number">
-          <img src="assets/01.svg" alt="/01" class="section-number" />
-        </div>
-
-        <div class="section-col-content hero-content">
-          <h1 class="hero-title">
-            marcas <strong>não precisam</strong> de mais<br>
-            posts. <strong>precisam</strong> de direção.
-          </h1>
-
-          <p class="hero-sub">
-            estratégia de marca, conteúdo e<br>
-            influência com intenção.
-          </p>
-        </div>
+  <!-- Seção Sobre Nós /02 -->
+  <section id="sobre" class="sobre-nos">
+    <div class="container sobre-content">
+      <!-- Imagem ilustrativa (moodboard) à esquerda -->
+      <div class="sobre-image">
+        <img src="assets/moodboard.jpg" alt="Moodboard representando o universo da marca">
       </div>
-    </section>
+      <!-- Texto sobre nós à direita -->
+      <div class="sobre-texto">
+        <img src="assets/02.svg" alt="02" class="section-number section-number-right">
+        <h2>sobre nós</h2>
+        <p>somos um estúdio que trabalha marca como ecossistema, não como ação isolada. a gente começa pelo que vem antes do conteúdo: posicionamento e direção.</p>
+        <p>entendemos o momento da marca, o que ela sustenta hoje, o que precisa ser ajustado e quais escolhas vão deixar tudo mais coerente.</p>
+        <p>atuamos a partir do posicionamento, da narrativa e da imagem, conectando números pra guiar e feeling pra criar.</p>
+        <p>isso vira direção criativa, editorial, social e influência com o mesmo norte: consistência no tempo.</p>
+      </div>
+    </div>
+  </section>
 
-    <!-- sobre /02 -->
-    <section class="section about" id="sobre">
-      <div class="container about-grid">
-        <div class="about-image">
-          <img src="assets/moodboard.jpg" alt="moodboard" loading="lazy">
-        </div>
-
-        <div class="about-copy">
-          <div class="about-head">
-            <h2 class="section-title">sobre nós</h2>
-            <img src="assets/02.svg" alt="/02" class="section-number small" />
+  <!-- Seção Arquitetura de Serviços /03 -->
+  <section id="arquitetura" class="arquitetura-servicos">
+    <div class="container">
+      <img src="assets/03.svg" alt="03" class="section-number section-number-left">
+      <h2>arquitetura de serviços</h2>
+      <!-- Texto introdutório da seção -->
+      <p>nossa metodologia é a forma como damos direção, começamos lendo o que a marca sustenta hoje para definir um norte e transformá-lo em escolhas claras: o que dizer, como dizer e onde aparecer. a partir disso, organizamos prioridades e calendário para construir consistência no tempo.</p>
+      <p>os módulos entram como peças de uma arquitetura. diagnóstico e posicionamento, direção criativa e editorial, social e conteúdo, influência e relações e lançamentos. não é um pacote engessado, é um sistema que se adapta ao seu momento, conectando posicionamento, direção e execução para evitar ações isoladas.</p>
+      
+      <!-- Accordion de módulos/serviços -->
+      <div class="accordion">
+        <!-- Módulo 1: fundação -->
+        <div class="accordion-item">
+          <button class="accordion-header" data-text="fundação: o que organiza a marca por dentro e define direção">
+            fundação: o que organiza a marca por dentro e define direção
+          </button>
+          <div class="accordion-panel">
+            <p><strong>planejamento estratégico de comunicação:</strong> estruturamos o plano do período a partir de uma leitura profunda da marca, do produto, do discurso e dos números. definimos pilares, mensagens e prioridades que dão direção e consistência ao que a marca comunica.</p>
+            <p><strong>calendário de campanhas e lançamentos:</strong> montamos um calendário macro que organiza lançamentos, campanhas e sazonalidades, alinhando comunicação e vendas para evitar ações isoladas e garantir coerência ao longo do tempo.</p>
           </div>
-
-          <div class="rich-text">
-            <p><strong>somos um estúdio que trabalha marca como ecossistema</strong>, não como ação isolada.</p>
-            <p>a gente começa pelo que vem antes do conteúdo: <strong>posicionamento e direção.</strong></p>
-
-            <p>entendemos o momento da marca, o que ela sustenta hoje, o que precisa ser ajustado e quais escolhas vão deixar tudo mais coerente.</p>
-
-            <p><strong>atuamos a partir do posicionamento,</strong><br>
-              <strong>da narrativa e da imagem</strong>, conectando números pra guiar e feeling pra criar.
-            </p>
-
-            <p>isso vira direção criativa, <strong>editorial</strong>, social e influência com o mesmo norte: <strong>consistência no tempo.</strong></p>
+        </div>
+        <!-- Módulo 2: desejo -->
+        <div class="accordion-item">
+          <button class="accordion-header" data-text="desejo: o que constrói imagem, linguagem e vontade de pertencer">
+            desejo: o que constrói imagem, linguagem e vontade de pertencer
+          </button>
+          <div class="accordion-panel">
+            <p><strong>direção criativa e produção executiva:</strong> traduzimos o norte em conceito e direção: linguagem visual, referências, casting, styling e produção. garantimos execução fiel e uma logística que sustenta a estética sem ruído.</p>
+            <p><strong>social media e editorial de conteúdo:</strong> definimos a linha editorial e a presença da marca nas redes: pauta, formatos e ritmo. do feed aos detalhes, construímos consistência estética e narrativa no tempo.</p>
+            <p><strong>produção de conteúdo em foto e vídeo:</strong> criamos e dirigimos foto e vídeo com intenção: conteúdos para campanhas e rotina que humanizam a marca e sustentam seu universo visual de forma contínua.</p>
+            <p><strong>marketing sensorial:</strong> desenhamos a experiência sensorial da marca nos pontos de contato físicos: embalagem, texto, materiais, loja e envio. tudo coerente com o dna e a percepção de valor.</p>
+          </div>
+        </div>
+        <!-- Módulo 3: relacionamento -->
+        <div class="accordion-item">
+          <button class="accordion-header" data-text="relacionamento: o que coloca a marca em circulação com contexto e parceria">
+            relacionamento: o que coloca a marca em circulação com contexto e parceria
+          </button>
+          <div class="accordion-panel">
+            <p><strong>marketing de influência:</strong> mapeamos, prospectamos e gerimos influenciadoras com critério, cuidando de acordos, entregas e acompanhamento, sempre orientados por posicionamento e resultado. </p>
+            <p><strong>gestão de collabs entre marcas:</strong> estruturamos collabs com marcas complementares, da proposta à execução, criando valor simbólico, contexto e alcance com sentido.</p>
+            <p><strong>ativações de marca e eventos de experiência:</strong> planejamos e produzimos ativações, lançamentos e encontros que materializam a marca no mundo real e geram conteúdo, relacionamento e repercussão.</p>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- arquitetura /03 -->
-    <section class="section arquitetura" id="arquitetura">
-      <div class="container section-grid">
-        <div class="section-col-number">
-          <img src="assets/03.svg" alt="/03" class="section-number" />
-        </div>
+  <!-- Seção CTA /04 -->
+  <section id="cafe" class="cta">
+    <div class="container">
+      <img src="assets/04.svg" alt="04" class="section-number section-number-right">
+      <h2>que tal um café?</h2>
+      <p>um convite simples pra conversar sobre a sua marca, entender o momento e pensar juntos os próximos passos.</p>
+      <p>sem roteiro engessado, sem pressão.</p>
+      <!-- Botão CTA agendar (abre WhatsApp) -->
+      <a href="https://wa.me/5522936182313" class="btn-cta" target="_blank" rel="noopener">
+        agendar :)
+      </a>
+    </div>
+  </section>
 
-        <div class="section-col-content">
-          <h2 class="section-title">arquitetura de serviços</h2>
-
-          <div class="rich-text arquitetura-text">
-            <p>nossa metodologia é a forma como damos direção, começamos lendo o que a marca sustenta hoje para definir um norte e transformá-lo em escolhas claras: o que dizer, como dizer e onde aparecer. a partir disso, organizamos prioridades e calendário para construir consistência no tempo.</p>
-
-            <p>os módulos entram como peças de uma arquitetura. diagnóstico e posicionamento, direção criativa e editorial, social e conteúdo, influência e relações e lançamentos. não é um pacote engessado, é um sistema que se adapta ao seu momento, conectando posicionamento, direção e execução para evitar ações soltas.</p>
-
-            <p>o acompanhamento funciona como bússola: números pra guiar, feeling pra criar.</p>
-          </div>
-
-          <div class="accordion" id="accordion"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- café /04 -->
-    <section class="section cafe" id="cafe">
-      <div class="container cafe-inner">
-        <div class="cafe-head">
-          <h2 class="cafe-title">que tal um café?</h2>
-          <img src="assets/04.svg" alt="/04" class="section-number" />
-        </div>
-
-        <div class="cafe-text">
-          <p>um convite simples pra conversar sobre a sua marca, entender o momento e pensar juntos os próximos passos.</p>
-          <p><strong>sem roteiro engessado, sem pressão.</strong></p>
-        </div>
-
-        <a class="cta-button" href="https://wa.me/5522936182313" target="_blank" rel="noopener">agendar :)</a>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- rodapé -->
-  <footer class="site-footer" role="contentinfo">
-    <div class="container footer-grid">
-      <div class="footer-left">
-        <img src="assets/logo.svg" alt="elã" class="footer-logo invert-on-wine" />
-
-        <nav class="footer-nav" aria-label="links do rodapé">
-          <a class="footer-link" href="#sobre"><span class="stable-bold" data-text="sobre nós">sobre nós</span></a>
-          <a class="footer-link" href="#arquitetura"><span class="stable-bold" data-text="arquitetura de serviços">arquitetura de serviços</span></a>
-          <a class="footer-link" href="#cafe"><span class="stable-bold" data-text="agende um café">agende um café</span></a>
+  <!-- Rodapé -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <!-- Logo + links (esquerda) -->
+      <div class="footer-col">
+        <a href="#" class="logo-footer"><img src="assets/logo_ela_footer.svg" alt="Elã Fashion MKT"></a>
+        <nav class="footer-menu">
+          <a href="#sobre" data-text="sobre nós">sobre nós</a>
+          <a href="#arquitetura" data-text="arquitetura de serviços">arquitetura de serviços</a>
+          <a href="#cafe" data-text="agende um café">agende um café</a>
         </nav>
       </div>
-
-      <div class="footer-right">
-        <a class="contact" href="https://www.instagram.com/elafashionmkt/" target="_blank" rel="noopener">
-          <span class="stable-bold" data-text="elafashionmkt">elafashionmkt</span>
-          <img src="assets/instagram.svg" alt="instagram" class="contact-icon invert-on-wine" />
-        </a>
-
-        <a class="contact" href="https://wa.me/5522936182313" target="_blank" rel="noopener">
-          <span class="stable-bold" data-text="+55 22 93618-2313">+55 22 93618-2313</span>
-          <img src="assets/whatsapp.svg" alt="whatsapp" class="contact-icon invert-on-wine" />
-        </a>
-
-        <a class="contact" href="mailto:contato@elafashionmkt.com.br">
-          <span class="stable-bold" data-text="contato@elafashionmkt.com.br">contato@elafashionmkt.com.br</span>
-          <img
-            src="assets/e-mail.svg"
-            data-fallback="assets/email.svg"
-            alt="email"
-            class="contact-icon invert-on-wine"
-          />
-        </a>
+      <!-- Contatos (direita) -->
+      <div class="footer-col">
+        <div class="contato-item">
+          <img src="assets/instagram.svg" alt="" aria-hidden="true">
+          <a href="https://instagram.com/elafashionmkt" target="_blank" rel="noopener">@elafashionmkt</a>
+        </div>
+        <div class="contato-item">
+          <img src="assets/whatsapp.svg" alt="" aria-hidden="true">
+          <a href="https://wa.me/5522936182313" target="_blank" rel="noopener">+55 22 93618-2313</a>
+        </div>
+        <div class="contato-item">
+          <img src="assets/e-mail.svg" alt="" aria-hidden="true">
+          <a href="mailto:contato@elafashionmkt.com.br">contato@elafashionmkt.com.br</a>
+        </div>
       </div>
     </div>
   </footer>
 
+  <!-- Inclusão do script JS -->
   <script src="script.js"></script>
 </body>
 </html>
