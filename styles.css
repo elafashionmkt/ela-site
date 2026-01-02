@@ -1,449 +1,209 @@
-/* base */
-:root{
-  --wine:#791815;
-  --hover:#ffcccc;
-  --bg:#ffffff;
-  --text:#000000;
-  --muted:#5b5b5b;
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>elã | fashion mkt</title>
 
-  --container:1280px;
-  --pad:64px;
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet" />
 
-  --header-h:78px;
+  <link rel="stylesheet" href="styles.css" />
+</head>
 
-  --line: rgba(255, 204, 204, .95);
-}
+<body>
+  <!-- header: respiro branco + barra vinho -->
+  <header class="header" role="banner">
+    <div class="header-gap" aria-hidden="true"></div>
 
-*{ box-sizing:border-box; }
-html{ scroll-behavior:smooth; }
-body{
-  margin:0;
-  font-family:'Inter', sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  line-height:1.55;
-  padding-top: var(--header-h);
-}
+    <div class="header-bar">
+      <div class="container header-inner">
+        <nav class="menu" aria-label="menu">
+          <a class="link" href="#sobre" data-text="sobre nós">sobre nós</a>
+          <a class="link" href="#arquitetura" data-text="arquitetura de serviços">arquitetura de serviços</a>
+          <a class="link" href="#cafe" data-text="vai um café?">vai um café?</a>
+        </nav>
 
-img{ max-width:100%; display:block; }
-a{ color:inherit; text-decoration:none; }
+        <button class="hamburger" id="hamburger" type="button" aria-label="abrir menu" aria-controls="mobile-menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
 
-.container{
-  max-width: var(--container);
-  margin: 0 auto;
-  padding: 0 var(--pad);
-}
+      <!-- logo topo: 150px, x 918 y 96 (frame 1280), recortado pela barra -->
+      <a class="logo-topo" href="#top" aria-label="voltar ao topo">
+        <img src="assets/logo.svg" alt="elã" />
+      </a>
+    </div>
 
-/* util */
-.invert-on-wine{ filter: brightness(0) invert(1); }
+    <!-- menu mobile -->
+    <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+      <nav class="mobile-nav" aria-label="menu mobile">
+        <a class="link" href="#sobre" data-text="sobre nós">sobre nós</a>
+        <a class="link" href="#arquitetura" data-text="arquitetura de serviços">arquitetura de serviços</a>
+        <a class="link" href="#cafe" data-text="vai um café?">vai um café?</a>
+      </nav>
+    </div>
+  </header>
 
-/* links anti-jump */
-.link{
-  position:relative;
-  display:inline-block;
-  font-weight:400;
-  transition: color .18s ease;
-}
-.link::before{
-  content: attr(data-text);
-  font-weight:700;
-  visibility:hidden;
-  height:0;
-  overflow:hidden;
-  display:block;
-}
-.link:hover{
-  color: var(--hover);
-  font-weight:700;
-}
+  <main id="top">
+    <!-- bloco superior (hero + sobre) como no layout -->
+    <section class="intro">
+      <div class="container intro-grid">
+        <div class="intro-left">
+          <img src="assets/01.svg" alt="/01" class="sec-num num-01" />
 
-/* HEADER */
-.header{
-  position:fixed;
-  top:0; left:0;
-  width:100%;
-  height: var(--header-h);
-  background: var(--wine);
-  z-index:1000;
-  overflow:hidden; /* recorta o logo grande */
-}
-.header-content{
-  height:100%;
-  display:flex;
-  align-items:center;
-  position:relative;
-}
-.menu{
-  display:flex;
-  gap:30px;
-  margin-left: 72px; /* empurra como no print */
-}
-.menu .link{
-  color:#fff;
-  font-size:12px;
-  letter-spacing:.01em;
-}
+          <div class="moodboard">
+            <img src="assets/moodboard.jpg" alt="moodboard" loading="lazy" />
+          </div>
+        </div>
 
-.logo-topo{
-  position:absolute;
-  right:0;
-  top:50%;
-  transform: translateY(-50%);
-  height:100%;
-  width: 260px;
-  display:flex;
-  justify-content:flex-end;
-  align-items:center;
-}
-.logo-img{
-  height: 170px;
-  width:auto;
-  transform: translateY(16px);
-}
+        <div class="intro-right">
+          <div class="hero-copy">
+            <h1 class="hero-title">
+              marcas <strong>não precisam</strong> de mais<br />
+              posts. <strong>precisam</strong> de<br />
+              direção.
+            </h1>
 
-/* hamburger */
-.hamburger{
-  display:none;
-  width:44px;
-  height:44px;
-  border:0;
-  background:transparent;
-  margin-left:auto;
-  cursor:pointer;
-  border-radius:10px;
-}
-.hamburger span{
-  display:block;
-  width:26px;
-  height:2px;
-  background:#fff;
-  border-radius:2px;
-  margin:6px auto;
-  transition: transform .25s ease, opacity .25s ease;
-}
-.hamburger.open span:nth-child(1){ transform: translateY(8px) rotate(45deg); }
-.hamburger.open span:nth-child(2){ opacity:0; }
-.hamburger.open span:nth-child(3){ transform: translateY(-8px) rotate(-45deg); }
+            <p class="hero-sub">
+              estratégia de marca, conteúdo e<br />
+              influência com intenção.
+            </p>
+          </div>
 
-/* mobile menu panel */
-.mobile-menu{
-  position:fixed;
-  top: var(--header-h);
-  left:0;
-  width:100%;
-  background: var(--wine);
-  border-top: 1px solid rgba(255,255,255,.18);
-  transform: translateY(-10px);
-  opacity:0;
-  pointer-events:none;
-  transition: transform .25s ease, opacity .25s ease;
-  z-index:999;
-}
-.mobile-menu.active{
-  transform: translateY(0);
-  opacity:1;
-  pointer-events:auto;
-}
-.mobile-nav{
-  max-width: var(--container);
-  margin: 0 auto;
-  padding: 22px var(--pad) 28px;
-  display:flex;
-  flex-direction:column;
-  gap:14px;
-}
-.mobile-link{
-  color:#fff;
-  font-size:18px;
-}
+          <section id="sobre" class="sobre">
+            <div class="sobre-head">
+              <h2 class="sobre-title">sobre nós</h2>
+              <img src="assets/02.svg" alt="/02" class="sec-num num-02" />
+            </div>
 
-/* seções */
-.sec-num{ width:92px; height:auto; }
-.num-02, .num-04{ width:98px; }
+            <div class="copy">
+              <p><strong>somos um estúdio que trabalha marca como ecossistema</strong>, não como ação isolada.</p>
+              <p>a gente começa pelo que vem antes do conteúdo: <strong>posicionamento e direção.</strong></p>
 
-.hero{
-  padding: 68px 0 18px;
-}
-.hero-grid{
-  display:grid;
-  grid-template-columns: 1.05fr .95fr;
-  gap: 56px;
-  align-items:start;
-}
-.hero-left{ padding-top: 8px; }
-.hero-right{ max-width: 520px; min-width:0; }
-.hero-title{
-  margin:0;
-  color: var(--wine);
-  font-size: 44px;
-  line-height: 1.12;
-  font-weight:500;
-  letter-spacing: -0.01em;
-}
-.hero-title strong{ font-weight:700; }
-.hero-sub{
-  margin: 18px 0 0;
-  font-size: 12px;
-  color: var(--muted);
-  text-align:right;
-  max-width: 300px;
-  margin-left:auto;
-}
+              <p>entendemos o momento da marca, o que ela sustenta hoje, o que precisa ser ajustado e quais escolhas vão deixar tudo mais coerente.</p>
 
-.sobre{
-  padding: 78px 0;
-}
-.sobre-grid{
-  display:grid;
-  grid-template-columns: 1.08fr .92fr;
-  gap: 56px;
-  align-items:start;
-}
-.sobre-img img{
-  border-radius: 20px;
-  width:100%;
-  height:auto;
-}
-.sobre-text{ min-width:0; }
-.sobre-head{
-  display:flex;
-  align-items:flex-start;
-  justify-content:space-between;
-  gap: 18px;
-}
-.title{
-  margin:0;
-  color: var(--wine);
-  font-size: 44px;
-  line-height:1.05;
-  font-weight:700;
-  letter-spacing:-0.01em;
-}
+              <p><strong>atuamos a partir do posicionamento,</strong><br />
+                <strong>da narrativa e da imagem</strong>, conectando números pra guiar e feeling pra criar.
+              </p>
 
-.copy{
-  margin-top: 18px;
-  font-size: 12px;
-}
-.copy p{ margin: 0 0 12px; }
-.copy strong{ font-weight:700; }
+              <p>isso vira direção criativa, <strong>editorial</strong>, social e influência com o mesmo norte: <strong>consistência no tempo.</strong></p>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
 
-/* arquitetura */
-.arquitetura{
-  padding: 58px 0 86px;
-}
-.arq-grid{
-  display:grid;
-  grid-template-columns: 150px 1fr;
-  gap: 56px;
-  align-items:start;
-}
-.arq-left{ padding-top: 8px; }
-.arq-right{ min-width:0; }
-.arq-copy{ max-width: 760px; }
+    <!-- arquitetura /03 -->
+    <section id="arquitetura" class="arquitetura">
+      <div class="container two-col">
+        <div class="col-left">
+          <img src="assets/03.svg" alt="/03" class="sec-num num-03" />
+        </div>
 
-/* accordion */
-.accordion{
-  margin-top: 22px;
-  max-width: 820px;
-  border-top: 1px solid var(--line);
-}
-.acc-item{
-  border-bottom: 1px solid var(--line);
-}
-.acc-btn{
-  width:100%;
-  border:0;
-  background:transparent;
-  padding: 16px 0;
-  text-align:left;
-  cursor:pointer;
-  display:flex;
-  align-items:flex-start;
-  justify-content:space-between;
-  gap: 14px;
+        <div class="col-right">
+          <h2 class="section-title">arquitetura de serviços</h2>
 
-  color: var(--wine);
-  font-size: 14px;
-  font-weight:400;
-  position:relative;
-}
-.acc-btn::before{
-  content: attr(data-text);
-  font-weight:700;
-  visibility:hidden;
-  height:0;
-  overflow:hidden;
-  display:block;
-}
+          <div class="copy">
+            <p><strong>nossa metodologia é a forma como damos direção,</strong> começamos lendo o que a marca sustenta hoje para definir um norte e transformar isso em escolhas claras: o que dizer, como dizer e onde aparecer. a partir disso, organizamos prioridades e calendário para construir consistência no tempo.</p>
 
-.acc-label{ min-width:0; }
-.acc-prefix{ font-weight:700; }
-.acc-desc{ font-weight:400; }
+            <p><strong>os módulos entram como peças de uma arquitetura.</strong> diagnóstico e posicionamento, direção criativa e editorial, social e conteúdo, influência e relações e lançamentos. é um sistema que se adapta ao seu momento, conectando posicionamento, direção e execução para evitar ações soltas.</p>
 
-.acc-btn:hover .acc-desc{ font-weight:700; }
+            <p>o acompanhamento funciona como bússola: números pra guiar, feeling pra criar.</p>
+          </div>
 
-.acc-icon{
-  width:18px;
-  height:18px;
-  flex:0 0 18px;
-  position:relative;
-  margin-top: 2px;
-}
-.acc-icon::before,
-.acc-icon::after{
-  content:"";
-  position:absolute;
-  background: var(--wine);
-}
-.acc-icon::before{
-  left:0; right:0;
-  top:50%;
-  height:1px;
-  transform: translateY(-.5px);
-}
-.acc-icon::after{
-  top:0; bottom:0;
-  left:50%;
-  width:1px;
-  transform: translateX(-.5px);
-}
-.acc-item[data-open="true"] .acc-icon::after{ opacity:0; }
+          <div class="accordion" aria-label="módulos">
+            <div class="accordion-item">
+              <button class="accordion-header" type="button" data-text="fundação: o que organiza a marca por dentro e define direção">
+                fundação: o que organiza a marca por dentro e define direção
+              </button>
+              <div class="accordion-panel">
+                <p><strong>planejamento estratégico de comunicação:</strong> estruturamos o plano do período a partir de uma leitura profunda da marca, do produto, do discurso e dos números. definimos pilares, mensagens e prioridades que dão direção e consistência ao que a marca comunica.</p>
+                <p><strong>calendário de campanhas e lançamentos:</strong> montamos um calendário macro que organiza lançamentos, campanhas e sazonalidades, alinhando comunicação e vendas para evitar ações isoladas e garantir coerência ao longo do tempo.</p>
+              </div>
+            </div>
 
-.acc-panel{
-  max-height:0;
-  overflow:hidden;
-  transition: max-height .32s ease;
-}
-.acc-inner{
-  padding: 0 0 16px 0;
-  font-size: 12px;
-  color: var(--text);
-}
-.acc-inner p{ margin:0 0 10px; }
-.acc-inner p:last-child{ margin-bottom:0; }
-.acc-inner strong{ font-weight:700; }
+            <div class="accordion-item">
+              <button class="accordion-header" type="button" data-text="desejo: o que constrói imagem, linguagem e vontade de pertencer">
+                desejo: o que constrói imagem, linguagem e vontade de pertencer
+              </button>
+              <div class="accordion-panel">
+                <p><strong>direção criativa e produção executiva:</strong> traduzimos o norte em conceito e direção: linguagem visual, referências, casting, styling e produção. garantimos execução fiel e uma logística que sustenta a estética sem ruído.</p>
+                <p><strong>social media e editorial de conteúdo:</strong> definimos a linha editorial e a presença da marca nas redes: pauta, formatos e ritmo. do feed aos detalhes, construímos consistência estética e narrativa no tempo.</p>
+                <p><strong>produção de conteúdo em foto e vídeo:</strong> criamos e dirigimos foto e vídeo com intenção: conteúdos para campanhas e rotina que humanizam a marca e sustentam seu universo visual de forma contínua.</p>
+                <p><strong>marketing sensorial:</strong> desenhamos a experiência sensorial da marca nos pontos de contato físicos: embalagem, texto, materiais, loja e envio. tudo coerente com o dna e a percepção de valor.</p>
+              </div>
+            </div>
 
-/* café */
-.cafe{
-  padding: 58px 0 120px;
-}
-.cafe-wrap{
-  max-width: 820px;
-  margin: 0 auto;
-}
-.cafe-head{
-  display:flex;
-  align-items:flex-start;
-  justify-content:space-between;
-  gap: 18px;
-}
-.cafe-title{
-  margin:0;
-  color: var(--wine);
-  font-size: 54px;
-  line-height: 1.02;
-  font-weight:700;
-  letter-spacing:-0.01em;
-}
-.cafe-copy{ max-width: 540px; }
+            <div class="accordion-item">
+              <button class="accordion-header" type="button" data-text="relacionamento: o que coloca a marca em circulação com contexto e parceria">
+                relacionamento: o que coloca a marca em circulação com contexto e parceria
+              </button>
+              <div class="accordion-panel">
+                <p><strong>marketing de influência:</strong> mapeamos, prospectamos e gerimos influenciadoras com critério, cuidando de acordos, entregas e acompanhamento, sempre orientados por posicionamento e resultado.</p>
+                <p><strong>gestão de collabs entre marcas:</strong> estruturamos collabs com marcas complementares, da proposta à execução, criando valor simbólico, contexto e alcance com sentido.</p>
+                <p><strong>ativações de marca e eventos de experiência:</strong> planejamos e produzimos ativações, lançamentos e encontros que materializam a marca no mundo real e geram conteúdo, relacionamento e repercussão.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-.btn{
-  display:inline-block;
-  margin-top: 10px;
-  padding: 12px 26px;
-  border-radius: 6px;
-  background: var(--hover);
-  color: var(--wine);
-  font-weight:700;
-  font-size: 12px;
-}
-/* sem hover no botão (pedido do projeto) */
-.btn:hover{ color: var(--wine); }
+    <!-- café /04 (alinhado no eixo esquerdo do /03) -->
+    <section id="cafe" class="cafe">
+      <div class="container two-col">
+        <div class="col-left">
+          <img src="assets/04.svg" alt="/04" class="sec-num num-04" />
+        </div>
 
-/* footer */
-.footer{
-  background: var(--wine);
-  color:#fff;
-  padding: 56px 0 62px;
-}
-.footer-grid{
-  display:grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 30px;
-  align-items:end;
-}
-.footer-logo{
-  width: 190px;
-  height:auto;
-  margin-bottom: 18px;
-}
-.footer-menu{
-  display:flex;
-  flex-direction:column;
-  gap: 8px;
-}
-.footer-menu .link{
-  color:#fff;
-  font-size:12px;
-}
+        <div class="col-right">
+          <h2 class="section-title">que tal um café?</h2>
 
-.footer-right{
-  display:flex;
-  flex-direction:column;
-  gap: 12px;
-  align-items:flex-end;
-}
-.contact{
-  width:100%;
-  max-width: 360px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap: 14px;
-  color:#fff;
-  font-size:12px;
-}
-.contact-ico{ width:16px; height:16px; }
+          <div class="copy">
+            <p>um convite simples pra conversar sobre a sua marca, entender o momento e pensar juntos os próximos passos.</p>
+            <p>sem roteiro engessado e sem pressão.</p>
+          </div>
 
-/* anchors com offset do header fixo */
-section[id]{ scroll-margin-top: calc(var(--header-h) + 20px); }
+          <a class="btn" href="https://wa.me/5522936182313" target="_blank" rel="noopener">agendar :)</a>
+        </div>
+      </div>
+    </section>
+  </main>
 
-/* responsivo */
-@media (max-width: 980px){
-  :root{ --pad: 24px; }
+  <!-- rodapé -->
+  <footer class="footer" role="contentinfo">
+    <div class="container footer-inner">
+      <div class="footer-left">
+        <img src="assets/logo.svg" alt="elã" class="footer-logo" />
 
-  .menu{ display:none; }
-  .hamburger{ display:block; }
+        <nav class="footer-menu" aria-label="links do rodapé">
+          <a class="link" href="#sobre" data-text="sobre nós">sobre nós</a>
+          <a class="link" href="#arquitetura" data-text="arquitetura de serviços">arquitetura de serviços</a>
+          <a class="link" href="#cafe" data-text="agende um café">agende um café</a>
+        </nav>
+      </div>
 
-  .logo-topo{ width: 210px; }
-  .logo-img{ height: 140px; transform: translateY(14px); }
+      <div class="footer-right" aria-label="contatos">
+        <a class="contact" href="https://www.instagram.com/elafashionmkt/" target="_blank" rel="noopener">
+          <span class="contact-text" data-text="elafashionmkt">elafashionmkt</span>
+          <img src="assets/instagram.svg" alt="instagram" class="contact-ico" />
+        </a>
 
-  .hero-grid,
-  .sobre-grid{
-    grid-template-columns: 1fr;
-    gap: 22px;
-  }
-  .hero-left{ display:none; }
+        <a class="contact" href="https://wa.me/5522936182313" target="_blank" rel="noopener">
+          <span class="contact-text" data-text="+55 22 93618-2313">+55 22 93618-2313</span>
+          <img src="assets/whatsapp.svg" alt="whatsapp" class="contact-ico" />
+        </a>
 
-  .hero-right{ max-width:none; }
-  .hero-title{ font-size: 34px; }
-  .hero-sub{ text-align:left; margin-left:0; max-width:none; }
+        <a class="contact" href="mailto:contato@elafashionmkt.com.br">
+          <span class="contact-text" data-text="contato@elafashionmkt.com.br">contato@elafashionmkt.com.br</span>
+          <img src="assets/e-mail.svg" alt="e-mail" class="contact-ico" />
+        </a>
+      </div>
+    </div>
+  </footer>
 
-  .arq-grid{
-    grid-template-columns: 1fr;
-    gap: 18px;
-  }
-  .arq-left{ display:none; }
-
-  .cafe-title{ font-size: 42px; }
-
-  .footer-grid{
-    grid-template-columns: 1fr;
-    align-items:start;
-  }
-  .footer-right{
-    align-items:flex-start;
-    margin-top: 22px;
-  }
-  .contact{ max-width:none; }
-}
+  <script src="script.js"></script>
+</body>
+</html>
