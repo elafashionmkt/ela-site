@@ -113,7 +113,7 @@
     },
     {
       etapa: "relacionamento",
-      descricao: "o que coloca a marca em circulação com contexto e parceria",
+      descricao: "o que coloca a marca em circulação com contexto",
       servicos: [
         {
           titulo: "marketing de influência",
@@ -234,3 +234,4 @@
   window.addEventListener("resize", syncOpenHeights);
   window.addEventListener("load", syncOpenHeights);
 })();
+
