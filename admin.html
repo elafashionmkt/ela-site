@@ -22,6 +22,12 @@
     .hint { font-size: 12px; opacity: .7; margin-top: 10px; }
     #editor { background: #fff; }
     pre { background:#0b1020; color:#e5e7eb; padding:12px; border-radius:12px; overflow:auto; }
+
+    /* Deixa o dropdown de cor mais previsível visualmente */
+    .ql-snow .ql-picker.ql-color .ql-picker-item,
+    .ql-snow .ql-picker.ql-background .ql-picker-item {
+      border: 1px solid rgba(0,0,0,.08);
+    }
   </style>
 </head>
 <body>
@@ -58,13 +64,16 @@
 
   <script src="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.min.js"></script>
   <script>
-    // Inicializa o editor
+    // Paleta (texto e fundo)
+    const PALETTE = ['#3A3838', '#791815', '#FFCCCC', '#000000', '#FFFFFF'];
+
+    // Inicializa o editor com paleta fixa
     const quill = new Quill('#editor', {
       theme: 'snow',
       modules: {
         toolbar: [
           ['bold', 'italic', 'underline'],
-          [{ 'color': [] }, { 'background': [] }],
+          [{ 'color': PALETTE }, { 'background': PALETTE }],
           [{ 'list': 'ordered' }, { 'list': 'bullet' }],
           ['link'],
           ['clean']
