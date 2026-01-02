@@ -1,4 +1,4 @@
-// script.js completo aqui
+// script.js
 (() => {
   // fallback para assets (logo topo/footer e email)
   document.querySelectorAll("img[data-fallback]").forEach((img) => {
@@ -64,6 +64,7 @@
   );
 
   window.addEventListener("resize", () => {
+    if (window.innerWidth > 768) closeMenu();
     if (hamburger?.classList.contains("open")) positionMobileMenu();
   });
 
@@ -157,17 +158,17 @@
       btn.className = "acc-btn";
       btn.type = "button";
 
-      const headerText = `${m.etapa} — ${m.descricao}`;
+      const headerText = `${m.etapa}: ${m.descricao}`;
       btn.setAttribute("data-text", headerText);
       btn.setAttribute("aria-expanded", "false");
 
       btn.innerHTML = `
         <span class="acc-label">
-          <span class="acc-prefix">${esc(m.etapa)}</span><span class="acc-desc"> — ${esc(m.descricao)}</span>
+          <span class="acc-prefix">${esc(m.etapa)}</span><span class="acc-desc">: ${esc(m.descricao)}</span>
         </span>
         <span class="acc-icon" aria-hidden="true">
           <span class="acc-plus">+</span>
-          <span class="acc-minus">−</span>
+          <span class="acc-minus">-</span>
         </span>
       `;
 
