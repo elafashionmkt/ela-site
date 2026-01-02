@@ -157,7 +157,7 @@
       btn.className = "acc-btn";
       btn.type = "button";
 
-      const headerText = `${m.etapa}: ${m.descricao}`;
+      const headerText = `${m.etapa} — ${m.descricao}`;
       btn.setAttribute("data-text", headerText);
       btn.setAttribute("aria-expanded", "false");
 
@@ -180,6 +180,7 @@
 
       m.servicos.forEach((s) => {
         const p = document.createElement("p");
+        p.className = "acc-service";
         p.innerHTML = `<strong>${esc(s.titulo)}</strong>: ${esc(s.texto)}`;
         inner.appendChild(p);
       });
