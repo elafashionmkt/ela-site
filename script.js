@@ -242,29 +242,18 @@ async function loadContent() {
     if (!res.ok) throw new Error('content.json not found');
     const content = await res.json();
 
-    // Exemplo de aplicação (só funciona se esses elementos existirem no HTML):
-    // <h1 id="heroTitle"></h1>
-    // <div id="heroRichText"></div>
-
     const heroTitleEl = document.getElementById('heroTitle');
-    if (content.heroTitle && content.heroTitle.trim()) {
-  heroTitleEl.textContent = content.heroTitle;
-}
-
+    if (heroTitleEl && typeof content.heroTitle === 'string') {
+      heroTitleEl.textContent = content.heroTitle;
+    }
 
     const heroRichEl = document.getElementById('heroRichText');
-    if (content.heroRichTextHtml && content.heroRichTextHtml.trim()) {
-  heroRichEl.innerHTML = content.heroRichTextHtml;
-}
+    if (heroRichEl && typeof content.heroRichTextHtml === 'string') {
+      heroRichEl.innerHTML = content.heroRichTextHtml;
+    }
   } catch (err) {
-    // Se não tiver content.json ou não quiser usar agora, ignora sem quebrar o site
     console.warn('[content] not loaded:', err.message);
   }
 }
 
-// roda quando o DOM estiver pronto
 document.addEventListener('DOMContentLoaded', loadContent);
-
-
-
-
