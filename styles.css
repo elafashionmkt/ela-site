@@ -219,7 +219,7 @@ section{ padding: 72px 0; }
 /* HERO */
 .hero{
   padding-top: 53px;
-  padding-bottom: 72px; /* mantém o mesmo respiro padrão entre sessões */
+  padding-bottom: 72px; /* mantém o respiro padrão */
 }
 
 .hero-right{
@@ -245,7 +245,11 @@ section{ padding: 72px 0; }
   letter-spacing:0.05em;
 }
 
-/* SOBRE */
+/* SOBRE (ajuste: subir o bloco para o topo da foto encostar na linha ciano) */
+.sobre{
+  margin-top:-36px;
+}
+
 .sobre-grid{
   display:grid;
   grid-template-columns: 1fr 1fr;
@@ -369,7 +373,7 @@ section{ padding: 72px 0; }
   font-weight:700;
   text-align:right;
   color:var(--wine);
-  width:520px;                    /* texto começa no mesmo ponto do título */
+  width:520px;
 }
 
 .cafe-copy{
@@ -467,6 +471,10 @@ section{ padding: 72px 0; }
   .cafe-copy{
     text-align:left;
     width:auto;
+  }
+
+  .sobre{
+    margin-top:0;
   }
 
   .sobre-grid{
