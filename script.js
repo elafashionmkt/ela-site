@@ -247,14 +247,15 @@ async function loadContent() {
     // <div id="heroRichText"></div>
 
     const heroTitleEl = document.getElementById('heroTitle');
-    if (heroTitleEl && typeof content.heroTitle === 'string') {
-      heroTitleEl.textContent = content.heroTitle;
-    }
+    if (content.heroTitle && content.heroTitle.trim()) {
+  heroTitleEl.textContent = content.heroTitle;
+}
+
 
     const heroRichEl = document.getElementById('heroRichText');
-    if (heroRichEl && typeof content.heroRichTextHtml === 'string') {
-      heroRichEl.innerHTML = content.heroRichTextHtml;
-    }
+    if (content.heroRichTextHtml && content.heroRichTextHtml.trim()) {
+  heroRichEl.innerHTML = content.heroRichTextHtml;
+}
   } catch (err) {
     // Se não tiver content.json ou não quiser usar agora, ignora sem quebrar o site
     console.warn('[content] not loaded:', err.message);
@@ -263,6 +264,7 @@ async function loadContent() {
 
 // roda quando o DOM estiver pronto
 document.addEventListener('DOMContentLoaded', loadContent);
+
 
 
 
