@@ -218,7 +218,8 @@ section{ padding: 72px 0; }
 
 /* HERO */
 .hero{
-  padding-top: 53px;
+  .hero{
+  padding-top: 20px;
   padding-bottom: 72px; /* mantém o respiro padrão */
 }
 
