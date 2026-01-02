@@ -219,7 +219,7 @@ section{ padding: 72px 0; }
 /* HERO */
 .hero{
   padding-top: 53px;
-  padding-bottom: 0; /* remove respiro antes do "sobre nós" */
+  padding-bottom: 72px; /* mantém o mesmo respiro padrão entre sessões */
 }
 
 .hero-right{
@@ -246,11 +246,6 @@ section{ padding: 72px 0; }
 }
 
 /* SOBRE */
-.sobre{
-  padding-top: 0;          /* remove o topo padrão da seção */
-  margin-top: -12px;       /* ajuste fino: topo da imagem encosta na linha */
-}
-
 .sobre-grid{
   display:grid;
   grid-template-columns: 1fr 1fr;
@@ -310,7 +305,7 @@ section{ padding: 72px 0; }
   display:block;
   flex:1;
   min-width:0;
-  text-align:left;                /* garante quebra alinhada à esquerda */
+  text-align:left;
 }
 
 .acc-prefix{ font-weight:700; }
@@ -342,7 +337,7 @@ section{ padding: 72px 0; }
 
 .acc-inner{
   padding:0 0 22px;
-  font-size:20px;                 /* tipografia do conteúdo aberto (Figma) */
+  font-size:20px;
   line-height:28.8px;
   letter-spacing:0;
   color:var(--text);
@@ -367,7 +362,6 @@ section{ padding: 72px 0; }
   align-items:flex-end;
 }
 
-/* título e texto com MESMA largura -> começam no mesmo ponto */
 .cafe-title{
   margin:0 0 21px;                /* +15% de respiro vs 18px */
   font-size:60px;
@@ -375,7 +369,7 @@ section{ padding: 72px 0; }
   font-weight:700;
   text-align:right;
   color:var(--wine);
-  width:520px;
+  width:520px;                    /* texto começa no mesmo ponto do título */
 }
 
 .cafe-copy{
@@ -473,10 +467,6 @@ section{ padding: 72px 0; }
   .cafe-copy{
     text-align:left;
     width:auto;
-  }
-
-  .sobre{
-    margin-top: 0;
   }
 
   .sobre-grid{
