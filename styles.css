@@ -245,6 +245,27 @@ section{ padding: 72px 0; }
   letter-spacing:0.05em;
 }
 
+/* Corrige o HTML rico vindo do admin (Quill) */
+#heroRichText p {
+  margin: 0;        /* remove a margem padrão do <p> */
+}
+
+#heroRichText p + p {
+  margin-top: 0;    /* garante que não crie “respiro” entre parágrafos */
+}
+
+#heroRichText a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+#heroRichText ul,
+#heroRichText ol {
+  margin: 0;
+  padding-left: 1.2em;
+}
+
+
 /* SOBRE (ajuste: subir o bloco para o topo da foto encostar na linha ciano) */
 .sobre{
   margin-top:-36px;
