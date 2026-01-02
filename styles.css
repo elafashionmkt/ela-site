@@ -132,7 +132,7 @@ a.btn{
 .logo-topo{
   position:absolute;
   right:42px;          /* alinhamento horizontal já validado */
-  top:96px;            /* linha ciano do Figma */
+  top:150px;            /* linha ciano do Figma */ testando
   transform:none;      /* remove centralização vertical */
   display:flex;
   align-items:flex-start;
