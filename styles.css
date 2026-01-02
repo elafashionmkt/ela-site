@@ -5,18 +5,18 @@
   --bg:#ffffff;
   --text:#000000;
 
-  --container:1440px;
+  --container:1280px;
   --gutter:120px;
 
   --bar-h:110px;
 
-  --col-left:247px;
+  --col-left:247px;   /* 120 + 247 = 367 */
   --line:#FFCCCC;
 
-  --frame:1440px;
-  --logo-x:1000px;
-  --title-gap:18px;
-  --head-row-h:110px;
+  --frame:1440px;     /* largura do frame desktop do Figma */
+  --logo-x:1000px;    /* X do Figma: início do logo */
+  --title-gap:18px;   /* gap “padrão” do /02 */
+  --head-row-h:110px; /* altura do bloco título+número (referência /02) */
 }
 
 *{ box-sizing:border-box; }
@@ -82,7 +82,7 @@ a.btn{
   height:var(--bar-h);
   background:var(--wine);
   z-index:1000;
-  overflow:hidden;
+  overflow:hidden; /* recorta o logo dentro da faixa */
 }
 
 .header-content{
@@ -146,7 +146,7 @@ a.btn{
 }
 
 .logo-img{
-  height:151px;
+  height:151px; /* Figma (150.99px) */
   width:auto;
 }
 
@@ -157,7 +157,7 @@ a.btn{
   position:fixed;
   left:0;
   right:0;
-  top: var(--bar-h);
+  top: var(--bar-h); /* fallback */
   background:var(--wine);
   z-index:999;
   opacity:0;
@@ -190,7 +190,10 @@ a.btn{
 /* =========================================================
    LAYOUT GERAL
 ========================================================= */
-section{ padding: 72px 0; scroll-margin-top: calc(var(--bar-h) + 18px); }
+section{
+  padding: 72px 0;
+  scroll-margin-top: calc(var(--bar-h) + 18px);
+}
 
 .grid-2col{
   display:grid;
@@ -223,22 +226,36 @@ section{ padding: 72px 0; scroll-margin-top: calc(var(--bar-h) + 18px); }
 .copy strong{ font-weight:700; }
 
 /* =========================================================
-   HERO (/01)
+   HERO (/01) DESKTOP
 ========================================================= */
 .hero{
   padding-top: 73px;
   padding-bottom: 72px;
 }
 
-.hero-grid{
-  display:grid;
+/* hero alinhado à esquerda com /01 à direita */
+.hero .grid-2col{
   grid-template-columns: 1fr auto;
-  align-items:start;
   column-gap: 158px;
+  align-items:start;
 }
 
-.hero-text{
-  max-width: 827px;
+.hero .col-left{
+  grid-column:2;
+  padding-top:0;
+  justify-self:end;
+}
+
+.hero .col-right{
+  grid-column:1;
+}
+
+.hero .sec-num{ margin-top: 15px; }
+
+.hero-right{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
 }
 
 .hero-title{
@@ -248,22 +265,16 @@ section{ padding: 72px 0; scroll-margin-top: calc(var(--bar-h) + 18px); }
   font-weight:400;
   text-align:left;
   color:var(--wine);
+  max-width: 827px;
 }
 
 .hero-sub{
   margin:0;
-  max-width:406px;
   font-size:23.54px;
   line-height:40px;
   text-align:left;
   letter-spacing:0.05em;
-}
-
-.hero-num{
-  width:110px;
-  height:auto;
-  margin-top: 15px;
-  justify-self:end;
+  max-width: 406px;
 }
 
 /* =========================================================
@@ -280,6 +291,7 @@ section{ padding: 72px 0; scroll-margin-top: calc(var(--bar-h) + 18px); }
 
 .sobre-img img{ width:100%; height:auto; }
 
+/* este bloco é a referência do espaçamento */
 .sobre-head{
   display:flex;
   align-items:flex-start;
@@ -373,8 +385,8 @@ section{ padding: 72px 0; scroll-margin-top: calc(var(--bar-h) + 18px); }
 
 .acc-inner{
   padding:0 0 22px;
-  font-size:15px !important;
-  line-height:24.5px !important;
+  font-size:15px;
+  line-height:24.5px;
   letter-spacing:0;
   color:var(--text);
 }
@@ -475,14 +487,9 @@ section{ padding: 72px 0; scroll-margin-top: calc(var(--bar-h) + 18px); }
 
 /* =========================================================
    RESPONSIVO
-   Breakpoints obrigatórios: 1024px, 768px, 480px
 ========================================================= */
-
 @media (max-width: 1024px){
-  :root{ --gutter: 64px; }
-
-  .container{ padding: 0 var(--gutter); }
-  .menu{ gap:32px; }
+  :root{ --gutter:64px; }
 
   .logo-topo{
     left:auto;
@@ -492,22 +499,23 @@ section{ padding: 72px 0; scroll-margin-top: calc(var(--bar-h) + 18px); }
   }
 
   .logo-img{ height:120px; }
-  .hero-grid{ column-gap: 120px; }
 }
 
 @media (max-width: 768px){
-  :root{ --gutter: 20px; }
+  :root{ --gutter:20px; }
 
   html, body{
     max-width:100%;
     overflow-x:hidden;
   }
 
-  .container{ padding: 0 var(--gutter); }
+  section{
+    padding: 32px 0;
+    scroll-margin-top: calc(var(--bar-h) + 12px);
+  }
 
   .menu{ display:none; }
   .hamburger{ display:inline-block; }
-  .header-content{ justify-content:flex-start; }
 
   .logo-topo{
     left:auto;
@@ -516,130 +524,151 @@ section{ padding: 72px 0; scroll-margin-top: calc(var(--bar-h) + 18px); }
     transform:translateY(-50%);
   }
 
-  .logo-img{ height:92px; }
+  /* reduzir logo em 30%, manter posição */
+  .logo-img{ height:64px; }
 
   .mobile-nav{
-    padding-left: var(--gutter);
-    padding-right: var(--gutter);
-    padding-top: 18px;
-    padding-bottom: 22px;
+    padding:18px var(--gutter) 22px;
     gap:14px;
+    font-size:18px;
   }
 
-  section{ padding: 52px 0; }
+  .sec-num{ width:56px; }
+  .num-right{ width:56px; }
 
-  .sec-num{ width:64px; }
-  .num-right{ width:64px; }
-
-  /* HERO: número ao lado do título, leitura em coluna */
-  .hero{ padding-top: 52px; padding-bottom: 52px; }
-
-  .hero-grid{
-    grid-template-columns: 1fr auto;
-    column-gap: 14px;
-    row-gap: 12px;
-  }
-
-  .hero-text{ display: contents; }
-
-  .hero-title{
-    margin:0;
-    grid-column:1;
-    grid-row:1;
-    font-size:34px;
-    line-height:44px;
-  }
-
-  .hero-num{
-    grid-column:2;
-    grid-row:1;
-    width:64px;
-    margin-top: 6px;
-  }
-
-  .hero-sub{
-    grid-column:1 / -1;
-    grid-row:2;
-    max-width:none;
-    font-size:17px;
-    line-height:26px;
-  }
-
-  /* Grids com /03 e /04: número ao lado do título */
-  .grid-2col{
-    grid-template-columns: 1fr auto;
-    column-gap: 14px;
-    row-gap: 14px;
-  }
-
-  .col-left{
-    grid-column:2;
-    grid-row:1;
-    padding-top:0;
-    justify-self:end;
-  }
-
-  .col-right{ display: contents; }
-
-  .col-right > .title,
-  .col-right > .cafe-title{
-    grid-column:1;
-    grid-row:1;
-    margin:0;
-    min-height:0;
-    font-size:44px;
-    line-height:48px;
-    text-align:left;
-    width:auto;
-  }
-
-  .col-right > :not(.title):not(.cafe-title){
-    grid-column:1 / -1;
-  }
-
-  .arq-copy{ margin-top: 14px; margin-bottom: 22px; }
-
-  .cafe-right{ align-items:flex-start; }
-  .cafe-copy{ margin-top: 14px; margin-bottom: 22px; text-align:left; width:auto; }
-
-  /* Sobre */
+  /* SOBRE */
   .sobre{ margin-top:0; }
 
   .sobre-grid{
     grid-template-columns: 1fr;
-    gap: 24px;
+    gap: 18px;
+    align-items:start;
   }
 
   .sobre-head{
     min-height:0;
-    margin-bottom: 14px;
+    gap:16px;
+    margin-bottom: 10px;
     align-items:baseline;
-    gap: 16px;
   }
 
-  .sobre-head .title{
-    font-size:44px;
-    line-height:48px;
+  .title{
+    font-size:40px;
+    line-height:46px;
   }
 
-  /* Tipografia de leitura */
   .copy{
     font-size:15px;
     line-height:24px;
   }
+  .copy p{ margin:0 0 14px; }
 
-  .acc-btn{
-    height:auto;
-    padding: 12px 0;
+  /* HERO */
+  .hero{
+    padding-top: 32px;
+    padding-bottom: 32px;
   }
 
-  /* Footer */
-  .footer{ padding: 44px 0; }
+  .hero .grid-2col{
+    grid-template-columns: 1fr auto;
+    column-gap: 14px;
+    row-gap: 12px;
+    align-items:start;
+  }
+
+  .hero .col-left{
+    grid-column:2;
+    justify-self:end;
+  }
+
+  .hero .sec-num{ margin-top: 6px; }
+
+  .hero-title{
+    font-size:34px;
+    line-height:44px;
+    margin:0 0 14px;
+    max-width:none;
+  }
+
+  .hero-sub{
+    font-size:17px;
+    line-height:26px;
+    max-width:none;
+  }
+
+  /* GRID 2 COL (ARQUITETURA e CAFE) */
+  .grid-2col{
+    grid-template-columns: 1fr auto;
+    column-gap: 14px;
+    row-gap: 12px;
+    align-items:start;
+  }
+
+  .grid-2col .col-left{
+    padding-top:0;
+    justify-self:end;
+  }
+
+  /* ARQUITETURA: título com /03 ao lado, conteúdo em largura total */
+  .arquitetura .col-right{ display:contents; }
+  .arquitetura .col-right > .title{
+    grid-column:1;
+    grid-row:1;
+    min-height:0;
+    margin:0;
+    text-align:left;
+    width:auto;
+  }
+  .arquitetura .col-right > :not(.title){
+    grid-column:1 / -1;
+  }
+
+  .arq-copy{ margin: 12px 0 18px; }
+
+  .acc-service{ margin:0 0 34px; }
+
+  /* CAFE: título com /04 ao lado, conteúdo em largura total */
+  .cafe .col-right{ display:contents; }
+  .cafe .col-right > .cafe-title{
+    grid-column:1;
+    grid-row:1;
+    min-height:0;
+    margin:0;
+    text-align:left;
+    width:auto;
+    font-size:40px;
+    line-height:46px;
+  }
+  .cafe .col-right > :not(.cafe-title){
+    grid-column:1 / -1;
+  }
+
+  .cafe-copy{
+    text-align:left;
+    width:auto;
+    margin: 12px 0 18px;
+  }
+
+  /* agendar centralizado na horizontal */
+  .cafe .btn{
+    display:block;
+    width:100%;
+    max-width:360px;
+    margin: 0 auto;
+    text-align:center;
+  }
+
+  /* FOOTER: hierarquia à esquerda no topo */
+  .footer{ padding:44px 0; }
 
   .footer-grid{
     grid-template-columns: 1fr;
     gap: 18px;
+    align-items:start;
   }
+
+  .footer-center{ justify-self:start; }
+  .footer-logo{ height:54px; }
 
   .footer-right{
     justify-self:start;
@@ -654,28 +683,14 @@ section{ padding: 72px 0; scroll-margin-top: calc(var(--bar-h) + 18px); }
 }
 
 @media (max-width: 480px){
-  :root{ --gutter: 16px; }
+  :root{ --gutter:16px; }
 
-  .container{ padding: 0 var(--gutter); }
-  section{ padding: 44px 0; }
+  section{ padding:28px 0; }
 
-  .logo-img{ height:84px; }
+  .logo-img{ height:58px; }
 
-  .sec-num{ width:56px; }
-  .num-right{ width:56px; }
-  .hero-num{ width:56px; }
-
-  .title{
-    font-size:38px;
-    line-height:44px;
-  }
-
-  .col-right > .title,
-  .col-right > .cafe-title,
-  .sobre-head .title{
-    font-size:38px;
-    line-height:44px;
-  }
+  .sec-num{ width:52px; }
+  .num-right{ width:52px; }
 
   .hero-title{
     font-size:28px;
@@ -687,19 +702,32 @@ section{ padding: 72px 0; scroll-margin-top: calc(var(--bar-h) + 18px); }
     line-height:24px;
   }
 
+  .title{
+    font-size:36px;
+    line-height:42px;
+  }
+
+  .cafe .col-right > .cafe-title{
+    font-size:36px;
+    line-height:42px;
+  }
+
   .acc-btn{
     height:auto;
-    padding: 12px 0;
+    padding:12px 0;
     font-size:18px;
     line-height:26px;
   }
+
+  .footer-logo{ height:50px; }
+  .cafe .btn{ max-width:320px; }
 }
 
 /* FORCE: tipografia do conteúdo aberto do acordeão */
 #accordion .acc-panel,
 #accordion .acc-panel *{
   font-size: 15px !important;
-  line-height: 28.8px !important;
+  line-height: 24.5px !important;
   letter-spacing: 0 !important;
 }
 #accordion .acc-service strong{
