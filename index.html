@@ -1,3 +1,10 @@
+ (cd "$(git rev-parse --show-toplevel)" && git apply --3way <<'EOF' 
+diff --git a/index.html b/index.html
+index 750067d6a34b5aee89cfdd43a5de90d718f199bc..d2290f40107c5194f11bd49e1cec41b130388448 100644
+--- a/index.html
++++ b/index.html
+@@ -35,60 +35,63 @@
+ 
        <!-- logo topo (dentro do box vinho) -->
        <a class="logo-topo" href="#top" aria-label="voltar ao topo">
          <img
