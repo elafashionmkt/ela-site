@@ -8,6 +8,15 @@
     });
   });
 
+  // garante data-text em links de texto (para hover sem “pulo”)
+  document.querySelectorAll("a:not(.btn)").forEach((a) => {
+    if (a.classList.contains("logo-topo")) return;
+    if (a.hasAttribute("data-text")) return;
+
+    const text = (a.textContent || "").replace(/\s+/g, " ").trim();
+    if (text) a.setAttribute("data-text", text);
+  });
+
   // menu mobile (fica sempre logo abaixo da barra vinho sticky)
   const headerBar = document.getElementById("header-bar");
   const hamburger = document.getElementById("hamburger");
@@ -58,12 +67,11 @@
     if (hamburger?.classList.contains("open")) positionMobileMenu();
   });
 
-  // acordeão (multi-open)
+  // acordeão (multi-open) - inicia com TODOS fechados
   const DATA = [
     {
       etapa: "fundação",
       descricao: "o que organiza a marca por dentro e define direção",
-      openByDefault: true,
       servicos: [
         {
           titulo: "planejamento estratégico de comunicação",
@@ -143,7 +151,7 @@
     DATA.forEach((m) => {
       const item = document.createElement("div");
       item.className = "acc-item";
-      item.dataset.open = m.openByDefault ? "true" : "false";
+      item.dataset.open = "false";
 
       const btn = document.createElement("button");
       btn.className = "acc-btn";
@@ -151,7 +159,7 @@
 
       const headerText = `${m.etapa}: ${m.descricao}`;
       btn.setAttribute("data-text", headerText);
-      btn.setAttribute("aria-expanded", item.dataset.open === "true" ? "true" : "false");
+      btn.setAttribute("aria-expanded", "false");
 
       btn.innerHTML = `
         <span class="acc-label">
@@ -165,7 +173,7 @@
 
       const panel = document.createElement("div");
       panel.className = "acc-panel";
-      panel.setAttribute("aria-hidden", item.dataset.open === "true" ? "false" : "true");
+      panel.setAttribute("aria-hidden", "true");
 
       const inner = document.createElement("div");
       inner.className = "acc-inner";
