@@ -1,81 +1,131 @@
-// script.js
-(function () {
+(() => {
   const body = document.body;
 
-  // ---------- mobile menu ----------
+  // ---------- Mobile menu ----------
   const hamburger = document.querySelector(".hamburger");
-  const mobileMenu = document.getElementById("mobileMenu");
+  const mobileMenu = document.querySelector(".mobile-menu");
   const mobileLinks = document.querySelectorAll(".mobile-link");
 
-  function openMenu() {
-    if (!hamburger || !mobileMenu) return;
+  const openMenu = () => {
     body.classList.add("menu-open");
-    mobileMenu.hidden = false;
     hamburger.setAttribute("aria-expanded", "true");
-  }
+    mobileMenu.setAttribute("aria-hidden", "false");
+  };
 
-  function closeMenu() {
-    if (!hamburger || !mobileMenu) return;
+  const closeMenu = () => {
     body.classList.remove("menu-open");
     hamburger.setAttribute("aria-expanded", "false");
-    window.setTimeout(() => {
-      if (!body.classList.contains("menu-open")) mobileMenu.hidden = true;
-    }, 250);
-  }
+    mobileMenu.setAttribute("aria-hidden", "true");
+  };
 
-  if (hamburger && mobileMenu) {
+  if (hamburger) {
     hamburger.addEventListener("click", () => {
       const isOpen = body.classList.contains("menu-open");
       isOpen ? closeMenu() : openMenu();
     });
-
-    mobileMenu.addEventListener("click", (e) => {
-      if (e.target === mobileMenu) closeMenu();
-    });
-
-    window.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") closeMenu();
-    });
-
-    mobileLinks.forEach((a) => a.addEventListener("click", () => closeMenu()));
   }
 
-  // ---------- accordion (abre vários) ----------
-  const items = document.querySelectorAll("[data-acc]");
-
-  function setPanelHeight(panel, open) {
-    panel.style.overflow = "hidden";
-    panel.style.transition = "max-height 220ms ease";
-    panel.style.maxHeight = open ? panel.scrollHeight + "px" : "0px";
-  }
-
-  items.forEach((item) => {
-    const trigger = item.querySelector(".accordion-trigger");
-    const panel = item.querySelector(".accordion-panel");
-    if (!trigger || !panel) return;
-
-    panel.hidden = false; // anima via max-height
-    panel.setAttribute("aria-hidden", "true");
-    setPanelHeight(panel, false);
-
-    trigger.addEventListener("click", () => {
-      const isOpen = item.classList.contains("open");
-
-      if (isOpen) {
-        item.classList.remove("open");
-        trigger.setAttribute("aria-expanded", "false");
-        panel.setAttribute("aria-hidden", "true");
-        setPanelHeight(panel, false);
-      } else {
-        item.classList.add("open");
-        trigger.setAttribute("aria-expanded", "true");
-        panel.setAttribute("aria-hidden", "false");
-        setPanelHeight(panel, true);
-      }
-    });
-
-    window.addEventListener("resize", () => {
-      setPanelHeight(panel, item.classList.contains("open"));
-    });
+  mobileLinks.forEach((a) => {
+    a.addEventListener("click", () => closeMenu());
   });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeMenu();
+  });
+
+  // Close mobile menu if switching to desktop
+  window.addEventListener("resize", () => {
+    if (window.matchMedia("(min-width: 981px)").matches) closeMenu();
+    syncAccordionHeights();
+  });
+
+  // ---------- Accordion ----------
+  const accordionRoot = document.getElementById("accordion");
+  const data = Array.isArray(window.ELA_ACCORDION_DATA) ? window.ELA_ACCORDION_DATA : [];
+
+  const escapeHtml = (str) =>
+    String(str)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+
+  const buildAccordion = () => {
+    if (!accordionRoot || !data.length) return;
+
+    const fragment = document.createDocumentFragment();
+
+    data.forEach((module) => {
+      const item = document.createElement("div");
+      item.className = "acc-item";
+      item.dataset.open = "false";
+
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "acc-trigger";
+      btn.setAttribute("aria-expanded", "false");
+
+      const title = document.createElement("div");
+      title.className = "acc-title";
+      title.innerHTML = `
+        <span class="stable-bold" data-text="${escapeHtml(module.etapa)}: ${escapeHtml(module.descricao)}">
+          ${escapeHtml(module.etapa)}: ${escapeHtml(module.descricao)}
+        </span>
+      `;
+
+      const icon = document.createElement("span");
+      icon.className = "acc-icon";
+      icon.setAttribute("aria-hidden", "true");
+
+      btn.appendChild(title);
+      btn.appendChild(icon);
+
+      const panel = document.createElement("div");
+      panel.className = "acc-panel";
+      panel.setAttribute("role", "region");
+      panel.setAttribute("aria-label", module.etapa);
+
+      const inner = document.createElement("div");
+      inner.className = "acc-panel-inner";
+
+      // conteúdo (serviços)
+      module.servicos.forEach((svc) => {
+        const p = document.createElement("p");
+        p.className = "service";
+        p.innerHTML = `<strong>${escapeHtml(svc.titulo)}</strong>: ${escapeHtml(svc.texto)}`;
+        inner.appendChild(p);
+      });
+
+      panel.appendChild(inner);
+
+      btn.addEventListener("click", () => {
+        const isOpen = item.dataset.open === "true";
+        if (isOpen) {
+          item.dataset.open = "false";
+          btn.setAttribute("aria-expanded", "false");
+          panel.style.maxHeight = "0px";
+        } else {
+          item.dataset.open = "true";
+          btn.setAttribute("aria-expanded", "true");
+          panel.style.maxHeight = panel.scrollHeight + "px";
+        }
+      });
+
+      item.appendChild(btn);
+      item.appendChild(panel);
+      fragment.appendChild(item);
+    });
+
+    accordionRoot.appendChild(fragment);
+  };
+
+  const syncAccordionHeights = () => {
+    document.querySelectorAll(".acc-item[data-open='true'] .acc-panel").forEach((panel) => {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    });
+  };
+
+  buildAccordion();
+  window.addEventListener("load", syncAccordionHeights);
 })();
