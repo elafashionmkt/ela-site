@@ -163,7 +163,7 @@
 
       btn.innerHTML = `
         <span class="acc-label">
-          <span class="acc-prefix">${esc(m.etapa)}</span><span class="acc-desc"> — ${esc(m.descricao)}</span>
+          <span class="acc-prefix">${esc(m.etapa)}</span><span class="acc-desc">: ${esc(m.descricao)}</span>
         </span>
         <span class="acc-icon" aria-hidden="true">
           <span class="acc-plus">+</span>
@@ -173,6 +173,7 @@
 
       const panel = document.createElement("div");
       panel.className = "acc-panel";
+      panel.style.maxHeight = "0px";
       panel.setAttribute("aria-hidden", "true");
 
       const inner = document.createElement("div");
