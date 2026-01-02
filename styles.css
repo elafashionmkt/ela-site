@@ -1,6 +1,6 @@
  (cd "$(git rev-parse --show-toplevel)" && git apply --3way <<'EOF' 
 diff --git a/styles.css b/styles.css
-index 4a7fd03e77349c472e982af4d5eb8cd23c2ff877..974fab37c04534b412757d5046174e5079f287c8 100644
+index 4a7fd03e77349c472e982af4d5eb8cd23c2ff877..179df10de5d368743e2844cefe1bc834d1f6a7b4 100644
 --- a/styles.css
 +++ b/styles.css
 @@ -8,50 +8,51 @@
@@ -55,7 +55,7 @@ index 4a7fd03e77349c472e982af4d5eb8cd23c2ff877..974fab37c04534b412757d5046174e50
    content: attr(data-text);
    font-weight:700;
    height:0;
-@@ -212,72 +213,85 @@ section{
+@@ -212,72 +213,88 @@ section{
    font-size:60px;
    line-height:40px;
    font-weight:700;
@@ -117,7 +117,10 @@ index 4a7fd03e77349c472e982af4d5eb8cd23c2ff877..974fab37c04534b412757d5046174e50
 +}
 +
 +@media (min-width: 1025px){
-+  .hero-right{ margin-top:-4px; }
++  .hero-right{
++    position:relative;
++    top:-4px;
++  }
  }
  
  .hero-title{
@@ -143,7 +146,7 @@ index 4a7fd03e77349c472e982af4d5eb8cd23c2ff877..974fab37c04534b412757d5046174e50
     SOBRE (/02)
  ========================================================= */
  .sobre{ margin-top:-36px; }
-@@ -345,50 +359,51 @@ section{
+@@ -345,50 +362,51 @@ section{
    letter-spacing:0;
    color:var(--wine);
    font-weight:400;
@@ -195,7 +198,7 @@ index 4a7fd03e77349c472e982af4d5eb8cd23c2ff877..974fab37c04534b412757d5046174e50
  }
  
  .acc-service{ margin:0 0 57.6px; }
-@@ -481,185 +496,193 @@ section{
+@@ -481,185 +499,193 @@ section{
    text-align:right;
    font-size:20px;
    line-height:25px;
@@ -423,7 +426,7 @@ index 4a7fd03e77349c472e982af4d5eb8cd23c2ff877..974fab37c04534b412757d5046174e50
  
    .footer-grid{
      grid-template-columns: 1fr;
-@@ -667,52 +690,52 @@ section{
+@@ -667,52 +693,52 @@ section{
      align-items:start;
    }
  
