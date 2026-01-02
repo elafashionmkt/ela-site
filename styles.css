@@ -341,7 +341,7 @@ section{ padding: 72px 0; }
 
 .acc-inner{
   padding:0 0 22px;
-  font-size:17px !important;
+  font-size:15px !important;
   line-height:24.5px !important;
   letter-spacing:0;
   color:var(--text);
@@ -500,7 +500,7 @@ section{ padding: 72px 0; }
 /* FORCE: tipografia do conteúdo aberto do acordeão */
 #accordion .acc-panel,
 #accordion .acc-panel *{
-  font-size: 17px !important;
+  font-size: 15px !important;
   line-height: 28.8px !important;
   letter-spacing: 0 !important;
 }
