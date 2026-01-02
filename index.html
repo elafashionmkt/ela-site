@@ -15,40 +15,40 @@
 </head>
 
 <body>
-  <!-- HEADER (respiro branco + barra vinho sticky) -->
+  <!-- HEADER (respiro branco + barra vinho) -->
   <header class="header" role="banner">
     <div class="header-gap" aria-hidden="true"></div>
 
     <div class="header-bar" id="header-bar">
       <div class="container header-content">
         <nav class="menu" aria-label="menu">
-          <a class="link" href="#sobre" data-text="sobre nós">sobre nós</a>
-          <a class="link" href="#arquitetura" data-text="arquitetura de serviços">arquitetura de serviços</a>
-          <a class="link" href="#cafe" data-text="vai um café?">vai um café?</a>
+          <a class="hlink" href="#sobre" data-text="sobre nós">sobre nós</a>
+          <a class="hlink" href="#arquitetura" data-text="arquitetura de serviços">arquitetura de serviços</a>
+          <a class="hlink" href="#cafe" data-text="vai um café?">vai um café?</a>
         </nav>
-
-        <!-- logo topo (mantém tamanho 150px e “sangria” via clip no box vinho) -->
-        <a class="logo-topo" href="#top" aria-label="voltar ao topo">
-          <img
-            src="assets/logo_ela_topo.svg"
-            data-fallback="assets/logo.svg"
-            alt="elã"
-            class="logo-img"
-          />
-        </a>
 
         <button class="hamburger" id="hamburger" type="button" aria-label="abrir menu" aria-controls="mobile-menu" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
       </div>
+
+      <!-- logo topo (dentro do box vinho; não mexer horizontal) -->
+      <a class="logo-topo" href="#top" aria-label="voltar ao topo">
+        <img
+          src="assets/logo_ela_topo.svg"
+          data-fallback="assets/logo.svg"
+          alt="elã"
+          class="logo-img"
+        />
+      </a>
     </div>
 
     <!-- MENU MOBILE -->
     <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
       <nav class="mobile-nav" aria-label="menu mobile">
-        <a class="link mobile-link" href="#sobre" data-text="sobre nós">sobre nós</a>
-        <a class="link mobile-link" href="#arquitetura" data-text="arquitetura de serviços">arquitetura de serviços</a>
-        <a class="link mobile-link" href="#cafe" data-text="vai um café?">vai um café?</a>
+        <a class="hlink mobile-link" href="#sobre" data-text="sobre nós">sobre nós</a>
+        <a class="hlink mobile-link" href="#arquitetura" data-text="arquitetura de serviços">arquitetura de serviços</a>
+        <a class="hlink mobile-link" href="#cafe" data-text="vai um café?" >vai um café?</a>
       </nav>
     </div>
   </header>
@@ -153,9 +153,9 @@
   <footer class="footer" role="contentinfo">
     <div class="container footer-grid">
       <nav class="footer-menu" aria-label="links do rodapé">
-        <a class="link" href="#sobre" data-text="sobre nós">sobre nós</a>
-        <a class="link" href="#arquitetura" data-text="arquitetura de serviços">arquitetura de serviços</a>
-        <a class="link" href="#cafe" data-text="agende um café">agende um café</a>
+        <a class="hlink" href="#sobre" data-text="sobre nós">sobre nós</a>
+        <a class="hlink" href="#arquitetura" data-text="arquitetura de serviços">arquitetura de serviços</a>
+        <a class="hlink" href="#cafe" data-text="agende um café">agende um café</a>
       </nav>
 
       <div class="footer-center" aria-label="logo">
@@ -167,19 +167,10 @@
         />
       </div>
 
-      <!-- contatos alinhados à direita (sem ícones) -->
-      <div class="footer-right">
-        <a class="contact" href="https://www.instagram.com/elafashionmkt/" target="_blank" rel="noopener">
-          <span class="contact-text" data-text="elafashionmkt">elafashionmkt</span>
-        </a>
-
-        <a class="contact" href="https://wa.me/5522936182313" target="_blank" rel="noopener">
-          <span class="contact-text" data-text="+55 22 93618-2313">+55 22 93618-2313</span>
-        </a>
-
-        <a class="contact" href="mailto:contato@elafashionmkt.com.br">
-          <span class="contact-text" data-text="contato@elafashionmkt.com.br">contato@elafashionmkt.com.br</span>
-        </a>
+      <div class="footer-right" aria-label="contatos">
+        <a class="hlink footer-contact" href="https://www.instagram.com/elafashionmkt/" target="_blank" rel="noopener" data-text="elafashionmkt">elafashionmkt</a>
+        <a class="hlink footer-contact" href="https://wa.me/5522936182313" target="_blank" rel="noopener" data-text="+55 22 93618-2313">+55 22 93618-2313</a>
+        <a class="hlink footer-contact" href="mailto:contato@elafashionmkt.com.br" data-text="contato@elafashionmkt.com.br">contato@elafashionmkt.com.br</a>
       </div>
     </div>
   </footer>
