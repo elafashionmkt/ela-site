@@ -1,4 +1,3 @@
-// script.js
 (() => {
   // fallback para assets (logo topo/footer e email)
   document.querySelectorAll("img[data-fallback]").forEach((img) => {
@@ -8,29 +7,12 @@
     });
   });
 
-  // garante data-text em links de texto (para hover sem “pulo”)
-  document.querySelectorAll("a:not(.btn)").forEach((a) => {
-    if (a.classList.contains("logo-topo")) return;
-    if (a.hasAttribute("data-text")) return;
-
-    const text = (a.textContent || "").replace(/\s+/g, " ").trim();
-    if (text) a.setAttribute("data-text", text);
-  });
-
-  // menu mobile (fica sempre logo abaixo da barra vinho sticky)
-  const headerBar = document.getElementById("header-bar");
+  // menu mobile
   const hamburger = document.getElementById("hamburger");
   const mobileMenu = document.getElementById("mobile-menu");
   const mobileLinks = document.querySelectorAll(".mobile-link");
 
-  const positionMobileMenu = () => {
-    if (!headerBar || !mobileMenu) return;
-    const rect = headerBar.getBoundingClientRect();
-    mobileMenu.style.top = `${Math.round(rect.bottom)}px`;
-  };
-
   const openMenu = () => {
-    positionMobileMenu();
     hamburger.classList.add("open");
     mobileMenu.classList.add("active");
     hamburger.setAttribute("aria-expanded", "true");
@@ -55,23 +37,12 @@
     if (e.key === "Escape") closeMenu();
   });
 
-  window.addEventListener(
-    "scroll",
-    () => {
-      if (hamburger?.classList.contains("open")) positionMobileMenu();
-    },
-    { passive: true }
-  );
-
-  window.addEventListener("resize", () => {
-    if (hamburger?.classList.contains("open")) positionMobileMenu();
-  });
-
-  // acordeão (multi-open) - inicia com TODOS fechados
+  // acordeão (multi-open)
   const DATA = [
     {
       etapa: "fundação",
       descricao: "o que organiza a marca por dentro e define direção",
+      openByDefault: true,
       servicos: [
         {
           titulo: "planejamento estratégico de comunicação",
@@ -151,7 +122,7 @@
     DATA.forEach((m) => {
       const item = document.createElement("div");
       item.className = "acc-item";
-      item.dataset.open = "false";
+      item.dataset.open = m.openByDefault ? "true" : "false";
 
       const btn = document.createElement("button");
       btn.className = "acc-btn";
@@ -159,22 +130,17 @@
 
       const headerText = `${m.etapa}: ${m.descricao}`;
       btn.setAttribute("data-text", headerText);
-      btn.setAttribute("aria-expanded", "false");
 
       btn.innerHTML = `
         <span class="acc-label">
-          <span class="acc-prefix">${esc(m.etapa)}</span><span class="acc-desc">: ${esc(m.descricao)}</span>
+          <span class="acc-prefix">${esc(m.etapa)}:</span>
+          <span class="acc-desc"> ${esc(m.descricao)}</span>
         </span>
-        <span class="acc-icon" aria-hidden="true">
-          <span class="acc-plus">+</span>
-          <span class="acc-minus">−</span>
-        </span>
+        <span class="acc-icon" aria-hidden="true"></span>
       `;
 
       const panel = document.createElement("div");
       panel.className = "acc-panel";
-      panel.style.maxHeight = "0px";
-      panel.setAttribute("aria-hidden", "true");
 
       const inner = document.createElement("div");
       inner.className = "acc-inner";
@@ -193,12 +159,8 @@
         if (openNow) {
           item.dataset.open = "false";
           panel.style.maxHeight = "0px";
-          btn.setAttribute("aria-expanded", "false");
-          panel.setAttribute("aria-hidden", "true");
         } else {
           item.dataset.open = "true";
-          btn.setAttribute("aria-expanded", "true");
-          panel.setAttribute("aria-hidden", "false");
           panel.style.maxHeight = panel.scrollHeight + "px";
         }
       });
@@ -215,17 +177,12 @@
   const syncOpenHeights = () => {
     root.querySelectorAll(".acc-item").forEach((item) => {
       const panel = item.querySelector(".acc-panel");
-      const btn = item.querySelector(".acc-btn");
       if (!panel) return;
 
       if (item.dataset.open === "true") {
         panel.style.maxHeight = panel.scrollHeight + "px";
-        btn?.setAttribute("aria-expanded", "true");
-        panel.setAttribute("aria-hidden", "false");
       } else {
         panel.style.maxHeight = "0px";
-        btn?.setAttribute("aria-expanded", "false");
-        panel.setAttribute("aria-hidden", "true");
       }
     });
   };
