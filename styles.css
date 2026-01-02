@@ -13,8 +13,8 @@
   --col-left:247px;   /* 120 + 247 = 367 */
   --line:#FFCCCC;
 
-  --logo-right: 42px; /* ajuste fino se precisar */
-
+  /* AJUSTE FINO: posição horizontal do logo do topo (para bater na linha ciano) */
+  --logo-right: 42px; /* se precisar: aumente p/ ir mais à esquerda, diminua p/ ir mais à direita */
 }
 
 *{ box-sizing:border-box; }
@@ -131,7 +131,7 @@ a.btn{
   .hamburger span{ transition:none; }
 }
 
-/* logo topo (dentro do box vinho; mantém alinhamento horizontal pelo gutter) */
+/* logo topo (dentro do box vinho; ajuste fino via --logo-right) */
 .logo-topo{
   position:absolute;
   right:var(--logo-right);
@@ -248,27 +248,6 @@ section{ padding: 72px 0; }
   letter-spacing:0.05em;
 }
 
-/* Corrige o HTML rico vindo do admin (Quill) */
-#heroRichText p {
-  margin: 0;        /* remove a margem padrão do <p> */
-}
-
-#heroRichText p + p {
-  margin-top: 0;    /* garante que não crie “respiro” entre parágrafos */
-}
-
-#heroRichText a {
-  color: inherit;
-  text-decoration: underline;
-}
-
-#heroRichText ul,
-#heroRichText ol {
-  margin: 0;
-  padding-left: 1.2em;
-}
-
-
 /* SOBRE (ajuste: subir o bloco para o topo da foto encostar na linha ciano) */
 .sobre{
   margin-top:-36px;
@@ -372,7 +351,7 @@ section{ padding: 72px 0; }
 }
 
 .acc-service{
-  margin:0 0 57.6px;              /* “pula 2 parágrafos” entre blocos */
+  margin:0 0 30px;              /* “pula 1,2 parágrafos” entre blocos */
 }
 
 .acc-service:last-child{
@@ -475,7 +454,7 @@ section{ padding: 72px 0; }
     --gutter: 24px;
     --logo-right: var(--gutter);
   }
-}
+
   .menu{ display:none; }
   .hamburger{ display:inline-block; }
 
