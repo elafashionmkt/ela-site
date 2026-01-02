@@ -341,7 +341,7 @@ section{ padding: 72px 0; }
 
 .acc-inner{
   padding:0 0 22px;
-  font-size:17px;
+   font-size:20px !important;
   line-height:28.8px;
   letter-spacing:0;
   color:var(--text);
