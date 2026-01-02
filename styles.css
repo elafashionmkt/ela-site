@@ -1,346 +1,479 @@
-// script.js
-(function () {
-  function qs(sel, root = document) { return root.querySelector(sel); }
-  function qsa(sel, root = document) { return Array.from(root.querySelectorAll(sel)); }
+/* styles.css */
+:root{
+  --wine:#791815;
+  --hover:#FFCCCC;
+  --bg:#ffffff;
+  --text:#000000;
 
-  function escapeHtml(str) {
-    return String(str)
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
+  --container:1280px;
+  --gutter:120px;
+
+  --gap-top:110px;     /* respiro branco */
+  --bar-h:110px;       /* altura barra vinho */
+  --header-h:220px;    /* gap + barra */
+
+  --col-left:247px;    /* 120 + 247 = 367 (bate com o print) */
+  --line:#FFCCCC;
+}
+
+*{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+body{
+  margin:0;
+  font-family:"Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  padding-top: 0;
+}
+
+img{ display:block; max-width:100%; }
+a{ color:inherit; text-decoration:none; }
+
+/* container do frame */
+.container{
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* links sem “pulo” (todos, exceto o botão) */
+.hlink{
+  position:relative;
+  display:inline-block;
+  font-weight:400;
+}
+.hlink::before{
+  content: attr(data-text);
+  font-weight:700;
+  visibility:hidden;
+  height:0;
+  overflow:hidden;
+  display:block;
+}
+.hlink:hover{
+  color: var(--hover);
+  font-weight:700;
+}
+
+/* HEADER */
+.header{
+  width:100%;
+  background: var(--bg);
+  z-index:1000;
+}
+
+.header-gap{
+  height: var(--gap-top);
+}
+
+.header-bar{
+  height: var(--bar-h);
+  background: var(--wine);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  color:#fff;
+
+  /* garante que o logo (sangrado) não “vaze” ao rolar */
+  overflow:hidden;
+}
+
+.header-content{
+  height:100%;
+  display:flex;
+  align-items:center;
+  position:relative;
+}
+
+.menu{
+  display:flex;
+  gap:29px;
+  align-items:center;
+}
+
+/* menu em branco puro */
+.menu .hlink{
+  color: inherit;
+  font-size:16px;
+  letter-spacing:.05em;
+}
+
+/* logo topo: x=918 (não mexer horizontal), agora dentro do box vinho e centralizado verticalmente */
+.logo-topo{
+  position:absolute;
+  left: calc(50% - 640px + 918px);
+  height:150px;
+  display:flex;
+  align-items:center;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.logo-img{
+  height:150px;
+  width:auto;
+}
+
+/* hamburger */
+.hamburger{
+  display:none;
+  width:44px;
+  height:44px;
+  border:0;
+  background:transparent;
+  margin-left:auto;
+  cursor:pointer;
+  border-radius:10px;
+}
+.hamburger span{
+  display:block;
+  width:26px;
+  height:2px;
+  background:#fff;
+  border-radius:2px;
+  margin:6px auto;
+  transition: transform .25s ease, opacity .25s ease;
+}
+.hamburger.open span:nth-child(1){ transform: translateY(8px) rotate(45deg); }
+.hamburger.open span:nth-child(2){ opacity:0; }
+.hamburger.open span:nth-child(3){ transform: translateY(-8px) rotate(-45deg); }
+
+/* mobile menu */
+.mobile-menu{
+  position:fixed;
+  top: var(--bar-h);
+  left:0;
+  width:100%;
+  background: var(--wine);
+  border-top: 1px solid rgba(255,255,255,.18);
+  transform: translateY(-10px);
+  opacity:0;
+  pointer-events:none;
+  transition: transform .25s ease, opacity .25s ease;
+  z-index:999;
+}
+.mobile-menu.active{
+  transform: translateY(0);
+  opacity:1;
+  pointer-events:auto;
+}
+.mobile-nav{
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 22px var(--gutter) 28px;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+.mobile-link{
+  color:#fff;
+  font-size:18px;
+  letter-spacing:.05em;
+}
+
+/* GRID BASE (/01 /03 /04 alinhados) */
+.grid-2col{
+  display:grid;
+  grid-template-columns: var(--col-left) 1fr;
+  gap: 56px;
+  align-items:start;
+}
+.col-left{ padding-top: 6px; }
+.col-right{ min-width:0; }
+
+.sec-num{ width:92px; height:auto; }
+.num-right{ width:98px; }
+
+/* HERO */
+.hero{
+  /* pedido: frase em Y=163,16 dentro do hero */
+  padding: 163.16px 0 18px;
+}
+.hero-right{
+  position:relative;
+  max-width: 760px;
+  margin-left:auto;
+  text-align:right;
+}
+.hero-title{
+  margin:0;
+  color: var(--wine);
+  font-size: 47px;
+  line-height: 70px;
+  font-weight:400;
+  letter-spacing:-0.01em;
+  text-align:right;
+}
+.hero-title strong{ font-weight:700; }
+
+.hero-sub{
+  margin: 10px 0 0;
+  font-size: 24px;
+  line-height: 40px;
+  letter-spacing:.05em;
+  text-align:right;
+  max-width: 420px;
+  margin-left:auto;
+}
+
+/* SOBRE */
+.sobre{
+  padding: 86px 0;
+}
+.sobre-grid{
+  display:grid;
+  grid-template-columns: 1.08fr .92fr;
+  gap: 56px;
+  align-items:center;
+}
+.sobre-img img{
+  width:100%;
+  height:auto;
+  border-radius: 22px;
+}
+.sobre-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap: 18px;
+}
+.title{
+  margin:0;
+  color: var(--wine);
+  font-size: 60px;
+  line-height: 40px;
+  font-weight:700;
+  letter-spacing:-0.01em;
+  padding-bottom: 10px;
+}
+
+/* CORPO */
+.copy{
+  margin-top: 14px;
+  font-size:16px;
+  line-height:25px;
+  letter-spacing:.05em;
+}
+.copy p{ margin: 0 0 14px; }
+.copy strong{ font-weight:700; }
+
+/* ARQUITETURA */
+.arquitetura{
+  padding: 72px 0 92px;
+}
+.arq-copy{
+  max-width: 760px;
+}
+
+/* ACCORDION */
+.accordion{
+  margin-top: 22px;
+  max-width: 820px;
+  border-top: 1px solid var(--line);
+}
+.acc-item{
+  border-bottom: 1px solid var(--line);
+}
+.acc-btn{
+  width:100%;
+  border:0;
+  background:transparent;
+  padding: 18px 0;
+  text-align:left;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 16px;
+
+  color: var(--wine);
+  font-size:16px;
+  line-height:25px;
+  letter-spacing:.05em;
+  font-weight:400;
+}
+.acc-btn::before{
+  content: attr(data-text);
+  font-weight:700;
+  visibility:hidden;
+  height:0;
+  overflow:hidden;
+  display:block;
+}
+.acc-btn:hover{ font-weight:700; }
+
+.acc-label{
+  min-width:0;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.acc-prefix{ font-weight:700; }
+.acc-desc{ font-weight:400; }
+
+.acc-icon{
+  width:18px;
+  height:18px;
+  flex:0 0 18px;
+  position:relative;
+}
+.acc-icon span{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+  font-size:22px;
+  line-height:18px;
+  color: var(--hover);
+  transition: opacity .22s ease, transform .22s ease;
+}
+.acc-plus{ opacity:1; transform: scale(1); }
+.acc-minus{ opacity:0; transform: scale(.85); }
+.acc-item[data-open="true"] .acc-plus{ opacity:0; transform: scale(.85); }
+.acc-item[data-open="true"] .acc-minus{ opacity:1; transform: scale(1); }
+
+.acc-panel{
+  max-height:0;
+  overflow:hidden;
+  transition: max-height .32s ease;
+}
+.acc-inner{
+  padding: 0 0 18px 0;
+  font-size:16px;
+  line-height:25px;
+  letter-spacing:.05em;
+}
+.acc-inner p{ margin:0 0 12px; }
+.acc-inner p:last-child{ margin-bottom:0; }
+.acc-inner strong{ font-weight:700; }
+
+/* CAFÉ */
+.cafe{
+  padding: 68px 0 120px;
+}
+.cafe-title{
+  margin:0;
+  color: var(--wine);
+  font-size: 60px;
+  line-height: 40px;
+  font-weight:700;
+  letter-spacing:-0.01em;
+  padding-bottom: 10px;
+}
+.btn{
+  display:inline-block;
+  margin-top: 10px;
+  padding: 12px 26px;
+  border-radius: 6px;
+  background: var(--hover);
+  color: var(--wine);
+  font-weight:700;
+  font-size:16px;
+  letter-spacing:.05em;
+}
+/* sem hover visual no botão */
+.btn:hover{ color: var(--wine); }
+
+/* FOOTER */
+.footer{
+  background: var(--wine);
+  color:#fff;
+  padding: 46px 0 54px;
+}
+.footer-grid{
+  display:grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 24px;
+  align-items:center;
+}
+.footer-menu{
+  display:flex;
+  flex-direction:column;
+  gap: 10px;
+}
+.footer-menu .hlink{
+  color: inherit;
+  font-size:16px;
+  letter-spacing:.05em;
+}
+
+.footer-center{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+.footer-logo{
+  width:114px;
+  height:auto;
+}
+
+.footer-right{
+  display:flex;
+  flex-direction:column;
+  gap: 12px;
+  align-items:flex-end;
+  text-align:right;
+}
+
+.footer-contact{
+  color:#fff;
+  font-size:16px;
+  letter-spacing:.05em;
+}
+
+/* offset para âncoras por causa da barra sticky */
+section[id]{ scroll-margin-top: calc(var(--bar-h) + 20px); }
+
+/* RESPONSIVO */
+@media (max-width: 980px){
+  :root{
+    --gutter:24px;
+    --gap-top:56px;
+    --bar-h:84px;
+    --header-h:140px;
+    --col-left:0px;
   }
 
-  function splitParagraphs(text) {
-    const t = String(text || "").trim();
-    if (!t) return [];
-    // tenta respeitar quebras e separadores comuns em CSV
-    const parts = t
-      .replace(/\r\n/g, "\n")
-      .replace(/\r/g, "\n")
-      .split(/\n{2,}|\s*\|\s*/g)
-      .map(s => s.trim())
-      .filter(Boolean);
-    return parts.length ? parts : [t];
+  .menu{ display:none; }
+  .hamburger{ display:block; }
+
+  /* logo topo centrado no mobile */
+  .logo-topo{
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .logo-img{ height:120px; }
+
+  .grid-2col{
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .col-left{ display:none; }
+
+  .hero-title{
+    font-size: 34px;
+    line-height: 48px;
+  }
+  .hero-sub{
+    text-align:left;
+    margin-left:0;
+    max-width:none;
+    font-size: 18px;
+    line-height: 30px;
   }
 
-  function detectDelimiter(line) {
-    const commas = (line.match(/,/g) || []).length;
-    const semis = (line.match(/;/g) || []).length;
-    return semis > commas ? ";" : ",";
+  .sobre-grid{
+    grid-template-columns: 1fr;
+    gap: 22px;
   }
 
-  // CSV simples (suporta aspas)
-  function parseCSV(text) {
-    const raw = String(text || "").replace(/\r\n/g, "\n").replace(/\r/g, "\n").trim();
-    if (!raw) return { headers: [], rows: [] };
-
-    const lines = raw.split("\n").filter(l => l.trim().length);
-    if (!lines.length) return { headers: [], rows: [] };
-
-    const delim = detectDelimiter(lines[0]);
-
-    function parseLine(line) {
-      const out = [];
-      let cur = "";
-      let inQuotes = false;
-
-      for (let i = 0; i < line.length; i++) {
-        const ch = line[i];
-
-        if (ch === '"') {
-          // escape "" dentro de aspas
-          if (inQuotes && line[i + 1] === '"') {
-            cur += '"';
-            i++;
-          } else {
-            inQuotes = !inQuotes;
-          }
-          continue;
-        }
-
-        if (!inQuotes && ch === delim) {
-          out.push(cur.trim());
-          cur = "";
-          continue;
-        }
-
-        cur += ch;
-      }
-      out.push(cur.trim());
-      return out;
-    }
-
-    const first = parseLine(lines[0]);
-    const hasHeader = first.some(v => /[A-Za-zÀ-ÖØ-öø-ÿ]/.test(v)) && first.every(v => v.length > 0);
-
-    const headers = hasHeader ? first : first.map((_, i) => `col_${i + 1}`);
-    const start = hasHeader ? 1 : 0;
-
-    const rows = [];
-    for (let i = start; i < lines.length; i++) {
-      const vals = parseLine(lines[i]);
-      if (vals.every(v => !v)) continue;
-
-      const obj = {};
-      headers.forEach((h, idx) => { obj[h] = vals[idx] ?? ""; });
-      rows.push(obj);
-    }
-
-    return { headers, rows };
+  .footer-grid{
+    grid-template-columns: 1fr;
+    gap: 26px;
+    align-items:start;
   }
-
-  function pickField(obj, keys) {
-    const lower = Object.keys(obj).reduce((acc, k) => {
-      acc[k.toLowerCase()] = k;
-      return acc;
-    }, {});
-
-    for (const k of keys) {
-      const lk = k.toLowerCase();
-      if (lower[lk]) return obj[lower[lk]];
-      // busca parcial
-      const found = Object.keys(lower).find(x => x.includes(lk));
-      if (found) return obj[lower[found]];
-    }
-    return "";
-  }
-
-  function buildAccordionItem({ prefix, title, desc, body }) {
-    const safePrefix = escapeHtml(prefix);
-    const safeTitle = escapeHtml(title);
-    const safeDesc = escapeHtml(desc);
-
-    const labelText = [prefix, title || desc].filter(Boolean).join(" ");
-    const btnDataText = escapeHtml(labelText);
-
-    const paragraphs = splitParagraphs(body);
-    const innerHTML = paragraphs.map(p => `<p>${escapeHtml(p)}</p>`).join("");
-
-    return `
-      <div class="acc-item" data-open="false">
-        <button class="acc-btn" type="button" aria-expanded="false" data-text="${btnDataText}">
-          <span class="acc-label">
-            ${safePrefix ? `<span class="acc-prefix">${safePrefix}</span> ` : ""}
-            <span class="acc-desc">${safeTitle || safeDesc}</span>
-          </span>
-          <span class="acc-icon" aria-hidden="true">
-            <span class="acc-plus">+</span>
-            <span class="acc-minus">−</span>
-          </span>
-        </button>
-        <div class="acc-panel" aria-hidden="true">
-          <div class="acc-inner">${innerHTML}</div>
-        </div>
-      </div>
-    `;
-  }
-
-  function closeItem(item) {
-    item.dataset.open = "false";
-    const btn = qs(".acc-btn", item);
-    const panel = qs(".acc-panel", item);
-    btn.setAttribute("aria-expanded", "false");
-    panel.setAttribute("aria-hidden", "true");
-    panel.style.maxHeight = "0px";
-  }
-
-  function openItem(item) {
-    item.dataset.open = "true";
-    const btn = qs(".acc-btn", item);
-    const panel = qs(".acc-panel", item);
-    btn.setAttribute("aria-expanded", "true");
-    panel.setAttribute("aria-hidden", "false");
-
-    // animação suave (max-height)
-    panel.style.maxHeight = panel.scrollHeight + "px";
-  }
-
-  function wireAccordion(root) {
-    const items = qsa(".acc-item", root);
-
-    items.forEach((item) => {
-      const btn = qs(".acc-btn", item);
-      const panel = qs(".acc-panel", item);
-
-      // estado inicial
-      panel.style.maxHeight = "0px";
-
-      btn.addEventListener("click", () => {
-        const isOpen = item.dataset.open === "true";
-
-        // comportamento: abre um por vez (mais limpo pro “menu”)
-        items.forEach(it => { if (it !== item) closeItem(it); });
-
-        if (isOpen) closeItem(item);
-        else {
-          openItem(item);
-          // garante altura correta após o repaint
-          requestAnimationFrame(() => {
-            panel.style.maxHeight = panel.scrollHeight + "px";
-          });
-        }
-      });
-    });
-
-    // mantém alturas se redimensionar
-    window.addEventListener("resize", () => {
-      items.forEach((item) => {
-        if (item.dataset.open === "true") {
-          const panel = qs(".acc-panel", item);
-          panel.style.maxHeight = panel.scrollHeight + "px";
-        }
-      });
-    });
-  }
-
-  async function loadAccordionFromCSV(root) {
-    // tenta múltiplos caminhos (normalização/encoding do nome com acento)
-    const precomposed = "listagem acorde\u00e3o.csv"; // acordeão
-    const decomposed = "listagem acorde" + "a\u0303" + "o.csv"; // acordeão (a + combining tilde)
-    const candidates = [
-      "./" + precomposed,
-      "./" + decomposed,
-      precomposed,
-      decomposed,
-      "listagem%20acorde%C3%A3o.csv",
-      "listagem%20acordea%CC%83o.csv"
-    ];
-
-    let csvText = "";
-    for (const url of candidates) {
-      try {
-        const res = await fetch(url, { cache: "no-cache" });
-        if (res && res.ok) {
-          csvText = await res.text();
-          break;
-        }
-      } catch (_) {}
-    }
-
-    if (!csvText) {
-      // fallback mínimo (caso extremo). Mantém o layout funcionando.
-      const fallback = [
-        { prefix: "/01", title: "diagnóstico e posicionamento", desc: "", body: "" },
-        { prefix: "/02", title: "direção criativa e editorial", desc: "", body: "" },
-        { prefix: "/03", title: "social e conteúdo", desc: "", body: "" },
-        { prefix: "/04", title: "influência e relações", desc: "", body: "" },
-        { prefix: "/05", title: "lançamentos", desc: "", body: "" }
-      ];
-
-      root.innerHTML = fallback.map(buildAccordionItem).join("");
-      wireAccordion(root);
-      return;
-    }
-
-    const { rows } = parseCSV(csvText);
-
-    const items = rows.map((row, idx) => {
-      const prefix =
-        pickField(row, ["prefix", "numero", "n", "id", "ordem"]) ||
-        (() => {
-          // tenta achar algo que pareça “/01”
-          const vals = Object.values(row).map(v => String(v || "").trim());
-          const found = vals.find(v => /^\/?\d{1,2}([./-]\d{1,2})?$/.test(v));
-          if (found) return found.startsWith("/") ? found : "/" + found;
-          return "/" + String(idx + 1).padStart(2, "0");
-        })();
-
-      const title =
-        pickField(row, ["titulo", "title", "módulo", "modulo", "nome", "name"]) ||
-        pickField(row, ["col_2", "col_1"]);
-
-      const desc =
-        pickField(row, ["subtitulo", "subtítulo", "desc", "descricao", "descrição", "resumo"]) ||
-        "";
-
-      // corpo: pega o campo mais “longo” ou um campo típico de conteúdo
-      let body =
-        pickField(row, ["texto", "conteudo", "conteúdo", "body", "detalhes", "detalhe", "copy"]) ||
-        "";
-      if (!body) {
-        const vals = Object.values(row).map(v => String(v || ""));
-        body = vals.sort((a, b) => b.length - a.length)[0] || "";
-      }
-
-      return { prefix, title, desc, body };
-    });
-
-    root.innerHTML = items.map(buildAccordionItem).join("");
-    wireAccordion(root);
-  }
-
-  function setupHamburger() {
-    const headerBar = qs("#header-bar");
-    const hamburger = qs("#hamburger");
-    const mobileMenu = qs("#mobile-menu");
-    if (!headerBar || !hamburger || !mobileMenu) return;
-
-    function positionMobileMenu() {
-      const rect = headerBar.getBoundingClientRect();
-      mobileMenu.style.top = Math.round(rect.bottom) + "px";
-    }
-
-    function openMenu() {
-      positionMobileMenu();
-      mobileMenu.classList.add("active");
-      mobileMenu.setAttribute("aria-hidden", "false");
-      hamburger.setAttribute("aria-expanded", "true");
-      hamburger.classList.add("open");
-    }
-
-    function closeMenu() {
-      mobileMenu.classList.remove("active");
-      mobileMenu.setAttribute("aria-hidden", "true");
-      hamburger.setAttribute("aria-expanded", "false");
-      hamburger.classList.remove("open");
-    }
-
-    hamburger.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const isOpen = mobileMenu.classList.contains("active");
-      if (isOpen) closeMenu();
-      else openMenu();
-    });
-
-    // fecha ao clicar em link
-    qsa("a", mobileMenu).forEach(a => a.addEventListener("click", closeMenu));
-
-    // fecha ao clicar fora
-    document.addEventListener("click", (e) => {
-      if (!mobileMenu.classList.contains("active")) return;
-      const target = e.target;
-      if (mobileMenu.contains(target) || hamburger.contains(target)) return;
-      closeMenu();
-    });
-
-    // mantém o menu sempre “colado” abaixo da barra (quando sticky muda de posição)
-    window.addEventListener("scroll", () => {
-      if (mobileMenu.classList.contains("active")) positionMobileMenu();
-    }, { passive: true });
-
-    window.addEventListener("resize", () => {
-      if (mobileMenu.classList.contains("active")) positionMobileMenu();
-    });
-  }
-
-  function setupImageFallbacks() {
-    qsa("img[data-fallback]").forEach((img) => {
-      img.addEventListener("error", () => {
-        const fb = img.getAttribute("data-fallback");
-        if (!fb) return;
-        img.src = fb;
-        img.removeAttribute("data-fallback");
-      }, { once: true });
-    });
-  }
-
-  document.addEventListener("DOMContentLoaded", () => {
-    setupImageFallbacks();
-    setupHamburger();
-
-    const accordionRoot = qs("#accordion");
-    if (accordionRoot) loadAccordionFromCSV(accordionRoot);
-  });
-})();
+  .footer-center{ justify-content:center; }
+  .footer-right{ align-items:flex-end; text-align:right; }
+}
