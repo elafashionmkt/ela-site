@@ -2,178 +2,558 @@
 <html lang="pt-br">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>elã | fashion mkt</title>
-  <meta name="description" content="estratégia de marca, conteúdo e influência com intenção." />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>elã — base</title>
+
+  <!-- Inter (aproxima o Figma) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --ela-wine:#791815;
+      --ela-graphite:#3a3838;
+      --ela-white:#ffffff;
+      --ela-blush:#ffcccc;
+      --max:1280px;
+    }
+
+    *{ box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
+    body{
+      margin:0;
+      font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:#000;
+      background:#fff;
+    }
+
+    a{ color:inherit; text-decoration:none; }
+    a:hover{ text-decoration:underline; }
+
+    .wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:0 24px;
+    }
+
+    /* HEADER */
+    header.site-header{
+      background:var(--ela-wine);
+      color:var(--ela-white);
+      position:sticky;
+      top:0;
+      z-index:50;
+    }
+    .header-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:18px 0;
+    }
+
+    .menu{
+      display:flex;
+      gap:28px;
+      font-size:16px;
+      letter-spacing:0.2px;
+      white-space:nowrap;
+    }
+
+    .logo{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      min-width:160px;
+    }
+    .logo img{
+      height:44px;
+      width:auto;
+      display:block;
+    }
+
+    /* HERO */
+    section.hero{
+      padding:54px 0 40px;
+    }
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:26px;
+      align-items:start;
+    }
+    .hero-top{
+      display:flex;
+      justify-content:flex-end;
+      align-items:flex-start;
+      gap:16px;
+    }
+    .hero-icons{
+      display:flex;
+      gap:8px;
+      align-items:flex-start;
+      margin-top:10px;
+      flex-shrink:0;
+    }
+    .hero-icons img{ height:56px; width:auto; display:block; }
+    .hero-text{
+      text-align:right;
+      max-width:760px;
+    }
+    .hero-title{
+      margin:0;
+      color:var(--ela-wine);
+      font-size:46px;
+      line-height:1.15;
+      font-weight:400;
+    }
+    .hero-title strong{ font-weight:700; }
+    .hero-sub{
+      margin:18px 0 0;
+      color:var(--ela-graphite);
+      font-size:20px;
+      line-height:1.55;
+      letter-spacing:0.05em;
+    }
+
+    /* SECTIONS */
+    section{
+      padding:64px 0;
+    }
+    .section-title-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      margin-bottom:26px;
+    }
+    .h2{
+      margin:0;
+      color:var(--ela-wine);
+      font-size:54px;
+      line-height:1.05;
+      font-weight:700;
+    }
+    .section-badge img{ height:66px; width:auto; display:block; }
+
+    .p{
+      margin:0;
+      font-size:16px;
+      line-height:25px;
+      letter-spacing:0.05em;
+      color:#000;
+      white-space:pre-wrap;
+    }
+    .p strong{ font-weight:700; }
+
+    /* ABOUT */
+    .about-grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:34px;
+      align-items:start;
+    }
+    .about-media{
+      border-radius:30px;
+      overflow:hidden;
+      background:#eee;
+      aspect-ratio: 548 / 608;
+      max-width:548px;
+      width:100%;
+    }
+    .about-media img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
+    /* SERVICES (arquitetura) */
+    .services-grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:24px;
+      align-items:start;
+    }
+
+    /* MODULES */
+    .modules{
+      display:grid;
+      gap:22px;
+      max-width:920px;
+    }
+    .module{
+      padding:18px 0 8px;
+      border-top:1px solid rgba(121,24,21,0.25);
+    }
+    .module-head{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:18px;
+    }
+    .module-title{
+      margin:0;
+      color:var(--ela-wine);
+      font-size:24px;
+      line-height:1.2;
+      font-weight:300;
+    }
+    .module-title strong{ font-weight:700; }
+    .module-plus{
+      width:31px;
+      height:31px;
+      flex-shrink:0;
+      display:block;
+    }
+    .module-body{
+      margin-top:14px;
+      color:var(--ela-graphite);
+      font-size:18px;
+      line-height:1.6;
+      letter-spacing:0.04em;
+      white-space:pre-wrap;
+    }
+    .module-body strong{ font-weight:700; }
+    .module-body u{ text-decoration:underline; }
+
+    /* CTA */
+    .cta{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:24px;
+      flex-wrap:wrap;
+    }
+    .cta-text{
+      max-width:620px;
+    }
+    .cta-title{
+      margin:0 0 18px;
+      color:var(--ela-wine);
+      font-size:54px;
+      line-height:1.05;
+      font-weight:700;
+    }
+    .cta-btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:14px 22px;
+      background:var(--ela-blush);
+      border-radius:10px;
+      font-weight:700;
+      font-size:20px;
+      letter-spacing:0.05em;
+      color:var(--ela-wine);
+      border:0;
+      cursor:pointer;
+    }
+
+    /* FOOTER */
+    footer{
+      background:var(--ela-wine);
+      color:#fff;
+      padding:72px 0 64px;
+      margin-top:30px;
+    }
+    .footer-top{
+      display:flex;
+      justify-content:center;
+      margin-bottom:28px;
+    }
+    .footer-top img{
+      height:72px;
+      width:auto;
+      display:block;
+    }
+    .footer-grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:26px;
+      align-items:start;
+    }
+    .footer-links{
+      display:grid;
+      gap:10px;
+      font-weight:300;
+      font-size:18px;
+      letter-spacing:0.05em;
+      line-height:1.4;
+    }
+    .footer-contact{
+      display:grid;
+      gap:10px;
+      font-weight:300;
+      font-size:18px;
+      letter-spacing:0.05em;
+      text-align:left;
+    }
+    .footer-social{
+      display:flex;
+      gap:14px;
+      align-items:flex-end;
+      margin-top:10px;
+    }
+    .footer-social a img{
+      height:26px;
+      width:auto;
+      display:block;
+    }
+
+    /* RESPONSIVE */
+    @media (min-width: 900px){
+      .wrap{ padding:0 48px; }
+
+      .hero-grid{ grid-template-columns: 1fr; }
+      .about-grid{ grid-template-columns: 548px 1fr; gap:64px; align-items:start; }
+      .services-grid{ grid-template-columns: 124px 1fr; gap:56px; align-items:start; }
+      .footer-grid{
+        grid-template-columns: 1fr 1fr;
+        align-items:start;
+      }
+      .footer-contact{ text-align:right; }
+      .footer-grid .right{
+        display:flex;
+        justify-content:flex-end;
+        gap:18px;
+        align-items:flex-end;
+      }
+    }
+  </style>
 </head>
+
 <body>
+  <!-- ASSETS (URLs vindas do node 2:7) -->
+  <!-- Se algum asset não abrir fora do Figma, exporte e substitua essas URLs -->
+  <script>
+    window.FIGMA_ASSETS = {
+      rectangle1: "https://www.figma.com/api/mcp/asset/396521cc-0984-44be-a9f8-934c0cff91b3",
+      logoEla: "https://www.figma.com/api/mcp/asset/aee05bd0-4a60-4bff-9058-b876fc7a1968",
+      v01a: "https://www.figma.com/api/mcp/asset/4f753575-00d5-47eb-bcc0-45fdd32fc4d4",
+      v01b: "https://www.figma.com/api/mcp/asset/8902c195-c344-4f65-9b1e-47e2a18e24cd",
+      v01c: "https://www.figma.com/api/mcp/asset/ff88c469-b940-4183-a5d5-3384a052a507",
+      icon02: "https://www.figma.com/api/mcp/asset/4737e8fb-8729-4092-b98c-c80f6256e663",
+      icon03: "https://www.figma.com/api/mcp/asset/e2e86515-c444-4403-9d28-43df457b2bc4",
+      line: "https://www.figma.com/api/mcp/asset/63633be1-6dc8-4edd-8453-d0f2d591e9d5",
+      plus: "https://www.figma.com/api/mcp/asset/ff83f671-0e20-4c7c-9592-38b0657134d3",
+      icon04: "https://www.figma.com/api/mcp/asset/330abd6b-b0f2-48af-92e6-8ee9b00715b2",
+      footerLogo: "https://www.figma.com/api/mcp/asset/03b771db-9ad5-4717-8443-1d248d880411",
+      instagram: "https://www.figma.com/api/mcp/asset/d3ad512c-e796-4d1f-9ffc-1ea2f38eb0db",
+      email: "https://www.figma.com/api/mcp/asset/0ee2a0f4-c9ae-4502-af9b-978f735aa88b"
+      // whatsapp no node vinha como vetores separados; aqui você pode trocar por um SVG pronto
+    };
+  </script>
 
-  <!-- Header -->
-  <header class="site-header" role="banner">
-    <div class="container header-inner">
-      <a class="brand" href="#top" aria-label="voltar ao topo">
-        <img src="assets/logo.svg" alt="elã" class="brand-logo" />
-      </a>
+  <header class="site-header" aria-label="Topo">
+    <div class="wrap">
+      <div class="header-row">
+        <nav class="menu" aria-label="Menu">
+          <a href="#sobre-nos">sobre nós</a>
+          <a href="#servicos">arquitetura de serviços</a>
+          <a href="#cafe">vai um café?</a>
+        </nav>
 
-      <nav class="nav-desktop" aria-label="menu">
-        <a class="nav-link" href="#sobre"><span class="stable-bold" data-text="sobre nós">sobre nós</span></a>
-        <a class="nav-link" href="#arquitetura"><span class="stable-bold" data-text="arquitetura de serviços">arquitetura de serviços</span></a>
-        <a class="nav-link" href="#cafe"><span class="stable-bold" data-text="vai um café?">vai um café?</span></a>
-      </nav>
+        <div class="logo" aria-label="Logo">
+          <img id="logo-top" alt="elã" />
+        </div>
 
-      <button class="hamburger" type="button" aria-label="abrir menu" aria-controls="mobile-menu" aria-expanded="false">
-        <span class="hamburger-lines" aria-hidden="true"></span>
-      </button>
-    </div>
-
-    <!-- Mobile menu -->
-    <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
-      <nav class="mobile-nav" aria-label="menu mobile">
-        <a class="nav-link mobile-link" href="#sobre"><span class="stable-bold" data-text="sobre nós">sobre nós</span></a>
-        <a class="nav-link mobile-link" href="#arquitetura"><span class="stable-bold" data-text="arquitetura de serviços">arquitetura de serviços</span></a>
-        <a class="nav-link mobile-link" href="#cafe"><span class="stable-bold" data-text="vai um café?">vai um café?</span></a>
-      </nav>
+        <div style="width:160px"></div>
+      </div>
     </div>
   </header>
 
-  <main id="top">
+  <main>
+    <section class="hero" aria-label="Hero">
+      <div class="wrap">
+        <div class="hero-grid">
+          <div class="hero-top">
+            <div class="hero-icons" aria-hidden="true">
+              <img id="v01c" alt="" />
+              <img id="v01b" alt="" />
+              <img id="v01a" alt="" />
+            </div>
 
-    <!-- Hero /01 -->
-    <section class="section hero" id="hero">
-      <div class="container hero-grid">
-        <div class="hero-mark">
-          <img src="assets/01.svg" alt="/01" class="section-number" />
-        </div>
-
-        <div class="hero-copy">
-          <h1 class="hero-title">
-            marcas <strong>não precisam</strong> de mais<br />
-            posts. <strong>precisam</strong> de direção.
-          </h1>
-          <p class="hero-sub">
-            estratégia de marca, conteúdo e<br />
-            influência com intenção.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Sobre /02 -->
-    <section class="section about" id="sobre">
-      <div class="container about-grid">
-        <div class="about-image">
-          <img src="assets/moodboard.jpg" alt="moodboard" loading="lazy" />
-        </div>
-
-        <div class="about-copy">
-          <div class="about-head">
-            <h2 class="section-title">sobre nós</h2>
-            <img src="assets/02.svg" alt="/02" class="section-number small" />
-          </div>
-
-          <div class="rich-text">
-            <p><strong>somos um estúdio que trabalha marca como ecossistema</strong>, não como ação isolada.<br>
-            a gente começa pelo que vem antes do conteúdo: <strong>posicionamento e direção.</strong></p>
-
-            <p>entendemos o <strong>momento da marca</strong>, o que ela sustenta hoje, o que precisa ser ajustado e
-            quais escolhas vão deixar tudo mais coerente.</p>
-
-            <p><strong>atuamos a partir do posicionamento,</strong><br>
-            <strong>da narrativa e da imagem</strong>, conectando números pra guiar e feeling pra criar.</p>
-
-            <!-- corrigido: editorival -> editorial -->
-            <p>isso vira direção criativa, <strong>editorial</strong>, social e
-            influência com o mesmo norte: <strong>consistência no tempo.</strong></p>
+            <div class="hero-text">
+              <h1 class="hero-title">
+                marcas <strong>não precisam</strong> de mais posts.
+                <strong>precisam de direção.</strong>
+              </h1>
+              <p class="hero-sub">
+                estratégia de marca, conteúdo e influência com intenção.
+              </p>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Arquitetura /03 -->
-    <section class="section arquitetura" id="arquitetura">
-      <div class="container">
-        <div class="arquitetura-head">
-          <img src="assets/03.svg" alt="/03" class="section-number" />
-          <h2 class="section-title">arquitetura de serviços</h2>
+    <section id="sobre-nos" aria-label="Sobre nós">
+      <div class="wrap">
+        <div class="about-grid">
+          <div class="about-media" aria-hidden="true">
+            <img id="about-img" alt="" />
+          </div>
+
+          <div>
+            <div class="section-title-row">
+              <h2 class="h2">sobre nós</h2>
+              <div class="section-badge"><img id="icon02" alt="" /></div>
+            </div>
+
+            <p class="p">
+somos um<strong> estúdio que trabalha marca como ecossistema</strong>, não como ação isolada.
+a gente começa pelo que vem antes do conteúdo: <strong>posicionamento e direção</strong>.
+
+entendemos <strong>o momento da marca</strong>, o que ela sustenta hoje, o que precisa ser ajustado e quais escolhas vão <strong>deixar tudo mais coerente</strong>.
+
+<strong>atuamos a partir do posicionamento, da narrativa e da imagem</strong>, conectando números pra guiar e feeling pra criar.
+
+isso vira direção criativa, editorival, social e influência com o mesmo norte: <strong>consistência no tempo</strong>.
+            </p>
+          </div>
         </div>
-
-        <div class="rich-text arquitetura-text">
-          <p>nossa metodologia é a forma como damos direção, começamos lendo o que a marca
-          sustenta hoje para definir um norte e transformá-lo em escolhas claras: o que dizer,
-          como dizer e onde aparecer. a partir disso, organizamos prioridades e calendário
-          para construir consistência no tempo.</p>
-
-          <p>os módulos entram como peças de uma arquitetura. diagnóstico e posicionamento,
-          direção criativa e editorial, social e conteúdo, influência e relações e lançamentos.
-          não é um pacote engessado, é um sistema que se adapta ao seu momento,
-          conectando posicionamento, direção e execução para evitar ações soltas.</p>
-
-          <p>o acompanhamento funciona como bússola: números pra guiar, feeling pra criar.</p>
-        </div>
-
-        <div class="accordion" id="accordion"></div>
       </div>
     </section>
 
-    <!-- CTA /04 -->
-    <section class="section cafe" id="cafe">
-      <div class="container cafe-inner">
-        <div class="cafe-head">
-          <h2 class="cafe-title">que tal um café?</h2>
-          <img src="assets/04.svg" alt="/04" class="section-number" />
-        </div>
+    <section id="servicos" aria-label="Arquitetura de serviços">
+      <div class="wrap">
+        <div class="services-grid">
+          <div class="section-badge">
+            <img id="icon03" alt="" />
+          </div>
 
-        <div class="cafe-text">
-          <p>um convite simples pra conversar sobre a sua marca,
-          entender o momento e pensar juntos os próximos passos.</p>
-          <p><strong>sem roteiro engessado, sem pressão.</strong></p>
-        </div>
+          <div>
+            <h2 class="h2" style="margin-bottom:26px;">arquitetura de serviços</h2>
+            <p class="p">
+nossa metodologia é a <strong>forma como damos direção</strong>, começamos lendo o que a marca sustenta hoje para definir um norte e transformá-lo em <strong> escolhas claras</strong>: o que dizer, como dizer e onde aparecer. A partir disso, organizamos prioridades e calendário <strong>para construir consistência no tempo</strong>.
 
-        <a class="cta-button" href="https://wa.me/5522936182313" target="_blank" rel="noopener">agendar :)</a>
+os <strong>módulos entram como peças de uma arquitetura.</strong> diagnóstico e posicionamento, direção criativa e editorial, social e conteúdo, influência e relações e lançamentos. <strong>não é um pacote engessado, é um sistema que se adapta ao seu momento</strong>, conectando posicionamento, direção e execução para evitar ações soltas.
+
+o acompanhamento funciona como bússola: <strong>números pra guiar, feeling pra criar</strong>.
+            </p>
+          </div>
+        </div>
       </div>
     </section>
 
+    <section aria-label="Módulos">
+      <div class="wrap">
+        <div class="modules">
+          <div class="module">
+            <div class="module-head">
+              <h3 class="module-title"><strong>fundação:</strong> o que organiza a marca por dentro e define direção</h3>
+              <img class="module-plus" id="plus1" alt="" />
+            </div>
+            <div class="module-body">
+<strong>planejamento estratégico de comunicação:</strong> estruturamos o plano do período a partir de uma <u>leitura profunda da marca, do produto, do discurso e dos números</u>. definimos pilares, mensagens e prioridades que dão direção e consistência ao que a marca comunica.
+
+<strong>calendário de campanhas e lançamentos:</strong> montamos um <u>calendário macro que organiza lançamentos, campanhas e sazonalidades</u>, alinhando comunicação e vendas para evitar ações isoladas e garantir coerência ao longo do tempo.
+            </div>
+          </div>
+
+          <div class="module">
+            <div class="module-head">
+              <h3 class="module-title"><strong>desejo:</strong> o que constrói imagem, linguagem e vontade de pertencer</h3>
+              <img class="module-plus" id="plus2" alt="" />
+            </div>
+          </div>
+
+          <div class="module">
+            <div class="module-head">
+              <h3 class="module-title"><strong>relacionamento:</strong> o que coloca a marca em circulação com contexto e parceria</h3>
+              <img class="module-plus" id="plus3" alt="" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="cafe" aria-label="Café">
+      <div class="wrap">
+        <div class="cta">
+          <div class="cta-text">
+            <h2 class="cta-title">que tal um café?</h2>
+            <p class="p" style="margin-bottom:18px;">
+um convite simples pra conversar sobre a sua marca, entender o momento e pensar juntos os próximos passos.
+
+<strong>sem roteiro engessado, sem pressão.</strong>
+            </p>
+
+            <a class="cta-btn" href="#footer">agendar :)</a>
+          </div>
+
+          <div class="section-badge" aria-hidden="true">
+            <img id="icon04" alt="" />
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <!-- Footer -->
-  <footer class="site-footer" role="contentinfo">
-    <div class="container footer-grid">
-      <div class="footer-left">
-        <img src="assets/logo.svg" alt="elã" class="footer-logo" />
-        <nav class="footer-nav" aria-label="links do rodapé">
-          <a class="footer-link" href="#sobre"><span class="stable-bold" data-text="sobre nós">sobre nós</span></a>
-          <a class="footer-link" href="#arquitetura"><span class="stable-bold" data-text="arquitetura de serviços">arquitetura de serviços</span></a>
-          <a class="footer-link" href="#cafe"><span class="stable-bold" data-text="agende um café">agende um café</span></a>
-        </nav>
+  <footer id="footer" aria-label="Rodapé">
+    <div class="wrap">
+      <div class="footer-top">
+        <img id="footerLogo" alt="elã" />
       </div>
 
-      <div class="footer-right">
-        <a class="contact" href="https://www.instagram.com/elafashionmkt/" target="_blank" rel="noopener">
-          <span class="stable-bold" data-text="elafashionmkt">elafashionmkt</span>
-          <img src="assets/instagram.svg" alt="instagram" class="contact-icon" />
-        </a>
+      <div class="footer-grid">
+        <div class="footer-links">
+          <a href="#sobre-nos">sobre nós</a>
+          <a href="#servicos">arquitetura de serviços</a>
+          <a href="#cafe">agende um café</a>
+        </div>
 
-        <a class="contact" href="https://wa.me/5522936182313" target="_blank" rel="noopener">
-          <span class="stable-bold" data-text="+55 22 93618-2313">+55 22 93618-2313</span>
-          <img src="assets/whatsapp.svg" alt="whatsapp" class="contact-icon" />
-        </a>
+        <div class="right">
+          <div class="footer-contact">
+            <div>elafashionmkt</div>
+            <div>+55 22 93618-2313</div>
+            <div>contato@elafashionmkt.com.br</div>
+          </div>
 
-        <a class="contact" href="mailto:contato@elafashionmkt.com.br">
-          <span class="stable-bold" data-text="contato@elafashionmkt.com.br">contato@elafashionmkt.com.br</span>
-          <img src="assets/e-mail.svg" alt="e-mail" class="contact-icon" />
-        </a>
+          <div class="footer-social" aria-label="Redes">
+            <a href="https://instagram.com/elafashionmkt" target="_blank" rel="noreferrer">
+              <img id="ig" alt="Instagram" />
+            </a>
+            <a href="mailto:contato@elafashionmkt.com.br">
+              <img id="mail" alt="E-mail" />
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   </footer>
 
   <script>
-    // dados do acordeão (gerado do csv)
-    window.ELA_ACCORDION_DATA = window.ELA_ACCORDION_DATA || [];
+    const A = window.FIGMA_ASSETS;
+
+    // Top
+    document.getElementById("logo-top").src = A.logoEla;
+
+    // Hero icons (/01)
+    document.getElementById("v01a").src = A.v01a;
+    document.getElementById("v01b").src = A.v01b;
+    document.getElementById("v01c").src = A.v01c;
+
+    // About image
+    document.getElementById("about-img").src = A.rectangle1;
+
+    // Section badges
+    document.getElementById("icon02").src = A.icon02;
+    document.getElementById("icon03").src = A.icon03;
+    document.getElementById("icon04").src = A.icon04;
+
+    // Plus icons
+    document.getElementById("plus1").src = A.plus;
+    document.getElementById("plus2").src = A.plus;
+    document.getElementById("plus3").src = A.plus;
+
+    // Footer
+    document.getElementById("footerLogo").src = A.footerLogo;
+    document.getElementById("ig").src = A.instagram;
+    document.getElementById("mail").src = A.email;
   </script>
-  <script src="script.js"></script>
 </body>
 </html>
