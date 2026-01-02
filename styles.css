@@ -1,16 +1,68 @@
-/* Links do menu (header e footer) */
+/* Reset básico e fonte base */
+* {
+  box-sizing: border-box;
+}
+body, h1, h2, p, figure, blockquote, dl, dd, ul, nav {
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #000;
+  background: #fff;
+}
+img {
+  max-width: 100%;
+  display: block;
+}
+/* Container centralizado */
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Header fixo no topo */
+.header {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  background: #791815;
+  color: #fff;
+  z-index: 1000;
+  /* pequena sombra para elevação */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px; /* altura do header */
+}
+.header .logo img {
+  height: 40px;
+  /* O logo topo assume que é branco/transparente adequado ao fundo vinho */
+}
+.menu a {
+  margin-left: 30px;
+}
+
+/* Links do menu (header e footer) - estilo e anti-jump bold */
 .menu a, .footer-menu a {
   position: relative;
   color: #ffffff;
   text-decoration: none;
   font-weight: 400;
+  text-transform: none; /* garantir caixa baixa */
   transition: color 0.3s;
 }
 .menu a:hover, .footer-menu a:hover {
   color: #ffcccc;
   font-weight: 700;
 }
-/* Pseudo-elemento para evitar shift ao bold no hover */
+/* Pseudo-elemento para evitar shift no hover bold (reserva largura do texto bold) */
 .menu a::before, .footer-menu a::before {
   content: attr(data-text);
   font-weight: 700;
@@ -18,5 +70,329 @@
   height: 0;
   overflow: hidden;
   display: block;
-  /* Opcional: margin-top: -1px;  ajusta eventual espaço de linha */
+}
+
+/* Hamburger (mobile menu button) */
+.hamburger {
+  display: none; /* visível apenas mobile */
+  width: 30px;
+  height: 24px;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+}
+.hamburger span {
+  display: block;
+  width: 100%;
+  height: 3px;
+  background: #fff;
+  border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+/* Estado aberto do hamburger (X) */
+.hamburger.open span:nth-child(1) {
+  transform: translateY(10px) rotate(45deg);
+}
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.open span:nth-child(3) {
+  transform: translateY(-10px) rotate(-45deg);
+}
+
+/* Menu mobile overlay */
+.mobile-nav {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: #fff;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 900;
+}
+.mobile-nav.active {
+  display: flex;
+}
+.mobile-nav a {
+  font-size: 1.5rem;
+  color: #791815;
+  text-decoration: none;
+  font-weight: 400;
+  margin: 15px 0;
+}
+.mobile-nav a:hover {
+  color: #ffcccc;
+  font-weight: 700;
+}
+
+/* Hero section */
+.hero {
+  padding: 120px 0 100px 0; /* espaçamento topo/baixo */
+  position: relative;
+}
+.hero-title {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+.hero-subtitle {
+  font-size: 1.25rem;
+  font-weight: 400;
+}
+/* Section number decorativo – posição e estilo */
+.section-number {
+  position: absolute;
+  font-weight: 700;
+  font-size: 8rem; /* tamanho grande para ocupar bastante espaço */
+  color: #ffcccc;
+  opacity: 0.5;
+  user-select: none;
+  pointer-events: none;
+}
+.section-number-left {
+  left: 0;
+  top: 0;
+}
+.section-number-right {
+  right: 0;
+  top: 0;
+}
+
+/* Sobre Nós section */
+.sobre-nos {
+  padding: 100px 0;
+}
+.sobre-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.sobre-image {
+  flex: 1;
+  padding-right: 40px;
+}
+.sobre-image img {
+  border-radius: 8px;
+  /* Possível sombra suave */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.sobre-texto {
+  flex: 1;
+  position: relative;
+}
+.sobre-texto h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+.sobre-texto p {
+  font-size: 1rem;
+  margin-bottom: 15px;
+}
+.sobre-texto .section-number-right {
+  /* ajustar posição do número decorativo /02 */
+  top: -20px;
+  right: -20px;
+  font-size: 6rem;
+  opacity: 0.1;
+}
+
+/* Arquitetura de Serviços section */
+.arquitetura-servicos {
+  padding: 100px 0;
+}
+.arquitetura-servicos h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+.arquitetura-servicos p {
+  font-size: 1rem;
+  margin-bottom: 15px;
+}
+/* Accordion */
+.accordion {
+  margin-top: 30px;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+.accordion-item {
+  border-bottom: 1px solid #eee;
+}
+.accordion-header {
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  font-size: 1rem;
+  font-weight: 400;
+  padding: 15px 40px 15px 0;
+  cursor: pointer;
+  position: relative;
+  color: #000;
+  transition: color 0.2s;
+}
+.accordion-header::after {
+  content: "+";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-weight: 400;
+  font-size: 1.2rem;
+  color: #791815;
+}
+.accordion-header:hover {
+  color: #791815;
+  font-weight: 700;
+}
+.accordion-header:hover::after {
+  font-weight: 700;
+}
+.accordion-panel {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  /* oculto inicialmente */
+}
+.accordion-panel.open {
+  /* classe para estado aberto, manipulado via JS */
+}
+.accordion-panel p {
+  padding: 5px 0;
+  font-size: 0.95rem;
+}
+
+/* CTA section */
+.cta {
+  padding: 100px 0;
+  text-align: center;
+}
+.cta h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+.cta p {
+  font-size: 1rem;
+  margin-bottom: 15px;
+}
+.btn-cta {
+  display: inline-block;
+  background: #791815;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 12px 24px;
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+.btn-cta:hover {
+  background: #5e1011;
+}
+
+/* Footer */
+.footer {
+  background: #791815;
+  color: #fff;
+  padding: 40px 0;
+}
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+.footer-col {
+  margin-bottom: 20px;
+}
+.footer .logo-footer img {
+  height: 30px;
+  margin-bottom: 15px;
+}
+.footer-menu a {
+  display: block;
+  margin-bottom: 8px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 400;
+}
+.footer-menu a:hover {
+  color: #ffcccc;
+  font-weight: 700;
+}
+.contato-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.contato-item img {
+  width: 20px;
+  margin-right: 8px;
+}
+.contato-item a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 400;
+}
+.contato-item a:hover {
+  color: #ffcccc;
+  font-weight: 700;
+}
+
+/* Scroll suave e correção de offset para header fixo */
+html {
+  scroll-behavior: smooth;
+}
+section[id] {
+  scroll-margin-top: 80px; /* espaço para revelar seção abaixo do header fixo :contentReference[oaicite:6]{index=6} */
+}
+
+/* Responsividade */
+@media (max-width: 980px) {
+  .header-content {
+    padding: 0 10px;
+  }
+  .menu {
+    display: none;
+  }
+  .hamburger {
+    display: flex;
+  }
+  .hero {
+    padding: 100px 0 80px;
+  }
+  .hero-title {
+    font-size: 2rem;
+  }
+  .hero-subtitle {
+    font-size: 1.1rem;
+  }
+  .sobre-content {
+    flex-direction: column;
+  }
+  .sobre-image {
+    width: 100%;
+    padding-right: 0;
+    margin-bottom: 20px;
+  }
+  .sobre-texto {
+    width: 100%;
+  }
+  .sobre-texto .section-number-right {
+    /* esconder ou reposicionar o número decorativo para não sobrepor conteúdo */
+    display: none;
+  }
+  .arquitetura-servicos .section-number-left {
+    display: none;
+  }
+  .footer-content {
+    flex-direction: column;
+  }
+  .footer-content .footer-col {
+    width: 100%;
+    margin-bottom: 30px;
+  }
 }
