@@ -131,15 +131,16 @@ a.btn{
 /* logo topo (dentro do box vinho; mantém alinhamento horizontal pelo gutter) */
 .logo-topo{
   position:absolute;
-  right:var(--gutter);
-  top:50%;
-  transform:translateY(-50%);
+  right:42px;          /* alinhamento horizontal já validado */
+  top:96px;            /* linha ciano do Figma */
+  transform:none;      /* remove centralização vertical */
   display:flex;
-  align-items:center;
+  align-items:flex-start;
   justify-content:center;
-  height:100%;
+  height:auto;
   z-index:1;
 }
+
 
 .logo-img{
   height:151px; /* conforme print (150.99px) */
