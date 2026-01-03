@@ -1,80 +1,120 @@
 // script.js
-(function () {
-  const topbar = document.querySelector(".topbar");
-  const burger = document.querySelector(".burger");
-  const mobile = document.querySelector(".mobile");
-  const navLinks = Array.from(document.querySelectorAll(".nav__link"));
-  const mobileLinks = Array.from(document.querySelectorAll(".mobile__link"));
-  const toTop = document.querySelector(".to-top");
+(() => {
+  // Progressive enhancement: só ativa efeitos se JS rodar.
+  document.documentElement.classList.add("js");
 
-  // menu mobile
-  function closeMobile() {
-    burger?.setAttribute("aria-expanded", "false");
-    if (mobile) mobile.hidden = true;
-  }
-  burger?.addEventListener("click", () => {
-    const expanded = burger.getAttribute("aria-expanded") === "true";
-    burger.setAttribute("aria-expanded", String(!expanded));
-    if (mobile) mobile.hidden = expanded;
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+
+  // ===== Mobile menu =====
+  const hamburger = document.querySelector(".hamburger");
+  const mobile = document.getElementById("mobileMenu");
+  const mobilePanel = mobile?.querySelector(".mobile__panel");
+  const closeBtn = mobile?.querySelector(".mobile__close");
+
+  const openMenu = () => {
+    if (!mobile) return;
+    mobile.hidden = false;
+    requestAnimationFrame(() => mobile.classList.add("is-open"));
+    hamburger?.setAttribute("aria-expanded", "true");
+    document.body.style.overflow = "hidden";
+  };
+
+  const closeMenu = () => {
+    if (!mobile) return;
+    mobile.classList.remove("is-open");
+    hamburger?.setAttribute("aria-expanded", "false");
+    document.body.style.overflow = "";
+    setTimeout(() => { mobile.hidden = true; }, 260);
+  };
+
+  hamburger?.addEventListener("click", () => {
+    const isOpen = mobile && !mobile.hidden;
+    isOpen ? closeMenu() : openMenu();
   });
-  mobileLinks.forEach((a) => a.addEventListener("click", closeMobile));
 
-  // underline ativo por seção (IntersectionObserver)
-  const sections = [
-    document.querySelector("#sobre"),
-    document.querySelector("#servicos"),
-    document.querySelector("#cafe"),
-  ].filter(Boolean);
+  closeBtn?.addEventListener("click", closeMenu);
 
-  const byId = (id) => navLinks.find((a) => a.getAttribute("href") === `#${id}`);
+  mobile?.addEventListener("click", (e) => {
+    if (e.target === mobile) closeMenu();
+  });
 
-  const activeObs = new IntersectionObserver(
-    (entries) => {
+  mobile?.querySelectorAll("a").forEach(a => a.addEventListener("click", closeMenu));
+
+  // ===== Accordion: opcional fechar os outros =====
+  const accs = Array.from(document.querySelectorAll(".acc"));
+  accs.forEach((d) => {
+    d.addEventListener("toggle", () => {
+      if (!d.open) return;
+      accs.forEach((o) => { if (o !== d) o.open = false; });
+    });
+  });
+
+  // ===== Nav active (scroll) =====
+  const links = Array.from(document.querySelectorAll(".navlink"))
+    .filter(a => a.getAttribute("href")?.startsWith("#"));
+
+  const sections = links
+    .map(a => document.querySelector(a.getAttribute("href")))
+    .filter(Boolean);
+
+  const setActive = (id) => {
+    links.forEach(a => a.classList.toggle("is-active", a.getAttribute("href") === `#${id}`));
+  };
+
+  if ("IntersectionObserver" in window && sections.length) {
+    const obs = new IntersectionObserver((entries) => {
       const visible = entries
-        .filter((e) => e.isIntersecting)
-        .sort((a, b) => (b.intersectionRatio || 0) - (a.intersectionRatio || 0))[0];
+        .filter(e => e.isIntersecting)
+        .sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (visible?.target?.id) setActive(visible.target.id);
+    }, { rootMargin: "-45% 0px -45% 0px", threshold: [0.1, 0.2, 0.35, 0.5, 0.7] });
 
-      if (!visible?.target?.id) return;
-
-      navLinks.forEach((a) => a.classList.remove("is-active"));
-      const link = byId(visible.target.id);
-      if (link) link.classList.add("is-active");
-    },
-    { root: null, threshold: [0.2, 0.35, 0.5] }
-  );
-
-  sections.forEach((s) => activeObs.observe(s));
-
-  // reveal (sem opacidade)
-  const reveals = Array.from(document.querySelectorAll(".reveal"));
-  reveals.forEach((el, i) => {
-    el.style.setProperty("--reveal-d", `${Math.min(i * 70, 280)}ms`);
-  });
-
-  const revealObs = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting) e.target.classList.add("is-in");
-      });
-    },
-    { threshold: 0.18 }
-  );
-  reveals.forEach((el) => revealObs.observe(el));
-
-  // voltar ao topo (estrela)
-  function updateToTop() {
-    if (!toTop) return;
-    const show = window.scrollY > 700;
-    toTop.classList.toggle("is-visible", show);
+    sections.forEach(s => obs.observe(s));
   }
-  window.addEventListener("scroll", updateToTop, { passive: true });
-  updateToTop();
 
-  toTop?.addEventListener("click", () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  });
+  // ===== Scroll reveal (sem opacidade; mais “mask/clip” tipo ref) =====
+  const supportsClip = CSS?.supports?.("clip-path", "inset(0 0 0 0)");
+  const revealEls = Array.from(document.querySelectorAll(".reveal"));
 
-  // garante que logo sempre leva pra home
-  const brand = document.querySelector(".brand");
-  brand?.addEventListener("click", closeMobile);
+  // se não suporta clip, ainda dá um leve translate/blur (ou nada)
+  const update = () => {
+    const vh = window.innerHeight || 1;
+
+    // “start/end” para sensação de scrub
+    const start = vh * 0.90;
+    const end   = vh * 0.40;
+
+    revealEls.forEach((el) => {
+      const r = el.getBoundingClientRect();
+
+      // progresso 0..1 baseado na posição do topo do elemento
+      const p = clamp((start - r.top) / (start - end), 0, 1);
+
+      // clip do fundo (100% escondido -> 0% visível)
+      const clipB = (1 - p) * 100;
+
+      // movimento sutil (sem opacidade)
+      const ty = (1 - p) * 18;
+      const blur = (1 - p) * 6;
+
+      if (supportsClip) el.style.setProperty("--clipB", `${clipB.toFixed(2)}%`);
+      el.style.setProperty("--ty", `${ty.toFixed(2)}px`);
+      el.style.setProperty("--blur", `${blur.toFixed(2)}px`);
+    });
+  };
+
+  let ticking = false;
+  const onScroll = () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      update();
+      ticking = false;
+    });
+  };
+
+  // init
+  update();
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll);
 })();
