@@ -8,7 +8,12 @@
   --container:1280px;
   --gutter:120px;
 
-  --bar-h:110px;
+  --bar-top:57px;
+  --bar-compact:38px;
+  --bar-current: var(--bar-top);
+  --bar-offset: var(--bar-top);
+
+  --topbar:#FFCCCC;
 
   --col-left:247px;   /* 120 + 247 = 367 */
   --line:#FFCCCC;
@@ -31,6 +36,7 @@ body{
   background:var(--bg);
   color:var(--text);
   overflow-x:hidden;
+  padding-top: var(--bar-offset);
 }
 
 img{ display:block; max-width:100%; height:auto; }
@@ -49,7 +55,7 @@ a{ color:inherit; text-decoration:none; }
 a:not(.btn)[data-text]{
   position:relative;
   display:inline-block;
-  font-weight:300;
+  font-weight:400;
 }
 
 a:not(.btn)[data-text]::before{
@@ -61,10 +67,42 @@ a:not(.btn)[data-text]::before{
   display:block;
 }
 
+a:not(.btn)[data-text]::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  bottom:-6px;
+  width:100%;
+  height:2px;
+  background:var(--wine);
+  transform: translateX(-50%) scaleX(0);
+  transform-origin:center;
+  transition: transform .2s ease, background-color .2s ease;
+}
+
 a:not(.btn):hover,
-a:not(.btn):focus-visible{
-  color: var(--hover);
+a:not(.btn):focus-visible,
+a:not(.btn).is-active{
   font-weight:700;
+}
+
+a:not(.btn):hover::after,
+a:not(.btn):focus-visible::after,
+a:not(.btn).is-active::after{
+  transform: translateX(-50%) scaleX(1);
+}
+
+a:not(.btn).is-active::after{
+  background: var(--hover);
+}
+
+a:not(.btn):active{
+  font-weight:700;
+}
+
+a:not(.btn):active::after{
+  transform: translateX(-50%) scaleX(1);
+  background: var(--hover);
 }
 
 a.btn{
@@ -78,12 +116,18 @@ a.btn{
 .header{ position:relative; }
 
 .header-bar{
-  position:sticky;
-  top:0;
-  height:var(--bar-h);
-  background:var(--wine);
+  position:fixed;
+  inset:0 0 auto 0;
+  height:var(--bar-current);
+  background:var(--topbar);
   z-index:1000;
   overflow:hidden; /* recorta o logo dentro da faixa */
+  transition: height .2s ease, background-color .2s ease;
+}
+
+body.header-compact{
+  --bar-current: var(--bar-compact);
+  --bar-offset: var(--bar-compact);
 }
 
 .header-content{
@@ -99,11 +143,16 @@ a.btn{
   display:flex;
   align-items:center;
   gap:44px;
-  color:#fff;
+  color:var(--wine);
   font-size:16px;
   line-height:25px;
-  font-weight:300;
+  font-weight:400;
   letter-spacing:0.05em;
+}
+
+.menu .hlink,
+.mobile-nav .hlink{
+  color:var(--wine);
 }
 
 /* hamburger (mobile) */
@@ -122,7 +171,7 @@ a.btn{
   display:block;
   height:2px;
   width:100%;
-  background:#fff;
+  background:var(--wine);
   margin:6px 0;
   transition:transform .25s ease, opacity .25s ease;
 }
@@ -158,8 +207,8 @@ a.btn{
   position:fixed;
   left:0;
   right:0;
-  top: var(--bar-h); /* fallback */
-  background:var(--wine);
+  top: var(--bar-offset); /* fallback */
+  background:var(--topbar);
   z-index:999;
   opacity:0;
   transform:translateY(-8px);
@@ -178,9 +227,9 @@ a.btn{
   flex-direction:column;
   gap:18px;
   padding:22px var(--gutter) 28px;
-  color:#fff;
+  color:var(--wine);
   font-size:18px;
-  font-weight:300;
+  font-weight:400;
   letter-spacing:0.05em;
 }
 
@@ -188,12 +237,31 @@ a.btn{
   .mobile-menu{ transition:none; }
 }
 
+/* transição "página sobe" (progressive enhancement) */
+.page-wipe{
+  position:fixed;
+  inset:0;
+  background:var(--bg);
+  transform: translateY(100%);
+  transition: transform .4s ease;
+  pointer-events:none;
+  z-index:1500;
+  display:none;
+}
+
+.js .page-wipe{ display:block; }
+.page-wipe.active{ transform: translateY(0); }
+
+@media (prefers-reduced-motion: reduce){
+  .page-wipe{ display:none !important; }
+}
+
 /* =========================================================
    LAYOUT GERAL
 ========================================================= */
 section{
   padding: 72px 0;
-  scroll-margin-top: calc(var(--bar-h) + 18px);
+  scroll-margin-top: calc(var(--bar-offset) + 18px);
 }
 
 .grid-2col{
@@ -523,7 +591,7 @@ section{
 
   section{
     padding: 32px 0;
-    scroll-margin-top: calc(var(--bar-h) + 12px);
+    scroll-margin-top: calc(var(--bar-offset) + 12px);
   }
 
   .menu{ display:none; }

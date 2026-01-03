@@ -1,5 +1,24 @@
 // script.js
 (() => {
+  const rootEl = document.documentElement;
+  if (rootEl) rootEl.classList.add("js");
+
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  let reduceMotion = prefersReducedMotion.matches;
+  if (prefersReducedMotion.addEventListener) {
+    prefersReducedMotion.addEventListener("change", (ev) => {
+      reduceMotion = ev.matches;
+    });
+  } else if (prefersReducedMotion.addListener) {
+    prefersReducedMotion.addListener((ev) => {
+      reduceMotion = ev.matches;
+    });
+  }
+
+  const pageWipe = document.createElement("div");
+  pageWipe.className = "page-wipe";
+  document.body.appendChild(pageWipe);
+
   // fallback para assets (logo topo e footer)
   document.querySelectorAll("img[data-fallback]").forEach((img) => {
     img.addEventListener("error", () => {
@@ -74,6 +93,69 @@
   // ao voltar para desktop/tablet, garantir menu fechado
   window.addEventListener("resize", () => {
     if (window.innerWidth > 768) closeMenu();
+  });
+
+  const heroSection = document.querySelector(".hero");
+  if (heroSection) {
+    const headerObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const compact = !entry.isIntersecting && entry.boundingClientRect.top < 0;
+        document.body.classList.toggle("header-compact", compact);
+        if (hamburger && hamburger.classList.contains("open")) {
+          positionMobileMenu();
+        }
+      });
+    });
+
+    headerObserver.observe(heroSection);
+    requestAnimationFrame(() => {
+      const rect = heroSection.getBoundingClientRect();
+      const compact = rect.top < 0 || rect.bottom <= 1;
+      document.body.classList.toggle("header-compact", compact);
+    });
+  }
+
+  const menuLinks = document.querySelectorAll(".menu .hlink, .mobile-nav .hlink");
+  const wipeDuration = 420;
+
+  const navigateWithWipe = (target, hash) => {
+    const behavior = reduceMotion ? "auto" : "smooth";
+    const finish = () => {
+      target.scrollIntoView({ behavior, block: "start" });
+      if (hash) {
+        history.replaceState(null, "", hash);
+      }
+    };
+
+    if (reduceMotion || !pageWipe) {
+      finish();
+      return;
+    }
+
+    pageWipe.classList.add("active");
+    window.setTimeout(() => {
+      finish();
+      window.setTimeout(() => pageWipe.classList.remove("active"), wipeDuration);
+    }, 20);
+  };
+
+  menuLinks.forEach((link) => {
+    link.addEventListener("click", (event) => {
+      const href = link.getAttribute("href");
+      if (!href || !href.startsWith("#")) return;
+
+      const target = document.querySelector(href);
+      if (!target) return;
+
+      menuLinks.forEach((lnk) => lnk.classList.remove("is-active"));
+      link.classList.add("is-active");
+
+      if (reduceMotion) return;
+
+      event.preventDefault();
+      navigateWithWipe(target, href);
+      if (link.classList.contains("mobile-link")) closeMenu();
+    });
   });
 
   // acordeão (multi-open) inicia com TODOS fechados
