@@ -9,468 +9,52 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
-  <!-- Ivy Journal (Typekit) -->
+  <!-- Ivy Journal -->
   <link rel="stylesheet" href="https://use.typekit.net/piy8ljr.css">
 
+  <!-- CSS (cache bust) -->
+  <link rel="stylesheet" href="/style.css?v=20260103" />
+
   <title>elã</title>
-
-  <style>
-    :root{
-      --frame: 1280px;
-
-      /* seu bg (confirmado) */
-      --bg: #F4E9E6;
-      --pink: #FFCCCC;
-      --accent: #791815;
-      --ink: rgba(58,56,56,.92);
-
-      --side: clamp(18px, 6vw, 120px); /* vira 120 no desktop */
-      --ease: cubic-bezier(.22,.61,.36,1);
-      --dur: 560ms;
-    }
-
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
-    html{ scroll-behavior:smooth; }
-
-    body{
-      margin:0;
-      background: var(--bg);
-      color: var(--ink);
-      font-family: "Inter Tight", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      -webkit-font-smoothing: antialiased;
-      text-rendering: geometricPrecision;
-      letter-spacing: .01em;
-    }
-
-    a{ color: inherit; text-decoration:none; }
-    a:hover{ opacity:.92; }
-
-    /* frame (1280 do Figma) */
-    .frame{
-      max-width: var(--frame);
-      margin: 0 auto;
-      background: var(--bg);
-    }
-
-    /* container (margem 120 no desktop) */
-    .container{
-      padding-inline: var(--side);
-    }
-
-    /* base de título Ivy */
-    .ivy{
-      font-family: "ivyjournal", "Ivy Journal", serif;
-      color: var(--accent);
-      letter-spacing: -0.02em;
-    }
-
-    /* texto corrido */
-    .body{
-      font-size: 20px;
-      line-height: 30px;
-      margin: 0 0 14px;
-      max-width: 62ch;
-    }
-
-    /* ---------- HERO (fundo rosa) ---------- */
-    .hero{
-      background: var(--pink);
-      min-height: 626px; /* do Figma */
-      position: relative;
-      overflow: hidden;
-    }
-
-    .topbar{
-      padding-top: 32px; /* Y=32 do Figma */
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      height: 57px; /* altura do grupo topo */
-    }
-
-    .logo{
-      display:flex;
-      align-items:center;
-      gap: 12px;
-    }
-
-    .logo svg{
-      width: 92px; height: 57px;
-      display:block;
-    }
-
-    .nav{
-      display:flex;
-      gap: 24px;
-      font-size: 20px;
-      line-height: 25px;
-      font-weight: 300;
-      letter-spacing: .05em;
-      color: var(--accent);
-      white-space: nowrap;
-    }
-
-    .hero-inner{
-      display:grid;
-      grid-template-columns: minmax(0, 774px) auto; /* largura do manifesto */
-      align-items:start;
-      gap: 28px;
-      padding-top: 169px; /* 258 - (32+57) = 169 */
-    }
-
-    .hero-title{
-      margin: 0 0 16px;
-      font-size: clamp(44px, 4.8vw, 72px);
-      line-height: .95;
-      font-weight: 600;
-    }
-
-    .hero-sub{
-      margin:0;
-      font-size: 24px;
-      line-height: 31px;
-      font-weight: 600;
-      letter-spacing: .05em;
-      color: var(--accent);
-      max-width: 774px;
-    }
-
-    .norte{
-      width: 84px;
-      height: 84px;
-      justify-self: end;
-      margin-top: 8px;
-      opacity: .95;
-      transform-origin: 50% 50%;
-      transition: transform var(--dur) var(--ease);
-    }
-    .norte:hover{ transform: rotate(-6deg); }
-
-    /* ---------- SOBRE (bleed direita) ---------- */
-    .about{
-      padding-top: 70px; /* do Figma (626 -> 696) */
-      padding-bottom: 90px;
-      background: var(--bg);
-    }
-
-    .about-bleed{
-      padding-left: var(--side);
-      padding-right: 0;
-    }
-
-    .about-grid{
-      display:grid;
-      grid-template-columns: 597px 1fr; /* esquerda 597, direita “preenche” até borda */
-      align-items:start;
-    }
-
-    .about-copy{
-      padding-right: 38px;
-    }
-
-    .about-title{
-      margin: 0 0 18px;
-      font-size: 60px;
-      line-height: .75;
-      font-weight: 600;
-    }
-
-    .about-media{
-      height: 485px; /* imagem do seu arquivo é exatamente 563x485 */
-      overflow: hidden;
-    }
-
-    .about-media img{
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display:block;
-    }
-
-    /* ---------- SEÇÕES (geral) ---------- */
-    .section{
-      padding: 110px 0;
-    }
-
-    .section--pink{
-      background: var(--pink);
-    }
-
-    .section-title{
-      margin: 0 0 18px;
-      font-size: clamp(44px, 4.6vw, 60px);
-      line-height: .75;
-      font-weight: 600;
-    }
-    .section-title em{ font-style: italic; }
-
-    /* ---------- MÓDULOS (linhas) ---------- */
-    .module-line{
-      margin: 0;
-      font-size: 25px;
-      line-height: 28.8px;
-      color: var(--accent);
-    }
-    .module-line strong{ font-weight: 700; }
-
-    .module-row{
-      padding: 18px 0;
-      border-top: 1px solid rgba(121,24,21,.18);
-    }
-
-    .module-body{
-      margin-left: 65px;
-      margin-top: 18px;
-      max-width: 910px;
-    }
-
-    /* ---------- ACORDEON (arquitetura) ---------- */
-    .accordion{
-      margin-top: 18px;
-      border-top: 1px solid rgba(121,24,21,.18);
-    }
-
-    details.acc{
-      border-bottom: 1px solid rgba(121,24,21,.18);
-      padding: 14px 0;
-    }
-
-    details.acc summary{
-      cursor: pointer;
-      list-style: none;
-      font-size: 25px;
-      line-height: 28.8px;
-      color: var(--accent);
-      user-select: none;
-    }
-
-    details.acc summary::-webkit-details-marker{ display:none; }
-
-    .acc-body{
-      margin-left: 65px;
-      padding-top: 14px;
-      max-width: 910px;
-    }
-
-    /* ---------- CTA ---------- */
-    .cta{
-      background: var(--bg);
-    }
-
-    .cta-grid{
-      display:grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap: 44px;
-      align-items: start;
-    }
-
-    .cta-title{
-      margin: 0 0 18px;
-      font-size: clamp(44px, 4.8vw, 72px);
-      line-height: .95;
-      font-weight: 600;
-    }
-    .cta-title em{ font-style: italic; }
-
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      padding: 10px 18px;
-      border-radius: 8px;
-      border: 1px solid rgba(121,24,21,.18);
-      background: rgba(255,204,204,.85);
-      color: var(--accent);
-      font-size: 13px;
-      font-weight: 500;
-      letter-spacing: .02em;
-      box-shadow: 0 10px 26px rgba(121,24,21,.08);
-      transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
-      will-change: transform;
-    }
-    .btn:hover{
-      transform: translateY(-1px);
-      box-shadow: 0 16px 38px rgba(121,24,21,.14);
-    }
-
-    .colophon{
-      padding-top: 16px;
-    }
-    .rule{
-      width: 34px;
-      height: 1px;
-      background: rgba(58,56,56,.35);
-      margin: 0 0 12px;
-    }
-    .colophon p{
-      margin: 0;
-      font-size: 13px;
-      line-height: 1.18;
-      letter-spacing: .02em;
-      color: rgba(58,56,56,.86);
-    }
-    .colophon span{ display:block; }
-    .colophon span:nth-child(1){
-      font-weight: 500;
-      color: rgba(58,56,56,.92);
-    }
-    .colophon span:nth-child(2){ margin-top: 6px; }
-    .colophon span:nth-child(3){
-      margin-top: 10px;
-      color: rgba(58,56,56,.7);
-    }
-
-    /* ---------- FOOTER (rosa) ---------- */
-    .footer{
-      background: var(--pink);
-      padding: 22px 0 36px;
-    }
-
-    .footer-grid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 18px;
-      align-items:start;
-    }
-
-    .footer a{
-      display:block;
-      font-size: 20px;
-      line-height: 25px;
-      font-weight: 300;
-      letter-spacing: .05em;
-      color: var(--accent);
-    }
-
-    /* ---------- EFEITOS CHIQUES (reveal) ---------- */
-    .reveal{
-      opacity: 0;
-      transform: translateY(10px);
-      transition: opacity 680ms var(--ease), transform 680ms var(--ease);
-    }
-    .reveal.in{
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* ---------- TRANSIÇÃO ENTRE PÁGINAS (wipe) ---------- */
-    .wipe{
-      position: fixed;
-      inset: 0;
-      background: var(--bg);
-      pointer-events: none;
-      z-index: 999;
-      clip-path: inset(0 0 100% 0);
-      transition: clip-path 520ms var(--ease);
-    }
-    .wipe.on{ clip-path: inset(0 0 0 0); }
-
-    /* ---------- RESPONSIVO ---------- */
-    @media (max-width: 980px){
-      .hero-inner{
-        grid-template-columns: 1fr;
-        padding-top: 110px;
-      }
-      .norte{
-        justify-self: start;
-        margin-top: 10px;
-      }
-
-      .about-bleed{
-        padding-inline: var(--side);
-      }
-      .about-grid{
-        grid-template-columns: 1fr;
-      }
-      .about-copy{
-        padding-right: 0;
-        padding-bottom: 22px;
-      }
-      .about-media{
-        height: 320px;
-        border-radius: 10px;
-      }
-
-      .cta-grid{
-        grid-template-columns: 1fr;
-      }
-      .footer-grid{
-        grid-template-columns: 1fr;
-      }
-
-      .module-body,
-      .acc-body{
-        margin-left: 0;
-      }
-
-      .nav{
-        gap: 16px;
-        font-size: 16px;
-        line-height: 20px;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce){
-      .reveal, .wipe, .btn, .norte{ transition:none !important; }
-      .reveal{ opacity:1; transform:none; }
-    }
-  </style>
 </head>
 
 <body>
   <div class="wipe" aria-hidden="true"></div>
 
-  <main class="frame" data-page>
+  <main class="frame">
 
     <!-- HERO -->
     <section class="hero" aria-label="Topo">
-      <div class="container">
+      <header class="container topbar">
+        <a class="logo" href="/" aria-label="elã">
+          <img src="/assets/logo-ela.svg" alt="elã" />
+        </a>
 
-        <div class="topbar">
-          <a class="logo" href="./index.html" aria-label="elã">
-            <!-- logo-elã.svg embutido (evita bug de nome com acento no GitHub) -->
-            <svg width="92" height="57" viewBox="0 0 92 57" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M8.2483 9.51531 60.1647 9.65814C63.6998 9.87455 67.6032 13.1986 67.6032 17.8815C67.6032 22.5643 63.6249 26.0184 60.1647 26.0184H19.7414V24.3087H59.9572C62.6558 24.3087 65.2865 21.8615 65.2865 17.8815C65.2865 13.9014 62.6558 11.4543 59.9572 11.4543H10.5649V47.4956H67.1054V49.2052H8.2483V9.51531Z" fill="#791815"/>
-              <path d="M83.7237 47.4956H68.9228V49.2052H86.0403V9.51531H83.7237V47.4956Z" fill="#791815"/>
-              <path d="M19.1156 33.606H45.293V31.8963H19.1156V33.606Z" fill="#791815"/>
-            </svg>
-          </a>
+        <nav class="nav" aria-label="Menu">
+          <a href="#sobre">sobre nós</a>
+          <a href="#servicos">arquitetura de serviços</a>
+          <a href="#cafe">agende um café</a>
+        </nav>
+      </header>
 
-          <nav class="nav" aria-label="Menu">
-            <a href="#sobre">sobre nós</a>
-            <a href="#servicos">arquitetura de serviços</a>
-            <a href="#cafe">agende um café</a>
-          </nav>
+      <div class="container hero-inner">
+        <div class="hero-copy">
+          <h1 class="ivy hero-title reveal">marcas não precisam de mais posts. precisam de direção.</h1>
+          <p class="hero-sub reveal">estratégia de marca, conteúdo e influência com intenção.</p>
         </div>
 
-        <div class="hero-inner">
-          <div>
-            <h1 class="hero-title ivy reveal">
-              marcas não precisam de mais posts. precisam de direção.
-            </h1>
-            <p class="hero-sub reveal">
-              estratégia de marca, conteúdo e influência com intenção.
-            </p>
-          </div>
-
-          <!-- norte.svg embutido -->
-          <svg class="norte reveal" viewBox="0 0 242 242" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path d="M121 3.5C56.272 3.5 3.5 56.272 3.5 121C3.5 185.728 56.272 238.5 121 238.5C185.728 238.5 238.5 185.728 238.5 121C238.5 56.272 185.728 3.5 121 3.5Z" stroke="#791815" stroke-width="7"/>
-            <path d="M121.396 108.581L188.657 57.3296L188.694 57.2921L188.732 57.2546C190.628 55.3583 193.71 55.3583 195.607 57.2546C197.503 59.1509 197.503 62.2338 195.607 64.1301L195.569 64.1676L195.532 64.2051L144.281 131.466C143.576 132.171 142.579 132.582 141.52 132.582H132.195V141.908C132.195 142.967 131.784 143.964 131.079 144.669L63.8172 195.92L63.7797 195.957L63.7422 195.995C61.8459 197.891 58.763 197.891 56.8667 195.995C54.9704 194.099 54.9704 191.016 56.8667 189.12L56.9042 189.082L56.9417 189.045L108.193 121.783C108.898 121.078 109.895 120.667 110.954 120.667H120.279V111.342C120.279 110.283 120.69 109.286 121.396 108.581Z" fill="#791815"/>
-          </svg>
-        </div>
-
+        <a class="norte reveal" href="#metodologia" aria-label="Ir para metodologia">
+          <img src="/assets/norte.svg" alt="" />
+        </a>
       </div>
     </section>
 
-    <!-- SOBRE NÓS (bleed direita) -->
+    <!-- SOBRE (bleed direita) -->
     <section class="about" id="sobre">
       <div class="about-bleed">
         <div class="about-grid">
-
           <div class="about-copy">
-            <h2 class="about-title ivy reveal">sobre nós</h2>
+            <h2 class="ivy about-title reveal">sobre nós</h2>
 
             <p class="body reveal">
               somos um estúdio que trata marca como ecossistema, não como ação isolada. a gente começa pelo que vem antes do conteúdo: posicionamento e direção.
@@ -486,47 +70,16 @@
           </div>
 
           <div class="about-media reveal">
-            <!-- coloque sobre.jpg na mesma pasta -->
-            <img src="./sobre.jpg" alt="" />
+            <img src="/assets/sobre.jpg" alt="" />
           </div>
-
         </div>
       </div>
     </section>
 
-    <!-- NOSSOS MÓDULOS (rosa) -->
-    <section class="section section--pink" id="modulos">
-      <div class="container">
-        <h2 class="section-title ivy reveal">nossos <em>módulos</em></h2>
-
-        <div class="module-row reveal">
-          <p class="module-line"><strong>fundação:</strong> o que organiza a marca por dentro e define direção</p>
-          <div class="module-body">
-            <p class="body">
-              <strong>planejamento estratégico de comunicação</strong><br/>
-              estruturamos o plano do período a partir de uma leitura da marca, do produto, do discurso e dos números. definimos pilares, mensagens e prioridades que sustentam o que a marca comunica.
-            </p>
-            <p class="body">
-              <strong>calendário de campanhas e lançamentos</strong><br/>
-              montamos um calendário macro que organiza lançamentos, campanhas e sazonalidades, alinhamos comunicação e vendas para manter coerência ao longo do tempo.
-            </p>
-          </div>
-        </div>
-
-        <div class="module-row reveal">
-          <p class="module-line"><strong>desejo:</strong> o que constrói imagem, linguagem e vontade de pertencer</p>
-        </div>
-
-        <div class="module-row reveal">
-          <p class="module-line"><strong>relacionamento:</strong> o que coloca a marca em circulação com contexto</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- METODOLOGIA (bg) -->
+    <!-- METODOLOGIA -->
     <section class="section" id="metodologia">
       <div class="container">
-        <h2 class="section-title ivy reveal">nossa <em>metodologia</em></h2>
+        <h2 class="ivy section-title reveal">nossa <em>metodologia</em></h2>
 
         <p class="body reveal">
           nossa metodologia é a forma como damos direção. começamos lendo o que a marca sustenta hoje e transformamos isso em escolhas práticas: o que dizer, como dizer e onde aparecer. a partir daí, organizamos prioridades, calendário e critérios de consistência.
@@ -542,10 +95,10 @@
       </div>
     </section>
 
-    <!-- SERVIÇOS (acordeon) -->
+    <!-- SERVIÇOS -->
     <section class="section" id="servicos">
       <div class="container">
-        <h2 class="section-title ivy reveal">arquitetura de <em>serviços</em></h2>
+        <h2 class="ivy section-title reveal">arquitetura de <em>serviços</em></h2>
 
         <div class="accordion">
           <details class="acc reveal">
@@ -575,9 +128,8 @@
     <!-- CTA -->
     <section class="section cta" id="cafe">
       <div class="container cta-grid">
-
         <div class="reveal">
-          <h2 class="cta-title ivy">que tal <em>um café</em>?</h2>
+          <h2 class="ivy cta-title">que tal <em>um café</em>?</h2>
           <p class="body">
             um convite simples para conversar sobre a sua marca, entender o momento e pensar juntos os próximos passos. conversa leve, com clareza e sem pressão.
           </p>
@@ -592,11 +144,10 @@
             <span>desde 2025</span>
           </p>
         </aside>
-
       </div>
     </section>
 
-    <!-- FOOTER (rosa) -->
+    <!-- FOOTER -->
     <footer class="footer">
       <div class="container footer-grid">
         <div>
@@ -614,55 +165,6 @@
 
   </main>
 
-  <script>
-    // reveal (scroll)
-    (() => {
-      const items = document.querySelectorAll(".reveal");
-      if (!("IntersectionObserver" in window)) {
-        items.forEach(el => el.classList.add("in"));
-        return;
-      }
-      const io = new IntersectionObserver((entries) => {
-        entries.forEach(e => {
-          if (e.isIntersecting) {
-            e.target.classList.add("in");
-            io.unobserve(e.target);
-          }
-        });
-      }, { threshold: 0.12 });
-
-      items.forEach(el => io.observe(el));
-    })();
-
-    // transição “wipe” para links .html no mesmo domínio
-    (() => {
-      const wipe = document.querySelector(".wipe");
-      function shouldHandle(a){
-        if (!a || !a.href) return false;
-        if (a.target === "_blank") return false;
-        if (a.hasAttribute("download")) return false;
-
-        const href = a.getAttribute("href") || "";
-        if (href.startsWith("#")) return false;
-        if (!href.endsWith(".html") && !href.includes(".html?") && !href.includes(".html#")) return false;
-
-        try {
-          const url = new URL(a.href);
-          return url.origin === window.location.origin;
-        } catch {
-          return false;
-        }
-      }
-
-      document.addEventListener("click", (ev) => {
-        const a = ev.target.closest("a");
-        if (!shouldHandle(a)) return;
-
-        ev.preventDefault();
-        wipe.classList.add("on");
-        setTimeout(() => window.location.href = a.getAttribute("href"), 220);
-      });
-    })();
-  </script>
+  <script src="/script.js?v=20260103"></script>
 </body>
 </html>
