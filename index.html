@@ -1,160 +1,181 @@
 <!-- index.html -->
 <!doctype html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>elã</title>
 
-  <!-- Ivy Journal (Adobe) -->
-  <link rel="stylesheet" href="https://use.typekit.net/piy8ljr.css" />
-  <!-- Inter Tight (Google) -->
+  <!-- Adobe Typekit (Ivy Journal) -->
+  <link rel="stylesheet" href="https://use.typekit.net/piy8ljr.css">
+
+  <!-- Google Fonts (Inter Tight) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;600;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="./styles.css" />
 </head>
 
 <body>
-  <a id="top" class="sr-only" href="#conteudo">pular para o conteúdo</a>
+  <a class="skip" href="#top">pular para o conteúdo</a>
 
-  <!-- barra fixa (colada ao topo / largura total) -->
-  <header class="topbar" aria-label="menu principal">
-    <div class="wrap topbar__inner">
-      <a class="brand" href="#top" aria-label="voltar para a home">
-        <img class="brand__logo" src="./logo-elã.svg" alt="elã" />
-      </a>
+  <!-- TOP BAR (fixa) -->
+  <header class="topbar" role="banner">
+    <div class="bar">
+      <a class="logo" href="./" aria-label="ir para home">elã</a>
 
-      <nav class="nav" aria-label="seções">
-        <a class="nav__link" href="#sobre">sobre nós</a>
-        <a class="nav__link" href="#servicos">arquitetura de serviços</a>
-        <a class="nav__link" href="#cafe">que tal um café?</a>
+      <nav class="nav" aria-label="menu principal">
+        <a class="navlink" href="#sobre">sobre nós</a>
+        <a class="navlink" href="#servicos">arquitetura de serviços</a>
+        <a class="navlink navlink--cta" href="#cafe">que tal um café?</a>
       </nav>
 
-      <button class="burger" type="button" aria-label="abrir menu" aria-expanded="false">
+      <button class="hamburger" type="button" aria-label="abrir menu" aria-expanded="false" aria-controls="mobileMenu">
         <span></span><span></span><span></span>
       </button>
     </div>
 
-    <!-- menu mobile -->
-    <div class="mobile" hidden>
-      <a class="mobile__link" href="#sobre">sobre nós</a>
-      <a class="mobile__link" href="#servicos">arquitetura de serviços</a>
-      <a class="mobile__link" href="#cafe">que tal um café?</a>
+    <div id="mobileMenu" class="mobile" hidden>
+      <div class="mobile__panel">
+        <button class="mobile__close" type="button" aria-label="fechar menu">fechar</button>
+        <nav class="mobile__nav" aria-label="menu mobile">
+          <a class="mobile__link" href="#sobre">sobre nós</a>
+          <a class="mobile__link" href="#servicos">arquitetura de serviços</a>
+          <a class="mobile__link" href="#cafe">que tal um café?</a>
+          <a class="mobile__link" href="#top">voltar ao topo</a>
+        </nav>
+      </div>
     </div>
   </header>
 
-  <main id="conteudo">
-    <!-- HERO (fundo rosa / menu fica só no hero, mas a barra é fixa) -->
-    <section class="hero">
-      <div class="wrap hero__grid reveal">
-        <div class="hero__copy">
-          <h1 class="hero__title">
-            marcas não precisam de mais posts.
-            <strong>precisam de direção.</strong>
-          </h1>
-          <p class="hero__subtitle">
-            estratégia de marca, conteúdo e influência com intenção.
-          </p>
-        </div>
+  <main id="top" tabindex="-1">
+    <!-- HERO -->
+    <section class="section hero">
+      <div class="container">
+        <div class="hero__grid reveal">
+          <div class="hero__copy">
+            <h1 class="hero__title">
+              marcas não precisam de mais posts.
+              <strong>precisam de direção.</strong>
+            </h1>
 
-        <div class="hero__mark" aria-hidden="true">
-          <img src="./norte.svg" alt="" />
+            <p class="hero__sub">
+              estratégia de marca, conteúdo e influência com intenção.
+            </p>
+          </div>
+
+          <div class="hero__mark" aria-hidden="true">
+            <!-- “norte” (inline) -->
+            <svg class="norte" viewBox="0 0 200 200">
+              <g stroke="currentColor" stroke-width="6" stroke-linecap="round">
+                <line x1="100" y1="18"  x2="100" y2="182"/>
+                <line x1="18"  y1="100" x2="182" y2="100"/>
+                <line x1="38"  y1="38"  x2="162" y2="162"/>
+                <line x1="162" y1="38"  x2="38"  y2="162"/>
+              </g>
+            </svg>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- SOBRE -->
+    <!-- SOBRE NÓS -->
     <section id="sobre" class="section about">
-      <div class="wrap about__grid reveal">
-        <div class="about__text">
+      <div class="about__grid">
+        <div class="container about__text reveal">
           <h2 class="h2">sobre <em>nós</em></h2>
 
           <p class="body">
-            somos um estúdio que cria direção com consistência, na moda com propósito e intenção.
-            posicionamento, editorial, social e influência — com números pra guiar e feeling pra criar.
+            somos um estúdio de direção de marca com foco em <strong>posicionamento</strong>, editorial,
+            social e influência. a gente trabalha com clareza: decisões que fazem sentido hoje e constroem
+            coerência ao longo do tempo.
           </p>
 
           <p class="body">
-            a gente lê a marca e transforma isso em escolhas práticas: o que dizer, como dizer e onde aparecer.
+            aqui, estratégia não é planilha fria: é leitura, critério e intenção.
+            <strong>números pra guiar, feeling pra criar.</strong>
           </p>
         </div>
 
-        <div class="about__image" aria-hidden="true">
-          <img src="./sobre.jpg" alt="" />
+        <div class="about__media reveal" aria-label="imagem editorial">
+          <div class="about__img" role="img" aria-label="imagem editorial"></div>
         </div>
       </div>
     </section>
 
-    <!-- ARQUITETURA DE SERVIÇOS (ACORDEON com + e -) -->
-    <section id="servicos" class="section services">
-      <div class="wrap reveal">
+    <!-- ARQUITETURA DE SERVIÇOS / NOSSOS MÓDULOS -->
+    <section id="servicos" class="section modules">
+      <div class="container reveal">
         <h2 class="h2">nossos <em>módulos</em></h2>
 
-        <div class="accordion" data-accordion>
-          <details open>
-            <summary>
-              <span class="acc__title">fundação</span>
-              <span class="acc__desc">: o que organiza a marca por dentro e define direção</span>
+        <div class="accordion" role="region" aria-label="módulos">
+          <details class="acc">
+            <summary class="acc__sum">
+              <span class="acc__title">
+                <strong>fundação:</strong> o que organiza a marca por dentro e define direção
+              </span>
+              <span class="acc__icon" aria-hidden="true"></span>
             </summary>
-            <div class="acc__content">
+            <div class="acc__body">
               <p class="body">
-                <strong><u>planejamento estratégico de comunicação:</u></strong>
-                estruturamos o plano do período a partir de uma leitura da marca, do produto, do discurso e dos números.
-                definimos pilares, mensagens e prioridades que sustentam o que a marca comunica.
-              </p>
-              <p class="body">
-                <strong><u>calendário de campanhas e lançamentos:</u></strong>
-                montamos um calendário macro que organiza lançamentos, campanhas e sazonalidades,
-                alinhamos comunicação e vendas para manter coerência ao longo do tempo.
+                diagnóstico, narrativa, proposta de valor, arquitetura de marca, tom e critérios.
               </p>
             </div>
           </details>
 
-          <details>
-            <summary>
-              <span class="acc__title">desejo</span>
-              <span class="acc__desc">: o que constrói imagem, linguagem e vontade de pertencer</span>
+          <details class="acc">
+            <summary class="acc__sum">
+              <span class="acc__title">
+                <strong>planejamento estratégico:</strong> como caminhar com clareza
+              </span>
+              <span class="acc__icon" aria-hidden="true"></span>
             </summary>
-            <div class="acc__content">
+            <div class="acc__body">
               <p class="body">
-                <strong><u>direção criativa e produção executiva:</u></strong>
-                traduzimos o norte em conceito e direção de produção. linguagem visual, referências, casting, styling
-                e organização de set para executar sem ruído.
-              </p>
-              <p class="body">
-                <strong><u>social media e editorial de conteúdo:</u></strong>
-                definimos linha editorial e presença nas redes. pauta, formatos e ritmo, com consistência estética e narrativa ao longo do tempo.
-              </p>
-              <p class="body">
-                <strong><u>marketing sensorial:</u></strong>
-                desenhamos a experiência da marca nos pontos de contato físicos e online. embalagem, texto, materiais e envio,
-                tudo coerente com o DNA e com a percepção de valor.
+                objetivos, hipóteses, prioridades, calendário e cadência. decisões que evitam ruído.
               </p>
             </div>
           </details>
 
-          <details>
-            <summary>
-              <span class="acc__title">relacionamento</span>
-              <span class="acc__desc">: o que coloca a marca em circulação com contexto e parceria</span>
+          <details class="acc">
+            <summary class="acc__sum">
+              <span class="acc__title">
+                <strong>editorial & conteúdo:</strong> o que dizer, como dizer e onde aparecer
+              </span>
+              <span class="acc__icon" aria-hidden="true"></span>
             </summary>
-            <div class="acc__content">
+            <div class="acc__body">
               <p class="body">
-                <strong><u>marketing de influência:</u></strong>
-                mapeamos, prospectamos e gerimos influenciadoras com critério. cuidamos de acordos, entregas e acompanhamento,
-                orientados por posicionamento e resultado.
+                direção editorial, linguagem, pilares, pautas e consistência de presença.
               </p>
+            </div>
+          </details>
+
+          <details class="acc">
+            <summary class="acc__sum">
+              <span class="acc__title">
+                <strong>desejo:</strong> o que constrói imagem, linguagem e vontade de pertencer
+              </span>
+              <span class="acc__icon" aria-hidden="true"></span>
+            </summary>
+            <div class="acc__body">
               <p class="body">
-                <strong><u>gestão de collabs entre marcas:</u></strong>
-                estruturamos collabs com marcas complementares, da proposta à execução.
-                criamos valor simbólico, contexto e alcance com sentido.
+                estética aplicada, códigos, narrativas visuais e escolhas que elevam percepção.
               </p>
+            </div>
+          </details>
+
+          <details class="acc">
+            <summary class="acc__sum">
+              <span class="acc__title">
+                <strong>relacionamento:</strong> o que coloca a marca em circulação com contexto e parceria
+              </span>
+              <span class="acc__icon" aria-hidden="true"></span>
+            </summary>
+            <div class="acc__body">
               <p class="body">
-                <strong><u>ativações de marca e eventos de experiência:</u></strong>
-                planejamos e produzimos ativações, lançamentos e encontros que materializam a marca no mundo real.
-                isso vira conteúdo, relacionamento e repercussão.
+                influência, colabs, presença social e ações que conectam marca e comunidade.
               </p>
             </div>
           </details>
@@ -162,79 +183,79 @@
       </div>
     </section>
 
-    <!-- METODOLOGIA -->
-    <section id="metodologia" class="section methodology">
-      <div class="wrap methodology__grid reveal">
-        <div>
-          <h2 class="h2">nossa <em>metodologia</em></h2>
+    <!-- NOSSA METODOLOGIA -->
+    <section id="metodologia" class="section method">
+      <div class="container reveal">
+        <h2 class="h2">nossa <em>metodologia</em></h2>
 
-          <p class="body">
-            é a forma como damos direção. começamos lendo o que a marca sustenta hoje e transformamos isso em escolhas práticas:
-            <strong class="wine">o que dizer, como dizer e onde aparecer.</strong>
-            a partir daí, organizamos prioridades, calendário e critérios de consistência.
-          </p>
+        <p class="body">
+          é a forma como damos direção. começamos lendo o que a marca sustenta hoje e transformamos isso em escolhas práticas:
+          <strong>o que dizer</strong>, <strong>como dizer</strong> e <strong>onde aparecer</strong>.
+          a partir dali, organizamos prioridades, calendário e critérios de consistência.
+        </p>
 
-          <p class="body">
-            os módulos entram como <strong class="wine">partes de uma arquitetura</strong>.
-            você pode começar pela fundação e evoluir para desejo e relacionamento, ou entrar pelo ponto que resolve o seu momento.
-            o sistema existe para <strong class="wine">manter coerência entre posicionamento, direção e execução</strong>.
-          </p>
+        <p class="body">
+          os módulos entram como partes de uma arquitetura. você pode começar pela fundação e evoluir para desejo e relacionamento,
+          ou entrar pelo ponto que resolve o seu momento. o sistema existe para <strong>manter coerência entre posicionamento, direção e execução</strong>.
+        </p>
 
-          <p class="body">
-            o acompanhamento funciona como bússola. você não fica com um PDF bonito e sozinho.
-            a gente volta no plano, ajusta o foco e garante continuidade.
-          </p>
-        </div>
+        <p class="body">
+          o acompanhamento funciona como bússola. você não fica com um PDF bonito e sozinho. a gente volta no plano,
+          ajusta o foco e garante continuidade.
+        </p>
       </div>
     </section>
 
     <!-- CTA -->
-    <section id="cafe" class="section cta">
-      <div class="wrap cta__grid reveal">
-        <div class="cta__copy">
+    <section id="cafe" class="section cafe">
+      <div class="container cafe__grid reveal">
+        <div>
           <h2 class="h2">que tal <em>um café?</em></h2>
           <p class="body">
             um convite simples para conversar sobre a sua marca, entender o momento e pensar juntos os próximos passos.
             conversa leve, com clareza e sem pressão.
           </p>
-          <a class="btn" href="mailto:contato@elafashionmkt.com.br">agendar :)</a>
+
+          <a class="btn" href="mailto:contato@elafashionmkt.com.br?subject=Quero%20agendar%20um%20caf%C3%A9">agendar :)</a>
         </div>
 
-        <div class="cta__mark" aria-hidden="true">
-          <img src="./norte.svg" alt="" />
+        <div class="cafe__mark" aria-hidden="true">
+          <svg class="norte norte--small" viewBox="0 0 200 200">
+            <g stroke="currentColor" stroke-width="6" stroke-linecap="round">
+              <line x1="100" y1="18"  x2="100" y2="182"/>
+              <line x1="18"  y1="100" x2="182" y2="100"/>
+              <line x1="38"  y1="38"  x2="162" y2="162"/>
+              <line x1="162" y1="38"  x2="38"  y2="162"/>
+            </g>
+          </svg>
         </div>
       </div>
     </section>
 
     <!-- RODAPÉ -->
     <footer class="footer">
-      <div class="wrap footer__grid reveal">
-        <div class="footer__left">
-          <a class="footer__link" href="#sobre">sobre nós</a><br />
-          <a class="footer__link" href="#servicos">arquitetura de serviços</a><br />
-          <a class="footer__link" href="#cafe">agende um café</a>
-        </div>
+      <div class="footer__bar">
+        <div class="container footer__grid">
+          <div class="footer__left">
+            <div class="footer__title">sobre nós</div>
+            <a class="footer__link" href="#sobre">arquitetura de serviços</a><br>
+            <a class="footer__link" href="#cafe">agende um café</a>
+          </div>
 
-        <div class="footer__right">
-          <div class="footer__row">
-            <span class="footer__muted">elafashionmkt</span>
-          </div>
-          <div class="footer__row">
-            <a class="footer__link" href="tel:+5522936182313">+55 22 93618-2313</a>
-          </div>
-          <div class="footer__row">
-            <a class="footer__link" href="mailto:contato@elafashionmkt.com.br">contato@elafashionmkt.com.br</a>
+          <div class="footer__right">
+            <div class="footer__meta">
+              <strong>elafashionmkt</strong><br>
+              +55 22 93618-2313<br>
+              <a class="footer__link" href="mailto:contato@elafashionmkt.com.br">contato@elafashionmkt.com.br</a>
+            </div>
+
+            <a class="toTop" href="#top">voltar ao topo</a>
           </div>
         </div>
       </div>
     </footer>
-
-    <!-- voltar ao topo (sutil / ícone estrela) -->
-    <button class="to-top" type="button" aria-label="voltar ao topo">
-      <img src="./norte.svg" alt="" />
-    </button>
   </main>
 
-  <script src="./script.js"></script>
+  <script src="./script.js" defer></script>
 </body>
 </html>
