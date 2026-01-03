@@ -12,159 +12,224 @@
   <!-- Ivy Journal -->
   <link rel="stylesheet" href="https://use.typekit.net/piy8ljr.css">
 
-  <!-- CSS (cache bust) -->
-  <link rel="stylesheet" href="/style.css?v=20260103" />
+  <!-- cache-bust pra não “parecer que não funcionou” -->
+  <link rel="stylesheet" href="/style.css?v=20260103-1022" />
 
   <title>elã</title>
 </head>
 
 <body>
+  <!-- overlay de transição (opcional) -->
   <div class="wipe" aria-hidden="true"></div>
 
-  <main class="frame">
-
-    <!-- HERO -->
-    <section class="hero" aria-label="Topo">
-      <header class="container topbar">
-        <a class="logo" href="/" aria-label="elã">
-          <img src="/assets/logo-ela.svg" alt="elã" />
+  <main class="frame" data-grid="off">
+    <!-- HERO / TOPO -->
+    <section class="hero" id="topo" aria-label="Topo">
+      <!-- topbar em y=32 e altura 57 -->
+      <header class="topbar">
+        <a class="logo" href="#topo" aria-label="elã">
+          <img src="/assets/logo-ela.svg" alt="elã">
         </a>
 
         <nav class="nav" aria-label="Menu">
           <a href="#sobre">sobre nós</a>
           <a href="#servicos">arquitetura de serviços</a>
-          <a href="#cafe">agende um café</a>
+          <a href="#cafe">que tal um café?</a>
         </nav>
       </header>
 
-      <div class="container hero-inner">
-        <div class="hero-copy">
-          <h1 class="ivy hero-title reveal">marcas não precisam de mais posts. precisam de direção.</h1>
-          <p class="hero-sub reveal">estratégia de marca, conteúdo e influência com intenção.</p>
-        </div>
-
-        <a class="norte reveal" href="#metodologia" aria-label="Ir para metodologia">
-          <img src="/assets/norte.svg" alt="" />
-        </a>
+      <!-- manifesto (x=120 y=258 w=774 h=120) + sub (x=120 y=394 w=774 h=31) -->
+      <div class="hero-copy">
+        <h1 class="ivy hero-title reveal">
+          marcas não precisam de mais posts. <em>precisam de direção.</em>
+        </h1>
+        <p class="hero-sub reveal">
+          estratégia de marca, conteúdo e influência com intenção.
+        </p>
       </div>
+
+      <!-- norte (x=918 y=221 w=242 h=242) -->
+      <a class="hero-norte reveal" href="#metodologia" aria-label="Ir para metodologia">
+        <img src="/assets/norte.svg" alt="">
+      </a>
     </section>
 
-    <!-- SOBRE (bleed direita) -->
+    <!-- SOBRE NÓS -->
     <section class="about" id="sobre">
+      <!-- grid que “sangra” até a direita (1280), com margem esquerda 120 -->
       <div class="about-bleed">
         <div class="about-grid">
-          <div class="about-copy">
-            <h2 class="ivy about-title reveal">sobre nós</h2>
+          <div class="about-left">
+            <h2 class="ivy about-title reveal">sobre <em>nós</em></h2>
 
-            <p class="body reveal">
-              somos um estúdio que trata marca como ecossistema, não como ação isolada. a gente começa pelo que vem antes do conteúdo: posicionamento e direção.
-            </p>
-
-            <p class="body reveal">
-              entendemos o momento da marca, o que ela sustenta hoje, o que precisa ser ajustado e quais escolhas deixam tudo mais coerente. atuamos a partir de posicionamento, narrativa e imagem, conectando números para guiar e feeling para criar.
-            </p>
-
-            <p class="body reveal">
-              isso vira direção criativa, editorial, social e influência com o mesmo norte. consistência no tempo, com decisões claras.
+            <p class="about-body reveal">
+              somos um estúdio que trata <span class="ink-accent">marca como ecossistema</span>, não como ação isolada.
+              a gente começa pelo que vem antes do conteúdo: <span class="ink-accent">posicionamento e direção</span>.
+              <br><br>
+              entendemos o momento da marca, o que ela sustenta hoje, o que precisa ser ajustado e quais escolhas deixam tudo mais coerente.
+              atuamos a partir de <span class="ink-accent">posicionamento, narrativa e estética</span>, conectando números pra guiar e feeling pra criar.
+              <br><br>
+              isso vira direção criativa, editorial, social e influência com o mesmo norte.
+              <span class="ink-accent">consistência no tempo</span>, com decisões claras.
             </p>
           </div>
 
-          <div class="about-media reveal">
-            <img src="/assets/sobre.jpg" alt="" />
+          <figure class="about-media reveal" aria-label="Imagem editorial">
+            <img src="/assets/sobre.jpg" alt="">
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- NOSSOS MÓDULOS -->
+    <section class="modules" id="modulos" aria-label="Nossos módulos">
+      <div class="container">
+        <h2 class="ivy section-title reveal">nossos <em>módulos</em></h2>
+
+        <div class="module-list">
+          <div class="module-block reveal">
+            <p class="module-line">
+              <span class="kicker">fundação:</span> o que organiza a marca por dentro e define direção
+            </p>
+
+            <div class="module-detail">
+              <p class="module-text">
+                <span class="label">planejamento estratégico de comunicação:</span>
+                estruturamos o plano do período a partir de uma leitura profunda da marca, do produto, do discurso e dos números.
+                definimos pilares, mensagens e prioridades que dão direção e consistência ao que a marca comunica.
+              </p>
+              <p class="module-text">
+                <span class="label">calendário de campanhas e lançamentos:</span>
+                montamos um calendário macro que organiza lançamentos, campanhas e sazonalidades,
+                alinhando comunicação e vendas para evitar ações isoladas e garantir coerência ao longo do tempo.
+              </p>
+            </div>
+          </div>
+
+          <div class="module-block reveal">
+            <p class="module-line">
+              <span class="kicker">desejo:</span> o que constrói imagem, linguagem e vontade de pertencer
+            </p>
+          </div>
+
+          <div class="module-block reveal">
+            <p class="module-line">
+              <span class="kicker">relacionamento:</span> o que coloca a marca em circulação com contexto e parceria
+            </p>
           </div>
         </div>
       </div>
     </section>
 
     <!-- METODOLOGIA -->
-    <section class="section" id="metodologia">
+    <section class="method" id="metodologia">
       <div class="container">
         <h2 class="ivy section-title reveal">nossa <em>metodologia</em></h2>
 
-        <p class="body reveal">
-          nossa metodologia é a forma como damos direção. começamos lendo o que a marca sustenta hoje e transformamos isso em escolhas práticas: o que dizer, como dizer e onde aparecer. a partir daí, organizamos prioridades, calendário e critérios de consistência.
-        </p>
-
-        <p class="body reveal">
-          os módulos entram como partes de uma arquitetura. você pode começar pela fundação e evoluir para desejo e relacionamento, ou entrar pelo ponto que resolve o seu momento. o sistema existe para manter coerência entre posicionamento, direção e execução.
-        </p>
-
-        <p class="body reveal">
-          o acompanhamento funciona como bússola. você não fica com um PDF bonito e sozinho. a gente volta no plano, ajusta o foco e garante continuidade.
+        <p class="method-body reveal">
+          <span class="ink-accent">é a forma como damos direção</span>. começamos lendo o que a marca sustenta hoje e transformamos isso em escolhas práticas:
+          <span class="ink-accent">o que dizer, como dizer e onde aparecer</span>.
+          a partir daí, organizamos prioridades, calendário e critérios de consistência.
+          <br><br>
+          os módulos entram como <span class="ink-accent">partes de uma arquitetura</span>. você pode começar pela fundação e evoluir para desejo e relacionamento,
+          ou entrar pelo ponto que resolve o seu momento. o sistema existe para
+          <span class="ink-accent">manter coerência entre posicionamento, direção e execução</span>.
+          <br><br>
+          o acompanhamento funciona como bússola. você não fica com um PDF bonito e sozinho.
+          a gente volta no plano, ajusta o foco e garante continuidade.
         </p>
       </div>
     </section>
 
-    <!-- SERVIÇOS -->
-    <section class="section" id="servicos">
+    <!-- ARQUITETURA DE SERVIÇOS (ACORDEON) -->
+    <section class="services" id="servicos">
       <div class="container">
         <h2 class="ivy section-title reveal">arquitetura de <em>serviços</em></h2>
 
-        <div class="accordion">
-          <details class="acc reveal">
+        <div class="accordion reveal">
+          <!-- texto vindo do seu PDF de serviços -->
+          <details class="acc">
             <summary>fundação</summary>
             <div class="acc-body">
-              <p class="body">planejamento estratégico de comunicação, calendário de campanhas e lançamentos.</p>
+              <p><strong>planejamento estratégico de comunicação:</strong> estruturamos o plano do período…</p>
+              <p><strong>calendário de campanhas e lançamentos:</strong> montamos um calendário macro…</p>
             </div>
           </details>
 
-          <details class="acc reveal">
+          <details class="acc">
             <summary>desejo</summary>
             <div class="acc-body">
-              <p class="body">direção criativa e produção executiva, social media e editorial, produção de conteúdo, marketing sensorial.</p>
+              <p><strong>direção criativa e produção executiva:</strong> traduzimos o norte em conceito…</p>
+              <p><strong>social media e editorial de conteúdo:</strong> definimos linha editorial…</p>
+              <p><strong>marketing sensorial:</strong> desenhamos a experiência da marca…</p>
             </div>
           </details>
 
-          <details class="acc reveal">
+          <details class="acc">
             <summary>relacionamento</summary>
             <div class="acc-body">
-              <p class="body">marketing de influência, collabs, ativações e eventos.</p>
+              <p><strong>marketing de influência:</strong> mapeamos, prospectamos e gerimos…</p>
+              <p><strong>gestão de collabs entre marcas:</strong> estruturamos collabs…</p>
+              <p><strong>ativações de marca e eventos de experiência:</strong> planejamos e produzimos…</p>
             </div>
           </details>
         </div>
+
+        <p class="services-note">
+          (texto completo está no seu PDF de serviços; aqui eu mantive resumido por enquanto)
+        </p>
       </div>
     </section>
 
     <!-- CTA -->
-    <section class="section cta" id="cafe">
-      <div class="container cta-grid">
-        <div class="reveal">
-          <h2 class="ivy cta-title">que tal <em>um café</em>?</h2>
-          <p class="body">
-            um convite simples para conversar sobre a sua marca, entender o momento e pensar juntos os próximos passos. conversa leve, com clareza e sem pressão.
-          </p>
-          <a class="btn" href="mailto:contato@elafashionmkt.com.br?subject=Agendar%20um%20caf%C3%A9">agendar :)</a>
-        </div>
+    <section class="cta" id="cafe">
+      <div class="cta-bleed">
+        <div class="cta-grid">
+          <div class="cta-left reveal">
+            <h2 class="ivy cta-title">que tal <em>um café</em>?</h2>
+            <p class="cta-body">
+              um convite simples para conversar sobre a sua marca, entender o momento e pensar juntos os próximos passos.
+              conversa leve, com clareza e sem pressão.
+            </p>
+            <a class="cta-btn" href="mailto:contato@elafashionmkt.com.br?subject=Agendar%20um%20caf%C3%A9">agendar :)</a>
+          </div>
 
-        <aside class="colophon reveal">
-          <div class="rule" aria-hidden="true"></div>
-          <p>
-            <span>estúdio de direção de marca</span>
-            <span>posicionamento • editorial • social • influência</span>
-            <span>desde 2025</span>
-          </p>
-        </aside>
+          <div class="cta-right">
+            <div class="cta-norte reveal" aria-hidden="true">
+              <img src="/assets/norte.svg" alt="">
+            </div>
+
+            <aside class="colophon reveal" aria-label="Ficha">
+              <div class="rule"></div>
+              <p class="colophon-text">
+                <span>estúdio de direção de marca</span>
+                <span>posicionamento • social • influência</span>
+                <span>desde 2025</span>
+              </p>
+            </aside>
+          </div>
+        </div>
       </div>
     </section>
 
     <!-- FOOTER -->
     <footer class="footer">
       <div class="container footer-grid">
-        <div>
+        <div class="footer-links">
           <a href="#sobre">sobre nós</a>
           <a href="#servicos">arquitetura de serviços</a>
           <a href="#cafe">agende um café</a>
         </div>
-        <div>
+
+        <div class="footer-meta">
           <a href="https://instagram.com/elafashionmkt" target="_blank" rel="noreferrer">@elafashionmkt</a>
           <a href="tel:+5522936182313">+55 22 93618-2313</a>
           <a href="mailto:contato@elafashionmkt.com.br">contato@elafashionmkt.com.br</a>
         </div>
       </div>
     </footer>
-
   </main>
 
-  <script src="/script.js?v=20260103"></script>
+  <script src="/script.js?v=20260103-1022"></script>
 </body>
 </html>
