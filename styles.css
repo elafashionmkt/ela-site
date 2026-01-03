@@ -568,14 +568,14 @@ section{
     line-height:28px;
   }
 
-  .grid-2col{
+  .grid-2col:not(.hero-grid){
     grid-template-columns: auto 1fr;
     column-gap: 12px;
     row-gap: 12px;
     align-items:start;
   }
 
-  .grid-2col > .col-left{ align-self:baseline; padding-top:0; }
+  .grid-2col:not(.hero-grid) > .col-left{ align-self:baseline; padding-top:0; }
 
   /* SOBRE */
   .sobre{ margin-top:0; }
