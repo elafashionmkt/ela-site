@@ -1,10 +1,17 @@
+// script.js
 (() => {
-  // Progressive enhancement: só ativa efeitos se JS rodar.
+  // Progressive enhancement
   document.documentElement.classList.add("js");
 
   const root = document.documentElement;
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const hero = document.querySelector(".hero");
+
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const getTopbarHeight = () => {
+    const v = getComputedStyle(root).getPropertyValue("--topbar-current");
+    return parseFloat(v) || 0;
+  };
 
   // ===== Topbar height (hero -> compact) =====
   const setCompact = (isCompact) => {
@@ -41,9 +48,7 @@
     mobile.classList.remove("is-open");
     hamburger?.setAttribute("aria-expanded", "false");
     document.body.style.overflow = "";
-
-    const delay = prefersReducedMotion.matches ? 0 : 260;
-    window.setTimeout(() => { mobile.hidden = true; }, delay);
+    window.setTimeout(() => { mobile.hidden = true; }, 260);
   };
 
   hamburger?.addEventListener("click", () => {
@@ -57,99 +62,132 @@
     if (e.target === mobile) closeMenu();
   });
 
-  mobile?.querySelectorAll("a").forEach(a => a.addEventListener("click", closeMenu));
+  mobile?.querySelectorAll("a").forEach((a) => a.addEventListener("click", closeMenu));
 
-  // ===== Nav active (scrollspy) =====
-  const links = Array.from(document.querySelectorAll(".navlink"))
-    .filter(a => a.getAttribute("href")?.startsWith("#"));
+  // ===== Smooth anchor navigation (no blur / no wipe) =====
+  const anchorLinks = Array.from(document.querySelectorAll('a[href^="#"]'))
+    .filter((a) => a.getAttribute("href") && a.getAttribute("href") !== "#");
 
-  const sections = links
-    .map(a => document.querySelector(a.getAttribute("href")))
-    .filter(Boolean);
+  const scrollToHash = (hash) => {
+    const target = document.querySelector(hash);
+    if (!target) return;
 
-  const setActive = (id) => {
-    links.forEach(a => a.classList.toggle("is-active", a.getAttribute("href") === `#${id}`));
+    const top = hash === "#top"
+      ? 0
+      : (target.getBoundingClientRect().top + window.scrollY - getTopbarHeight());
+
+    const behavior = prefersReducedMotion.matches ? "auto" : "smooth";
+    window.scrollTo({ top, behavior });
+    history.replaceState(null, "", hash);
   };
 
-  if ("IntersectionObserver" in window && sections.length) {
-    const obs = new IntersectionObserver((entries) => {
-      const visible = entries
-        .filter(e => e.isIntersecting)
-        .sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
-      if (visible?.target?.id) setActive(visible.target.id);
-    }, { rootMargin: "-45% 0px -45% 0px", threshold: [0.12, 0.25, 0.4, 0.6] });
+  anchorLinks.forEach((a) => {
+    a.addEventListener("click", (event) => {
+      const href = a.getAttribute("href");
+      if (!href || !href.startsWith("#")) return;
+      const target = document.querySelector(href);
+      if (!target) return;
+      event.preventDefault();
+      scrollToHash(href);
+    });
+  });
 
-    sections.forEach(s => obs.observe(s));
-  }
+  // ===== Accordion (from spec/acordeon.md) =====
+  const accordionHost = document.getElementById("servicesAccordion");
 
-  // ===== Accordion: carrega do spec/acordeon.md (sem quebrar se falhar) =====
-  const accordionRoot = document.getElementById("accordion");
+  const parseAccordionSpec = (raw) => {
+    const text = String(raw || "").replace(/\r\n?/g, "\n");
+    const blocks = text
+      .split(/\n\s*\n+/g)
+      .map((b) => b.trim())
+      .filter(Boolean);
 
-  const mdToHtmlBody = (md) => {
-    const safe = md
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;");
+    return blocks.map((block) => {
+      const lines = block
+        .split("\n")
+        .map((l) => l.replace(/\t+/g, " ").trim())
+        .filter(Boolean);
 
-    const lines = safe.split("\n").map(l => l.trim());
-    let html = "";
-    let inList = false;
+      const titleLine = lines[0] || "";
+      const bullets = lines
+        .slice(1)
+        .filter((l) => l.startsWith("•"))
+        .map((l) => l.replace(/^•\s*/, "").trim());
 
-    for (const line of lines) {
-      if (!line) continue;
+      const colon = titleLine.indexOf(":");
+      const key = colon >= 0 ? titleLine.slice(0, colon + 1).trim() : titleLine.trim();
+      const rest = colon >= 0 ? titleLine.slice(colon + 1).trim() : "";
 
-      const isBullet = /^[-*]\s+/.test(line);
-      if (isBullet) {
-        if (!inList) { inList = true; html += "<ul class=\"acc__list\">"; }
-        const li = line.replace(/^[-*]\s+/, "").replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
-        html += `<li>${li}</li>`;
-      } else {
-        if (inList) { inList = false; html += "</ul>"; }
-        const p = line.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
-        html += `<p class="body">${p}</p>`;
-      }
-    }
-    if (inList) html += "</ul>";
-    return html;
+      return { key, rest, bullets };
+    }).filter((b) => b.key);
   };
 
-  const parseAccordionItems = (md) => {
-    const normalized = md.replace(/\r/g, "");
-    const parts = normalized.split(/\n##\s+/g);
+  const buildAccordion = (items) => {
+    if (!accordionHost) return;
 
-    // Remove o que vier antes do primeiro "##"
-    const chunks = parts.slice(1);
+    const frag = document.createDocumentFragment();
 
-    return chunks.map(chunk => {
-      const block = chunk.trim();
-      const [titleLine, ...rest] = block.split("\n");
-      return {
-        title: (titleLine || "").trim(),
-        body: rest.join("\n").trim(),
-      };
-    }).filter(it => it.title && it.body);
-  };
+    items.forEach((item, idx) => {
+      const details = document.createElement("details");
+      details.className = "acc";
+      if (idx === 0) details.open = true;
 
-  const renderAccordion = (items) => {
-    if (!accordionRoot) return;
+      const summary = document.createElement("summary");
+      summary.className = "acc__sum";
 
-    accordionRoot.innerHTML = items.map((it) => {
-      const titleHtml = it.title.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
-      return `
-        <details class="acc">
-          <summary class="acc__sum">
-            <span class="acc__title">${titleHtml}</span>
-            <span class="acc__icon" aria-hidden="true"></span>
-          </summary>
-          <div class="acc__body">
-            ${mdToHtmlBody(it.body)}
-          </div>
-        </details>
-      `.trim();
-    }).join("");
-  };
+      const title = document.createElement("span");
+      title.className = "acc__title";
+      title.innerHTML = `<strong>${item.key}</strong> ${item.rest}`.trim();
 
-  const wireAccordionCloseOthers = () => {
-    const accs = Array.from(document.querySelectorAll(".acc"));
+      const icon = document.createElement("span");
+      icon.className = "acc__icon";
+      icon.setAttribute("aria-hidden", "true");
+
+      summary.appendChild(title);
+      summary.appendChild(icon);
+
+      const lineWrap = document.createElement("div");
+      lineWrap.className = "acc__line";
+      lineWrap.setAttribute("aria-hidden", "true");
+      const rule = document.createElement("img");
+      rule.className = "acc__rule";
+      rule.src = "./assets/linha.svg";
+      rule.alt = "";
+      rule.setAttribute("aria-hidden", "true");
+      lineWrap.appendChild(rule);
+
+      const body = document.createElement("div");
+      body.className = "acc__body";
+
+      const ul = document.createElement("ul");
+      ul.className = "acc__list";
+
+      item.bullets.forEach((b) => {
+        const li = document.createElement("li");
+        const c = b.indexOf(":");
+        if (c >= 0) {
+          const label = b.slice(0, c + 1).trim();
+          const rest = b.slice(c + 1).trim();
+          li.innerHTML = `<strong>${label}</strong> ${rest}`.trim();
+        } else {
+          li.textContent = b;
+        }
+        ul.appendChild(li);
+      });
+
+      body.appendChild(ul);
+
+      details.appendChild(summary);
+      details.appendChild(lineWrap);
+      details.appendChild(body);
+
+      frag.appendChild(details);
+    });
+
+    accordionHost.replaceChildren(frag);
+
+    // fecha os outros ao abrir
+    const accs = Array.from(accordionHost.querySelectorAll("details.acc"));
     accs.forEach((d) => {
       d.addEventListener("toggle", () => {
         if (!d.open) return;
@@ -158,59 +196,100 @@
     });
   };
 
-  const initAccordionFromSpec = async () => {
-    if (!accordionRoot) return;
+  if (accordionHost) {
+    const specUrl = accordionHost.getAttribute("data-spec") || "./spec/acordeon.md";
+    fetch(specUrl)
+      .then((r) => {
+        if (!r.ok) throw new Error(`fetch failed: ${r.status}`);
+        return r.text();
+      })
+      .then((txt) => buildAccordion(parseAccordionSpec(txt)))
+      .catch((err) => {
+        console.warn("accordion spec not loaded", err);
+      });
+  }
 
-    try {
-      const res = await fetch("./spec/acordeon.md", { cache: "no-store" });
-      if (!res.ok) return;
+  // ===== Nav active (scroll) =====
+  const navLinks = Array.from(document.querySelectorAll(".navlink"))
+    .filter((a) => (a.getAttribute("href") || "").startsWith("#"));
 
-      const md = await res.text();
-      const items = parseAccordionItems(md);
+  const sections = navLinks
+    .map((a) => document.querySelector(a.getAttribute("href")))
+    .filter(Boolean);
 
-      if (!items.length) return;
-
-      renderAccordion(items);
-      wireAccordionCloseOthers();
-    } catch {
-      // Silencioso: não quebra o site e não polui console.
-    }
+  let sectionTops = [];
+  const measureSections = () => {
+    sectionTops = sections.map((s) => s.getBoundingClientRect().top + window.scrollY);
   };
 
-  // Mantém comportamento atual e depois tenta substituir pelo spec
-  wireAccordionCloseOthers();
-  initAccordionFromSpec();
+  const setActive = (id) => {
+    navLinks.forEach((a) => {
+      const href = a.getAttribute("href");
+      a.classList.toggle("is-active", !!id && href === `#${id}`);
+    });
+  };
 
-  // ===== Scroll reveal (sem opacidade) =====
-  if (!prefersReducedMotion.matches) {
-    const revealEls = Array.from(document.querySelectorAll(".reveal"));
-    const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const updateActive = () => {
+    if (!sections.length) return;
 
-    const update = () => {
-      const vh = window.innerHeight || 1;
-      const start = vh * 0.90;
-      const end   = vh * 0.40;
+    const y = window.scrollY + getTopbarHeight() + 120;
 
-      revealEls.forEach((el) => {
-        const r = el.getBoundingClientRect();
-        const p = clamp((start - r.top) / (start - end), 0, 1);
-        const ty = (1 - p) * 14;
-        el.style.setProperty("--ty", `${ty.toFixed(2)}px`);
-      });
-    };
+    let activeIdx = -1;
+    for (let i = 0; i < sections.length; i++) {
+      if (y >= sectionTops[i]) activeIdx = i;
+    }
 
-    let ticking = false;
-    const onScroll = () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => {
-        update();
-        ticking = false;
-      });
-    };
+    if (activeIdx < 0) {
+      setActive(null);
+      return;
+    }
 
-    update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-  }
+    setActive(sections[activeIdx].id);
+  };
+
+  // ===== Scroll reveal (sem blur) =====
+  const revealEls = Array.from(document.querySelectorAll(".reveal"));
+  const updateReveal = () => {
+    const vh = window.innerHeight || 1;
+    const start = vh * 0.90;
+    const end = vh * 0.40;
+
+    revealEls.forEach((el) => {
+      const r = el.getBoundingClientRect();
+      const p = clamp((start - r.top) / (start - end), 0, 1);
+      const ty = (1 - p) * 14;
+      el.style.setProperty("--ty", `${ty.toFixed(2)}px`);
+    });
+  };
+
+  let ticking = false;
+  const onScroll = () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      updateReveal();
+      updateActive();
+      ticking = false;
+    });
+  };
+
+  // init
+  measureSections();
+  updateReveal();
+  updateActive();
+
+  window.addEventListener("load", () => {
+    measureSections();
+    updateActive();
+  });
+
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", () => {
+    measureSections();
+    onScroll();
+  });
+
+  prefersReducedMotion.addEventListener?.("change", () => {
+    updateReveal();
+  });
 })();
