@@ -1,4 +1,3 @@
-<!-- index.html -->
 <!doctype html>
 <html lang="pt-BR">
 <head>
@@ -12,7 +11,7 @@
   <!-- Google Fonts (Inter Tight) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;600;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="./styles.css" />
 </head>
@@ -20,17 +19,18 @@
 <body>
   <a class="skip" href="#top">pular para o conteúdo</a>
 
-  <div id="page-wipe" aria-hidden="true"></div>
-
   <!-- TOP BAR (fixa) -->
   <header class="topbar" role="banner">
     <div class="bar">
-      <a class="logo" href="#top" aria-label="ir para home">elã</a>
+      <a class="logo" href="#top" aria-label="ir para home">
+        <img class="logo__img" src="./assets/logo-ela.svg" alt="elã">
+      </a>
 
       <nav class="nav" aria-label="menu principal">
         <a class="navlink" href="#sobre">sobre nós</a>
         <a class="navlink" href="#servicos">arquitetura de serviços</a>
-        <a class="navlink navlink--cta" href="#cafe">que tal um café?</a>
+        <a class="navlink" href="#metodologia">nossa metodologia</a>
+        <a class="navlink" href="#cafe">que tal um café?</a>
       </nav>
 
       <button class="hamburger" type="button" aria-label="abrir menu" aria-expanded="false" aria-controls="mobileMenu">
@@ -44,6 +44,7 @@
         <nav class="mobile__nav" aria-label="menu mobile">
           <a class="mobile__link" href="#sobre">sobre nós</a>
           <a class="mobile__link" href="#servicos">arquitetura de serviços</a>
+          <a class="mobile__link" href="#metodologia">nossa metodologia</a>
           <a class="mobile__link" href="#cafe">que tal um café?</a>
           <a class="mobile__link" href="#top">voltar ao topo</a>
         </nav>
@@ -68,15 +69,7 @@
           </div>
 
           <div class="hero__mark" aria-hidden="true">
-            <!-- “norte” (inline) -->
-            <svg class="norte" viewBox="0 0 200 200">
-              <g stroke="currentColor" stroke-width="6" stroke-linecap="round">
-                <line x1="100" y1="18"  x2="100" y2="182"/>
-                <line x1="18"  y1="100" x2="182" y2="100"/>
-                <line x1="38"  y1="38"  x2="162" y2="162"/>
-                <line x1="162" y1="38"  x2="38"  y2="162"/>
-              </g>
-            </svg>
+            <img class="norte" src="./assets/norte.svg" alt="">
           </div>
         </div>
       </div>
@@ -100,18 +93,19 @@
           </p>
         </div>
 
-        <div class="about__media reveal" aria-label="imagem editorial">
-          <div class="about__img" role="img" aria-label="imagem editorial"></div>
+        <div class="about__media reveal" aria-hidden="true">
+          <img class="about__img" src="./assets/sobre.jpg" alt="" loading="lazy" decoding="async">
         </div>
       </div>
     </section>
 
-    <!-- ARQUITETURA DE SERVIÇOS / NOSSOS MÓDULOS -->
+    <!-- ARQUITETURA DE SERVIÇOS / ACORDEON -->
     <section id="servicos" class="section modules">
       <div class="container reveal">
         <h2 class="h2">arquitetura de <em>serviços</em></h2>
 
-        <div class="accordion" role="region" aria-label="arquitetura de serviços">
+        <div id="accordion" class="accordion" role="region" aria-label="arquitetura de serviços">
+          <!-- Fallback (se o fetch do spec falhar, isso permanece) -->
           <details class="acc">
             <summary class="acc__sum">
               <span class="acc__title">
@@ -199,14 +193,7 @@
         </div>
 
         <div class="cafe__mark" aria-hidden="true">
-          <svg class="norte norte--small" viewBox="0 0 200 200">
-            <g stroke="currentColor" stroke-width="6" stroke-linecap="round">
-              <line x1="100" y1="18"  x2="100" y2="182"/>
-              <line x1="18"  y1="100" x2="182" y2="100"/>
-              <line x1="38"  y1="38"  x2="162" y2="162"/>
-              <line x1="162" y1="38"  x2="38"  y2="162"/>
-            </g>
-          </svg>
+          <img class="norte norte--small" src="./assets/norte-footer.svg" alt="">
         </div>
       </div>
     </section>
@@ -216,8 +203,9 @@
       <div class="footer__bar">
         <div class="container footer__grid">
           <div class="footer__left">
-            <div class="footer__title">sobre nós</div>
-            <a class="footer__link" href="#sobre">arquitetura de serviços</a><br>
+            <div class="footer__title">menu</div>
+            <a class="footer__link" href="#sobre">sobre nós</a><br>
+            <a class="footer__link" href="#servicos">arquitetura de serviços</a><br>
             <a class="footer__link" href="#cafe">agende um café</a>
           </div>
 
