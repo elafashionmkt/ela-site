@@ -1,29 +1,32 @@
 (() => {
   const root = document.documentElement;
 
+  // ====== Compact on scroll (quando sai do topo/hero) ======
   const hero = document.querySelector(".hero");
+
+  const setCompact = (v) => root.classList.toggle("is-compact", v);
+
+  const computeCompact = () => {
+    // No topo (antes de “passar” o hero), mantém estático
+    const y = window.scrollY || 0;
+    // Ajuste fino: quando passar 10px do topo já pode compactar? aqui não:
+    // compacta só quando sair de um “respiro” (hero)
+    if (!hero) return setCompact(y > 40);
+
+    const heroBottom = hero.offsetTop + hero.offsetHeight;
+    // compacta quando o scroll passa um pedaço do hero (fica natural)
+    setCompact(y > (heroBottom - 220));
+  };
+
+  computeCompact();
+  window.addEventListener("scroll", computeCompact, { passive: true });
+  window.addEventListener("resize", computeCompact);
+
+  // ====== Mobile menu ======
   const hamburger = document.querySelector(".hamburger");
   const mobile = document.getElementById("mobileMenu");
   const closeBtn = mobile?.querySelector(".mobile__close");
-  const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)") ?? { matches: false };
 
-  const getTopbarHeight = () => {
-    try{
-      const v = getComputedStyle(root).getPropertyValue("--topbar-total-current");
-      return Number.parseFloat(v) || 0;
-    } catch {
-      return 0;
-    }
-  };
-
-  // ===== Topbar compacta ao rolar =====
-  const setCompact = (isCompact) => root.classList.toggle("is-compact", !!isCompact);
-
-  const onTopbarScroll = () => setCompact(window.scrollY > 12);
-  onTopbarScroll();
-  window.addEventListener("scroll", onTopbarScroll, { passive: true });
-
-  // ===== Mobile menu =====
   const openMenu = () => {
     if (!mobile) return;
     mobile.hidden = false;
@@ -37,7 +40,7 @@
     mobile.classList.remove("is-open");
     hamburger?.setAttribute("aria-expanded", "false");
     document.body.style.overflow = "";
-    setTimeout(() => { mobile.hidden = true; }, 260);
+    setTimeout(() => { mobile.hidden = true; }, 240);
   };
 
   hamburger?.addEventListener("click", () => {
@@ -46,10 +49,14 @@
   });
 
   closeBtn?.addEventListener("click", closeMenu);
-  mobile?.addEventListener("click", (e) => { if (e.target === mobile) closeMenu(); });
-  mobile?.querySelectorAll("a")?.forEach(a => a.addEventListener("click", closeMenu));
 
-  // ===== Accordion: fecha os outros ao abrir =====
+  mobile?.addEventListener("click", (e) => {
+    if (e.target === mobile) closeMenu();
+  });
+
+  mobile?.querySelectorAll("a").forEach(a => a.addEventListener("click", closeMenu));
+
+  // ====== Accordion: fecha os outros ao abrir ======
   const accs = Array.from(document.querySelectorAll(".acc"));
   accs.forEach((d) => {
     d.addEventListener("toggle", () => {
@@ -58,77 +65,45 @@
     });
   });
 
-  // ===== Menu ativo (NENHUM ativo no topo/hero) =====
+  // ====== Active menu (sem marcar no topo) ======
   const navLinks = Array.from(document.querySelectorAll(".navlink"))
     .filter(a => (a.getAttribute("href") || "").startsWith("#"));
 
-  const sections = navLinks
+  const targets = navLinks
     .map(a => document.querySelector(a.getAttribute("href")))
     .filter(Boolean);
 
   const clearActive = () => navLinks.forEach(a => a.classList.remove("is-active"));
-
   const setActive = (id) => {
-    navLinks.forEach(a => a.classList.toggle("is-active", a.getAttribute("href") === `#${id}`));
-  };
-
-  const computeActive = () => {
-    if (hero) {
-      const heroBottom = hero.getBoundingClientRect().bottom + window.scrollY;
-      if (window.scrollY < (heroBottom - getTopbarHeight() - 140)) {
-        clearActive();
-        return;
-      }
-    }
-
-    const top = window.scrollY + getTopbarHeight() + 90;
-    let current = "";
-
-    for (const s of sections) {
-      if (!s || !s.id) continue;
-      if (top >= s.offsetTop) current = s.id;
-    }
-
-    current ? setActive(current) : clearActive();
-  };
-
-  computeActive();
-  window.addEventListener("scroll", computeActive, { passive: true });
-  window.addEventListener("resize", computeActive);
-
-  // ===== Scroll com offset do header =====
-  const scrollToTarget = (target, hash) => {
-    const offset = target.getBoundingClientRect().top + window.scrollY - getTopbarHeight();
-    window.scrollTo({ top: offset, behavior: prefersReducedMotion.matches ? "auto" : "smooth" });
-    if (hash) history.replaceState(null, "", hash);
-  };
-
-  const clickableAnchors = Array.from(document.querySelectorAll(
-    ".navlink, .mobile__link, .logo, .footer__link[href^='#']"
-  ));
-
-  clickableAnchors.forEach((link) => {
-    const href = link.getAttribute("href") || "";
-    if (!href.startsWith("#")) return;
-
-    link.addEventListener("click", (e) => {
-      const target = document.querySelector(href);
-      if (!target) return;
-      e.preventDefault();
-      scrollToTarget(target, href);
+    navLinks.forEach(a => {
+      a.classList.toggle("is-active", a.getAttribute("href") === `#${id}`);
     });
-  });
-})();
+  };
 
-(() => {
-  const root = document.documentElement;
+  // no topo: não marca nada
+  const ensureTopNeutral = () => {
+    const y = window.scrollY || 0;
+    if (y < 80) clearActive();
+  };
 
-  function updateTopbarState() {
-    if (window.scrollY > 0) root.classList.add("is-compact");
-    else root.classList.remove("is-compact");
+  ensureTopNeutral();
+  window.addEventListener("scroll", ensureTopNeutral, { passive: true });
+
+  if ("IntersectionObserver" in window && targets.length) {
+    const obs = new IntersectionObserver((entries) => {
+      // se está no topo, não marca
+      if ((window.scrollY || 0) < 80) return clearActive();
+
+      const visible = entries
+        .filter(e => e.isIntersecting)
+        .sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+      if (visible?.target?.id) setActive(visible.target.id);
+    }, {
+      rootMargin: "-45% 0px -45% 0px",
+      threshold: [0.15, 0.25, 0.35, 0.5, 0.7]
+    });
+
+    targets.forEach(s => obs.observe(s));
   }
-
-  updateTopbarState();
-  window.addEventListener("scroll", updateTopbarState, { passive: true });
 })();
-
