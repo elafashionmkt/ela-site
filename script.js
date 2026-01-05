@@ -119,3 +119,16 @@
     });
   });
 })();
+
+(() => {
+  const root = document.documentElement;
+
+  function updateTopbarState() {
+    if (window.scrollY > 0) root.classList.add("is-compact");
+    else root.classList.remove("is-compact");
+  }
+
+  updateTopbarState();
+  window.addEventListener("scroll", updateTopbarState, { passive: true });
+})();
+
