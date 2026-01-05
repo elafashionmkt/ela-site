@@ -82,7 +82,6 @@ img, svg{ max-width: 100%; height: auto; display: block; }
   transition: height 220ms ease, padding-top 220ms ease;
 }
 
-/* default (compact/normal responsivo) */
 .bar{
   height: var(--topbar-inner-current);
   max-width: var(--max);
@@ -90,30 +89,22 @@ img, svg{ max-width: 100%; height: auto; display: block; }
   padding-left: var(--pad);
   padding-right: var(--pad);
   display: flex;
-  align-items: center;
+  align-items: flex-start; /* <<< ESTÁTICO (Figma) */
   justify-content: space-between;
   gap: 18px;
 }
 
-/* ✅ TOPO “estático” igual Figma (somente em desktop grande) */
-@media (min-width: 1280px){
-  html:not(.is-compact) .topbar{ padding-top: 32px; }
+/* ESTÁTICO: menu desce 18px (50 - 32) */
+html:not(.is-compact) .nav{
+  padding-top: 18px;
+}
 
-  html:not(.is-compact) .bar{
-    width: 1040px;
-    max-width: 1040px;
-    height: 57px;
-
-    /* X = 120 */
-    margin-left: 120px;
-    margin-right: auto;
-
-    /* sem padding lateral aqui (o X já é a margem) */
-    padding-left: 0;
-    padding-right: 0;
-
-    align-items: center;
-  }
+/* COMPACT: volta pro centro e tira offset */
+html.is-compact .bar{
+  align-items: center;
+}
+html.is-compact .nav{
+  padding-top: 0;
 }
 
 /* Logo */
