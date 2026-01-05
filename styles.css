@@ -502,3 +502,39 @@ details[open] .acc__toggle::before{ content: "−"; }
   .footer__contact{ justify-items: start; }
   .footer__brand{ order: -1; justify-self: start; }
 }
+
+/* ===== MENU ESTÁTICO — POSIÇÃO EXATA DO FIGMA ===== */
+@media (min-width: 1280px){
+
+  /* barra começa em Y=32 */
+  .topbar{
+    padding-top: 32px;
+  }
+
+  /* grupo do menu (1040 x 57 em X=120) */
+  .bar{
+    position: relative;
+    height: 57px;
+  }
+
+  /* LOGO: Y = 32 */
+  .logo{
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .logo__img{
+    width: 92px;
+    height: 57px;
+  }
+
+  /* NAV: Y = 50 → offset = 18px */
+  .nav{
+    position: absolute;
+    top: 18px;
+    right: 0;
+    padding: 0;
+  }
+}
+
