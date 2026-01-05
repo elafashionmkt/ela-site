@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>elã</title>
 
-  <!-- Adobe Typekit (Ivy Journal) -->
+  <!-- Ivy Journal (Typekit) -->
   <link rel="stylesheet" href="https://use.typekit.net/piy8ljr.css">
 
-  <!-- Google Fonts (Inter Tight) -->
+  <!-- Inter Tight -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;600;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="./styles.css" />
 </head>
@@ -19,7 +19,7 @@
 <body>
   <a class="skip" href="#top">pular para o conteúdo</a>
 
-  <!-- TOP BAR (fixa) -->
+  <!-- HEADER / TOPBAR -->
   <header class="topbar" role="banner">
     <div class="topbar__inner">
       <a class="logo" href="#top" aria-label="ir para home">
@@ -29,7 +29,6 @@
       <nav class="nav" aria-label="menu principal">
         <a class="navlink" href="#sobre">sobre nós</a>
         <a class="navlink" href="#servicos">arquitetura de serviços</a>
-        <a class="navlink" href="#metodologia">nossa metodologia</a>
         <a class="navlink" href="#cafe">que tal um café?</a>
       </nav>
 
@@ -39,12 +38,11 @@
     </div>
 
     <div id="mobileMenu" class="mobile" hidden>
-      <div class="mobile__panel">
+      <div class="mobile__panel" role="dialog" aria-modal="true" aria-label="menu">
         <button class="mobile__close" type="button" aria-label="fechar menu">fechar</button>
         <nav class="mobile__nav" aria-label="menu mobile">
           <a class="mobile__link" href="#sobre">sobre nós</a>
           <a class="mobile__link" href="#servicos">arquitetura de serviços</a>
-          <a class="mobile__link" href="#metodologia">nossa metodologia</a>
           <a class="mobile__link" href="#cafe">que tal um café?</a>
         </nav>
       </div>
@@ -53,23 +51,23 @@
 
   <main id="top" tabindex="-1">
     <!-- HERO -->
-    <section class="section hero" aria-label="introdução">
+    <section class="hero" aria-label="introdução">
       <div class="container">
-        <div class="hero__grid reveal">
-          <div class="hero__copy">
+        <div class="hero__grid">
+          <div class="hero__copy reveal">
             <h1 class="hero__title">
               marcas não precisam de mais posts.
               <strong>precisam de direção.</strong>
             </h1>
 
-            <img class="rule rule--hero" src="./assets/linha.svg" alt="" aria-hidden="true" />
+            <img class="linha linha--hero" src="./assets/linha.svg" alt="" aria-hidden="true" />
 
             <p class="hero__sub">
               estratégia de marca, conteúdo e influência com intenção.
             </p>
           </div>
 
-          <div class="hero__mark" aria-hidden="true">
+          <div class="hero__mark reveal" aria-hidden="true">
             <img class="norte" src="./assets/norte.svg" alt="" aria-hidden="true" />
           </div>
         </div>
@@ -77,13 +75,15 @@
     </section>
 
     <!-- SOBRE NÓS -->
-    <section id="sobre" class="section about" aria-label="sobre nós">
+    <section id="sobre" class="about" aria-label="sobre nós">
       <div class="about__grid">
-        <div class="container about__text reveal">
-          <h2 class="h2">sobre <em>nós</em></h2>
+        <div class="about__text reveal">
+          <h2 class="section-title">
+            <span>sobre</span> <span class="is-bold">nós</span>
+          </h2>
 
           <p class="body">
-            somos um estúdio que trata marca como ecossistema, não como ação isolada. a gente começa pelo que vem antes do conteúdo: posicionamento e direção.
+            somos um estúdio que trata marca como ecossistema, não como ação isolada. a gente começa pelo que vem antes do conteúdo: <strong>posicionamento e direção.</strong>
           </p>
 
           <p class="body">
@@ -95,28 +95,31 @@
           </p>
         </div>
 
-        <div class="about__media reveal" aria-label="imagem editorial">
-          <div class="about__sticky">
-            <img class="about__photo" src="./assets/sobre.jpg" alt="" aria-hidden="true" />
-          </div>
+        <div class="about__media reveal" aria-hidden="true">
+          <img class="about__img" src="./assets/sobre.jpg" alt="" loading="lazy" decoding="async" />
         </div>
       </div>
     </section>
 
-    <!-- ARQUITETURA DE SERVIÇOS / NOSSOS MÓDULOS -->
-    <section id="servicos" class="section modules" aria-label="arquitetura de serviços">
+    <!-- ARQUITETURA DE SERVIÇOS -->
+    <section id="servicos" class="modules" aria-label="arquitetura de serviços">
       <div class="container reveal">
-        <h2 class="h2">nossos <em>módulos</em></h2>
-        <img class="rule" src="./assets/linha.svg" alt="" aria-hidden="true" />
+        <h2 class="section-title">
+          <span>arquitetura de</span> <span class="is-bold">serviços</span>
+        </h2>
 
-        <div id="servicesAccordion" class="accordion" data-spec="./spec/acordeon.md" role="region" aria-label="nossos módulos"></div>
+        <img class="linha" src="./assets/linha.svg" alt="" aria-hidden="true" />
+
+        <div id="servicesAccordion" class="accordion" data-spec="./spec/acordeon.md" role="region" aria-label="arquitetura de serviços"></div>
       </div>
     </section>
 
-    <!-- NOSSA METODOLOGIA -->
-    <section id="metodologia" class="section method" aria-label="nossa metodologia">
+    <!-- METODOLOGIA (sem link no menu) -->
+    <section id="metodologia" class="method" aria-label="nossa metodologia">
       <div class="container reveal">
-        <h2 class="h2">nossa <em>metodologia</em></h2>
+        <h2 class="section-title">
+          <span>nossa</span> <span class="is-bold">metodologia</span>
+        </h2>
 
         <p class="body">
           é a forma como damos direção. começamos lendo o que a marca sustenta hoje e transformamos isso em escolhas práticas: o que dizer, como dizer e onde aparecer. a partir daí, organizamos prioridades, calendário e critérios de consistência.
@@ -130,18 +133,21 @@
           o acompanhamento funciona como bússola. você não fica com um PDF bonito e sozinho. a gente volta no plano, ajusta o foco e garante continuidade.
         </p>
 
-        <img class="rule" src="./assets/linha.svg" alt="" aria-hidden="true" />
+        <img class="linha" src="./assets/linha.svg" alt="" aria-hidden="true" />
       </div>
     </section>
 
     <!-- CTA -->
-    <section id="cafe" class="section cafe" aria-label="contato">
+    <section id="cafe" class="cafe" aria-label="contato">
       <div class="container reveal">
-        <img class="rule" src="./assets/linha.svg" alt="" aria-hidden="true" />
+        <img class="linha" src="./assets/linha.svg" alt="" aria-hidden="true" />
 
         <div class="cafe__grid">
           <div class="cafe__copy">
-            <h2 class="h2">que tal <em>um café?</em></h2>
+            <h2 class="section-title">
+              <span>que tal</span> <span class="is-bold">um café?</span>
+            </h2>
+
             <p class="body">
               um convite simples para conversar sobre a sua marca, entender o momento e pensar juntos os próximos passos. conversa leve, com clareza e sem pressão.
             </p>
@@ -151,18 +157,22 @@
 
           <div class="cafe__aside" aria-hidden="true">
             <img class="cafe__norte" src="./assets/norte-footer.svg" alt="" aria-hidden="true" />
-            <p class="cafe__note">vamos conversar sobre<br> sua marca?</p>
+            <p class="cafe__note">
+              estúdio de direção de marca<br>
+              posicionamento • social • influência<br>
+              desde 2025
+            </p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- RODAPÉ -->
+    <!-- FOOTER -->
     <footer class="footer" aria-label="rodapé">
       <div class="footer__wrap">
         <div class="footer__card">
           <div class="footer__grid">
-            <nav class="footer__nav" aria-label="links do rodapé">
+            <nav class="footer__nav" aria-label="menu no rodapé">
               <a class="footer__link" href="#sobre">sobre nós</a>
               <a class="footer__link" href="#servicos">arquitetura de serviços</a>
               <a class="footer__link" href="#cafe">agende um café</a>
@@ -172,7 +182,7 @@
               <img class="footer__logo" src="./assets/logo-ela.svg" alt="" aria-hidden="true" />
             </div>
 
-            <div class="footer__contact">
+            <div class="footer__contact" aria-label="contato">
               <a class="footer__link" href="https://www.instagram.com/elafashionmkt/" target="_blank" rel="noreferrer">@elafashionmkt</a>
               <a class="footer__link" href="tel:+5522936182313">+55 22 93618-2313</a>
               <a class="footer__link" href="mailto:contato@elafashionmkt.com.br">contato@elafashionmkt.com.br</a>
