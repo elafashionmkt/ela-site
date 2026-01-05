@@ -22,6 +22,19 @@
   --topbar-total-current: var(--topbar-total-expanded);
   --topbar-inner-current: var(--topbar-inner-expanded);
   --topbar-pad-top-current: var(--topbar-pad-top-expanded);
+
+  /* ===== Ajuste posição do MENU no estado estático (Figma: bar Y=32, menu Y=50 => offset 18px) ===== */
+@media (min-width: 1280px){
+  html:not(.is-compact) .bar{
+    align-items: flex-start; /* para parar de centralizar verticalmente */
+  }
+
+  html:not(.is-compact) .nav{
+    align-self: flex-start;
+    padding-top: 18px; /* 50 - 32 = 18px */
+  }
+}
+
 }
 
 html.is-compact{
