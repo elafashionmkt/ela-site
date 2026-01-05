@@ -84,6 +84,36 @@ main{ overflow-x: clip; }
   gap: 18px;
 }
 
+/* ===== FIX LOGO (Figma: 92x57 | X=120 | Y=32) ===== */
+
+/* 1) garante o Y=32 no topo (estado expandido) */
+.topbar{
+  padding-top: var(--topbar-pad-top-current); /* já usa 32px quando NÃO compact */
+}
+
+/* 2) garante o X=120 sempre (mesmo que você mude --pad no futuro) */
+:root{ --pad: 120px; } /* se você já usa isso, ok. Se mudar responsivo, mantenha 120 no desktop */
+
+/* 3) trava o logo no tamanho do Figma */
+.logo__img{
+  width: 92px !important;
+  height: 57px !important;
+  max-width: none !important;
+}
+
+/* ajuda a não “baixar” o logo visualmente */
+.logo{
+  display: inline-flex;
+  align-items: flex-start; /* topo do bloco */
+}
+
+/* o bar precisa respeitar a altura do logo no topo */
+html:not(.is-compact) .bar{
+  height: 57px;
+  align-items: flex-start;
+}
+
+
 .logo{
   display: inline-flex;
   align-items: center;
