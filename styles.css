@@ -4,7 +4,6 @@
   --wine: #791815;
 
   --line: rgba(121,24,21,.55);
-  --line-soft: rgba(121,24,21,.22);
 
   --serif: "ivy-journal", serif;
   --sans: "Inter Tight", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
@@ -31,24 +30,6 @@ html.is-compact{
   --topbar-pad-top-current: var(--topbar-pad-top-compact);
 }
 
-/* ===== TOPBAR ===== */
-/* ... seu CSS do header aqui ... */
-
-/* COLE AQUI 👇 (logo menor no scroll + centralizado) */
-html.is-compact .bar{
-  height: 38px;
-  align-items: center;
-}
-
-html.is-compact .logo__img{
-  height: 34px !important;
-  width: auto !important;
-}
-/* COLE AQUI 👆 */
-
-/* ===== HERO ===== */
-
-
 *{ box-sizing: border-box; }
 html{ scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce){
@@ -63,8 +44,8 @@ body{
   overflow-x: hidden;
 }
 
-img, svg{ max-width: 100%; height: auto; display: block; }
 main{ overflow-x: clip; }
+img, svg{ max-width: 100%; height: auto; display: block; }
 
 .container{
   max-width: var(--max);
@@ -72,10 +53,9 @@ main{ overflow-x: clip; }
   padding-left: var(--pad);
   padding-right: var(--pad);
 }
+
 @media (max-width: 1100px){ :root{ --pad: 48px; } }
 @media (max-width: 640px){ :root{ --pad: 22px; } }
-
-.section{ width: 100%; }
 
 /* ===== TOPBAR ===== */
 .topbar{
@@ -89,70 +69,64 @@ main{ overflow-x: clip; }
   transition: height 220ms ease, padding-top 220ms ease;
 }
 
+/* default (compact/normal responsivo) */
 .bar{
   height: var(--topbar-inner-current);
   max-width: var(--max);
   margin: 0 auto;
   padding-left: var(--pad);
   padding-right: var(--pad);
-
   display: flex;
-  align-items: center;                 /* centraliza verticalmente */
+  align-items: center;
   justify-content: space-between;
   gap: 18px;
 }
 
-/* ===== FIX LOGO (Figma: 92x57 | X=120 | Y=32) ===== */
+/* ✅ TOPO “estático” igual Figma (somente em desktop grande) */
+@media (min-width: 1280px){
+  html:not(.is-compact) .topbar{ padding-top: 32px; }
 
-/* 1) garante o Y=32 no topo (estado expandido) */
-.topbar{
-  padding-top: var(--topbar-pad-top-current); /* já usa 32px quando NÃO compact */
+  html:not(.is-compact) .bar{
+    width: 1040px;
+    max-width: 1040px;
+    height: 57px;
+
+    /* X = 120 */
+    margin-left: 120px;
+    margin-right: auto;
+
+    /* sem padding lateral aqui (o X já é a margem) */
+    padding-left: 0;
+    padding-right: 0;
+
+    align-items: center;
+  }
 }
 
-/* 2) garante o X=120 sempre (mesmo que você mude --pad no futuro) */
-:root{ --pad: 120px; } /* se você já usa isso, ok. Se mudar responsivo, mantenha 120 no desktop */
-
-/* 3) trava o logo no tamanho do Figma */
-.logo__img{
-  width: 92px !important;
-  height: 57px !important;
-  max-width: none !important;
-}
-
-/* ajuda a não “baixar” o logo visualmente */
-.logo{
-  display: inline-flex;
-  align-items: flex-start; /* topo do bloco */
-}
-
-/* o bar precisa respeitar a altura do logo no topo */
-html:not(.is-compact) .bar{
-  height: 57px;
-  align-items: flex-start;
-}
-
-
+/* Logo */
 .logo{
   display: inline-flex;
   align-items: center;
   text-decoration: none;
 }
-
 .logo__img{
   width: 92px;
   height: 57px;
+  max-width: none;
 }
 html.is-compact .logo__img{
   width: auto;
   height: 34px;
 }
 
-/* NAV (hover/ativo VINHO) */
+/* Nav */
 .nav{
   display: flex;
   align-items: center;
   gap: 38px;
 }
+
+/* hover/ativo VINHO + underline do centro */
 .navlink{
   position: relative;
   color: var(--wine);
@@ -162,8 +136,6 @@ html.is-compact .logo__img{
   padding: 2px 0;
   transition: font-weight 180ms ease, color 180ms ease;
 }
-
-/* underline cresce do centro */
 .navlink::after{
   content: "";
   position: absolute;
@@ -176,7 +148,6 @@ html.is-compact .logo__img{
   transform-origin: center;
   transition: transform 260ms cubic-bezier(.25,.8,.2,1);
 }
-
 .navlink:hover,
 .navlink.is-active{
   font-weight: 700;
@@ -187,7 +158,7 @@ html.is-compact .logo__img{
   transform: translateX(-50%) scaleX(1);
 }
 
-/* Mobile button */
+/* Hamburger */
 .hamburger{
   display: none;
   width: 44px;
@@ -204,13 +175,12 @@ html.is-compact .logo__img{
   background: var(--wine);
   margin: 6px 0;
 }
-
 @media (max-width: 860px){
   .nav{ display: none; }
   .hamburger{ display: block; }
 }
 
-/* Mobile menu panel */
+/* Mobile menu */
 .mobile{
   position: fixed;
   inset: var(--topbar-total-current) 0 0 0;
@@ -234,7 +204,6 @@ html.is-compact .logo__img{
 @media (prefers-reduced-motion: reduce){
   .mobile__panel{ transition: none; }
 }
-
 .mobile__close{
   align-self: flex-end;
   border: 0;
@@ -269,15 +238,12 @@ html.is-compact .logo__img{
   margin: 0 0 16px 0;
   font-family: var(--sans);
   font-weight: 400;
-  font-size: 16px;                /* ajustes finos */
-  line-height: 30px;              /* 16/30 */
-  letter-spacing: 0.05em;         /* tracking 5% */
+  font-size: 16px;
+  line-height: 30px;
+  letter-spacing: 0.05em;
   color: rgba(121,24,21,.92);
 }
-.body strong{
-  font-weight: 700;
-  color: var(--wine);
-}
+.body strong{ font-weight: 700; color: var(--wine); }
 
 /* ===== HERO ===== */
 .hero{
@@ -285,14 +251,12 @@ html.is-compact .logo__img{
   padding-top: calc(var(--topbar-total-current) + 147px);
   padding-bottom: 92px;
 }
-
 .hero__grid{
   display: grid;
   grid-template-columns: minmax(0, 774px) 1fr;
   gap: 32px;
   align-items: start;
 }
-
 .hero__title{
   font-family: var(--serif);
   font-weight: 400;
@@ -300,11 +264,7 @@ html.is-compact .logo__img{
   line-height: 68px;
   margin: 0 0 14px 0;
 }
-.hero__title strong{
-  font-weight: 600;
-  font-style: italic;
-}
-
+.hero__title strong{ font-weight: 600; font-style: italic; }
 .hero__sub{
   margin: 0;
   font-family: var(--sans);
@@ -314,14 +274,11 @@ html.is-compact .logo__img{
   letter-spacing: 0.05em;
   color: var(--wine);
 }
-
 .hero__mark{
   justify-self: end;
   padding-top: 18px;
 }
-.norte{
-  width: 242px;
-}
+.norte{ width: 242px; }
 
 @media (max-width: 900px){
   .hero{ padding-top: calc(var(--topbar-total-current) + 110px); }
@@ -330,34 +287,27 @@ html.is-compact .logo__img{
   .norte{ width: 190px; }
 }
 
-/* ===== ABOUT (grid 508 / 89 / 563) ===== */
+/* ===== ABOUT (508 / 89 / 563) ===== */
 .about{
   background: var(--bg);
   padding: 80px 0;
 }
-
 .about__grid{
   display: grid;
   grid-template-columns: 508px 89px 563px;
   align-items: start;
 }
-
 .about__text{ grid-column: 1; }
 .about__gap{ grid-column: 2; }
 .about__media{ grid-column: 3; }
-
 .about__img{
   width: 100%;
   height: 485px;
   background: url("./assets/sobre.jpg") center / cover no-repeat;
-  border: 0;                        /* remove qualquer linha */
+  border: 0;
 }
-
 @media (max-width: 980px){
-  .about__grid{
-    grid-template-columns: 1fr;
-    gap: 22px;
-  }
+  .about__grid{ grid-template-columns: 1fr; gap: 22px; }
   .about__text, .about__gap, .about__media{ grid-column: auto; }
   .about__img{ height: 360px; }
 }
@@ -369,14 +319,8 @@ html.is-compact .logo__img{
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
 }
-
-.accordion{
-  margin-top: 10px;
-}
-
-.acc{
-  border: 0;
-}
+.accordion{ margin-top: 10px; }
+.acc{ border: 0; }
 
 .acc__sum{
   list-style: none;
@@ -390,7 +334,6 @@ html.is-compact .logo__img{
 .acc__sum::-webkit-details-marker{ display: none; }
 
 .acc__title{
-  display: block;
   font-family: var(--sans);
   font-weight: 400;
   font-size: 20px;
@@ -416,7 +359,7 @@ html.is-compact .logo__img{
 }
 details[open] .acc__toggle::before{ content: "−"; }
 
-/* linha abaixo do título (usa linha.svg com “pontinhas”) */
+/* linha com bolinhas (precisa existir em ./assets/linha.svg) */
 .acc__sum::after{
   content: "";
   grid-column: 1 / -1;
@@ -458,12 +401,11 @@ details[open] .acc__toggle::before{ content: "−"; }
   margin: 0 auto;
 }
 
-/* ===== CTA (card 1040 x 250 + coluna 275) ===== */
+/* ===== CTA ===== */
 .cafe{
   background: var(--bg);
   padding: 90px 0 110px;
 }
-
 .cafe__card{
   width: 1040px;
   max-width: 100%;
@@ -473,7 +415,6 @@ details[open] .acc__toggle::before{ content: "−"; }
   gap: 28px;
   align-items: start;
 }
-
 .cafe__right{
   width: 275px;
   min-height: 250px;
@@ -482,11 +423,7 @@ details[open] .acc__toggle::before{ content: "−"; }
   align-content: start;
   justify-items: start;
 }
-
-.cafe__norte{
-  width: 250px;
-}
-
+.cafe__norte{ width: 250px; }
 .cafe__note{
   margin: 0;
   font-size: 14px;
@@ -495,7 +432,6 @@ details[open] .acc__toggle::before{ content: "−"; }
   text-transform: lowercase;
   text-align: left;
 }
-
 .btn{
   display: inline-flex;
   align-items: center;
@@ -509,14 +445,9 @@ details[open] .acc__toggle::before{ content: "−"; }
   text-decoration: none;
   font-weight: 700;
 }
-
 @media (max-width: 900px){
-  .cafe__card{
-    grid-template-columns: 1fr;
-  }
-  .cafe__right{
-    width: 100%;
-  }
+  .cafe__card{ grid-template-columns: 1fr; }
+  .cafe__right{ width: 100%; }
 }
 
 /* ===== FOOTER ===== */
@@ -524,34 +455,21 @@ details[open] .acc__toggle::before{ content: "−"; }
   background: var(--pink);
   border-top: 1px solid var(--line);
 }
-
 .footer__grid{
   max-width: var(--max);
   margin: 0 auto;
   padding-left: var(--pad);
   padding-right: var(--pad);
   height: 156px;
-
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   gap: 22px;
   align-items: center;
 }
-
 .footer__nav{ display: grid; gap: 10px; }
 .footer__brand{ display: grid; place-items: center; }
-
-.footer__logo{
-  width: 92px;
-  height: auto;
-}
-
-.footer__contact{
-  display: grid;
-  gap: 10px;
-  justify-items: end;
-}
-
+.footer__logo{ width: 92px; height: auto; }
+.footer__contact{ display: grid; gap: 10px; justify-items: end; }
 .footer__link{
   color: var(--wine);
   text-decoration: none;
@@ -560,7 +478,6 @@ details[open] .acc__toggle::before{ content: "−"; }
   letter-spacing: 0.08em;
 }
 .footer__link:hover{ text-decoration: underline; }
-
 @media (max-width: 900px){
   .footer__grid{
     height: auto;
