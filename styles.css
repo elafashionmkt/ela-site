@@ -31,6 +31,24 @@ html.is-compact{
   --topbar-pad-top-current: var(--topbar-pad-top-compact);
 }
 
+/* ===== TOPBAR ===== */
+/* ... seu CSS do header aqui ... */
+
+/* COLE AQUI 👇 (logo menor no scroll + centralizado) */
+html.is-compact .bar{
+  height: 38px;
+  align-items: center;
+}
+
+html.is-compact .logo__img{
+  height: 34px !important;
+  width: auto !important;
+}
+/* COLE AQUI 👆 */
+
+/* ===== HERO ===== */
+
+
 *{ box-sizing: border-box; }
 html{ scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce){
