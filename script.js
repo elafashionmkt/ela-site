@@ -1,22 +1,12 @@
-/* elã | comportamento do menu
-   - estado "estático" (topo): respeita o Y=32 do Figma
-   - estado "compact" (scroll): reduz alturas e mantém alinhamento
+/* elã | menu
+   - desktop: header fixo e estático (pixel-perfect no 1440)
+   - mobile: abre e fecha o menu
 */
 
 (() => {
-  const root = document.documentElement;
   const hamburger = document.querySelector('.hamburger');
   const mobileMenu = document.getElementById('mobileMenu');
 
-  // compactar ao rolar
-  const COMPACT_AFTER = 40;
-
-  const setCompact = () => {
-    const shouldCompact = window.scrollY > COMPACT_AFTER;
-    root.classList.toggle('is-compact', shouldCompact);
-  };
-
-  // mobile menu
   const closeMobile = () => {
     if (!mobileMenu) return;
     mobileMenu.hidden = true;
@@ -28,9 +18,6 @@
     mobileMenu.hidden = false;
     if (hamburger) hamburger.setAttribute('aria-expanded', 'true');
   };
-
-  window.addEventListener('scroll', setCompact, { passive: true });
-  window.addEventListener('load', setCompact);
 
   if (hamburger && mobileMenu) {
     hamburger.addEventListener('click', () => {
