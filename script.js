@@ -5,7 +5,6 @@
   const hamburger = document.querySelector(".hamburger");
   const mobile = document.getElementById("mobileMenu");
   const closeBtn = mobile?.querySelector(".mobile__close");
-
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
   const getTopbarHeight = () => {
@@ -13,14 +12,10 @@
     return Number.parseFloat(v) || 0;
   };
 
-  // ===== Topbar compacta ao rolar (e fica “certinha” no topo) =====
+  // ===== Topbar compacta ao rolar =====
   const setCompact = (isCompact) => root.classList.toggle("is-compact", isCompact);
 
-  const onTopbarScroll = () => {
-    // compacto depois de começar a rolar (estado scroll do print)
-    setCompact(window.scrollY > 12);
-  };
-
+  const onTopbarScroll = () => setCompact(window.scrollY > 12);
   onTopbarScroll();
   window.addEventListener("scroll", onTopbarScroll, { passive: true });
 
@@ -38,7 +33,6 @@
     mobile.classList.remove("is-open");
     hamburger?.setAttribute("aria-expanded", "false");
     document.body.style.overflow = "";
-    // tempo curto pra animar sem “tranco”
     setTimeout(() => { mobile.hidden = true; }, 260);
   };
 
@@ -60,37 +54,40 @@
     });
   });
 
-  // ===== Menu ativo (sem bold no topo/hero) =====
-  const links = Array.from(document.querySelectorAll(".navlink"))
+  // ===== Menu ativo (NENHUM ativo no topo/hero) =====
+  const navLinks = Array.from(document.querySelectorAll(".navlink"))
     .filter(a => (a.getAttribute("href") || "").startsWith("#"));
 
-  const setActive = (id) => {
-    links.forEach(a => a.classList.toggle("is-active", a.getAttribute("href") === `#${id}`));
-  };
-
-  const sections = links
+  const sections = navLinks
     .map(a => document.querySelector(a.getAttribute("href")))
     .filter(Boolean);
 
+  const clearActive = () => navLinks.forEach(a => a.classList.remove("is-active"));
+
+  const setActive = (id) => {
+    navLinks.forEach(a => a.classList.toggle("is-active", a.getAttribute("href") === `#${id}`));
+  };
+
   const computeActive = () => {
-    // no topo/hero: nada ativo (print do “não deve haver bold”)
+    // Se hero ainda domina a viewport, NÃO ativa nada
     if (hero) {
       const heroBottom = hero.getBoundingClientRect().bottom + window.scrollY;
-      if (window.scrollY < heroBottom - getTopbarHeight() - 140) {
-        setActive("");
+      if (window.scrollY < (heroBottom - getTopbarHeight() - 140)) {
+        clearActive();
         return;
       }
     }
 
-    const top = window.scrollY + getTopbarHeight() + 80;
+    const top = window.scrollY + getTopbarHeight() + 90;
     let current = "";
 
     for (const s of sections) {
-      const elTop = s.offsetTop;
-      if (top >= elTop) current = s.id;
+      if (!s?.id) continue;
+      if (top >= s.offsetTop) current = s.id;
     }
 
-    setActive(current);
+    if (!current) clearActive();
+    else setActive(current);
   };
 
   computeActive();
