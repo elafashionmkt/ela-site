@@ -1,42 +1,30 @@
-// script.js
 (() => {
-  // Progressive enhancement: só ativa efeitos se JS rodar.
-  document.documentElement.classList.add("js");
-
   const root = document.documentElement;
-  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
   const hero = document.querySelector(".hero");
-
-  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
-  const getTopbarHeight = () => {
-    const v = getComputedStyle(root).getPropertyValue("--topbar-total-current");
-    return parseFloat(v) || 0;
-  };
-
-  // ===== Topbar height (hero -> compact) =====
-  const setCompact = (isCompact) => {
-    root.classList.toggle("is-compact", isCompact);
-  };
-
-  if ("IntersectionObserver" in window && hero) {
-    const obs = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => setCompact(!entry.isIntersecting));
-    }, { threshold: 0.01 });
-
-    obs.observe(hero);
-  } else if (hero) {
-    const fallback = () => {
-      setCompact(window.scrollY > hero.offsetHeight);
-    };
-    fallback();
-    window.addEventListener("scroll", fallback, { passive: true });
-  }
-
-  // ===== Mobile menu =====
   const hamburger = document.querySelector(".hamburger");
   const mobile = document.getElementById("mobileMenu");
   const closeBtn = mobile?.querySelector(".mobile__close");
 
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  const getTopbarHeight = () => {
+    const v = getComputedStyle(root).getPropertyValue("--topbar-total-current");
+    return Number.parseFloat(v) || 0;
+  };
+
+  // ===== Topbar compacta ao rolar (e fica “certinha” no topo) =====
+  const setCompact = (isCompact) => root.classList.toggle("is-compact", isCompact);
+
+  const onTopbarScroll = () => {
+    // compacto depois de começar a rolar (estado scroll do print)
+    setCompact(window.scrollY > 12);
+  };
+
+  onTopbarScroll();
+  window.addEventListener("scroll", onTopbarScroll, { passive: true });
+
+  // ===== Mobile menu =====
   const openMenu = () => {
     if (!mobile) return;
     mobile.hidden = false;
@@ -50,6 +38,7 @@
     mobile.classList.remove("is-open");
     hamburger?.setAttribute("aria-expanded", "false");
     document.body.style.overflow = "";
+    // tempo curto pra animar sem “tranco”
     setTimeout(() => { mobile.hidden = true; }, 260);
   };
 
@@ -59,14 +48,10 @@
   });
 
   closeBtn?.addEventListener("click", closeMenu);
-
-  mobile?.addEventListener("click", (e) => {
-    if (e.target === mobile) closeMenu();
-  });
-
+  mobile?.addEventListener("click", (e) => { if (e.target === mobile) closeMenu(); });
   mobile?.querySelectorAll("a").forEach(a => a.addEventListener("click", closeMenu));
 
-  // ===== Accordion: opcional fechar os outros =====
+  // ===== Accordion: fecha os outros ao abrir =====
   const accs = Array.from(document.querySelectorAll(".acc"));
   accs.forEach((d) => {
     d.addEventListener("toggle", () => {
@@ -75,79 +60,62 @@
     });
   });
 
-  // ===== Nav active (scroll) =====
+  // ===== Menu ativo (sem bold no topo/hero) =====
   const links = Array.from(document.querySelectorAll(".navlink"))
-    .filter(a => a.getAttribute("href")?.startsWith("#"));
-
-  const sections = links
-    .map(a => document.querySelector(a.getAttribute("href")))
-    .filter(Boolean);
+    .filter(a => (a.getAttribute("href") || "").startsWith("#"));
 
   const setActive = (id) => {
     links.forEach(a => a.classList.toggle("is-active", a.getAttribute("href") === `#${id}`));
   };
 
-  if ("IntersectionObserver" in window && sections.length) {
-    const obs = new IntersectionObserver((entries) => {
-      const visible = entries
-        .filter(e => e.isIntersecting)
-        .sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
-      if (visible?.target?.id) setActive(visible.target.id);
-      else setActive("");
-    }, { rootMargin: "-25% 0px -65% 0px", threshold: [0.12, 0.25, 0.4, 0.6] });
+  const sections = links
+    .map(a => document.querySelector(a.getAttribute("href")))
+    .filter(Boolean);
 
-    sections.forEach(s => obs.observe(s));
-  }
+  const computeActive = () => {
+    // no topo/hero: nada ativo (print do “não deve haver bold”)
+    if (hero) {
+      const heroBottom = hero.getBoundingClientRect().bottom + window.scrollY;
+      if (window.scrollY < heroBottom - getTopbarHeight() - 140) {
+        setActive("");
+        return;
+      }
+    }
 
-  // ===== Scroll reveal (sem opacidade; só “entrada” sutil) =====
-  const revealEls = Array.from(document.querySelectorAll(".reveal"));
+    const top = window.scrollY + getTopbarHeight() + 80;
+    let current = "";
 
-  const update = () => {
-    const vh = window.innerHeight || 1;
-    const start = vh * 0.90;
-    const end   = vh * 0.40;
+    for (const s of sections) {
+      const elTop = s.offsetTop;
+      if (top >= elTop) current = s.id;
+    }
 
-    revealEls.forEach((el) => {
-      const r = el.getBoundingClientRect();
-      const p = clamp((start - r.top) / (start - end), 0, 1);
-      const ty = (1 - p) * 14;
-      el.style.setProperty("--ty", `${ty.toFixed(2)}px`);
-    });
+    setActive(current);
   };
 
-  let ticking = false;
-  const onScroll = () => {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(() => {
-      update();
-      ticking = false;
-    });
-  };
+  computeActive();
+  window.addEventListener("scroll", computeActive, { passive: true });
+  window.addEventListener("resize", computeActive);
 
-  update();
-  window.addEventListener("scroll", onScroll, { passive: true });
-  window.addEventListener("resize", onScroll);
-
-  // ===== Navegação suave (sem blur/"wipe") =====
-  const navTriggers = Array.from(document.querySelectorAll(
-    ".navlink, .mobile__link, .logo, .footer__link[href^='#']"
-  ));
-
+  // ===== Scroll suave com offset do header (sem blur) =====
   const scrollToTarget = (target, hash) => {
     const offset = target.getBoundingClientRect().top + window.scrollY - getTopbarHeight();
-    const behavior = prefersReducedMotion.matches ? "auto" : "smooth";
-    window.scrollTo({ top: offset, behavior });
+    window.scrollTo({ top: offset, behavior: prefersReducedMotion.matches ? "auto" : "smooth" });
     if (hash) history.replaceState(null, "", hash);
   };
 
-  navTriggers.forEach((link) => {
+  const clickableAnchors = Array.from(document.querySelectorAll(
+    ".navlink, .mobile__link, .logo, .footer__link[href^='#']"
+  ));
+
+  clickableAnchors.forEach((link) => {
     const href = link.getAttribute("href") || "";
-    if (!href.startsWith("#") || link.classList.contains("skip")) return;
-    link.addEventListener("click", (event) => {
+    if (!href.startsWith("#")) return;
+
+    link.addEventListener("click", (e) => {
       const target = document.querySelector(href);
       if (!target) return;
-      event.preventDefault();
+      e.preventDefault();
       scrollToTarget(target, href);
     });
   });
