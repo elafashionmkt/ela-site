@@ -43,6 +43,54 @@ html.is-compact{
   --topbar-pad-top-current: var(--topbar-pad-top-compact);
 }
 
+/* ✅ TOPO “estático” igual Figma (somente em desktop grande) */
+@media (min-width: 1280px){
+
+  /* TOPBAR: cria o “Y=32” do Figma */
+  html:not(.is-compact) .topbar{
+    padding-top: 32px;      /* Y do grupo no Figma */
+    height: auto;           /* deixa o conteúdo definir */
+  }
+
+  /* BAR: grupo do Figma (W ≈ 1040 / H 57 / X=120) */
+  html:not(.is-compact) .bar{
+    height: 57px;
+    max-width: 1040px;
+    width: 1040px;          /* desktop grande = fixa como no frame */
+    margin-left: 120px;     /* X do grupo no Figma */
+    margin-right: auto;
+
+    padding-left: 0;
+    padding-right: 0;
+
+    align-items: flex-start; /* <<< ESSENCIAL: não pode ser center */
+  }
+
+  /* MENU: desce o texto para “Y=50” (50 - 32 = 18) */
+  html:not(.is-compact) .nav{
+    padding-top: 18px;
+  }
+
+  /* COMPACT (scroll): volta tudo pro “normal” */
+  html.is-compact .topbar{
+    padding-top: 0;
+  }
+
+  html.is-compact .bar{
+    width: auto;
+    max-width: var(--max);
+    margin: 0 auto;
+    padding-left: var(--pad);
+    padding-right: var(--pad);
+    align-items: center;
+  }
+
+  html.is-compact .nav{
+    padding-top: 0;
+  }
+}
+
+
 *{ box-sizing: border-box; }
 html{ scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce){
