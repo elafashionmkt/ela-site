@@ -502,39 +502,44 @@ details[open] .acc__toggle::before{ content: "−"; }
   .footer__contact{ justify-items: start; }
   .footer__brand{ order: -1; justify-self: start; }
 }
-
-/* ===== MENU ESTÁTICO — POSIÇÃO EXATA DO FIGMA ===== */
+/* ===== FIX MENU ESTÁTICO (SEM QUEBRAR O FLEX) ===== */
 @media (min-width: 1280px){
 
-  /* barra começa em Y=32 */
-  .topbar{
-    padding-top: 32px;
+  /* garante a barra com medidas do Figma */
+  html:not(.is-compact) .topbar{
+    padding-top: 32px !important;
+    height: calc(32px + 57px) !important;
   }
 
-  /* grupo do menu (1040 x 57 em X=120) */
-  .bar{
-    position: relative;
-    height: 57px;
+  html:not(.is-compact) .bar{
+    width: 1040px !important;
+    max-width: 1040px !important;
+    height: 57px !important;
+
+    margin-left: 120px !important;
+    margin-right: auto !important;
+
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+
+    display: flex !important;
+    align-items: flex-start !important; /* para o menu não “afundar” */
+    justify-content: space-between !important;
   }
 
-  /* LOGO: Y = 32 */
-  .logo{
-    position: absolute;
-    top: 0;
-    left: 0;
+  /* logo no topo da barra (ele já tem 57px de altura, então encaixa perfeito) */
+  html:not(.is-compact) .logo{
+    align-self: flex-start !important;
   }
 
-  .logo__img{
-    width: 92px;
-    height: 57px;
+  html:not(.is-compact) .logo__img{
+    width: 92px !important;
+    height: 57px !important;
   }
 
-  /* NAV: Y = 50 → offset = 18px */
-  .nav{
-    position: absolute;
-    top: 18px;
-    right: 0;
-    padding: 0;
+  /* menu: Y 50 vs barra Y 32 => offset 18px */
+  html:not(.is-compact) .nav{
+    align-self: flex-start !important;
+    padding-top: 18px !important;
   }
 }
-
