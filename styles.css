@@ -199,6 +199,21 @@ a{ color: inherit; text-decoration: none; }
   gap: 64px;
   align-items: start;
 }
+.about__media{
+  margin: 0;          /* remove margem padrão do figure */
+  justify-self: end;  /* cola na direita */
+  align-self: start;  /* cola no topo */
+  width: 563px;
+  height: 485px;
+}
+
+.about__media img{
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  max-width: none;    /* evita o img "encolher" por regra global */
+}
 
 /* Copy */
 .copy{
