@@ -37,6 +37,31 @@
           <a href="#servicos" data-text="nav.servicos">arquitetura de serviços</a>
           <a href="#contato" data-text="nav.contato">que tal um café?</a>
         </div>
+
+        <button class="nav__toggle" type="button" aria-label="Abrir menu" aria-controls="nav-panel" aria-expanded="false">
+          <span class="nav__toggleLines" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </span>
+        </button>
+
+        <div class="navPanel" id="nav-panel" aria-hidden="true">
+          <div class="navPanel__backdrop" data-menu-close></div>
+
+          <div class="navPanel__sheet" role="dialog" aria-modal="true" aria-label="Menu">
+            <div class="navPanel__top">
+              <span class="navPanel__title">menu</span>
+              <button class="navPanel__close" type="button" data-menu-close aria-label="Fechar menu">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+
+            <div class="navPanel__links" aria-label="Links do menu">
+              <a href="#sobre" data-menu-link data-text="nav.sobre">sobre nós</a>
+              <a href="#servicos" data-menu-link data-text="nav.servicos">arquitetura de serviços</a>
+              <a href="#contato" data-menu-link data-text="nav.contato">que tal um café?</a>
+            </div>
+          </div>
+        </div>
       </nav>
 
       <div class="hero__grid" id="conteudo">
