@@ -518,3 +518,41 @@ img{ max-width: 100%; height: auto; display: block; }
 
   .module__title{ font-size: 22px; }
 }
+/* ===========================
+   CENTRALIZAR "NOSSOS MÓDULOS" + ACCORDION
+   (miolo no meio da tela)
+   =========================== */
+
+/* deixa o conteúdo da seção inteiro centralizado */
+.section--modules > .container{
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* centraliza tudo horizontalmente */
+}
+
+/* título alinhado à esquerda, mas dentro do miolo central */
+.section--modules .h2{
+  width: min(920px, 100%);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* o acordeon já é a lista; aqui a gente trava a largura e centraliza */
+.section--modules .modules{
+  width: min(920px, 100%);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* garante que as linhas/bordas acompanhem a mesma largura do miolo */
+.section--modules .module{
+  width: 100%;
+}
+.section--modules{
+  display: flex;
+  align-items: center; /* centraliza verticalmente o container */
+}
+
+.section--modules > .container{
+  width: 100%;
+}
