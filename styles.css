@@ -603,3 +603,15 @@ img{ max-width: 100%; height: auto; display: block; }
     transition: none;
   }
 }
+/* corta o respiro entre essas seções pela metade */
+.section-separator,
+.spacer,
+.section__spacer,
+.hero__spacer,
+.divider-space,
+.scroll-space{
+  padding-top: 50px !important;
+  padding-bottom: 50px !important;
+  min-height: 0 !important;
+}
+
