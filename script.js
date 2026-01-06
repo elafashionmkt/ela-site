@@ -1,6 +1,10 @@
 (function () {
+  const hasMeaningfulText = (v) =>
+    v !== null && v !== undefined && String(v).trim() !== "";
+
   const prefersReduced =
-    window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.matchMedia &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   const nav = document.querySelector(".nav");
 
@@ -17,14 +21,18 @@
 
   // mini-markdown seguro: **bold** + quebras de linha
   const renderMini = (text) => {
-    const safe = escapeHtml(text ?? "");
+    if (!hasMeaningfulText(text)) return null;
+    const safe = escapeHtml(String(text));
     const bolded = safe.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
     return bolded.replace(/\n/g, "<br>");
   };
 
   const setMultiline = (el, text) => {
-    el.innerHTML = escapeHtml(text ?? "").replace(/\n/g, "<br>");
+    if (!hasMeaningfulText(text)) return;
+    el.innerHTML = escapeHtml(String(text)).replace(/\n/g, "<br>");
   };
+
+  const raf = (fn) => window.requestAnimationFrame(fn);
 
   // =============================
   // 0) Theme + Content loader
@@ -45,24 +53,33 @@
     const texts = content.texts || {};
     const images = content.images || {};
 
-    // data-text (textContent)
+    // data-text (textContent) - NÃO sobrescreve com vazio
     document.querySelectorAll("[data-text]").forEach((el) => {
       const key = el.getAttribute("data-text");
       if (!key || !(key in texts)) return;
-      el.textContent = String(texts[key]);
+
+      const v = texts[key];
+      if (!hasMeaningfulText(v)) return;
+
+      el.textContent = String(v);
     });
 
-    // data-rich (**bold** + \n)
+    // data-rich (**bold** + \n) - NÃO sobrescreve com vazio
     document.querySelectorAll("[data-rich]").forEach((el) => {
       const key = el.getAttribute("data-rich");
       if (!key || !(key in texts)) return;
-      el.innerHTML = renderMini(texts[key]);
+
+      const html = renderMini(texts[key]);
+      if (!html) return;
+
+      el.innerHTML = html;
     });
 
-    // data-multiline (\n -> <br>, sem markdown)
+    // data-multiline (\n -> <br>) - NÃO sobrescreve com vazio
     document.querySelectorAll("[data-multiline]").forEach((el) => {
       const key = el.getAttribute("data-multiline");
       if (!key || !(key in texts)) return;
+
       setMultiline(el, texts[key]);
     });
 
@@ -70,7 +87,9 @@
     document.querySelectorAll("[data-img]").forEach((el) => {
       const key = el.getAttribute("data-img");
       if (!key || !(key in images)) return;
+
       const src = String(images[key]);
+      if (!hasMeaningfulText(src)) return;
 
       if (el.tagName.toLowerCase() === "img") {
         el.setAttribute("src", src);
@@ -102,68 +121,45 @@
   // 1) Reveal on scroll
   // =============================
   const revealEls = Array.from(document.querySelectorAll(".reveal"));
-  if (!prefersReduced && "IntersectionObserver" in window) {
+  if (revealEls.length) {
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.classList.add("is-visible");
-            io.unobserve(e.target);
-          }
+          if (e.isIntersecting) e.target.classList.add("is-visible");
         });
       },
       { threshold: 0.12 }
     );
+
     revealEls.forEach((el) => io.observe(el));
-  } else {
-    revealEls.forEach((el) => el.classList.add("is-visible"));
   }
 
   // =============================
   // 2) Accordion (single open)
   // =============================
-  const modules = Array.from(document.querySelectorAll("[data-module]"));
+  const accordions = Array.from(document.querySelectorAll("[data-accordion]"));
+  accordions.forEach((root) => {
+    const heads = Array.from(root.querySelectorAll(".accordion__head"));
 
-  const setOpen = (moduleEl, open) => {
-    const btn = moduleEl.querySelector(".module__head");
-    const body = moduleEl.querySelector(".module__body");
-    if (!btn || !body) return;
+    const closeAll = () => {
+      heads.forEach((btn) => {
+        btn.setAttribute("aria-expanded", "false");
+        const panel = btn.nextElementSibling;
+        if (panel) panel.hidden = true;
+      });
+    };
 
-    moduleEl.classList.toggle("is-open", open);
-    btn.setAttribute("aria-expanded", open ? "true" : "false");
-
-    if (open) body.style.height = body.scrollHeight + "px";
-    else body.style.height = "0px";
-  };
-
-  const closeAllExcept = (keepEl) => {
-    modules.forEach((m) => {
-      if (m !== keepEl) setOpen(m, false);
-    });
-  };
-
-  modules.forEach((m) => setOpen(m, false));
-
-  modules.forEach((m) => {
-    const btn = m.querySelector(".module__head");
-    const body = m.querySelector(".module__body");
-    if (!btn || !body) return;
-
-    btn.addEventListener("click", () => {
-      const isOpen = m.classList.contains("is-open");
-      closeAllExcept(m);
-      setOpen(m, !isOpen);
-    });
-
-    window.addEventListener(
-      "resize",
-      () => {
-        if (m.classList.contains("is-open")) {
-          body.style.height = body.scrollHeight + "px";
+    heads.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const isOpen = btn.getAttribute("aria-expanded") === "true";
+        closeAll();
+        if (!isOpen) {
+          btn.setAttribute("aria-expanded", "true");
+          const panel = btn.nextElementSibling;
+          if (panel) panel.hidden = false;
         }
-      },
-      { passive: true }
-    );
+      });
+    });
   });
 
   // =============================
@@ -176,6 +172,122 @@
   };
   onScroll();
   window.addEventListener("scroll", onScroll, { passive: true });
+
+  // =============================
+  // 4) Mobile menu + smooth anchors
+  // =============================
+  const header = document.querySelector("#header-bar");
+  const backdrop = document.querySelector(".nav__backdrop");
+  const toggleBtn = document.querySelector(".nav__toggle");
+  const menuEl = document.querySelector("#site-menu");
+
+  const getHeaderOffset = () => {
+    const h = header ? header.getBoundingClientRect().height : 0;
+    return Math.ceil(h);
+  };
+
+  const lockBodyScroll = () => {
+    const y = window.scrollY || window.pageYOffset || 0;
+    document.body.dataset.scrollY = String(y);
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${y}px`;
+    document.body.style.left = "0";
+    document.body.style.right = "0";
+    document.body.style.width = "100%";
+  };
+
+  const unlockBodyScroll = () => {
+    const y = parseInt(document.body.dataset.scrollY || "0", 10);
+    document.body.style.position = "";
+    document.body.style.top = "";
+    document.body.style.left = "";
+    document.body.style.right = "";
+    document.body.style.width = "";
+    delete document.body.dataset.scrollY;
+    window.scrollTo(0, isNaN(y) ? 0 : y);
+  };
+
+  const openMenu = () => {
+    if (!toggleBtn || !menuEl || !backdrop) return;
+    document.body.classList.add("menu-open");
+    toggleBtn.setAttribute("aria-expanded", "true");
+    toggleBtn.setAttribute("aria-label", "Fechar menu");
+    backdrop.hidden = false;
+    lockBodyScroll();
+
+    const firstLink = menuEl.querySelector('a[href^="#"]');
+    if (firstLink) firstLink.focus({ preventScroll: true });
+  };
+
+  const closeMenu = () => {
+    if (!toggleBtn || !backdrop) return;
+    document.body.classList.remove("menu-open");
+    toggleBtn.setAttribute("aria-expanded", "false");
+    toggleBtn.setAttribute("aria-label", "Abrir menu");
+    backdrop.hidden = true;
+    unlockBodyScroll();
+    toggleBtn.focus({ preventScroll: true });
+  };
+
+  const isMenuOpen = () => document.body.classList.contains("menu-open");
+
+  if (toggleBtn) {
+    toggleBtn.addEventListener("click", () => {
+      isMenuOpen() ? closeMenu() : openMenu();
+    });
+  }
+
+  if (backdrop) {
+    backdrop.addEventListener("click", () => {
+      if (isMenuOpen()) closeMenu();
+    });
+  }
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && isMenuOpen()) {
+      e.preventDefault();
+      closeMenu();
+    }
+  });
+
+  const scrollToHash = (hash) => {
+    if (!hash || hash === "#") return;
+    const id = hash.slice(1);
+    const target = document.getElementById(id);
+    if (!target) return;
+
+    const offset = getHeaderOffset() + 12;
+    const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+
+    window.scrollTo({ top, behavior: prefersReduced ? "auto" : "smooth" });
+
+    target.setAttribute("tabindex", "-1");
+    target.focus({ preventScroll: true });
+  };
+
+  // Intercepta só cliques do menu (não quebra skip link)
+  if (menuEl) {
+    menuEl.addEventListener("click", (e) => {
+      const a = e.target.closest('a[href^="#"]');
+      if (!a) return;
+
+      const hash = a.getAttribute("href");
+      if (!hash) return;
+
+      e.preventDefault();
+      if (isMenuOpen()) closeMenu();
+
+      raf(() => scrollToHash(hash));
+      history.pushState(null, "", hash);
+    });
+  }
+
+  // Se abrir já com hash, corrige offset
+  window.addEventListener("load", () => {
+    if (location.hash) {
+      setTimeout(() => scrollToHash(location.hash), 0);
+    }
+  });
 
   // =============================
   // Boot
