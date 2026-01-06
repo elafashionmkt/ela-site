@@ -100,6 +100,18 @@
   });
 
   const heroSection = document.querySelector(".hero");
+
+  const applyHeaderState = () => {
+    const compact = heroSection
+      ? heroSection.getBoundingClientRect().top < 0
+      : window.scrollY > 2;
+    document.body.classList.toggle("header-compact", compact);
+    if (hamburger && hamburger.classList.contains("open")) {
+      positionMobileMenu();
+    }
+    return compact;
+  };
+
   if (heroSection) {
     const headerObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -112,17 +124,23 @@
     });
 
     headerObserver.observe(heroSection);
-    requestAnimationFrame(() => {
-      const rect = heroSection.getBoundingClientRect();
-      const compact = rect.top < 0 || rect.bottom <= 1;
-      document.body.classList.toggle("header-compact", compact);
-    });
   }
+
+  applyHeaderState();
+  window.addEventListener(
+    "scroll",
+    () => {
+      applyHeaderState();
+    },
+    { passive: true }
+  );
+  window.addEventListener("resize", applyHeaderState);
 
   const menuLinks = document.querySelectorAll(".menu .hlink, .mobile-nav .hlink");
   const wipeDuration = 420;
 
   const scrollToTarget = (target, hash) => {
+    applyHeaderState();
     const headerHeight = headerBar ? headerBar.getBoundingClientRect().height : 0;
     const targetTop = target.getBoundingClientRect().top + window.scrollY;
     const top = Math.max(targetTop - headerHeight - 12, 0);
