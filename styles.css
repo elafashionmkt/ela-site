@@ -89,8 +89,48 @@ a{ color: inherit; text-decoration: none; }
   font-size: 18px;
   color: var(--accent);
 }
-.nav__links a{ opacity: .95; }
-.nav__links a:hover{ opacity: .7; }
+/* Links do menu: hover em bold + underline do centro */
+.nav__links a{
+  position: relative;
+  display: inline-block;         /* necessário pro ::after ficar no tamanho do texto */
+  opacity: 1;                    /* remove o efeito antigo */
+  padding-bottom: 6px;           /* espaço pra sublinha sem “encostar” no texto */
+  transition: font-weight .18s ease;
+}
+
+/* A sublinha (começa “fechada” no centro) */
+.nav__links a::after{
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  height: 1px;
+  background: currentColor;      /* usa a mesma cor do texto */
+
+  transform: scaleX(0);          /* invisível */
+  transform-origin: center;      /* nasce do centro */
+  transition: transform .22s ease;
+}
+
+.nav__links a:hover,
+.nav__links a:focus-visible{
+  font-weight: 600;              /* “bold” no hover/focus */
+}
+
+.nav__links a:hover::after,
+.nav__links a:focus-visible::after{
+  transform: scaleX(1);          /* abre do centro pras pontas */
+}
+
+/* opcional: respeita quem prefere menos animação */
+@media (prefers-reduced-motion: reduce){
+  .nav__links a,
+  .nav__links a::after{
+    transition: none;
+  }
+}
 
 .hero__grid{
   display: grid;
