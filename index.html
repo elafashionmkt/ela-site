@@ -1,10 +1,6 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>elã | fashion mkt</title>
@@ -12,9 +8,12 @@
   <!-- favicon -->
   <link rel="icon" href="assets/fav-ela.webp" type="image/webp" />
 
-  <!-- fonts -->
-  <link rel="preload" href="font/Inter-Regular_1.otf" as="font" type="font/otf" crossorigin />
-  <link rel="preload" href="font/Inter-Light_1.otf" as="font" type="font/otf" crossorigin />
+  <!-- Google Fonts (Inter Tight global) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Inter+Tight:ital,wght@0,100..900;1,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+
+  <!-- Typekit (seus títulos) -->
   <link rel="stylesheet" href="https://use.typekit.net/piy8ljr.css" />
 
   <link rel="stylesheet" href="styles.css" />
@@ -23,16 +22,14 @@
 <body>
   <a class="skip" href="#conteudo">Pular para o conteúdo</a>
 
-  <!-- overlay de transição (mantido, mas sem interferir no scroll) -->
+  <!-- overlay de transição -->
   <div class="pageTransition" aria-hidden="true"></div>
 
   <header class="hero" id="topo">
     <div class="container hero__container">
       <nav class="nav" aria-label="Navegação principal">
         <a class="brand" href="#topo" aria-label="Voltar ao topo">
-          <!-- logo normal -->
           <img class="brand__logo" src="assets/2-11.svg" alt="Logo elã" />
-          <!-- swap no scroll: logo menor -->
           <img class="brand__norte" src="assets/2-11.svg" alt="" aria-hidden="true" />
         </a>
 
@@ -58,7 +55,6 @@
         </div>
       </div>
 
-      <!-- setinha do hero -->
       <a class="scrollHint" href="#sobre" aria-label="descer para sobre nós">
         <svg class="scrollHint__icon" width="18" height="10" viewBox="0 0 18 10" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <path d="M1 1L9 9L17 1" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
@@ -146,7 +142,7 @@
 
           <article class="module reveal" data-module>
             <button class="module__head" type="button" aria-expanded="false">
-              <span class="module__title"><strong>relacionamento:</strong> o que coloca a marca em circulação com contexto</span>
+              <span class="module__title"><strong>relacionamento:</strong> o que coloca a marca em circulação com contexto e parceria</span>
               <span class="module__chev" aria-hidden="true"></span>
             </button>
 
@@ -194,7 +190,7 @@
         </div>
       </div>
 
-      <!-- REMOVIDO: scrollHint entre metodologia e café -->
+      <!-- ✅ seta removida entre metodologia e café -->
     </section>
 
     <section class="section section--cta" id="contato">
