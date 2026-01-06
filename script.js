@@ -154,3 +154,70 @@
     setTimeout(hideTransition, prefersReduced ? 0 : 360);
   });
 })();
+document.addEventListener("DOMContentLoaded", () => {
+  const overlay = document.querySelector(".pageTransition");
+  const menuHeight = document.querySelector("header")?.offsetHeight || 0;
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const TRANSITION_TIME = prefersReducedMotion ? 0 : 700;
+
+  function scrollToHash(hash, pushState = true) {
+    const target = document.querySelector(hash);
+    if (!target) return;
+
+    const y =
+      target.getBoundingClientRect().top +
+      window.pageYOffset -
+      menuHeight;
+
+    window.scrollTo({
+      top: y,
+      behavior: prefersReducedMotion ? "auto" : "smooth",
+    });
+
+    if (pushState) {
+      history.pushState(null, "", hash);
+    }
+  }
+
+  function runTransition(hash, pushState = true) {
+    if (prefersReducedMotion) {
+      scrollToHash(hash, pushState);
+      return;
+    }
+
+    overlay.classList.add("is-active");
+
+    setTimeout(() => {
+      scrollToHash(hash, pushState);
+
+      setTimeout(() => {
+        overlay.classList.remove("is-active");
+        overlay.classList.add("is-leaving");
+
+        setTimeout(() => {
+          overlay.classList.remove("is-leaving");
+        }, TRANSITION_TIME);
+      }, 100);
+    }, TRANSITION_TIME);
+  }
+
+  // intercepta cliques no menu
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener("click", e => {
+      const hash = link.getAttribute("href");
+      if (!hash || hash === "#") return;
+
+      e.preventDefault();
+      runTransition(hash, true);
+    });
+  });
+
+  // back / forward do navegador
+  window.addEventListener("popstate", () => {
+    const hash = window.location.hash;
+    if (hash) {
+      runTransition(hash, false);
+    }
+  });
+});
+
