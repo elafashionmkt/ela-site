@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>elã | painel</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#f4e9e6; --pink:#ffcccc; --ink:#3a3838; --accent:#791815;
+    }
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family:"Inter Tight", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:var(--bg);
+      color:var(--ink);
+    }
+    header{
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--pink);
+      border-bottom: 1px solid rgba(121,24,21,.12);
+      padding: 16px 18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+    }
+    header h1{
+      margin:0;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: -0.01em;
+    }
+    header .actions{
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    button, a.btn{
+      height: 36px;
+      padding: 0 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(121,24,21,.18);
+      background: #fff;
+      color: var(--accent);
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+    }
+    button.primary{
+      background: var(--accent);
+      color: #fff;
+      border-color: rgba(0,0,0,0);
+    }
+    main{
+      padding: 18px;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .card{
+      background: rgba(255,255,255,.55);
+      border: 1px solid rgba(121,24,21,.12);
+      border-radius: 18px;
+      padding: 16px;
+    }
+    .card h2{
+      margin: 0 0 12px;
+      font-size: 14px;
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 12px;
+    }
+    .field{
+      grid-column: span 12;
+      display:flex;
+      flex-direction:column;
+      gap: 6px;
+    }
+    .field label{
+      font-size: 12px;
+      color: rgba(58,56,56,.85);
+      font-weight: 600;
+    }
+    input[type="text"], input[type="number"], textarea{
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(121,24,21,.14);
+      background:#fff;
+      font-family: inherit;
+      font-size: 14px;
+      outline: none;
+    }
+    textarea{ min-height: 84px; resize: vertical; }
+    .row-6{ grid-column: span 6; }
+    .row-4{ grid-column: span 4; }
+    .row-3{ grid-column: span 3; }
+    .hint{
+      font-size: 12px;
+      opacity: .75;
+      margin-top: 6px;
+      line-height: 1.4;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 8px 10px;
+      background: rgba(255,204,204,.55);
+      border: 1px solid rgba(121,24,21,.12);
+      border-radius: 999px;
+      font-size: 12px;
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .preview{
+      display:flex;
+      gap: 12px;
+      align-items:center;
+      flex-wrap: wrap;
+    }
+    .preview img{
+      width: 120px;
+      height: 76px;
+      object-fit: cover;
+      border-radius: 14px;
+      border: 1px solid rgba(121,24,21,.12);
+      background:#fff;
+    }
+    @media (min-width: 980px){
+      main{ grid-template-columns: 1fr 1fr; }
+      .span-2{ grid-column: 1 / -1; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>painel elã • editor (exporta JSON)</h1>
+    <div class="actions">
+      <a class="btn" href="./" target="_blank" rel="noopener">abrir site</a>
+      <button id="btnReload">recarregar JSON</button>
+      <button class="primary" id="btnExport">exportar content.json + theme.json</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>🎨 tema (cores + tipografia)</h2>
+      <div class="grid">
+        <div class="field row-3">
+          <label>BG (--bg)</label>
+          <input type="color" id="t_bg">
+        </div>
+        <div class="field row-3">
+          <label>Pink (--pink)</label>
+          <input type="color" id="t_pink">
+        </div>
+        <div class="field row-3">
+          <label>Ink (--ink)</label>
+          <input type="color" id="t_ink">
+        </div>
+        <div class="field row-3">
+          <label>Accent (--accent)</label>
+          <input type="color" id="t_accent">
+        </div>
+
+        <div class="field row-4">
+          <label>Body size (px)</label>
+          <input type="number" id="t_bodySize" min="12" max="28" step="1">
+        </div>
+        <div class="field row-4">
+          <label>Body weight</label>
+          <input type="number" id="t_bodyWeight" min="100" max="900" step="50">
+        </div>
+        <div class="field row-4">
+          <label>Nav weight</label>
+          <input type="number" id="t_navWeight" min="100" max="900" step="50">
+        </div>
+
+        <div class="field row-4">
+          <label>Accordion title size (px)</label>
+          <input type="number" id="t_modTitleSize" min="16" max="40" step="1">
+        </div>
+        <div class="field row-4">
+          <label>Accordion title weight</label>
+          <input type="number" id="t_modTitleWeight" min="100" max="900" step="50">
+        </div>
+        <div class="field row-4">
+          <label>Prefix weight (fundação:)</label>
+          <input type="number" id="t_modPrefixWeight" min="100" max="900" step="50">
+        </div>
+      </div>
+
+      <div class="hint">
+        <span class="pill">dica</span>
+        cores e pesos aqui viram variáveis CSS em <code>content/theme.json</code>.
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>🖼 imagens (troca por caminho/URL)</h2>
+      <div class="grid">
+        <div class="field">
+          <label>Imagem “sobre nós” (about.image)</label>
+          <input type="text" id="img_about" placeholder="assets/16-12.webp ou URL">
+          <div class="preview">
+            <img id="prev_about" alt="">
+            <span class="hint">se você subir uma imagem nova, coloque em <code>/assets</code> e atualize o caminho aqui.</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Decor hero (hero.decor)</label>
+          <input type="text" id="img_hero" placeholder="assets/17-406.svg ou URL">
+        </div>
+
+        <div class="field">
+          <label>Stamp ícone (cta.stampIcon)</label>
+          <input type="text" id="img_stamp" placeholder="assets/19-6.svg ou URL">
+        </div>
+      </div>
+    </section>
+
+    <section class="card span-2">
+      <h2>✍️ textos (suporta **bold** e quebras de linha)</h2>
+
+      <div class="grid">
+        <div class="field row-6">
+          <label>Hero título (1ª linha)</label>
+          <input type="text" id="tx_hero1">
+        </div>
+        <div class="field row-6">
+          <label>Hero título (itálico)</label>
+          <input type="text" id="tx_hero2">
+        </div>
+
+        <div class="field">
+          <label>Hero subtítulo</label>
+          <input type="text" id="tx_heroSub">
+        </div>
+
+        <div class="field row-6">
+          <label>Menu “sobre”</label>
+          <input type="text" id="tx_navSobre">
+        </div>
+        <div class="field row-6">
+          <label>Menu “serviços”</label>
+          <input type="text" id="tx_navServicos">
+        </div>
+        <div class="field">
+          <label>Menu “contato”</label>
+          <input type="text" id="tx_navContato">
+        </div>
+
+        <div class="field">
+          <label>Sobre nós (p1) — use **negrito**</label>
+          <textarea id="tx_about1"></textarea>
+        </div>
+        <div class="field">
+          <label>Sobre nós (p2)</label>
+          <textarea id="tx_about2"></textarea>
+        </div>
+        <div class="field">
+          <label>Sobre nós (p3)</label>
+          <textarea id="tx_about3"></textarea>
+        </div>
+
+        <div class="field row-6">
+          <label>Acordeon: fundação (texto após “fundação:”)</label>
+          <input type="text" id="tx_modFundTitle">
+        </div>
+        <div class="field row-6">
+          <label>Acordeon: desejo (texto após “desejo:”)</label>
+          <input type="text" id="tx_modDesTitle">
+        </div>
+        <div class="field row-6">
+          <label>Acordeon: relacionamento (texto após “relacionamento:”)</label>
+          <input type="text" id="tx_modRelTitle">
+        </div>
+
+        <div class="field">
+          <label>CTA texto (quebra de linha com Enter, **bold** ok)</label>
+          <textarea id="tx_cta"></textarea>
+        </div>
+
+        <div class="field row-6">
+          <label>Botão CTA</label>
+          <input type="text" id="tx_ctaBtn">
+        </div>
+        <div class="field row-6">
+          <label>Rodapé</label>
+          <input type="text" id="tx_footer">
+        </div>
+
+        <div class="field">
+          <label>Stamp (3 linhas)</label>
+          <textarea id="tx_stamp"></textarea>
+        </div>
+      </div>
+
+      <div class="hint">
+        <span class="pill">dica</span>
+        para manter destaque, use <code>**assim**</code>. o site converte para <strong>&lt;strong&gt;</strong> automaticamente.
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+
+    const state = {
+      content: null,
+      theme: null
+    };
+
+    const fetchJson = async (url) => {
+      try {
+        const res = await fetch(url, { cache: "no-store" });
+        if (!res.ok) return null;
+        return await res.json();
+      } catch {
+        return null;
+      }
+    };
+
+    const setColor = (el, hex) => { el.value = (hex || "#000000"); };
+    const getColor = (el) => el.value;
+
+    const px = (n) => `${Number(n)}px`;
+    const unpx = (v) => Number(String(v || "").replace("px","")) || 0;
+
+    const bindInputsFromJson = () => {
+      const c = state.content;
+      const t = state.theme;
+
+      // theme
+      setColor($("t_bg"), t.vars["--bg"]);
+      setColor($("t_pink"), t.vars["--pink"]);
+      setColor($("t_ink"), t.vars["--ink"]);
+      setColor($("t_accent"), t.vars["--accent"]);
+
+      $("t_bodySize").value = unpx(t.vars["--body-size"]);
+      $("t_bodyWeight").value = Number(t.vars["--body-weight"]) || 300;
+      $("t_navWeight").value = Number(t.vars["--nav-weight"]) || 300;
+
+      $("t_modTitleSize").value = unpx(t.vars["--module-title-size"]);
+      $("t_modTitleWeight").value = Number(t.vars["--module-title-weight"]) || 300;
+      $("t_modPrefixWeight").value = Number(t.vars["--module-prefix-weight"]) || 600;
+
+      // images
+      $("img_about").value = c.images["about.image"] || "";
+      $("img_hero").value = c.images["hero.decor"] || "";
+      $("img_stamp").value = c.images["cta.stampIcon"] || "";
+      $("prev_about").src = c.images["about.image"] || "";
+
+      // texts
+      $("tx_hero1").value = c.texts["hero.title"] || "";
+      $("tx_hero2").value = c.texts["hero.titleEm"] || "";
+      $("tx_heroSub").value = c.texts["hero.sub"] || "";
+
+      $("tx_navSobre").value = c.texts["nav.sobre"] || "";
+      $("tx_navServicos").value = c.texts["nav.servicos"] || "";
+      $("tx_navContato").value = c.texts["nav.contato"] || "";
+
+      $("tx_about1").value = c.texts["about.p1"] || "";
+      $("tx_about2").value = c.texts["about.p2"] || "";
+      $("tx_about3").value = c.texts["about.p3"] || "";
+
+      $("tx_modFundTitle").value = c.texts["modules.fundacao.title"] || "";
+      $("tx_modDesTitle").value = c.texts["modules.desejo.title"] || "";
+      $("tx_modRelTitle").value = c.texts["modules.rel.title"] || "";
+
+      $("tx_cta").value = c.texts["cta.p1"] || "";
+      $("tx_ctaBtn").value = c.texts["cta.btn"] || "";
+      $("tx_footer").value = c.texts["footer.copy"] || "";
+      $("tx_stamp").value = c.texts["cta.stampText"] || "";
+    };
+
+    const pullInputsToJson = () => {
+      const c = state.content;
+      const t = state.theme;
+
+      // theme
+      t.vars["--bg"] = getColor($("t_bg"));
+      t.vars["--pink"] = getColor($("t_pink"));
+      t.vars["--ink"] = getColor($("t_ink"));
+      t.vars["--accent"] = getColor($("t_accent"));
+
+      t.vars["--body-size"] = px($("t_bodySize").value);
+      t.vars["--body-weight"] = String($("t_bodyWeight").value);
+      t.vars["--nav-weight"] = String($("t_navWeight").value);
+
+      t.vars["--module-title-size"] = px($("t_modTitleSize").value);
+      t.vars["--module-title-weight"] = String($("t_modTitleWeight").value);
+      t.vars["--module-prefix-weight"] = String($("t_modPrefixWeight").value);
+
+      // images
+      c.images["about.image"] = $("img_about").value.trim();
+      c.images["hero.decor"] = $("img_hero").value.trim();
+      c.images["cta.stampIcon"] = $("img_stamp").value.trim();
+
+      // texts
+      c.texts["hero.title"] = $("tx_hero1").value;
+      c.texts["hero.titleEm"] = $("tx_hero2").value;
+      c.texts["hero.sub"] = $("tx_heroSub").value;
+
+      c.texts["nav.sobre"] = $("tx_navSobre").value;
+      c.texts["nav.servicos"] = $("tx_navServicos").value;
+      c.texts["nav.contato"] = $("tx_navContato").value;
+
+      c.texts["about.p1"] = $("tx_about1").value;
+      c.texts["about.p2"] = $("tx_about2").value;
+      c.texts["about.p3"] = $("tx_about3").value;
+
+      c.texts["modules.fundacao.title"] = $("tx_modFundTitle").value;
+      c.texts["modules.desejo.title"] = $("tx_modDesTitle").value;
+      c.texts["modules.rel.title"] = $("tx_modRelTitle").value;
+
+      c.texts["cta.p1"] = $("tx_cta").value;
+      c.texts["cta.btn"] = $("tx_ctaBtn").value;
+      c.texts["footer.copy"] = $("tx_footer").value;
+      c.texts["cta.stampText"] = $("tx_stamp").value;
+
+      // preview
+      $("prev_about").src = c.images["about.image"] || "";
+    };
+
+    const downloadTextFile = (filename, text) => {
+      const blob = new Blob([text], { type: "application/json;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+
+      URL.revokeObjectURL(url);
+    };
+
+    const load = async () => {
+      const [content, theme] = await Promise.all([
+        fetchJson("content/content.json"),
+        fetchJson("content/theme.json"),
+      ]);
+
+      if (!content || !theme) {
+        alert("Não encontrei content/content.json e/ou content/theme.json. Confere se você criou a pasta /content.");
+        return;
+      }
+
+      state.content = content;
+      state.theme = theme;
+
+      if (!state.theme.vars) state.theme.vars = {};
+      if (!state.content.texts) state.content.texts = {};
+      if (!state.content.images) state.content.images = {};
+
+      bindInputsFromJson();
+    };
+
+    $("btnReload").addEventListener("click", load);
+
+    $("btnExport").addEventListener("click", () => {
+      pullInputsToJson();
+
+      const contentOut = JSON.stringify(state.content, null, 2);
+      const themeOut = JSON.stringify(state.theme, null, 2);
+
+      downloadTextFile("content.json", contentOut);
+      downloadTextFile("theme.json", themeOut);
+
+      alert("Baixei content.json e theme.json.\nAgora substitua os arquivos em /content no GitHub.");
+    });
+
+    // atualização de preview de imagem ao digitar
+    $("img_about").addEventListener("input", () => {
+      $("prev_about").src = $("img_about").value.trim();
+    });
+
+    load();
+  </script>
+</body>
+</html>
