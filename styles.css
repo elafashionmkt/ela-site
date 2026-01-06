@@ -1,11 +1,4 @@
 /* ===========================
-   FONTS
-   =========================== */
-body{
-  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-}
-
-/* ===========================
    TOKENS
    =========================== */
 :root{
@@ -13,6 +6,9 @@ body{
   --pink: #ffcccc;
   --ink: #3a3838;
   --accent: #791815;
+
+  /* fonte global */
+  --body-font: "Inter Tight", Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 
   /* títulos/destaques via Typekit */
   --display-font: ivyjournal, "IvyJournal", ivy-mode, "Ivy Mode", Georgia, serif;
@@ -33,7 +29,7 @@ body{
   margin: 0;
   background: var(--bg);
   color: var(--ink);
-  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-family: var(--body-font);
   overflow-x: hidden;
 
   /* como o menu é fixed */
@@ -64,7 +60,7 @@ img{ max-width: 100%; height: auto; display: block; }
 .skip:focus{ left: 8px; }
 
 /* ===========================
-   PAGE TRANSITION (mantido)
+   PAGE TRANSITION
    =========================== */
 .pageTransition{
   position: fixed;
@@ -107,6 +103,7 @@ img{ max-width: 100%; height: auto; display: block; }
    COPY
    =========================== */
 .copy{
+  font-family: var(--body-font);
   font-size: 18px;
   line-height: 1.75;
   font-weight: 300;
@@ -131,7 +128,7 @@ img{ max-width: 100%; height: auto; display: block; }
 }
 
 /* ===========================
-   NAV (FIXO + swap logo/logo)
+   NAV (FIXO + swap logo)
    =========================== */
 .nav{
   position: fixed;
@@ -150,11 +147,9 @@ img{ max-width: 100%; height: auto; display: block; }
 
   /* 0 transparência */
   background: var(--pink);
-  backdrop-filter: none;
   border-bottom: 1px solid rgba(121,24,21,.12);
 }
 
-/* mantém o espaço do logo constante para NÃO mexer no layout */
 .brand{
   position: relative;
   width: 96px;
@@ -162,7 +157,6 @@ img{ max-width: 100%; height: auto; display: block; }
   display: inline-block;
 }
 
-/* ambos ficam no mesmo lugar (sem "pulo") */
 .brand__logo,
 .brand__norte{
   position: absolute;
@@ -173,31 +167,29 @@ img{ max-width: 100%; height: auto; display: block; }
   transition: opacity .18s ease;
 }
 
-/* topo: logo 20% menor */
+/* topo: 20% menor */
 .brand__logo{
-  width: 77px; /* 96 * 0.8 = ~77 */
+  width: 77px;
   opacity: 1;
 }
 
-/* logo pequeno no scroll (swap) */
 .brand__norte{
   width: 56px;
   opacity: 0;
 }
 
-/* quando scrola: troca os logos sem alterar layout */
 .nav.is-scrolled .brand__logo{ opacity: 0; pointer-events: none; }
 .nav.is-scrolled .brand__norte{ opacity: 1; }
 
 .nav__links{
   display: flex;
   gap: 48px;
+  font-family: var(--body-font);
   font-weight: 300;
   font-size: 18px;
   color: var(--accent);
 }
 
-/* hover: bold + underline do centro */
 .nav__links a{
   position: relative;
   display: inline-block;
@@ -236,7 +228,7 @@ img{ max-width: 100%; height: auto; display: block; }
 }
 
 /* ===========================
-   HERO (full screen)
+   HERO
    =========================== */
 .hero{
   background: var(--pink);
@@ -262,6 +254,7 @@ img{ max-width: 100%; height: auto; display: block; }
 
 .hero__sub{
   margin: 0;
+  font-family: var(--body-font);
   font-weight: 300;
   font-size: 18px;
   line-height: 1.7;
@@ -287,7 +280,7 @@ img{ max-width: 100%; height: auto; display: block; }
 }
 
 /* ===========================
-   SCROLL HINT (setinha)
+   SCROLL HINT
    =========================== */
 .scrollHint{
   position: absolute;
@@ -320,7 +313,7 @@ img{ max-width: 100%; height: auto; display: block; }
 }
 
 /* ===========================
-   ABOUT (Figma: 563x485)
+   ABOUT (Figma)
    =========================== */
 .section--about{ background: var(--bg); padding-bottom: 120px; }
 .about{
@@ -339,7 +332,7 @@ img{ max-width: 100%; height: auto; display: block; }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center top; /* mais fiel ao Figma */
+  object-position: center top;
 }
 
 @media (max-width: 980px){
@@ -349,7 +342,7 @@ img{ max-width: 100%; height: auto; display: block; }
 }
 
 /* ===========================
-   MODULES (centralizado)
+   MODULES (ACORDEON) - sem sublinhado
    =========================== */
 .section--modules{
   background: var(--pink);
@@ -371,78 +364,87 @@ img{ max-width: 100%; height: auto; display: block; }
   margin: 0 auto;
 }
 
-.module{
-  border-top: 1px solid rgba(121,24,21,.25);
-}
-.module:last-child{
-  border-bottom: 1px solid rgba(121,24,21,.25);
-}
+.module{ border: 0; }
 
 .module__head{
   width: 100%;
   background: transparent;
   border: 0;
-  padding: 22px 0;
+  padding: 18px 0;
   display: flex;
-  align-items: center;
+  align-items: baseline;
   justify-content: space-between;
   gap: 18px;
   cursor: pointer;
   color: var(--accent);
   text-align: left;
+
+  border-bottom: 1px solid rgba(121,24,21,.22);
+}
+.module:first-child .module__head{
+  border-top: 1px solid rgba(121,24,21,.22);
 }
 
-/* ✅ REQ: Inter Bold 25px */
+/* ✅ REQ: 25px + Inter Tight + sem underline */
 .module__title{
-  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-family: var(--body-font);
   font-size: 25px;
-  line-height: 1.25;
-  font-weight: 700;
+  line-height: 1.15;
+  font-weight: 300;
+  letter-spacing: -0.02em; /* “tight” */
+  text-decoration: none;
 }
-.module__title strong{ font-weight: 700; }
+.module__title strong{
+  font-weight: 600; /* prefixo mais forte (fundação/desejo/relacionamento) */
+}
+
+/* garante que nada herde underline aqui */
+.module__head,
+.module__head *{
+  text-decoration: none !important;
+}
 
 .module__chev{
-  width: 18px;
-  height: 18px;
+  width: 14px;
+  height: 14px;
   border-right: 1px solid var(--accent);
   border-bottom: 1px solid var(--accent);
-  transform: rotate(45deg);
+  transform: rotate(45deg) translateY(-1px);
   transition: transform .2s ease;
   flex: 0 0 auto;
-  opacity: .8;
+  opacity: .75;
 }
 
-/* importante: overflow e transição */
 .module__body{
   height: 0px;
   overflow: hidden;
   transition: height .28s ease;
   will-change: height;
 }
-
-.module__inner{ padding: 0 0 22px; }
-
-.module.is-open .module__chev{ transform: rotate(-135deg); }
+.module__inner{ padding: 16px 0 22px; }
+.module.is-open .module__chev{ transform: rotate(-135deg) translateY(0px); }
 
 .module__item h3{
   margin: 0 0 8px;
+  font-family: var(--body-font);
   font-size: 16px;
   font-weight: 700;
   color: var(--ink);
 }
 .module__item p{
   margin: 0 0 20px;
+  font-family: var(--body-font);
   color: var(--ink);
 }
 .module__item:last-child p{ margin-bottom: 0; }
 
 /* ===========================
-   METODOLOGIA (respiro menor para CTA)
+   METODOLOGIA (respiro menor)
    =========================== */
 .section--method{
   background: var(--bg);
   padding-top: 96px;
-  padding-bottom: 60px; /* era 120: reduz 50% */
+  padding-bottom: 60px; /* reduzido 50% */
 }
 .method{
   width: min(1040px, 100%);
@@ -456,11 +458,11 @@ img{ max-width: 100%; height: auto; display: block; }
 .copy--method p:last-child{ margin-bottom: 0; }
 
 /* ===========================
-   CTA (respiro menor vindo da metodologia)
+   CTA (respiro menor)
    =========================== */
 .section--cta{
   background: var(--bg);
-  padding-top: 48px;  /* era 96: reduz 50% */
+  padding-top: 48px;  /* reduzido 50% */
   padding-bottom: 96px;
 }
 .cta{
@@ -475,6 +477,7 @@ img{ max-width: 100%; height: auto; display: block; }
 
 .cta__text{
   margin: 0 0 26px;
+  font-family: var(--body-font);
   font-size: 18px;
   line-height: 1.75;
   font-weight: 300;
@@ -489,6 +492,7 @@ img{ max-width: 100%; height: auto; display: block; }
   background: var(--pink);
   color: var(--accent);
   border-radius: 12px;
+  font-family: var(--body-font);
   font-weight: 600;
 }
 
@@ -499,6 +503,7 @@ img{ max-width: 100%; height: auto; display: block; }
   gap: 14px;
   color: var(--accent);
   text-align: right;
+  font-family: var(--body-font);
 }
 .cta__stamp img{ width: 120px; }
 
@@ -508,7 +513,7 @@ img{ max-width: 100%; height: auto; display: block; }
 }
 
 /* ===========================
-   FOOTER BAR (Figma)
+   FOOTER BAR
    =========================== */
 .footerBar{
   background: var(--pink);
@@ -531,6 +536,7 @@ img{ max-width: 100%; height: auto; display: block; }
 .footerBar__copy{
   margin: 0;
   text-align: center;
+  font-family: var(--body-font);
   font-size: 16px;
   font-weight: 300;
   color: var(--accent);
