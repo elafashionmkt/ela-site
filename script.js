@@ -1,18 +1,106 @@
-// Vanilla interactions:
-// - reveal on scroll
-// - accordion (single open, starts all closed)
-// - fixed nav swap (logo menor no scroll)
-// - mantém âncoras nativas (corrige navegação)
-
 (function () {
   const prefersReduced =
     window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   const nav = document.querySelector(".nav");
 
-  // -----------------------------
+  // =============================
+  // Helpers
+  // =============================
+  const escapeHtml = (s) =>
+    String(s)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+
+  // mini-markdown seguro: **bold** + quebras de linha
+  const renderMini = (text) => {
+    const safe = escapeHtml(text ?? "");
+    const bolded = safe.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+    return bolded.replace(/\n/g, "<br>");
+  };
+
+  const setMultiline = (el, text) => {
+    el.innerHTML = escapeHtml(text ?? "").replace(/\n/g, "<br>");
+  };
+
+  // =============================
+  // 0) Theme + Content loader
+  // =============================
+  const applyTheme = (theme) => {
+    if (!theme || !theme.vars) return;
+    const root = document.documentElement;
+    Object.entries(theme.vars).forEach(([k, v]) => {
+      if (typeof k === "string" && k.startsWith("--")) {
+        root.style.setProperty(k, String(v));
+      }
+    });
+  };
+
+  const applyContent = (content) => {
+    if (!content) return;
+
+    const texts = content.texts || {};
+    const images = content.images || {};
+
+    // data-text (textContent)
+    document.querySelectorAll("[data-text]").forEach((el) => {
+      const key = el.getAttribute("data-text");
+      if (!key || !(key in texts)) return;
+      el.textContent = String(texts[key]);
+    });
+
+    // data-rich (**bold** + \n)
+    document.querySelectorAll("[data-rich]").forEach((el) => {
+      const key = el.getAttribute("data-rich");
+      if (!key || !(key in texts)) return;
+      el.innerHTML = renderMini(texts[key]);
+    });
+
+    // data-multiline (\n -> <br>, sem markdown)
+    document.querySelectorAll("[data-multiline]").forEach((el) => {
+      const key = el.getAttribute("data-multiline");
+      if (!key || !(key in texts)) return;
+      setMultiline(el, texts[key]);
+    });
+
+    // data-img (src)
+    document.querySelectorAll("[data-img]").forEach((el) => {
+      const key = el.getAttribute("data-img");
+      if (!key || !(key in images)) return;
+      const src = String(images[key]);
+
+      if (el.tagName.toLowerCase() === "img") {
+        el.setAttribute("src", src);
+      }
+    });
+  };
+
+  const fetchJson = async (url) => {
+    try {
+      const res = await fetch(url, { cache: "no-store" });
+      if (!res.ok) return null;
+      return await res.json();
+    } catch {
+      return null;
+    }
+  };
+
+  const bootContent = async () => {
+    const [theme, content] = await Promise.all([
+      fetchJson("content/theme.json"),
+      fetchJson("content/content.json"),
+    ]);
+
+    if (theme) applyTheme(theme);
+    if (content) applyContent(content);
+  };
+
+  // =============================
   // 1) Reveal on scroll
-  // -----------------------------
+  // =============================
   const revealEls = Array.from(document.querySelectorAll(".reveal"));
   if (!prefersReduced && "IntersectionObserver" in window) {
     const io = new IntersectionObserver(
@@ -31,9 +119,9 @@
     revealEls.forEach((el) => el.classList.add("is-visible"));
   }
 
-  // -----------------------------
+  // =============================
   // 2) Accordion (single open)
-  // -----------------------------
+  // =============================
   const modules = Array.from(document.querySelectorAll("[data-module]"));
 
   const setOpen = (moduleEl, open) => {
@@ -44,11 +132,8 @@
     moduleEl.classList.toggle("is-open", open);
     btn.setAttribute("aria-expanded", open ? "true" : "false");
 
-    if (open) {
-      body.style.height = body.scrollHeight + "px";
-    } else {
-      body.style.height = "0px";
-    }
+    if (open) body.style.height = body.scrollHeight + "px";
+    else body.style.height = "0px";
   };
 
   const closeAllExcept = (keepEl) => {
@@ -81,9 +166,9 @@
     );
   });
 
-  // -----------------------------
+  // =============================
   // 3) Nav swap (scroll)
-  // -----------------------------
+  // =============================
   const swapThreshold = 80;
   const onScroll = () => {
     if (!nav) return;
@@ -92,18 +177,8 @@
   onScroll();
   window.addEventListener("scroll", onScroll, { passive: true });
 
-  // -----------------------------
-  // 4) Correção de hash no load
-  // -----------------------------
-  window.addEventListener("load", () => {
-    const hash = window.location.hash;
-    if (!hash) return;
-
-    const el = document.querySelector(hash);
-    if (!el) return;
-
-    setTimeout(() => {
-      el.scrollIntoView({ behavior: "auto", block: "start" });
-    }, 0);
-  });
+  // =============================
+  // Boot
+  // =============================
+  bootContent();
 })();
