@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "texts": {
+    "nav.sobre": "sobre nós",
+    "nav.servicos": "arquitetura de serviços",
+    "nav.contato": "que tal um café?",
+
+    "hero.title": "marcas não precisam de mais posts.",
+    "hero.titleEm": "precisam de direção.",
+    "hero.sub": "estratégia de marca, conteúdo e influência com intenção.",
+
+    "about.h2Main": "sobre",
+    "about.h2Em": "nós",
+    "about.p1": "somos um estúdio que trata **marca como ecossistema**, não como ação isolada. a gente começa pelo que vem antes do conteúdo: **posicionamento e direção**.",
+    "about.p2": "entendemos o momento da marca, o que ela sustenta hoje, o que precisa ser ajustado e quais escolhas deixam tudo mais coerente. atuamos a partir de **posicionamento, narrativa e estética**, conectando números para guiar e feeling para criar.",
+    "about.p3": "isso vira direção criativa, editorial, social e influência com o mesmo norte. **consistência no tempo, com decisões claras.**",
+
+    "modules.h2Main": "nossos",
+    "modules.h2Em": "módulos",
+
+    "modules.fundacao.prefix": "fundação:",
+    "modules.fundacao.title": "o que organiza a marca por dentro e define direção",
+    "modules.fundacao.i1.h": "planejamento estratégico de comunicação:",
+    "modules.fundacao.i1.p": "estruturamos o plano do período a partir de uma **leitura profunda da marca, do produto, do discurso e dos números**. definimos pilares, mensagens e prioridades que dão direção e consistência ao que a marca comunica.",
+    "modules.fundacao.i2.h": "calendário de campanhas e lançamentos:",
+    "modules.fundacao.i2.p": "montamos um **calendário macro que organiza lançamentos, campanhas e sazonalidades**, alinhando comunicação e vendas para evitar ações isoladas e garantir coerência ao longo do tempo.",
+
+    "modules.desejo.prefix": "desejo:",
+    "modules.desejo.title": "o que constrói imagem, linguagem e vontade de pertencer",
+    "modules.desejo.i1.h": "direção criativa e produção executiva:",
+    "modules.desejo.i1.p": "traduzimos o norte em conceito e direção de produção. linguagem visual, referências, casting, styling e organização de set para executar sem ruído.",
+    "modules.desejo.i2.h": "social media e editorial de conteúdo:",
+    "modules.desejo.i2.p": "definimos linha editorial e presença nas redes. pauta, formatos e ritmo, com consistência estética e narrativa ao longo do tempo.",
+    "modules.desejo.i3.h": "marketing sensorial:",
+    "modules.desejo.i3.p": "desenhamos a experiência da marca nos pontos de contato físicos e online. embalagem, texto, materiais e envio, tudo coerente com o DNA e com a percepção de valor.",
+
+    "modules.rel.prefix": "relacionamento:",
+    "modules.rel.title": "o que coloca a marca em circulação com contexto e parceria",
+    "modules.rel.i1.h": "marketing de influência:",
+    "modules.rel.i1.p": "mapeamos, prospectamos e gerimos influenciadoras com critério. cuidamos de acordos, entregas e acompanhamento, orientados por posicionamento e resultado.",
+    "modules.rel.i2.h": "gestão de collabs entre marcas:",
+    "modules.rel.i2.p": "estruturamos collabs com marcas complementares, da proposta à execução. criamos valor simbólico, contexto e alcance com sentido.",
+    "modules.rel.i3.h": "ativações de marca e eventos de experiência:",
+    "modules.rel.i3.p": "planejamos e produzimos ativações, lançamentos e encontros que materializam a marca no mundo real. isso vira conteúdo, relacionamento e repercussão.",
+
+    "method.h2Main": "nossa",
+    "method.h2Em": "metodologia",
+    "method.p1": "**é a forma como damos direção.** começamos lendo o que a marca sustenta hoje e transformamos isso em escolhas práticas: **o que dizer, como dizer e onde aparecer**. a partir daí, organizamos prioridades, calendário e critérios de consistência.",
+    "method.p2": "os módulos entram como **partes de uma arquitetura**. você pode começar pela fundação e evoluir para desejo e relacionamento, ou entrar pelo ponto que resolve o seu momento. o sistema existe para **manter coerência entre posicionamento, direção e execução**.",
+    "method.p3": "o acompanhamento funciona como bússola. **você não fica com um PDF bonito e sozinho**. a gente volta no plano, ajusta o foco e garante continuidade.",
+
+    "cta.h2Main": "que tal",
+    "cta.h2Em": "um café?",
+    "cta.p1": "um convite simples para conversar sobre a sua marca, entender o momento e pensar juntos os próximos passos.\n**conversa leve, com clareza e sem pressão.**",
+    "cta.btn": "agendar :)",
+    "cta.stampText": "estúdio de direção de marca\nposicionamento • social • influência\ndesde 2025",
+
+    "footer.copy": "© 2026 todos os direitos reservados"
+  },
+  "images": {
+    "brand.logo": "assets/2-11.svg",
+    "brand.logoSmall": "assets/2-11.svg",
+    "brand.logoFooter": "assets/2-11.svg",
+    "hero.decor": "assets/17-406.svg",
+    "about.image": "assets/16-12.webp",
+    "cta.stampIcon": "assets/19-6.svg"
+  }
+}
