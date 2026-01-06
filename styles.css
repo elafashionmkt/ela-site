@@ -614,4 +614,14 @@ img{ max-width: 100%; height: auto; display: block; }
   padding-bottom: 50px !important;
   min-height: 0 !important;
 }
+/* remove apenas a seta dentro de metodologia */
+#metodologia .scroll-indicator,
+#metodologia .hero__scroll,
+#metodologia .down-arrow,
+#metodologia .scroll-arrow,
+#metodologia .chevron-down,
+#metodologia .arrow-down{
+  display: none !important;
+}
+
 
