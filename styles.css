@@ -170,8 +170,8 @@ img{ max-width: 100%; height: auto; display: block; }
 }
 
 .brand__norte{
-  width: 18px;            /* pequenininho */
-  height: 18px;
+  width: 56px;      /* ajuste fino aqui */
+  height: auto;     /* importante para não “amassar” */
   opacity: 0;
   transform: translateY(-2px);
   transition: opacity .18s ease, transform .18s ease;
