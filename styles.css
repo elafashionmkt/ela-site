@@ -89,12 +89,13 @@ a{ color: inherit; text-decoration: none; }
   font-size: 18px;
   color: var(--accent);
 }
+
 /* Links do menu: hover em bold + underline do centro */
 .nav__links a{
   position: relative;
-  display: inline-block;         /* necessário pro ::after ficar no tamanho do texto */
-  opacity: 1;                    /* remove o efeito antigo */
-  padding-bottom: 6px;           /* espaço pra sublinha sem “encostar” no texto */
+  display: inline-block;
+  opacity: 1;
+  padding-bottom: 6px;
   transition: font-weight .18s ease;
 }
 
@@ -107,24 +108,23 @@ a{ color: inherit; text-decoration: none; }
   bottom: 0;
 
   height: 1px;
-  background: currentColor;      /* usa a mesma cor do texto */
+  background: currentColor;
 
-  transform: scaleX(0);          /* invisível */
-  transform-origin: center;      /* nasce do centro */
+  transform: scaleX(0);
+  transform-origin: center;
   transition: transform .22s ease;
 }
 
 .nav__links a:hover,
 .nav__links a:focus-visible{
-  font-weight: 600;              /* “bold” no hover/focus */
+  font-weight: 600;
 }
 
 .nav__links a:hover::after,
 .nav__links a:focus-visible::after{
-  transform: scaleX(1);          /* abre do centro pras pontas */
+  transform: scaleX(1);
 }
 
-/* opcional: respeita quem prefere menos animação */
 @media (prefers-reduced-motion: reduce){
   .nav__links a,
   .nav__links a::after{
@@ -136,12 +136,12 @@ a{ color: inherit; text-decoration: none; }
   display: grid;
   grid-template-columns: 1.4fr .6fr;
   gap: 56px;
-  align-items: center; /* <- centraliza texto e ícone na mesma altura */
+  align-items: center;
 }
 
 /* Faz o texto do hero ficar centrado na altura do ícone "norte" */
 .hero__copy{
-  min-height: 240px;              /* mesma altura do ícone atual */
+  min-height: 240px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -195,11 +195,7 @@ a{ color: inherit; text-decoration: none; }
   align-items: start;
 }
 
-/* Remove o "empurrão" padrão do <figure> */
-.about__media{
-  margin: 0;
-}
-
+/* Copy */
 .copy{
   font-size: 18px;
   line-height: 1.75;
@@ -207,19 +203,27 @@ a{ color: inherit; text-decoration: none; }
 .copy p{ margin: 0 0 18px; }
 .copy strong{ color: var(--accent); font-weight: 700; }
 
+/* ================================
+   ABOUT IMAGE (ajuste Figma)
+   - remove margin default do figure
+   - trava tamanho 563x485
+   - remove shadow/radius (Figma está “chapado”)
+   - garante topo e encosto na direita
+   ================================ */
 .about__media{
-  margin: 0;
-  display: flex;
-  justify-content: flex-end; /* garante que ela encoste na direita da coluna */
+  margin: 0;                 /* remove margin padrão do <figure> */
+  align-self: start;         /* topo do grid */
+  justify-self: end;         /* encosta à direita da coluna */
 }
 
 .about__media img{
   width: 563px;
   height: 485px;
-  max-width: 100%;     /* não estoura em telas menores */
-  object-fit: cover;   /* mantém o corte bonito se precisar */
-  border-radius: 6px;
-  box-shadow: 0 10px 30px rgba(0,0,0,.12);
+  max-width: 100%;
+  object-fit: cover;
+
+  border-radius: 0;          /* Figma: raio 0 */
+  box-shadow: none;          /* Figma: sem sombra */
 }
 
 /* Modules (Accordion) */
