@@ -19,6 +19,11 @@
   pageWipe.className = "page-wipe";
   document.body.appendChild(pageWipe);
 
+  const headerBar = document.getElementById("header-bar");
+  if (headerBar) {
+    headerBar.classList.add("is-solid");
+  }
+
   // fallback para assets (logo topo e footer)
   document.querySelectorAll("img[data-fallback]").forEach((img) => {
     img.addEventListener("error", () => {
@@ -37,7 +42,6 @@
   });
 
   // menu mobile (fica sempre logo abaixo da barra vinho sticky)
-  const headerBar = document.getElementById("header-bar");
   const hamburger = document.getElementById("hamburger");
   const mobileMenu = document.getElementById("mobile-menu");
   const mobileLinks = document.querySelectorAll(".mobile-link");
@@ -118,10 +122,14 @@
   const menuLinks = document.querySelectorAll(".menu .hlink, .mobile-nav .hlink");
   const wipeDuration = 420;
 
-  const navigateWithWipe = (target, hash) => {
+  const scrollToTarget = (target, hash) => {
+    const headerHeight = headerBar ? headerBar.getBoundingClientRect().height : 0;
+    const targetTop = target.getBoundingClientRect().top + window.scrollY;
+    const top = Math.max(targetTop - headerHeight - 12, 0);
     const behavior = reduceMotion ? "auto" : "smooth";
+
     const finish = () => {
-      target.scrollIntoView({ behavior, block: "start" });
+      window.scrollTo({ top, behavior });
       if (hash) {
         history.replaceState(null, "", hash);
       }
@@ -150,13 +158,18 @@
       menuLinks.forEach((lnk) => lnk.classList.remove("is-active"));
       link.classList.add("is-active");
 
-      if (reduceMotion) return;
-
       event.preventDefault();
-      navigateWithWipe(target, href);
+      scrollToTarget(target, href);
       if (link.classList.contains("mobile-link")) closeMenu();
     });
   });
+
+  if (window.location.hash) {
+    const target = document.querySelector(window.location.hash);
+    if (target) {
+      requestAnimationFrame(() => scrollToTarget(target, window.location.hash));
+    }
+  }
 
   // acordeão (multi-open) inicia com TODOS fechados
   const DATA = [
