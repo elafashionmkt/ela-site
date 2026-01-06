@@ -3,60 +3,63 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#FFCCCC" />
+
   <title>elã | fashion mkt</title>
 
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+
   <link rel="icon" href="assets/fav-ela.webp" type="image/webp" />
-
-  <!-- Google Fonts (Inter Tight global) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Inter+Tight:ital,wght@0,100..900;1,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
-
-  <!-- Typekit (seus títulos) -->
-  <link rel="stylesheet" href="https://use.typekit.net/piy8ljr.css" />
-
   <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
-  <a class="skip" href="#conteudo">Pular para o conteúdo</a>
-
-  <div class="pageTransition" aria-hidden="true"></div>
+  <a class="skip" href="#conteudo">Pular para conteúdo</a>
 
   <header class="hero" id="topo">
     <div class="container hero__container">
-
       <nav class="nav" aria-label="Navegação principal" id="header-bar">
         <a class="brand" href="#topo" aria-label="Voltar ao topo">
           <img class="brand__logo" data-img="brand.logo" src="assets/2-11.svg" alt="Logo elã" />
-          <img class="brand__norte" data-img="brand.logoSmall" src="assets/2-11.svg" alt="" aria-hidden="true" knowing="yes" />
+          <img class="brand__norte" data-img="brand.logoSmall" src="assets/2-11.svg" alt="" aria-hidden="true" />
         </a>
 
-        <div class="nav__links">
+        <button class="nav__toggle" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="site-menu">
+          <span class="nav__toggleIcon" aria-hidden="true"></span>
+        </button>
+
+        <div class="nav__links" id="site-menu">
           <a href="#sobre" data-text="nav.sobre">sobre nós</a>
           <a href="#servicos" data-text="nav.servicos">arquitetura de serviços</a>
           <a href="#contato" data-text="nav.contato">que tal um café?</a>
         </div>
       </nav>
 
+      <div class="nav__backdrop" hidden></div>
+
       <div class="hero__grid" id="conteudo">
         <div class="hero__copy reveal">
           <h1 class="h1">
-            <span data-text="hero.title">marcas não precisam de mais posts.</span>
-            <span class="h1__em" data-text="hero.titleEm">precisam de direção.</span>
+            <span data-text="hero.h1Main">marcas precisam</span>
+            <span class="h1__em" data-text="hero.h1Em">de intenção.</span>
           </h1>
 
-          <p class="hero__sub" data-text="hero.sub">estratégia de marca, conteúdo e influência com intenção.</p>
+          <p class="lead" data-rich="hero.lead">
+            moda com propósito & intenção.
+          </p>
         </div>
 
-        <div class="hero__decor reveal" aria-hidden="true">
-          <img data-img="hero.decor" src="assets/17-406.svg" alt="" />
-        </div>
+        <figure class="hero__media reveal">
+          <img data-img="hero.image" src="assets/16-12.webp" alt="Colagem elã" loading="eager" decoding="async" />
+        </figure>
       </div>
 
+      <!-- seta só no hero -->
       <a class="scrollHint" href="#sobre" aria-label="descer para sobre nós">
-        <svg class="scrollHint__icon" width="18" height="10" viewBox="0 0 18 10" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M1 1L9 9L17 1" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+        <svg class="scrollHint__icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 16.5l-7-7 1.4-1.4L12 13.7l5.6-5.6L19 9.5z"></path>
         </svg>
       </a>
     </div>
@@ -79,174 +82,91 @@
         </div>
 
         <figure class="about__media reveal">
-          <img data-img="about.image" src="assets/16-12.webp" alt="Colagem sobre nós" loading="lazy" />
+          <img data-img="about.image" src="assets/16-12.webp" alt="Colagem sobre nós" loading="lazy" decoding="async" />
         </figure>
       </div>
 
-      <a class="scrollHint scrollHint--section" href="#servicos" aria-label="descer para nossos módulos">
-        <svg class="scrollHint__icon" width="18" height="10" viewBox="0 0 18 10" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M1 1L9 9L17 1" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </a>
+      <!-- removido scrollHint das seções (CSS também garante) -->
     </section>
 
-    <section class="section section--modules" id="servicos">
-      <div class="container">
-        <h2 class="h2 reveal">
-          <span data-text="modules.h2Main">nossos</span>
-          <span class="h2__em" data-text="modules.h2Em">módulos</span>
+    <section class="section" id="servicos">
+      <div class="container reveal">
+        <h2 class="h2">
+          <span data-text="services.h2Main">arquitetura</span>
+          <span class="h2__em" data-text="services.h2Em">de serviços</span>
         </h2>
 
-        <div class="modules">
+        <div class="accordion" data-accordion>
+          <button class="accordion__head" type="button" aria-expanded="false">
+            <span class="accordion__title" data-text="services.item1Title">estratégia</span>
+            <span class="accordion__chev" aria-hidden="true">›</span>
+          </button>
+          <div class="accordion__panel" hidden>
+            <div class="accordion__body" data-multiline="services.item1Body"></div>
+          </div>
 
-          <article class="module reveal" data-module>
-            <button class="module__head" type="button" aria-expanded="false">
-              <span class="module__title">
-                <strong data-text="modules.fundacao.prefix">fundação:</strong>
-                <span data-text="modules.fundacao.title">o que organiza a marca por dentro e define direção</span>
-              </span>
-              <span class="module__chev" aria-hidden="true"></span>
-            </button>
+          <button class="accordion__head" type="button" aria-expanded="false">
+            <span class="accordion__title" data-text="services.item2Title">direção criativa</span>
+            <span class="accordion__chev" aria-hidden="true">›</span>
+          </button>
+          <div class="accordion__panel" hidden>
+            <div class="accordion__body" data-multiline="services.item2Body"></div>
+          </div>
 
-            <div class="module__body" role="region">
-              <div class="module__inner">
-                <div class="module__item">
-                  <h3 data-text="modules.fundacao.i1.h">planejamento estratégico de comunicação:</h3>
-                  <p data-rich="modules.fundacao.i1.p"></p>
-                </div>
-
-                <div class="module__item">
-                  <h3 data-text="modules.fundacao.i2.h">calendário de campanhas e lançamentos:</h3>
-                  <p data-rich="modules.fundacao.i2.p"></p>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <article class="module reveal" data-module>
-            <button class="module__head" type="button" aria-expanded="false">
-              <span class="module__title">
-                <strong data-text="modules.desejo.prefix">desejo:</strong>
-                <span data-text="modules.desejo.title">o que constrói imagem, linguagem e vontade de pertencer</span>
-              </span>
-              <span class="module__chev" aria-hidden="true"></span>
-            </button>
-
-            <div class="module__body" role="region">
-              <div class="module__inner">
-                <div class="module__item">
-                  <h3 data-text="modules.desejo.i1.h">direção criativa e produção executiva:</h3>
-                  <p data-rich="modules.desejo.i1.p"></p>
-                </div>
-
-                <div class="module__item">
-                  <h3 data-text="modules.desejo.i2.h">social media e editorial de conteúdo:</h3>
-                  <p data-rich="modules.desejo.i2.p"></p>
-                </div>
-
-                <div class="module__item">
-                  <h3 data-text="modules.desejo.i3.h">marketing sensorial:</h3>
-                  <p data-rich="modules.desejo.i3.p"></p>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <article class="module reveal" data-module>
-            <button class="module__head" type="button" aria-expanded="false">
-              <span class="module__title">
-                <strong data-text="modules.rel.prefix">relacionamento:</strong>
-                <span data-text="modules.rel.title">o que coloca a marca em circulação com contexto e parceria</span>
-              </span>
-              <span class="module__chev" aria-hidden="true"></span>
-            </button>
-
-            <div class="module__body" role="region">
-              <div class="module__inner">
-                <div class="module__item">
-                  <h3 data-text="modules.rel.i1.h">marketing de influência:</h3>
-                  <p data-rich="modules.rel.i1.p"></p>
-                </div>
-
-                <div class="module__item">
-                  <h3 data-text="modules.rel.i2.h">gestão de collabs entre marcas:</h3>
-                  <p data-rich="modules.rel.i2.p"></p>
-                </div>
-
-                <div class="module__item">
-                  <h3 data-text="modules.rel.i3.h">ativações de marca e eventos de experiência:</h3>
-                  <p data-rich="modules.rel.i3.p"></p>
-                </div>
-              </div>
-            </div>
-          </article>
-
-        </div>
-      </div>
-
-      <a class="scrollHint scrollHint--section" href="#metodologia" aria-label="descer para metodologia">
-        <svg class="scrollHint__icon" width="18" height="10" viewBox="0 0 18 10" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M1 1L9 9L17 1" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </a>
-    </section>
-
-    <section class="section section--method" id="metodologia">
-      <div class="container">
-        <div class="method reveal">
-          <h2 class="h2">
-            <span data-text="method.h2Main">nossa</span>
-            <span class="h2__em" data-text="method.h2Em">metodologia</span>
-          </h2>
-
-          <div class="copy copy--method">
-            <p data-rich="method.p1"></p>
-            <p data-rich="method.p2"></p>
-            <p data-rich="method.p3"></p>
+          <button class="accordion__head" type="button" aria-expanded="false">
+            <span class="accordion__title" data-text="services.item3Title">conteúdo editorial</span>
+            <span class="accordion__chev" aria-hidden="true">›</span>
+          </button>
+          <div class="accordion__panel" hidden>
+            <div class="accordion__body" data-multiline="services.item3Body"></div>
           </div>
         </div>
       </div>
-
-      <!-- ✅ removido: seta entre metodologia e café -->
     </section>
 
-    <section class="section section--cta" id="contato">
-      <div class="cta">
-        <div class="cta__copy reveal">
-          <h2 class="h2">
-            <span data-text="cta.h2Main">que tal</span>
-            <span class="h2__em" data-text="cta.h2Em">um café?</span>
-          </h2>
+    <section class="section" id="metodologia">
+      <div class="container reveal">
+        <h2 class="h2">
+          <span data-text="method.h2Main">metodologia</span>
+          <span class="h2__em" data-text="method.h2Em">elã</span>
+        </h2>
 
-          <p class="cta__text" data-rich="cta.p1"></p>
-
-          <a class="btn" href="mailto:contato@elafashionmkt.com.br" data-text="cta.btn">agendar :)</a>
-        </div>
-
-        <div class="cta__stamp reveal" aria-label="Assinatura">
-          <img data-img="cta.stampIcon" src="assets/19-6.svg" alt="" aria-hidden="true" />
-          <p data-multiline="cta.stampText"></p>
+        <div class="copy">
+          <p data-rich="method.p1"></p>
+          <p data-rich="method.p2"></p>
         </div>
       </div>
     </section>
+
+    <section class="section" id="contato">
+      <div class="container reveal">
+        <h2 class="h2">
+          <span data-text="contact.h2Main">que tal</span>
+          <span class="h2__em" data-text="contact.h2Em">um café?</span>
+        </h2>
+
+        <div class="contact">
+          <a class="btn" href="https://wa.me/" target="_blank" rel="noopener" data-text="contact.cta">falar no whatsapp</a>
+
+          <div class="social">
+            <a href="#" aria-label="Instagram">
+              <img src="assets/instagram.svg" alt="" aria-hidden="true" />
+            </a>
+            <a href="#" aria-label="LinkedIn">
+              <img src="assets/linkedin.svg" alt="" aria-hidden="true" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container">
+        <small data-text="footer.copy">© elã | fashion mkt</small>
+      </div>
+    </footer>
   </main>
 
-  <footer class="footerBar" aria-label="Rodapé">
-    <div class="footerBar__inner">
-      <a class="footerBar__logo" href="#topo" aria-label="Voltar ao topo">
-        <img data-img="brand.logoFooter" src="assets/2-11.svg" alt="elã" />
-      </a>
-
-      <p class="footerBar__copy" data-text="footer.copy">© 2026 todos os direitos reservados</p>
-
-      <div class="footerBar__social" aria-label="Redes e contato">
-        <a href="#" aria-label="WhatsApp"><img src="assets/whatsapp.svg" alt="" aria-hidden="true" /></a>
-        <a href="#" aria-label="Instagram"><img src="assets/instagram.svg" alt="" aria-hidden="true" /></a>
-        <a href="#" aria-label="LinkedIn"><img src="assets/linkedin.svg" alt="" aria-hidden="true" /></a>
-      </div>
-    </div>
-  </footer>
-
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
 </body>
 </html>
