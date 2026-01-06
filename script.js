@@ -2,7 +2,7 @@
 // - reveal on scroll
 // - accordion (single open, starts all closed)
 // - fixed nav swap (logo menor no scroll)
-// IMPORTANT: não intercepta mais cliques em âncoras (corrige bug de navegação)
+// - mantém âncoras nativas (corrige navegação)
 
 (function () {
   const prefersReduced =
@@ -57,7 +57,6 @@
     });
   };
 
-  // init: tudo fechado
   modules.forEach((m) => setOpen(m, false));
 
   modules.forEach((m) => {
@@ -94,10 +93,8 @@
   window.addEventListener("scroll", onScroll, { passive: true });
 
   // -----------------------------
-  // 4) Correção de hash no load (com header fixo)
+  // 4) Correção de hash no load
   // -----------------------------
-  // O CSS já resolve com scroll-margin-top. Isso aqui só garante que,
-  // ao abrir a página diretamente com #hash, a posição final fique certinha.
   window.addEventListener("load", () => {
     const hash = window.location.hash;
     if (!hash) return;
@@ -105,7 +102,6 @@
     const el = document.querySelector(hash);
     if (!el) return;
 
-    // "auto" para não dar double-smooth no load
     setTimeout(() => {
       el.scrollIntoView({ behavior: "auto", block: "start" });
     }, 0);
