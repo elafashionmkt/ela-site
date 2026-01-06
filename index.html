@@ -5,10 +5,10 @@
   <title>elã</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- fontes do Pixso -->
+  <!-- CSS ORIGINAL PIXSO -->
   <link rel="stylesheet" href="./css/style.css" />
 
-  <!-- override limpo -->
+  <!-- OVERRIDES CORRETOS -->
   <link rel="stylesheet" href="./styles.css" />
 </head>
 
@@ -17,9 +17,9 @@
   <!-- HEADER FIXO -->
   <header class="site-header">
     <div class="header-inner">
-      <div class="logo">
+      <a href="#top" class="logo">
         <img src="./assets/logo.svg" alt="elã" />
-      </div>
+      </a>
 
       <nav class="menu">
         <a href="#sobre">sobre nós</a>
@@ -29,7 +29,54 @@
     </div>
   </header>
 
-  <!-- CONTEÚDO PIXSO -->
-  <main class="page-wrapper">
-    <!-- mantém TODO o HTML exportado do Pixso aqui dentro -->
-    <!-- não alterei nenhuma section fora do acordeon -->
+  <!-- CONTEÚDO -->
+  <main id="top" class="page-wrapper">
+    <div class="content">
+
+      <!-- TODO O HTML EXPORTADO DO PIXSO PERMANECE AQUI -->
+      <!-- exceto o bloco antigo de menu -->
+
+      <!-- EXEMPLO DO ACORDEON -->
+      <section class="accordion">
+
+        <div class="accordion-item is-active">
+          <button class="accordion-header" aria-expanded="true">
+            fundação
+          </button>
+          <div class="accordion-content">
+            <p>
+              posicionamento, narrativa e arquitetura de marca.
+            </p>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-header" aria-expanded="false">
+            desejo
+          </button>
+          <div class="accordion-content">
+            <p>
+              conteúdo, imagem e presença que geram atração real.
+            </p>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-header" aria-expanded="false">
+            relacionamento
+          </button>
+          <div class="accordion-content">
+            <p>
+              influência, comunidade e continuidade.
+            </p>
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+  </main>
+
+  <script src="./script.js"></script>
+</body>
+</html>
