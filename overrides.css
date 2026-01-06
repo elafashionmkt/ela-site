@@ -1,0 +1,62 @@
+/* =========================================================
+   Overrides mínimos (Pixso → Figma)
+   - sem reset global
+   - sem refatorar layout
+   ========================================================= */
+
+/* garante que o scroll principal seja o do container Pixso */
+html, body { height: 100%; }
+.scroll-container-0_1 { height: 100vh; }
+
+/* Header fixo acompanhando o scroll (dentro do scroll-container) */
+.group-19_7{
+  position: sticky !important;
+  top: 0 !important;
+  left: 0;
+  z-index: 9999;
+}
+
+/* evita que o header fique "transparente" em alguns browsers */
+.group-19_7 .rectangle-18_23{ background-color: rgba(255, 204, 204, 1); }
+
+/* ===== Acordeon (mantém composição do Pixso) ===== */
+.group-19_15,
+.group-19_14,
+.group-19_12,
+.group-19_13{
+  overflow: visible;
+}
+
+/* Conteúdo injetado para módulos 2 e 3 */
+.ela-acc-content{
+  font-size: 20px;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  letter-spacing: 0em;
+  line-height: 30px;
+  color: var(--el-graphite);
+  width: 910px;
+  position: absolute;
+  left: 65px;
+  top: 66px;
+  white-space: pre-line;
+}
+
+/* quando fechado, escondemos o conteúdo sem colapsar layout do Pixso à força */
+.ela-acc-content[hidden]{ display: none !important; }
+
+/* suavidade nas transições de altura */
+.group-19_14,
+.group-19_12,
+.group-19_13,
+.frame-7_17,
+.group-19_15{
+  transition: height 260ms ease;
+}
+
+/* cursor de interação */
+.group-19_11,
+.group-19_12,
+.group-19_13{
+  cursor: pointer;
+  user-select: none;
+}
