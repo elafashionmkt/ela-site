@@ -30,7 +30,7 @@
           <img class="brand__logo" src="assets/2-11.svg" alt="Logo elã" />
 
           <!-- norte (entra no lugar do logo no scroll) -->
-          <img class="brand__norte" src="assets/17-406.svg" alt="" aria-hidden="true" />
+          <img class="brand__norte" src="assets/2-11.svg" alt="" aria-hidden="true" />
         </a>
 
         <div class="nav__links">
