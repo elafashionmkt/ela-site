@@ -29,6 +29,9 @@
   --display-font: ivyjournal, "IvyJournal", ivy-mode, "Ivy Mode", Georgia, serif;
 
   --container: 1180px;
+
+  /* nav */
+  --nav-h: 78px;
 }
 
 /* ===========================
@@ -42,6 +45,9 @@ body{
   color: var(--ink);
   font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   overflow-x: hidden;
+
+  /* como o menu agora é fixed */
+  padding-top: var(--nav-h);
 }
 a{ color: inherit; text-decoration: none; }
 img{ max-width: 100%; height: auto; display: block; }
@@ -61,6 +67,23 @@ img{ max-width: 100%; height: auto; display: block; }
   z-index: 1000;
 }
 .skip:focus{ left: 8px; }
+
+/* ===========================
+   PAGE TRANSITION (not-ish)
+   =========================== */
+.pageTransition{
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .28s ease;
+  z-index: 999;
+}
+.pageTransition.is-active{
+  opacity: 1;
+  pointer-events: none;
+}
 
 /* ===========================
    HEADINGS
@@ -113,36 +136,57 @@ img{ max-width: 100%; height: auto; display: block; }
 }
 
 /* ===========================
-   HERO (full screen)
+   NAV (FIXO + swap logo/norte)
    =========================== */
-.hero{
-  background: var(--pink);
-  min-height: 100svh;
-  display: flex;
-}
-.hero__container{
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  padding: 24px 0 22px;
-}
-
 .nav{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--nav-h);
+  z-index: 200;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 24px;
 
-  position: sticky;
-  top: 0;
-  z-index: 50;
-
-  padding: 18px 0;
+  padding: 18px calc((100vw - min(var(--container), calc(100% - 48px))) / 2);
   background: rgba(255,204,204,.92);
   backdrop-filter: blur(8px);
 }
-.brand img{ width: 96px; height: auto; }
+
+.brand{
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 42px;
+}
+
+.brand__logo{
+  width: 96px;
+  height: auto;
+  transition: opacity .18s ease, transform .18s ease;
+}
+
+.brand__norte{
+  width: 18px;            /* pequenininho */
+  height: 18px;
+  opacity: 0;
+  transform: translateY(-2px);
+  transition: opacity .18s ease, transform .18s ease;
+}
+
+/* quando scrola: some logo, entra norte */
+.nav.is-scrolled .brand__logo{
+  opacity: 0;
+  transform: translateY(-4px);
+  pointer-events: none;
+}
+.nav.is-scrolled .brand__norte{
+  opacity: 1;
+  transform: translateY(0);
+}
 
 .nav__links{
   display: flex;
@@ -180,6 +224,22 @@ img{ max-width: 100%; height: auto; display: block; }
   transform: scaleX(1);
 }
 
+/* ===========================
+   HERO (full screen)
+   =========================== */
+.hero{
+  background: var(--pink);
+  min-height: calc(100svh - var(--nav-h));
+  display: flex;
+}
+.hero__container{
+  min-height: calc(100svh - var(--nav-h));
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding: 24px 0 22px;
+}
+
 .hero__grid{
   flex: 1;
   display: grid;
@@ -208,6 +268,15 @@ img{ max-width: 100%; height: auto; display: block; }
 }
 
 @media (max-width: 980px){
+  :root{ --nav-h: 74px; }
+
+  body{ padding-top: var(--nav-h); }
+
+  .nav{
+    padding: 16px 24px;
+  }
+  .nav__links{ gap: 22px; font-size: 16px; }
+
   .hero__grid{
     grid-template-columns: 1fr;
     padding: 44px 0 88px;
@@ -271,32 +340,23 @@ img{ max-width: 100%; height: auto; display: block; }
 }
 
 @media (max-width: 980px){
-  .about{
-    grid-template-columns: 1fr;
-  }
-  .about__media{
-    width: 100%;
-    height: auto;
-  }
-  .about__media img{
-    height: auto;
-  }
+  .about{ grid-template-columns: 1fr; }
+  .about__media{ width: 100%; height: auto; }
+  .about__media img{ height: auto; }
 }
 
 /* ===========================
-   MODULES (centralizado no miolo)
+   MODULES (centralizado)
    =========================== */
 .section--modules{
   background: var(--pink);
   padding-bottom: 120px;
 }
-
 .section--modules > .container{
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-
 .section--modules .h2{
   width: min(920px, 100%);
   margin-left: auto;
@@ -349,18 +409,14 @@ img{ max-width: 100%; height: auto; display: block; }
 }
 
 .module__body{
-  max-height: 0;
+  height: 0px;
   overflow: hidden;
-  transition: max-height .28s ease;
+  transition: height .28s ease;
 }
 
-.module__inner{
-  padding: 0 0 22px;
-}
+.module__inner{ padding: 0 0 22px; }
 
-.module.is-open .module__chev{
-  transform: rotate(-135deg);
-}
+.module.is-open .module__chev{ transform: rotate(-135deg); }
 
 .module__item h3{
   margin: 0 0 8px;
@@ -375,44 +431,27 @@ img{ max-width: 100%; height: auto; display: block; }
 .module__item:last-child p{ margin-bottom: 0; }
 
 /* ===========================
-   METODOLOGIA (Figma: 1040px e gap 46)
+   METODOLOGIA (Figma: 1040 + gap 46)
    =========================== */
 .section--method{
   background: var(--bg);
   padding-top: 96px;
-  padding-bottom: 120px; /* dá “respeito” antes do CTA como no print */
+  padding-bottom: 120px;
 }
-
-/* este é o “container interno” do Figma (1040 x 356) */
 .method{
   width: min(1040px, 100%);
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 46px; /* Figma: spacing 46 */
+  gap: 46px;
 }
+.method .h2{ margin: 0; }
 
-/* remove qualquer margem extra do h2 dentro desse bloco */
-.method .h2{
-  margin: 0;
-}
-
-/* corpo do texto alinhado com largura do container Figma */
-.copy--method{
-  width: 100%;
-  margin: 0;
-}
-
-/* parágrafos com respiro semelhante ao layout */
-.copy--method p{
-  margin: 0 0 26px;
-}
-.copy--method p:last-child{
-  margin-bottom: 0;
-}
+.copy--method p{ margin: 0 0 26px; }
+.copy--method p:last-child{ margin-bottom: 0; }
 
 /* ===========================
-   CTA
+   CTA (ALINHADO COM METODOLOGIA)
    =========================== */
 .section--cta{
   background: var(--bg);
@@ -420,7 +459,11 @@ img{ max-width: 100%; height: auto; display: block; }
   padding-bottom: 96px;
 }
 
+/* aqui está o ajuste que você pediu: mesma largura/miolo da metodologia */
 .cta{
+  width: min(1040px, calc(100% - 48px));
+  margin: 0 auto;
+
   display: grid;
   grid-template-columns: 1.2fr .8fr;
   gap: 64px;
@@ -462,29 +505,26 @@ img{ max-width: 100%; height: auto; display: block; }
 }
 
 /* ===========================
-   FOOTER BAR (Figma: 156px / icons 32px)
+   FOOTER BAR (Figma)
    =========================== */
 .footerBar{
   background: var(--pink);
-  height: 156px; /* Figma */
+  height: 156px;
   display: flex;
   align-items: center;
 }
-
 .footerBar__inner{
   width: min(1280px, 100%);
   margin: 0 auto;
-  padding: 0 120px; /* Figma “margem” */
+  padding: 0 120px;
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
 }
-
 .footerBar__logo img{
-  width: 92px; /* Figma */
+  width: 92px;
   height: auto;
 }
-
 .footerBar__copy{
   margin: 0;
   text-align: center;
@@ -492,7 +532,6 @@ img{ max-width: 100%; height: auto; display: block; }
   font-weight: 300;
   color: var(--accent);
 }
-
 .footerBar__social{
   display: flex;
   justify-content: flex-end;
@@ -521,6 +560,14 @@ img{ max-width: 100%; height: auto; display: block; }
 }
 
 /* ===========================
-   reveal (se já existir no seu js, mantém neutro)
+   reveal
    =========================== */
-.reveal{ opacity: 1; transform: none; }
+.reveal{
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity .5s ease, transform .5s ease;
+}
+.reveal.is-visible{
+  opacity: 1;
+  transform: translateY(0);
+}
