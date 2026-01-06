@@ -162,7 +162,7 @@ a{ color: inherit; text-decoration: none; }
 .hero__sub{
   margin: 0;
   font-family: Inter, system-ui, sans-serif;
-  font-weight: 600;
+  font-weight: 300;
   font-size: 22px;
 }
 
