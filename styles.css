@@ -624,4 +624,14 @@ img{ max-width: 100%; height: auto; display: block; }
   display: none !important;
 }
 
+/* Metodologia: títulos do accordion com 25px */
+#metodologia summary,
+#metodologia .accordion summary,
+#metodologia .accordion__title,
+#metodologia .accordion-title,
+#metodologia .module-title{
+  font-size: 25px !important;
+  line-height: 1.15;
+}
+
 
