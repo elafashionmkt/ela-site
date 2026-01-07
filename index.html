@@ -33,7 +33,13 @@
           <img class="brand__norte" src="assets/2-11.svg" alt="" aria-hidden="true" />
         </a>
 
-        <div class="nav__links">
+        <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Abrir menu">
+          <span class="nav__toggle-line" aria-hidden="true"></span>
+          <span class="nav__toggle-line" aria-hidden="true"></span>
+          <span class="nav__toggle-line" aria-hidden="true"></span>
+        </button>
+
+        <div class="nav__links" id="nav-links">
           <a href="#sobre">sobre nós</a>
           <a href="#servicos">arquitetura de serviços</a>
           <a href="#contato">que tal um café?</a>
@@ -96,33 +102,33 @@
         <div class="modules">
           <!-- COMEÇA FECHADO -->
           <article class="module reveal" data-module>
-            <button class="module__head" type="button" aria-expanded="false">
+            <button class="module__head" type="button" aria-expanded="false" aria-controls="module-foundation" id="module-foundation-trigger">
               <span class="module__title"><strong>fundação:</strong> o que organiza a marca por dentro e define direção</span>
               <span class="module__chev" aria-hidden="true"></span>
             </button>
 
-            <div class="module__body" role="region">
+            <div class="module__body" role="region" id="module-foundation" aria-labelledby="module-foundation-trigger" aria-hidden="true">
               <div class="module__inner">
                 <div class="module__item">
                   <h3>planejamento estratégico de comunicação:</h3>
-                  <p>estruturamos o plano do período a partir de uma <span class="u-underline">leitura profunda da marca, do produto, do discurso e dos números</span>. definimos pilares, mensagens e prioridades que dão direção e consistência ao que a marca comunica.</p>
+                  <p>estruturamos o plano do período a partir de uma leitura da marca, do produto, do discurso e dos números. definimos pilares, mensagens e prioridades que sustentam o que a marca comunica.</p>
                 </div>
 
                 <div class="module__item">
                   <h3>calendário de campanhas e lançamentos:</h3>
-                  <p>montamos um <span class="u-underline">calendário macro que organiza lançamentos, campanhas e sazonalidades</span>, alinhando comunicação e vendas para evitar ações isoladas e garantir coerência ao longo do tempo.</p>
+                  <p>montamos um calendário macro que organiza lançamentos, campanhas e sazonalidades, alinhamos comunicação e vendas para manter coerência ao longo do tempo.</p>
                 </div>
               </div>
             </div>
           </article>
 
           <article class="module reveal" data-module>
-            <button class="module__head" type="button" aria-expanded="false">
+            <button class="module__head" type="button" aria-expanded="false" aria-controls="module-desire" id="module-desire-trigger">
               <span class="module__title"><strong>desejo:</strong> o que constrói imagem, linguagem e vontade de pertencer</span>
               <span class="module__chev" aria-hidden="true"></span>
             </button>
 
-            <div class="module__body" role="region">
+            <div class="module__body" role="region" id="module-desire" aria-labelledby="module-desire-trigger" aria-hidden="true">
               <div class="module__inner">
                 <div class="module__item">
                   <h3>direção criativa e produção executiva:</h3>
@@ -143,12 +149,12 @@
           </article>
 
           <article class="module reveal" data-module>
-            <button class="module__head" type="button" aria-expanded="false">
-              <span class="module__title"><strong>relacionamento:</strong> o que coloca a marca em circulação com contexto e parceria</span>
+            <button class="module__head" type="button" aria-expanded="false" aria-controls="module-relationship" id="module-relationship-trigger">
+              <span class="module__title"><strong>relacionamento:</strong> o que coloca a marca em circulação com contexto</span>
               <span class="module__chev" aria-hidden="true"></span>
             </button>
 
-            <div class="module__body" role="region">
+            <div class="module__body" role="region" id="module-relationship" aria-labelledby="module-relationship-trigger" aria-hidden="true">
               <div class="module__inner">
                 <div class="module__item">
                   <h3>marketing de influência:</h3>
