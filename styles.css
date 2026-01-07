@@ -175,6 +175,10 @@ img{ max-width: 100%; height: auto; display: block; }
 .nav.is-scrolled .brand__logo{ opacity: 0; pointer-events: none; }
 .nav.is-scrolled .brand__norte{ opacity: 1; }
 
+/* wrapper do painel (desktop) */
+.nav__panel{ display: block; }
+.nav__toggle{ display: none; }
+
 .nav__links{
   display: flex;
   gap: 48px;
@@ -308,7 +312,7 @@ img{ max-width: 100%; height: auto; display: block; }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center top; /* ✅ mais fiel ao figma */
+  object-position: center top;
 }
 @media (max-width: 980px){
   .about{ grid-template-columns: 1fr; }
@@ -395,7 +399,7 @@ img{ max-width: 100%; height: auto; display: block; }
 .section--method{
   background: var(--bg);
   padding-top: 96px;
-  padding-bottom: 60px; /* ✅ -50% */
+  padding-bottom: 60px;
 }
 .method{
   width: min(1040px, 100%);
@@ -408,10 +412,10 @@ img{ max-width: 100%; height: auto; display: block; }
 .copy--method p{ margin: 0 0 26px; }
 .copy--method p:last-child{ margin-bottom: 0; }
 
-/* CTA (respiro -50% vindo da metodologia) */
+/* CTA */
 .section--cta{
   background: var(--bg);
-  padding-top: 48px;  /* ✅ -50% */
+  padding-top: 48px;
   padding-bottom: 96px;
 }
 .cta{
@@ -500,24 +504,21 @@ img{ max-width: 100%; height: auto; display: block; }
   .footerBar__social{ justify-content: center; }
 }
 
-/* reveal */
+/* reveal: nunca esconde conteúdo */
 .reveal{
-  opacity: 0;
-  transform: translateY(12px);
-  transition: opacity .5s ease, transform .5s ease;
-}
-.reveal.is-visible{
   opacity: 1;
   transform: translateY(0);
 }
-@media (prefers-reduced-motion: reduce){
-  .reveal{ transition: none; }
+.reveal.is-visible{
+  animation: revealMove .5s ease both;
 }
-
-/* =============================
-   MOBILE + TABLET REFINO
-   Breakpoints: 430px e 768px
-   ============================= */
+@keyframes revealMove{
+  from{ transform: translateY(12px); }
+  to{ transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce){
+  .reveal.is-visible{ animation: none; }
+}
 
 /* foco visível consistente */
 :where(a, button, [role="button"], input, textarea, select):focus-visible{
@@ -528,12 +529,10 @@ img{ max-width: 100%; height: auto; display: block; }
 
 body.menu-open{ overflow: hidden; }
 
-/* estrutura do painel de navegação (desktop mantém como está) */
-.nav__panel{ display: block; }
-.nav__toggle{ display: none; }
-
-/* evita scroll horizontal por sombras/transforms */
-.hero, .section, .footerBar{ overflow-x: clip; }
+/* =============================
+   MOBILE + TABLET
+   Breakpoints: 768px e 430px
+   ============================= */
 
 @media (max-width: 768px){
   :root{
@@ -562,15 +561,22 @@ body.menu-open{ overflow: hidden; }
     margin-bottom: 22px;
   }
 
-  /* NAV */
+  /* remove “norte” no mobile (hero e qualquer lugar) */
+  img[knowing="yes"],
+  .brand__norte{ display: none !important; }
+
+  /* garante logo principal visível mesmo com scroll */
+  .nav.is-scrolled .brand__logo{
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+  .nav.is-scrolled .brand__norte{ opacity: 0 !important; }
+
+  /* NAV mobile */
   .nav{
     padding: 14px 16px;
     gap: 14px;
   }
-
-  .brand{ width: 92px; height: 40px; }
-  .brand__logo{ width: 74px; }
-  .brand__norte{ width: 52px; }
 
   .nav__toggle{
     display: inline-flex;
@@ -608,7 +614,6 @@ body.menu-open{ overflow: hidden; }
   .nav__toggleLines::before{ top: -6px; }
   .nav__toggleLines::after{ top: 6px; }
 
-  /* painel do menu */
   .nav__panel{
     position: fixed;
     left: 0;
@@ -636,9 +641,7 @@ body.menu-open{ overflow: hidden; }
     font-size: 18px;
   }
 
-  .nav__links a{
-    padding: 10px 0;
-  }
+  .nav__links a{ padding: 10px 0; }
 
   /* X do toggle quando aberto */
   .nav.is-open .nav__toggleLines{ background: transparent; }
@@ -648,9 +651,11 @@ body.menu-open{ overflow: hidden; }
   /* HERO */
   .hero__container{ padding: 18px 0 18px; }
   .hero__grid{
+    grid-template-columns: 1fr;
     padding: 34px 0 72px;
     gap: 26px;
   }
+  .hero__decor{ justify-content: flex-start; }
   .hero__decor img{ width: 190px; }
 
   .scrollHint{ bottom: 18px; }
@@ -662,6 +667,11 @@ body.menu-open{ overflow: hidden; }
   .section--modules{ padding-bottom: 92px; }
   .module__head{ padding: 16px 0; }
   .module__inner{ padding: 14px 0 18px; }
+
+  /* FOOTER */
+  .footerBar{ height: auto; padding: 24px 0; }
+  .footerBar__logo img{ width: 86px; }
+  .footerBar__copy{ font-size: 15px; }
 }
 
 @media (max-width: 430px){
@@ -673,22 +683,12 @@ body.menu-open{ overflow: hidden; }
 
   .section{ padding: 64px 0; }
 
-  /* remove “norte” no mobile (hero) */
-  .brand__norte{ display: none !important; }
-  .nav.is-scrolled .brand__logo{ opacity: 1 !important; pointer-events: auto !important; }
-  .nav.is-scrolled .brand__norte{ opacity: 0 !important; }
-
   .brand{ width: 86px; height: 38px; }
   .brand__logo{ width: 70px; }
 
   .hero__decor img{ width: 170px; }
 
-  /* CTA e metodologia com respiro mais enxuto */
+  /* CTA e metodologia mais enxutos */
   .section--method{ padding-top: 72px; padding-bottom: 44px; }
   .section--cta{ padding-top: 40px; padding-bottom: 72px; }
-
-  /* FOOTER: compacta sem perder leitura */
-  .footerBar{ height: auto; padding: 24px 0; }
-  .footerBar__logo img{ width: 86px; }
-  .footerBar__copy{ font-size: 15px; }
 }
