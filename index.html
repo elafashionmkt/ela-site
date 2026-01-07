@@ -10,7 +10,7 @@
   <!-- Google Fonts (Inter Tight global) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Inter+Tight:ital,wght@0,100..900;1,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Inter+Tight:ital,wght@0,100..900;1,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900&display=swap" rel="stylesheet">
 
   <!-- Typekit (seus títulos) -->
   <link rel="stylesheet" href="https://use.typekit.net/piy8ljr.css" />
@@ -72,9 +72,16 @@
           </h2>
 
           <div class="copy">
-            <p data-rich="about.p1"></p>
-            <p data-rich="about.p2"></p>
-            <p data-rich="about.p3"></p>
+            <!-- fallback de corpo (se content.json falhar no file://, não fica vazio) -->
+            <p data-rich="about.p1">
+              A elã é uma agência de marketing para marcas de moda que querem crescer com coerência. A gente organiza estratégia, linguagem e presença para que a marca pare de operar no improviso.
+            </p>
+            <p data-rich="about.p2">
+              Trabalhamos com direção criativa, conteúdo e influência com intenção. Cada decisão existe para sustentar posicionamento, desejo e resultado no tempo certo.
+            </p>
+            <p data-rich="about.p3">
+              Nosso jeito de fazer é editorial, menos ruído, mais escolha. A estética é parte da estratégia, e a estratégia guia a estética.
+            </p>
           </div>
         </div>
 
@@ -112,12 +119,16 @@
               <div class="module__inner">
                 <div class="module__item">
                   <h3 data-text="modules.fundacao.i1.h">planejamento estratégico de comunicação:</h3>
-                  <p data-rich="modules.fundacao.i1.p"></p>
+                  <p data-rich="modules.fundacao.i1.p">
+                    Diagnóstico, objetivos e arquitetura de mensagens. Um mapa claro para orientar campanhas, conteúdo e decisões do dia a dia.
+                  </p>
                 </div>
 
                 <div class="module__item">
                   <h3 data-text="modules.fundacao.i2.h">calendário de campanhas e lançamentos:</h3>
-                  <p data-rich="modules.fundacao.i2.p"></p>
+                  <p data-rich="modules.fundacao.i2.p">
+                    Organização de datas, narrativas e entregas. Você ganha previsibilidade e ritmo, com espaço para o que é prioridade.
+                  </p>
                 </div>
               </div>
             </div>
@@ -136,17 +147,23 @@
               <div class="module__inner">
                 <div class="module__item">
                   <h3 data-text="modules.desejo.i1.h">direção criativa e produção executiva:</h3>
-                  <p data-rich="modules.desejo.i1.p"></p>
+                  <p data-rich="modules.desejo.i1.p">
+                    Conceito, estética e execução alinhados. Da referência ao set, tudo pensado para consistência e reconhecimento.
+                  </p>
                 </div>
 
                 <div class="module__item">
                   <h3 data-text="modules.desejo.i2.h">social media e editorial de conteúdo:</h3>
-                  <p data-rich="modules.desejo.i2.p"></p>
+                  <p data-rich="modules.desejo.i2.p">
+                    Linha editorial, pauta e cadência. Conteúdo com intenção, que sustenta posicionamento e constrói marca no tempo.
+                  </p>
                 </div>
 
                 <div class="module__item">
                   <h3 data-text="modules.desejo.i3.h">marketing sensorial:</h3>
-                  <p data-rich="modules.desejo.i3.p"></p>
+                  <p data-rich="modules.desejo.i3.p">
+                    Linguagem que traduz percepção. Visual, texto e ritmo para que a marca seja sentida com clareza e assinatura.
+                  </p>
                 </div>
               </div>
             </div>
@@ -165,17 +182,23 @@
               <div class="module__inner">
                 <div class="module__item">
                   <h3 data-text="modules.rel.i1.h">marketing de influência:</h3>
-                  <p data-rich="modules.rel.i1.p"></p>
+                  <p data-rich="modules.rel.i1.p">
+                    Curadoria e ativações com alinhamento real. Influência para ampliar repertório, desejo e conversa em torno da marca.
+                  </p>
                 </div>
 
                 <div class="module__item">
                   <h3 data-text="modules.rel.i2.h">gestão de collabs entre marcas:</h3>
-                  <p data-rich="modules.rel.i2.p"></p>
+                  <p data-rich="modules.rel.i2.p">
+                    Estratégia e negociação de parcerias. Collabs com narrativa, soma de públicos e propósito claro.
+                  </p>
                 </div>
 
                 <div class="module__item">
                   <h3 data-text="modules.rel.i3.h">ativações de marca e eventos de experiência:</h3>
-                  <p data-rich="modules.rel.i3.p"></p>
+                  <p data-rich="modules.rel.i3.p">
+                    Experiências que geram lembrança e conteúdo. Do convite ao pós, pensado para repercutir com estética e intenção.
+                  </p>
                 </div>
               </div>
             </div>
@@ -200,14 +223,20 @@
           </h2>
 
           <div class="copy copy--method">
-            <p data-rich="method.p1"></p>
-            <p data-rich="method.p2"></p>
-            <p data-rich="method.p3"></p>
+            <p data-rich="method.p1">
+              Primeiro, alinhamos direção, objetivos, linguagem e prioridades para a marca operar com clareza.
+            </p>
+            <p data-rich="method.p2">
+              Depois, desenhamos o sistema, calendário, conteúdo e imagem, com consistência e ritmo.
+            </p>
+            <p data-rich="method.p3">
+              Por fim, colocamos em circulação, influência, collabs e ativações para ampliar presença com contexto.
+            </p>
           </div>
         </div>
       </div>
 
-      <!-- ✅ removido: seta entre metodologia e café -->
+      <!-- removido: seta entre metodologia e café -->
     </section>
 
     <section class="section section--cta" id="contato">
@@ -218,14 +247,20 @@
             <span class="h2__em" data-text="cta.h2Em">um café?</span>
           </h2>
 
-          <p class="cta__text" data-rich="cta.p1"></p>
+          <p class="cta__text" data-rich="cta.p1">
+            Conta em que fase a sua marca está. A gente devolve direção, prioridades e um plano claro para o próximo ciclo.
+          </p>
 
           <a class="btn" href="mailto:contato@elafashionmkt.com.br" data-text="cta.btn">agendar :)</a>
         </div>
 
         <div class="cta__stamp reveal" aria-label="Assinatura">
           <img data-img="cta.stampIcon" src="assets/19-6.svg" alt="" aria-hidden="true" />
-          <p data-multiline="cta.stampText"></p>
+          <p data-multiline="cta.stampText">
+            elã | fashion mkt<br>
+            estratégia, conteúdo e influência<br>
+            com intenção
+          </p>
         </div>
       </div>
     </section>
