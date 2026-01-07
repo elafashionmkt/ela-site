@@ -1,4 +1,6 @@
 (function () {
+  document.documentElement.classList.remove("no-js");
+
   const prefersReduced =
     window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
