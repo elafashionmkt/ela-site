@@ -514,10 +514,26 @@ img{ max-width: 100%; height: auto; display: block; }
   .reveal{ transition: none; }
 }
 
-/* fallback para ambientes sem JS ou com observer falhando */
+/* fallback seguro para quando JS não roda ou observer falha */
 .no-js .reveal{
   opacity: 1;
   transform: none;
+}
+
+/* =============================
+   TABLET: validação 768
+   remove norte e evita sumiço do logo ao scroll
+   ============================= */
+@media (max-width: 768px){
+  .brand__norte{ display: none !important; }
+
+  .nav.is-scrolled .brand__logo{
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+  .nav.is-scrolled .brand__norte{
+    opacity: 0 !important;
+  }
 }
 
 /* =============================
@@ -525,7 +541,7 @@ img{ max-width: 100%; height: auto; display: block; }
    ============================= */
 @media (max-width: 430px){
   :root{
-    --nav-h: 68px;
+    --nav-h: 72px;
     --body-size: 16px;
   }
 
@@ -543,22 +559,33 @@ img{ max-width: 100%; height: auto; display: block; }
     gap: 14px;
   }
 
+  /* links sem quebrar layout: rolagem horizontal suave */
   .nav__links{
-    gap: 14px;
+    gap: 18px;
     font-size: 15px;
+    overflow-x: auto;
     white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 2px;
+    flex: 1 1 auto;
+    justify-content: flex-end;
+  }
+  .nav__links::-webkit-scrollbar{ display: none; }
+
+  /* remove completamente o norte no mobile e mantém logo no scroll */
+  .brand__norte{ display: none !important; }
+  .nav.is-scrolled .brand__logo{
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+  .nav.is-scrolled .brand__norte{
+    opacity: 0 !important;
   }
 
-  /* remove o norte no hero */
-  .brand__norte{
-    display: none !important;
-  }
-
-  /* hero mais editorial e sem sobra decorativa */
   .hero__grid{
     grid-template-columns: 1fr;
-    gap: 28px;
-    padding: 36px 0 72px;
+    gap: 32px;
+    padding: 42px 0 78px;
   }
 
   .h1{
@@ -567,40 +594,20 @@ img{ max-width: 100%; height: auto; display: block; }
     margin-bottom: 18px;
   }
 
-  .hero__decor{
-    display: none;
-  }
-
   .section{
     padding: 72px 0;
   }
 
-  /* footer: remove ícone do rodapé no mobile, mantém só texto */
+  /* footer: remove logo no mobile, mantendo textos */
   .footerBar{
     height: auto;
     padding: 28px 0;
   }
-
-  .footerBar__logo img{
+  .footerBar__logo{
     display: none !important;
   }
-
   .footerBar__inner{
     padding: 0 20px;
     gap: 12px;
-  }
-}
-
-/* =============================
-   TABLET: validação 768
-   ============================= */
-@media (max-width: 768px){
-  /* garante que o norte não aparece no tablet também */
-  .brand__norte{
-    display: none !important;
-  }
-
-  .hero__decor{
-    display: none;
   }
 }
