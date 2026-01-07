@@ -10,6 +10,8 @@
 
   const nav = document.querySelector(".nav");
   const transitionEl = document.querySelector(".pageTransition");
+  const navToggle = document.querySelector(".nav__toggle");
+  const navLinks = document.querySelector(".nav__links");
 
   // -----------------------------
   // 1) Reveal on scroll
@@ -45,6 +47,7 @@
 
     moduleEl.classList.toggle("is-open", open);
     btn.setAttribute("aria-expanded", open ? "true" : "false");
+    body.setAttribute("aria-hidden", open ? "false" : "true");
 
     // FIX: mede via scrollHeight (robusto mesmo com overflow/height 0)
     if (open) {
@@ -95,7 +98,69 @@
   window.addEventListener("scroll", onScroll, { passive: true });
 
   // -----------------------------
-  // 4) Transition on hash navigation
+  // 4) Mobile menu (hamburger)
+  // -----------------------------
+  const isMobileNav = () =>
+    window.matchMedia && window.matchMedia("(max-width: 768px)").matches;
+
+  const setNavState = (open) => {
+    if (!nav || !navToggle || !navLinks) return;
+    nav.classList.toggle("is-open", open);
+    navToggle.setAttribute("aria-expanded", open ? "true" : "false");
+    navToggle.setAttribute("aria-label", open ? "Fechar menu" : "Abrir menu");
+    document.body.classList.toggle("nav-open", open);
+    if (isMobileNav()) {
+      navLinks.setAttribute("aria-hidden", open ? "false" : "true");
+    } else {
+      navLinks.removeAttribute("aria-hidden");
+    }
+    if (open && isMobileNav()) {
+      const firstLink = navLinks.querySelector("a");
+      if (firstLink) {
+        setTimeout(() => firstLink.focus(), 0);
+      }
+    }
+  };
+
+  if (navToggle && navLinks && nav) {
+    navToggle.addEventListener("click", () => {
+      const isOpen = nav.classList.contains("is-open");
+      setNavState(!isOpen);
+    });
+
+    navLinks.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => setNavState(false));
+    });
+
+    document.addEventListener("click", (event) => {
+      if (!isMobileNav()) return;
+      if (!nav.classList.contains("is-open")) return;
+      if (!nav.contains(event.target)) {
+        setNavState(false);
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (!isMobileNav()) return;
+      if (event.key === "Escape") {
+        setNavState(false);
+        navToggle.focus();
+      }
+    });
+
+    window.addEventListener("resize", () => {
+      if (!isMobileNav()) {
+        setNavState(false);
+      } else if (!nav.classList.contains("is-open")) {
+        setNavState(false);
+      }
+    });
+
+    setNavState(false);
+  }
+
+  // -----------------------------
+  // 5) Transition on hash navigation
   // -----------------------------
   const showTransition = () => {
     if (!transitionEl || prefersReduced) return;
