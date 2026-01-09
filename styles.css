@@ -1,29 +1,16 @@
 /* ===========================
    FONTS
    =========================== */
-@font-face{
-  font-family: "Inter";
-  src: url("font/Inter-Regular_1.otf") format("opentype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face{
-  font-family: "Inter";
-  src: url("font/Inter-Light_1.otf") format("opentype");
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
+/* fonte principal via Typekit (Acumin) */
 
 /* ===========================
    TOKENS
    =========================== */
 :root{
   --bg: #f4e9e6;
-  --pink: #ffcccc;
+  --pink: #cd0005;
   --ink: #3a3838;
-  --accent: #791815;
+  --accent: #f4e9e6;
 
   /* títulos/destaques via Typekit */
   --display-font: ivyjournal, "IvyJournal", ivy-mode, "Ivy Mode", Georgia, serif;
@@ -41,7 +28,7 @@ body{
   margin: 0;
   background: var(--bg);
   color: var(--ink);
-  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-family: "acumin-pro", "Acumin Pro", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   overflow-x: hidden;
 
   /* como o menu agora é fixed */
@@ -153,7 +140,7 @@ img{ max-width: 100%; height: auto; display: block; }
   gap: 24px;
 
   padding: 18px calc((100vw - min(var(--container), calc(100% - 48px))) / 2);
-  background: rgba(255,204,204,.92);
+  background: rgba(205,0,5,.92);
   backdrop-filter: blur(8px);
 }
 
@@ -276,7 +263,7 @@ img{ max-width: 100%; height: auto; display: block; }
     display: grid;
     gap: 18px;
     padding: 20px 24px 28px;
-    background: rgba(255,204,204,.98);
+    background: rgba(205,0,5,.98);
     box-shadow: 0 12px 24px rgba(58,56,56,.08);
     transform: translateY(-8px);
     opacity: 0;
@@ -324,7 +311,7 @@ img{ max-width: 100%; height: auto; display: block; }
   font-weight: 300;
   font-size: 18px;
   line-height: 1.7;
-  color: var(--ink);
+  color: #f4e9e6;
 }
 
 .hero__decor{
@@ -430,10 +417,10 @@ img{ max-width: 100%; height: auto; display: block; }
 }
 
 .module{
-  border-top: 1px solid rgba(121,24,21,.25);
+  border-top: 1px solid rgba(244,233,230,.25);
 }
 .module:last-child{
-  border-bottom: 1px solid rgba(121,24,21,.25);
+  border-bottom: 1px solid rgba(244,233,230,.25);
 }
 
 .module__head{
@@ -490,11 +477,11 @@ img{ max-width: 100%; height: auto; display: block; }
   margin: 0 0 8px;
   font-size: 16px;
   font-weight: 700;
-  color: var(--ink);
+  color: #f4e9e6;
 }
 .module__item p{
   margin: 0 0 20px;
-  color: var(--ink);
+  color: #f4e9e6;
 }
 .module__item:last-child p{ margin-bottom: 0; }
 
