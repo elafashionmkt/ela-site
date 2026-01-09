@@ -24,6 +24,8 @@
    =========================== */
 *{ box-sizing: border-box; }
 html{ scroll-behavior: smooth; }
+
+::selection{ background: var(--pink); color: var(--accent); }
 body{
   margin: 0;
   background: var(--bg);
@@ -96,6 +98,16 @@ img{ max-width: 100%; height: auto; display: block; }
 }
 .h2__em{ font-style: italic; font-weight: 600; }
 
+/* títulos em seções claras: legíveis no fundo claro */
+.section--about .h2,
+.section--method .h2,
+.section--cta .h2{ color: var(--ink); }
+
+/* destaques em seções claras: vermelho */
+.section--about .h2__em,
+.section--method .h2__em,
+.section--cta .h2__em{ color: var(--pink); }
+
 /* ===========================
    COPY
    =========================== */
@@ -106,7 +118,7 @@ img{ max-width: 100%; height: auto; display: block; }
 }
 .copy p{ margin: 0 0 24px; }
 .copy p:last-child{ margin-bottom: 0; }
-.copy strong{ color: var(--accent); font-weight: 700; }
+.copy strong{ color: var(--pink); font-weight: 700; }
 
 .u-underline{
   text-decoration: underline;
@@ -114,6 +126,11 @@ img{ max-width: 100%; height: auto; display: block; }
   text-decoration-thickness: 1px;
 }
 .u-accent{ color: var(--accent); font-weight: 700; }
+
+/* destaque de texto no fundo claro */
+.section--method .u-accent,
+.section--about .u-accent,
+.section--cta .u-accent{ color: var(--pink); }
 
 /* ===========================
    SECTIONS
@@ -156,25 +173,7 @@ img{ max-width: 100%; height: auto; display: block; }
   transition: opacity .18s ease, transform .18s ease;
 }
 
-/* swap: agora é o logo pequeno */
-.brand__norte{
-  width: 56px; /* ajuste fino aqui se quiser menor/maior */
-  height: auto;
-  opacity: 0;
-  transform: translateY(-2px);
-  transition: opacity .18s ease, transform .18s ease;
-}
-
-/* quando scrola: some o logo normal, entra o logo pequeno */
-.nav.is-scrolled .brand__logo{
-  opacity: 0;
-  transform: translateY(-4px);
-  pointer-events: none;
-}
-.nav.is-scrolled .brand__norte{
-  opacity: 1;
-  transform: translateY(0);
-}
+/* logo fica estável no scroll */
 
 .nav__links{
   display: flex;
@@ -244,12 +243,9 @@ img{ max-width: 100%; height: auto; display: block; }
   .nav{ padding: 16px 24px; }
   .nav__links{ gap: 22px; font-size: 16px; }
   .brand__logo{ width: 90px; }
-  .brand__norte{ width: 52px; }
 }
 
 @media (max-width: 768px){
-  .brand__norte{ display: none; }
-
   .nav__toggle{
     display: inline-flex;
     flex-direction: column;
@@ -443,12 +439,12 @@ img{ max-width: 100%; height: auto; display: block; }
 }
 
 .module__title{
-  font-family: var(--display-font);
+  font-family: "acumin-pro", "Acumin Pro", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   font-size: 30px;
   line-height: 1.12;
   font-weight: 400;
 }
-.module__title strong{ font-weight: 600; }
+.module__title strong{ font-weight: 700; }
 
 .module__chev{
   width: 18px;
@@ -546,10 +542,22 @@ img{ max-width: 100%; height: auto; display: block; }
   flex-direction: column;
   align-items: flex-end;
   gap: 14px;
-  color: var(--accent);
+  color: var(--pink);
   text-align: right;
 }
 .cta__stamp img{ width: 120px; }
+
+/* norte: giro clean no hover */
+.cta__stamp img{
+  transform-origin: 50% 50%;
+  transition: transform .65s ease;
+}
+.cta__stamp img:hover{ transform: rotate(360deg); }
+
+@media (prefers-reduced-motion: reduce){
+  .cta__stamp img{ transition: none; }
+  .cta__stamp img:hover{ transform: none; }
+}
 
 @media (max-width: 980px){
   .cta{ grid-template-columns: 1fr; }

@@ -1,7 +1,7 @@
 // Vanilla interactions:
 // - reveal on scroll
 // - accordion (single open, starts all closed) [FIX: height via scrollHeight]
-// - fixed nav swap: logo -> logo pequeno
+// - fixed nav (logo estável)
 // - transition overlay for hash navigation
 
 (function () {
@@ -87,18 +87,7 @@
   });
 
   // -----------------------------
-  // 3) Nav swap (scroll)
-  // -----------------------------
-  const swapThreshold = 80;
-  const onScroll = () => {
-    if (!nav) return;
-    nav.classList.toggle("is-scrolled", window.scrollY > swapThreshold);
-  };
-  onScroll();
-  window.addEventListener("scroll", onScroll, { passive: true });
-
-  // -----------------------------
-  // 4) Mobile menu (hamburger)
+  // 3) Mobile menu (hamburger)
   // -----------------------------
   const isMobileNav = () =>
     window.matchMedia && window.matchMedia("(max-width: 768px)").matches;
@@ -160,7 +149,7 @@
   }
 
   // -----------------------------
-  // 5) Transition on hash navigation
+  // 4) Transition on hash navigation
   // -----------------------------
   const showTransition = () => {
     if (!transitionEl || prefersReduced) return;
