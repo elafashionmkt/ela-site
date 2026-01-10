@@ -658,3 +658,202 @@ img{ max-width: 100%; height: auto; display: block; }
   opacity: 1;
   transform: translateY(0);
 }
+
+
+
+/* ===========================
+   RETROSPECTIVA (página)
+   =========================== */
+.page{
+  padding-top: calc(var(--nav-h) + 18px);
+}
+
+.retroHero{
+  padding: 56px 0 18px;
+}
+
+.retroHero .kicker{
+  font-size: 14px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(58,56,56,.72);
+  margin: 0 0 14px;
+}
+
+.retroHero h1{
+  margin: 0 0 14px;
+  font-family: var(--display-font);
+  font-weight: 400;
+  color: var(--ink);
+  font-size: clamp(34px, 5.6vw, 72px);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+}
+
+.retroHero p{
+  margin: 0;
+  max-width: 72ch;
+  color: rgba(58,56,56,.78);
+  font-size: 18px;
+  line-height: 1.55;
+}
+
+.embedWrap{
+  padding: 28px 0 76px;
+}
+
+.embedCard{
+  border: 1px solid rgba(0,0,0,.10);
+  border-radius: 18px;
+  overflow: hidden;
+  background: rgba(255,255,255,.70);
+  box-shadow: 0 28px 64px rgba(0,0,0,.10);
+}
+
+.embedCard iframe{
+  width: 100%;
+  height: min(78vh, 920px);
+  border: 0;
+  display: block;
+  background: #fff;
+}
+
+/* botão "Dados brutos" com cara de elã */
+.nav__links a.btnLink{
+  border: 1px solid currentColor;
+  padding: 10px 14px;
+  border-radius: 999px;
+  line-height: 1;
+}
+.nav__links a.btnLink::after{ display: none; }
+.nav__links a.btnLink:hover{ background: rgba(0,0,0,.05); }
+
+/* ===========================
+   LOGIN (camada)
+   Atenção: é só bloqueio visual client-side
+   =========================== */
+.authLock{
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: radial-gradient(1200px 600px at 20% 10%, rgba(205,0,5,.12), transparent 55%),
+              radial-gradient(900px 500px at 90% 30%, rgba(205,0,5,.10), transparent 58%),
+              var(--bg);
+}
+
+.authCard{
+  width: min(520px, 100%);
+  border: 1px solid rgba(0,0,0,.10);
+  border-radius: 18px;
+  background: rgba(255,255,255,.72);
+  box-shadow: 0 28px 64px rgba(0,0,0,.12);
+  padding: 26px 22px 20px;
+}
+
+.authBrand{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.authBrand img{ width: 28px; height: 28px; }
+.authBrand .name{
+  font-family: var(--display-font);
+  font-size: 24px;
+  line-height: 1.05;
+  margin: 0;
+  font-weight: 400;
+}
+
+.authCard p{
+  margin: 0 0 16px;
+  color: rgba(58,56,56,.78);
+  line-height: 1.5;
+  font-size: 14px;
+}
+
+.authForm{
+  display: grid;
+  gap: 10px;
+}
+
+.authForm input{
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(0,0,0,.16);
+  background: rgba(255,255,255,.85);
+  font-size: 14px;
+  outline: none;
+}
+
+.authForm input:focus{
+  border-color: rgba(205,0,5,.55);
+  box-shadow: 0 0 0 3px rgba(205,0,5,.12);
+}
+
+.authForm button{
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,.18);
+  background: var(--pink);
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.authForm button:hover{ filter: brightness(.98); }
+
+.authError{
+  display: none;
+  margin-top: 10px;
+  color: #b00020;
+  font-size: 13px;
+}
+
+body.is-auth .authLock{ display: none; }
+body:not(.is-auth) .site{ filter: blur(10px); }
+body:not(.is-auth){ overflow: hidden; }
+
+/* Footer compacto com ícones */
+.retroFooter{
+  padding: 18px 0 28px;
+  border-top: 1px solid rgba(0,0,0,.10);
+}
+
+.retroFooter__inner{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.social{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.social a{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(0,0,0,.14);
+  border-radius: 999px;
+  background: rgba(255,255,255,.65);
+}
+.social a:hover{ background: rgba(255,255,255,.85); }
+
+.social img{ width: 18px; height: 18px; }
+
+.smallNote{
+  font-size: 12px;
+  color: rgba(58,56,56,.68);
+}
