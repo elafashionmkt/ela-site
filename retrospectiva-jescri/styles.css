@@ -645,3 +645,36 @@ body:not(.is-auth) .site{ filter: blur(10px); }
 .slides__frame iframe{
   background: rgba(255,255,255,.02);
 }
+
+/* fullscreen + borda */
+.slides__frame{
+  border: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+.slides__frame iframe{
+  border: 0 !important;
+  outline: none !important;
+  background: transparent !important;
+}
+
+/* controles */
+.slides__controls{
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 0 0 10px;
+}
+
+/* quando estiver em tela cheia */
+#slidesFrame:fullscreen{
+  background: var(--red);
+  padding: 0;
+}
+#slidesFrame:fullscreen iframe{
+  width: 100vw;
+  height: 100vh;
+}

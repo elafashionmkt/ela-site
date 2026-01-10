@@ -135,4 +135,48 @@
       if (statusEl) statusEl.textContent = "e-mail aberto com a avaliação";
     });
   }
+
+  // =======================
+  // tela cheia (pdf)
+  // =======================
+  const fsBtn = document.getElementById("fsBtn");
+  const frame = document.getElementById("slidesFrame");
+  const pdfTab = document.getElementById("pdfTab");
+
+  function canFullscreen(){
+    return !!(document.fullscreenEnabled && frame && frame.requestFullscreen);
+  }
+
+  function inFullscreen(){
+    return !!document.fullscreenElement;
+  }
+
+  function setFsLabel(){
+    if (!fsBtn) return;
+    fsBtn.textContent = inFullscreen() ? "sair da tela cheia" : "tela cheia";
+  }
+
+  if (fsBtn){
+    fsBtn.addEventListener("click", async () => {
+      // iOS Safari costuma não suportar fullscreen API aqui, então mantém fallback
+      if (!canFullscreen()){
+        pdfTab && pdfTab.click();
+        return;
+      }
+      try{
+        if (inFullscreen()){
+          await document.exitFullscreen();
+        } else {
+          await frame.requestFullscreen();
+        }
+      } catch(e){
+        pdfTab && pdfTab.click();
+      }
+      setFsLabel();
+    });
+  }
+
+  document.addEventListener("fullscreenchange", setFsLabel);
+  setFsLabel();
+
 })();
