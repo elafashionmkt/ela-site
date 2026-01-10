@@ -207,8 +207,98 @@
       const bodyMail = encodeURIComponent(
         `nota: ${selected}/5\n\ncomentário: ${comment || "(sem comentário)"}\n\n(enviado pela página da retrospectiva)`
       );
-      window.location.href = `mailto:contato@elafashionmkt.com.br?subject=${subject}&body=${bodyMail}`;
-      if (statusEl) statusEl.textContent = "e-mail aberto com a avaliação";
+      /* envio via google forms (sem mailto) */
+if (statusEl) statusEl.textContent = "e-mail aberto com a avaliação";
     });
   }
+
+  // =======================
+  // avaliação (envio automático via google forms)
+  // GOOGLE_FORMS_AUTOSUBMIT_V1
+  // =======================
+  const FORM_POST_URL = "https://docs.google.com/forms/d/e/1FAIpQLSeZvuCUzldwv02gqtE-auA1mMt87wE0frygYrs6tqklLCOfhQ/formResponse";
+  const ENTRY_RATE = "entry.622540097";
+  const ENTRY_COMMENT = "entry.1419897417";
+  const ENTRY_DATE = "entry.1369629969";
+  const ENTRY_TIME = "entry.1466132269";
+
+  const ratingBtns = Array.from(document.querySelectorAll(".rating__btn"));
+  const feedbackBox = document.getElementById("feedback");
+  const sendBtn = document.getElementById("sendFeedback");
+  const statusEl = document.getElementById("feedbackStatus");
+  let selected = null;
+  let sending = false;
+
+  function pad2(n){ return String(n).padStart(2, "0"); }
+
+  function nowDateStr(){ 
+    const d = new Date();
+    return `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`;
+  }
+  function nowTimeStr(){ 
+    const d = new Date();
+    return `${pad2(d.getHours())}:${pad2(d.getMinutes())}`;
+  }
+
+  function setSelected(n){
+    selected = n;
+    ratingBtns.forEach((b) => {
+      const on = Number(b.dataset.rate) === n;
+      b.classList.toggle("is-on", on);
+    });
+    if (statusEl) statusEl.textContent = n ? `nota selecionada: ${n}` : "";
+  }
+
+  ratingBtns.forEach((b) => {
+    b.addEventListener("click", () => setSelected(Number(b.dataset.rate)));
+  });
+
+  async function sendToForms(rate, comment){
+    // POST cross-domain: no-cors (não dá para ler a resposta, mas registra no Forms)
+    const params = new URLSearchParams();
+    params.append(ENTRY_RATE, String(rate));
+    params.append(ENTRY_COMMENT, comment || "");
+    params.append(ENTRY_DATE, nowDateStr());
+    params.append(ENTRY_TIME, nowTimeStr());
+
+    await fetch(FORM_POST_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+      },
+      body: params.toString()
+    });
+  }
+
+  if (sendBtn){
+    sendBtn.addEventListener("click", async () => {
+      if (sending) return;
+      if (!selected){
+        if (statusEl) statusEl.textContent = "escolhe uma nota primeiro";
+        return;
+      }
+      sending = true;
+      sendBtn.disabled = true;
+      sendBtn.textContent = "enviando…";
+      if (statusEl) statusEl.textContent = "enviando sua avaliação…";
+
+      const comment = (feedbackBox?.value || "").trim();
+
+      try{
+        await sendToForms(selected, comment);
+        if (statusEl) statusEl.textContent = "enviado ✓ obrigada!";
+        // limpa
+        if (feedbackBox) feedbackBox.value = "";
+        setSelected(null);
+      } catch (e) {
+        if (statusEl) statusEl.textContent = "não consegui enviar. tenta de novo.";
+      } finally {
+        sending = false;
+        sendBtn.disabled = false;
+        sendBtn.textContent = "enviar";
+      }
+    });
+  }
+
 })();
