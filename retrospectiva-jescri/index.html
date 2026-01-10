@@ -6,52 +6,71 @@
   <title>Retrospectiva Jescri 2025</title>
   <link rel="stylesheet" href="styles.css"/>
 </head>
+
 <body>
 
-<header class="topo">
-  <div class="logo">JESCRI</div>
-  <nav class="menu">
-    <a href="#inicio">Início</a>
-    <a href="#vendas">Vendas</a>
-    <a href="#mix">Mix</a>
-    <a href="#conteudo">Conteúdo</a>
-    <a 
-      class="dados-brutos"
-      href="https://drive.google.com/drive/folders/1_y-8F1quZGQLOMNvz91EvEPouMvE65X8?usp=sharing"
-      target="_blank"
-      rel="noopener"
-    >
-      Dados brutos
-    </a>
-  </nav>
+<header class="topo" id="topo">
+  <div class="topo-inner">
+    <div class="logo" aria-label="Jescri">JESCRI</div>
+
+    <nav class="menu" aria-label="Menu">
+      <a href="#slides">Retrospectiva</a>
+      <a href="#dados">Dados</a>
+      <a
+        class="btn"
+        href="https://drive.google.com/drive/folders/1_y-8F1quZGQLOMNvz91EvEPouMvE65X8?usp=sharing"
+        target="_blank"
+        rel="noopener"
+      >
+        Dados brutos
+      </a>
+    </nav>
+  </div>
 </header>
 
 <main>
-<section id="inicio" class="bloco">
-  <h1>Retrospectiva 2025</h1>
-  <p>Um ano de ajustes, testes e confirmações.</p>
-</section>
+  <section class="hero" id="slides">
+    <div class="hero-inner">
+      <h1>Retrospectiva 2025</h1>
+      <p>Uma retrospectiva dinâmica, feita para entender o que funcionou, o que pediu atenção e como seguir com mais clareza no próximo ciclo.</p>
+    </div>
+  </section>
 
-<section id="vendas" class="bloco">
-  <h2>Análise de vendas</h2>
-  <p>Leitura trimestral com foco em operação, tráfego e decisão.</p>
-</section>
+  <section class="embed">
+    <div class="embed-inner">
+      <div class="embed-frame" role="region" aria-label="Apresentação da retrospectiva">
+        <iframe
+          title="Retrospectiva Jescri 2025 (Figma Slides)"
+          src="https://embed.figma.com/slides/l57EiSJ6rGRFS73DMzf05k/-JESCRI--RETROSPECTIVA?node-id=0-1&embed-host=share"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </div>
+  </section>
 
-<section id="mix" class="bloco">
-  <h2>Análise de mix</h2>
-  <p>O que vendeu, por que vendeu e onde existe espaço real.</p>
-</section>
-
-<section id="conteudo" class="bloco">
-  <h2>Marketing e conteúdo</h2>
-  <p>Influência, formatos e construção de desejo ao longo do ano.</p>
-</section>
+  <section class="dados" id="dados">
+    <div class="dados-inner">
+      <h2>Dados para consulta</h2>
+      <p>Se você quiser olhar os dados brutos que embasam a análise, eles estão organizados em uma pasta separada.</p>
+      <a
+        class="btn btn-wide"
+        href="https://drive.google.com/drive/folders/1_y-8F1quZGQLOMNvz91EvEPouMvE65X8?usp=sharing"
+        target="_blank"
+        rel="noopener"
+      >
+        Abrir dados brutos
+      </a>
+    </div>
+  </section>
 </main>
 
 <footer class="rodape">
-  <a href="https://wa.me/" target="_blank">WhatsApp</a>
-  <a href="https://instagram.com/elafashionmkt" target="_blank">Instagram</a>
+  <div class="rodape-inner">
+    <a class="iconlink" href="https://wa.me/" target="_blank" rel="noopener">WhatsApp</a>
+    <a class="iconlink" href="https://instagram.com/elafashionmkt" target="_blank" rel="noopener">Instagram</a>
+  </div>
 </footer>
 
+<script src="script.js"></script>
 </body>
 </html>
