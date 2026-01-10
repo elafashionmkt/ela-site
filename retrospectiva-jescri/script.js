@@ -1,5 +1,30 @@
 (function () {
   // =======================
+  // helpers (sem TDZ)
+  // =======================
+  function closeNav(){
+    const navPanel = document.getElementById("navPanel");
+    const toggle = document.querySelector(".nav__toggle");
+    if (!navPanel) return;
+
+    navPanel.classList.remove("is-open");
+    navPanel.setAttribute("aria-hidden", "true");
+    if (toggle) toggle.setAttribute("aria-expanded", "false");
+    document.documentElement.style.overflow = "";
+  }
+
+  function openNav(){
+    const navPanel = document.getElementById("navPanel");
+    const toggle = document.querySelector(".nav__toggle");
+    if (!navPanel) return;
+
+    navPanel.classList.add("is-open");
+    navPanel.setAttribute("aria-hidden", "false");
+    if (toggle) toggle.setAttribute("aria-expanded", "true");
+    document.documentElement.style.overflow = "hidden";
+  }
+
+  // =======================
   // auth (bloqueio visual)
   // sempre pede senha ao carregar
   // =======================
@@ -47,42 +72,30 @@
   // =======================
   // mobile nav
   // =======================
-  const navPanel = document.getElementById("navPanel");
   const toggle = document.querySelector(".nav__toggle");
+  const navPanel = document.getElementById("navPanel");
   const closeBtn = document.querySelector(".navPanel__close");
   const logoutBtn = document.getElementById("logoutBtn");
 
-  function openNav(){
-    if (!navPanel) return;
-    navPanel.classList.add("is-open");
-    navPanel.setAttribute("aria-hidden", "false");
-    toggle && toggle.setAttribute("aria-expanded", "true");
-    document.documentElement.style.overflow = "hidden";
-  }
-
-  function closeNav(){
-    if (!navPanel) return;
-    navPanel.classList.remove("is-open");
-    navPanel.setAttribute("aria-hidden", "true");
-    toggle && toggle.setAttribute("aria-expanded", "false");
-    document.documentElement.style.overflow = "";
-  }
-
   if (toggle){
     toggle.addEventListener("click", () => {
-      const open = navPanel?.classList.contains("is-open");
-      open ? closeNav() : openNav();
+      const isOpen = navPanel?.classList.contains("is-open");
+      isOpen ? closeNav() : openNav();
     });
   }
+
   if (closeBtn){ closeBtn.addEventListener("click", closeNav); }
+
   if (navPanel){
     navPanel.addEventListener("click", (e) => {
       if (e.target === navPanel) closeNav();
     });
   }
+
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") closeNav();
   });
+
   document.querySelectorAll(".navPanel__links a[href^='#']").forEach((a) => {
     a.addEventListener("click", () => closeNav());
   });
@@ -123,7 +136,6 @@
         if (inFullscreen()){
           await document.exitFullscreen();
         } else {
-          // fullscreen no iframe funciona melhor pedindo fullscreen no próprio iframe
           await pdf.requestFullscreen();
         }
       } catch(e){
@@ -138,7 +150,6 @@
   // foco do pdf ao clicar, melhora setas
   if (pdf){
     pdf.addEventListener("load", () => {
-      // não força foco automático se ainda não passou na senha
       if (body.classList.contains("is-auth")){
         setTimeout(() => pdf.focus(), 200);
       }
@@ -157,7 +168,6 @@
     if (KEY_HINT_KEYS.has(e.key) && pdf && document.activeElement !== pdf){
       pdf.focus();
       if (kbdHint) kbdHint.textContent = "teclas ativas no pdf. aperte novamente.";
-      // não preventDefault, deixa o próximo keydown ir para o pdf
       setTimeout(() => { if (kbdHint) kbdHint.textContent = ""; }, 1800);
     }
   });
