@@ -173,48 +173,8 @@
   });
 
   // =======================
-  // avaliação (abre e-mail)
-  // =======================
-  const ratingBtns = Array.from(document.querySelectorAll(".rating__btn"));
-  const feedbackBox = document.getElementById("feedback");
-  const sendBtn = document.getElementById("sendFeedback");
-  const statusEl = document.getElementById("feedbackStatus");
-  let selected = null;
-
-  function setSelected(n){
-    selected = n;
-    ratingBtns.forEach((b) => {
-      const on = Number(b.dataset.rate) === n;
-      b.classList.toggle("is-on", on);
-    });
-    if (statusEl){
-      statusEl.textContent = n ? `nota selecionada: ${n}` : "";
-    }
-  }
-
-  ratingBtns.forEach((b) => {
-    b.addEventListener("click", () => setSelected(Number(b.dataset.rate)));
-  });
-
-  if (sendBtn){
-    sendBtn.addEventListener("click", () => {
-      if (!selected){
-        if (statusEl) statusEl.textContent = "escolhe uma nota primeiro";
-        return;
-      }
-      const comment = (feedbackBox?.value || "").trim();
-      const subject = encodeURIComponent("avaliação | retrospectiva jescri 2025");
-      const bodyMail = encodeURIComponent(
-        `nota: ${selected}/5\n\ncomentário: ${comment || "(sem comentário)"}\n\n(enviado pela página da retrospectiva)`
-      );
-      /* envio via google forms (sem mailto) */
-if (statusEl) statusEl.textContent = "e-mail aberto com a avaliação";
-    });
-  }
-
-  // =======================
   // avaliação (envio automático via google forms)
-  // GOOGLE_FORMS_AUTOSUBMIT_V1
+  // GOOGLE_FORMS_AUTOSUBMIT_V2
   // =======================
   const FORM_POST_URL = "https://docs.google.com/forms/d/e/1FAIpQLSeZvuCUzldwv02gqtE-auA1mMt87wE0frygYrs6tqklLCOfhQ/formResponse";
   const ENTRY_RATE = "entry.622540097";
@@ -235,6 +195,7 @@ if (statusEl) statusEl.textContent = "e-mail aberto com a avaliação";
     const d = new Date();
     return `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`;
   }
+
   function nowTimeStr(){ 
     const d = new Date();
     return `${pad2(d.getHours())}:${pad2(d.getMinutes())}`;
@@ -246,7 +207,9 @@ if (statusEl) statusEl.textContent = "e-mail aberto com a avaliação";
       const on = Number(b.dataset.rate) === n;
       b.classList.toggle("is-on", on);
     });
-    if (statusEl) statusEl.textContent = n ? `nota selecionada: ${n}` : "";
+    if (statusEl){
+      statusEl.textContent = n ? `nota selecionada: ${n}` : "";
+    }
   }
 
   ratingBtns.forEach((b) => {
@@ -254,7 +217,6 @@ if (statusEl) statusEl.textContent = "e-mail aberto com a avaliação";
   });
 
   async function sendToForms(rate, comment){
-    // POST cross-domain: no-cors (não dá para ler a resposta, mas registra no Forms)
     const params = new URLSearchParams();
     params.append(ENTRY_RATE, String(rate));
     params.append(ENTRY_COMMENT, comment || "");
@@ -278,17 +240,18 @@ if (statusEl) statusEl.textContent = "e-mail aberto com a avaliação";
         if (statusEl) statusEl.textContent = "escolhe uma nota primeiro";
         return;
       }
+
       sending = true;
       sendBtn.disabled = true;
+      const old = sendBtn.textContent;
       sendBtn.textContent = "enviando…";
       if (statusEl) statusEl.textContent = "enviando sua avaliação…";
 
       const comment = (feedbackBox?.value || "").trim();
 
-      try{
+      try {
         await sendToForms(selected, comment);
         if (statusEl) statusEl.textContent = "enviado ✓ obrigada!";
-        // limpa
         if (feedbackBox) feedbackBox.value = "";
         setSelected(null);
       } catch (e) {
@@ -296,7 +259,7 @@ if (statusEl) statusEl.textContent = "e-mail aberto com a avaliação";
       } finally {
         sending = false;
         sendBtn.disabled = false;
-        sendBtn.textContent = "enviar";
+        sendBtn.textContent = old || "enviar";
       }
     });
   }
