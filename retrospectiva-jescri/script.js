@@ -1,86 +1,138 @@
 (function () {
-  // ----------------------
-  // Auth (visual gate)
-  // ----------------------
-  const STORAGE_KEY = "jescri_retro_auth_v1";
+  // =======================
+  // auth (bloqueio visual)
+  // =======================
+  const STORAGE_KEY = "jescri_retro_auth_v2";
   const PASSWORD = "jescri#2025";
 
   const body = document.body;
   const form = document.getElementById("authForm");
   const passInput = document.getElementById("authPass");
   const errorEl = document.getElementById("authError");
-  const logoutLink = document.getElementById("logoutLink");
 
-  const setAuthed = (value) => {
-    if (value) {
+  const logoutBtn = document.getElementById("logoutBtn");
+
+  function setAuthed(ok){
+    if (ok){
       localStorage.setItem(STORAGE_KEY, "1");
       body.classList.add("is-auth");
-      if (logoutLink) logoutLink.style.display = "";
     } else {
       localStorage.removeItem(STORAGE_KEY);
       body.classList.remove("is-auth");
-      if (logoutLink) logoutLink.style.display = "none";
+      closeNav();
+      setTimeout(() => passInput && passInput.focus(), 120);
     }
-  };
-
-  // Auto auth if already stored
-  if (localStorage.getItem(STORAGE_KEY) === "1") {
-    setAuthed(true);
   }
 
-  if (form) {
+  if (localStorage.getItem(STORAGE_KEY) === "1"){
+    setAuthed(true);
+  } else {
+    setTimeout(() => passInput && passInput.focus(), 200);
+  }
+
+  if (form){
     form.addEventListener("submit", (e) => {
       e.preventDefault();
       const val = (passInput?.value || "").trim();
-      if (val === PASSWORD) {
-        errorEl && (errorEl.style.display = "none");
+      if (val === PASSWORD){
+        if (errorEl) errorEl.style.display = "none";
         setAuthed(true);
-        passInput && (passInput.value = "");
+        if (passInput) passInput.value = "";
       } else {
-        errorEl && (errorEl.style.display = "block");
-        passInput && passInput.focus();
+        if (errorEl) errorEl.style.display = "block";
+        if (passInput) passInput.focus();
       }
     });
   }
 
-  if (logoutLink) {
-    logoutLink.addEventListener("click", (e) => {
-      e.preventDefault();
-      setAuthed(false);
-      window.scrollTo({ top: 0, behavior: "smooth" });
-      setTimeout(() => passInput && passInput.focus(), 250);
-    });
+  if (logoutBtn){
+    logoutBtn.addEventListener("click", () => setAuthed(false));
   }
 
-  // ----------------------
-  // Mobile nav toggle (elã)
-  // ----------------------
-  const nav = document.querySelector(".nav");
-  const navToggle = document.querySelector(".nav__toggle");
-  const navLinks = document.querySelector(".nav__links");
+  // =======================
+  // mobile nav
+  // =======================
+  const navPanel = document.getElementById("navPanel");
+  const toggle = document.querySelector(".nav__toggle");
+  const closeBtn = document.querySelector(".navPanel__close");
 
-  const closeNav = () => {
-    if (!nav) return;
-    nav.classList.remove("is-open");
-    document.documentElement.classList.remove("nav-open");
-    navToggle && navToggle.setAttribute("aria-expanded", "false");
-  };
-
-  if (navToggle && nav) {
-    navToggle.addEventListener("click", () => {
-      const open = nav.classList.toggle("is-open");
-      document.documentElement.classList.toggle("nav-open", open);
-      navToggle.setAttribute("aria-expanded", open ? "true" : "false");
-    });
+  function openNav(){
+    if (!navPanel) return;
+    navPanel.classList.add("is-open");
+    navPanel.setAttribute("aria-hidden", "false");
+    toggle && toggle.setAttribute("aria-expanded", "true");
+    document.documentElement.style.overflow = "hidden";
   }
 
-  if (navLinks) {
-    navLinks.querySelectorAll('a[href^="#"]').forEach((a) => {
-      a.addEventListener("click", () => closeNav());
-    });
+  function closeNav(){
+    if (!navPanel) return;
+    navPanel.classList.remove("is-open");
+    navPanel.setAttribute("aria-hidden", "true");
+    toggle && toggle.setAttribute("aria-expanded", "false");
+    document.documentElement.style.overflow = "";
   }
 
+  if (toggle){
+    toggle.addEventListener("click", () => {
+      const open = navPanel?.classList.contains("is-open");
+      open ? closeNav() : openNav();
+    });
+  }
+  if (closeBtn){ closeBtn.addEventListener("click", closeNav); }
+  if (navPanel){
+    navPanel.addEventListener("click", (e) => {
+      if (e.target === navPanel) closeNav();
+    });
+  }
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") closeNav();
   });
+
+  // fechar menu ao clicar em link
+  document.querySelectorAll(".navPanel__links a[href^='#']").forEach((a) => {
+    a.addEventListener("click", () => closeNav());
+  });
+
+  // =======================
+  // avaliação
+  // =======================
+  const ratingBtns = Array.from(document.querySelectorAll(".rating__btn"));
+  const feedbackBox = document.getElementById("feedback");
+  const sendBtn = document.getElementById("sendFeedback");
+  const statusEl = document.getElementById("feedbackStatus");
+  let selected = null;
+
+  function setSelected(n){
+    selected = n;
+    ratingBtns.forEach((b) => {
+      const on = Number(b.dataset.rate) === n;
+      b.classList.toggle("is-on", on);
+    });
+    if (statusEl){
+      statusEl.textContent = n ? `nota selecionada: ${n}` : "";
+    }
+  }
+
+  ratingBtns.forEach((b) => {
+    b.addEventListener("click", () => setSelected(Number(b.dataset.rate)));
+  });
+
+  if (sendBtn){
+    sendBtn.addEventListener("click", () => {
+      if (!selected){
+        if (statusEl) statusEl.textContent = "escolhe uma nota primeiro";
+        return;
+      }
+      const comment = (feedbackBox?.value || "").trim();
+      const subject = encodeURIComponent("avaliação | retrospectiva jescri 2025");
+      const body = encodeURIComponent(
+        `nota: ${selected}/5\n\ncomentário: ${comment || "(sem comentário)"}\n\n(enviado pela página da retrospectiva)`
+      );
+
+      // abre o e-mail preenchido
+      window.location.href = `mailto:contato@elafashionmkt.com.br?subject=${subject}&body=${body}`;
+
+      if (statusEl) statusEl.textContent = "e-mail aberto com a avaliação";
+    });
+  }
 })();
