@@ -1,9 +1,9 @@
-// Scroll suave com correção para topo sticky (em alguns navegadores)
+// Ajuste de scroll para topo fixed
 (function () {
-  const header = document.querySelector('.topo');
+  const header = document.querySelector('.topbar');
   if (!header) return;
 
-  const offset = () => header.getBoundingClientRect().height + 8;
+  const offset = () => header.getBoundingClientRect().height + 10;
 
   document.querySelectorAll('a[href^="#"]').forEach((a) => {
     a.addEventListener('click', (e) => {
@@ -19,4 +19,16 @@
       history.replaceState(null, '', id);
     });
   });
+
+  // Fallback se iframe falhar (ex: bloqueio)
+  const iframe = document.querySelector('iframe');
+  const fallback = document.querySelector('.frame__fallback');
+  if (!iframe || !fallback) return;
+
+  let loaded = false;
+  iframe.addEventListener('load', () => { loaded = true; });
+
+  setTimeout(() => {
+    if (!loaded) fallback.style.display = 'block';
+  }, 2500);
 })();

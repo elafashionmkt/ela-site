@@ -1,76 +1,115 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Retrospectiva Jescri 2025</title>
-  <link rel="stylesheet" href="styles.css"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Retrospectiva Jescri 2025 | elã</title>
+
+  <link rel="icon" href="assets/fav-ela.webp" type="image/webp" />
+  <link rel="stylesheet" href="https://use.typekit.net/piy8ljr.css" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
-
-<header class="topo" id="topo">
-  <div class="topo-inner">
-    <div class="logo" aria-label="Jescri">JESCRI</div>
-
-    <nav class="menu" aria-label="Menu">
-      <a href="#slides">Retrospectiva</a>
-      <a href="#dados">Dados</a>
-      <a
-        class="btn"
-        href="https://drive.google.com/drive/folders/1_y-8F1quZGQLOMNvz91EvEPouMvE65X8?usp=sharing"
-        target="_blank"
-        rel="noopener"
-      >
-        Dados brutos
+  <header class="topbar" id="topo">
+    <div class="container topbar__inner">
+      <a class="brand" href="#topo" aria-label="Topo">
+        <span class="brand__ela">elã</span>
+        <span class="brand__sep">|</span>
+        <span class="brand__sub">retrospectiva</span>
       </a>
-    </nav>
-  </div>
-</header>
 
-<main>
-  <section class="hero" id="slides">
-    <div class="hero-inner">
-      <h1>Retrospectiva 2025</h1>
-      <p>Uma retrospectiva dinâmica, feita para entender o que funcionou, o que pediu atenção e como seguir com mais clareza no próximo ciclo.</p>
+      <nav class="nav" aria-label="Navegação">
+        <a class="nav__link" href="#slides">slides</a>
+        <a class="nav__link" href="#dados">dados</a>
+        <a
+          class="nav__btn"
+          href="https://drive.google.com/drive/folders/1_y-8F1quZGQLOMNvz91EvEPouMvE65X8?usp=sharing"
+          target="_blank"
+          rel="noopener"
+        >
+          dados brutos
+        </a>
+      </nav>
     </div>
-  </section>
+  </header>
 
-  <section class="embed">
-    <div class="embed-inner">
-      <div class="embed-frame" role="region" aria-label="Apresentação da retrospectiva">
-        <iframe
-          title="Retrospectiva Jescri 2025 (Figma Slides)"
-          src="https://embed.figma.com/slides/l57EiSJ6rGRFS73DMzf05k/-JESCRI--RETROSPECTIVA?node-id=0-1&embed-host=share"
-          allowfullscreen
-        ></iframe>
+  <main>
+    <section class="hero" id="slides">
+      <div class="container hero__inner">
+        <p class="kicker">JESCRI</p>
+        <h1>Retrospectiva anual 2025</h1>
+        <p class="lead">
+          Um ano de ajustes, testes e confirmações. Uma leitura dinâmica para entender o que funcionou,
+          o que pediu atenção e como seguir com mais clareza no próximo ciclo.
+        </p>
+      </div>
+    </section>
+
+    <section class="stage" aria-label="Apresentação">
+      <div class="container">
+        <div class="frame">
+          <iframe
+            title="Retrospectiva Jescri 2025 (Figma Slides)"
+            src="https://embed.figma.com/slides/l57EiSJ6rGRFS73DMzf05k/-JESCRI--RETROSPECTIVA?node-id=0-1&embed-host=share"
+            allowfullscreen
+          ></iframe>
+
+          <div class="frame__fallback">
+            <p>
+              Se a apresentação não carregar aqui, você pode abrir em uma nova aba.
+            </p>
+            <a
+              class="nav__btn nav__btn--soft"
+              href="https://embed.figma.com/slides/l57EiSJ6rGRFS73DMzf05k/-JESCRI--RETROSPECTIVA?node-id=0-1&embed-host=share"
+              target="_blank"
+              rel="noopener"
+            >
+              abrir slides
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="dados" id="dados">
+      <div class="container dados__inner">
+        <h2>Dados brutos para consulta</h2>
+        <p class="muted">
+          Os arquivos que embasam as leituras estão organizados em uma pasta separada para facilitar
+          conferência e cruzamentos.
+        </p>
+
+        <a
+          class="nav__btn nav__btn--wide"
+          href="https://drive.google.com/drive/folders/1_y-8F1quZGQLOMNvz91EvEPouMvE65X8?usp=sharing"
+          target="_blank"
+          rel="noopener"
+        >
+          abrir dados brutos
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" aria-label="Rodapé">
+    <div class="container footer__inner">
+      <div class="footer__left">
+        <span class="footer__mark">elã</span>
+        <span class="footer__muted">fashion mkt</span>
+      </div>
+
+      <div class="footer__right">
+        <a class="icon" href="https://wa.me/" target="_blank" rel="noopener" aria-label="WhatsApp">
+          <img src="assets/whatsapp.svg" alt="" />
+        </a>
+        <a class="icon" href="https://instagram.com/elafashionmkt" target="_blank" rel="noopener" aria-label="Instagram">
+          <img src="assets/instagram.svg" alt="" />
+        </a>
       </div>
     </div>
-  </section>
+  </footer>
 
-  <section class="dados" id="dados">
-    <div class="dados-inner">
-      <h2>Dados para consulta</h2>
-      <p>Se você quiser olhar os dados brutos que embasam a análise, eles estão organizados em uma pasta separada.</p>
-      <a
-        class="btn btn-wide"
-        href="https://drive.google.com/drive/folders/1_y-8F1quZGQLOMNvz91EvEPouMvE65X8?usp=sharing"
-        target="_blank"
-        rel="noopener"
-      >
-        Abrir dados brutos
-      </a>
-    </div>
-  </section>
-</main>
-
-<footer class="rodape">
-  <div class="rodape-inner">
-    <a class="iconlink" href="https://wa.me/" target="_blank" rel="noopener">WhatsApp</a>
-    <a class="iconlink" href="https://instagram.com/elafashionmkt" target="_blank" rel="noopener">Instagram</a>
-  </div>
-</footer>
-
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
