@@ -99,13 +99,13 @@
 
       <section class="slides" id="slides" aria-label="apresentação">
         <div class="container">
-          <div class="slides__controls" aria-label="controles do pdf">
-            <button class="btn btn--white" type="button" id="fsBtn">tela cheia</button>
-            <a class="btn btn--white" id="pdfTab" href="retrospectiva.pdf#view=FitH&toolbar=0&navpanes=0" target="_blank" rel="noopener">abrir em outra aba</a>
-          </div>
+          <div class="slides__controls" aria-label="controles">
+  <button class="btn btn--white" type="button" id="fsBtn">tela cheia</button>
+  <span class="slides__kbd" id="kbdHint" aria-live="polite"></span>
+</div>
 
-          <div class="slides__frame" id="slidesFrame">
-            <iframe title="retrospectiva jescri 2025 (pdf)" src="retrospectiva.pdf#view=FitH&toolbar=0&navpanes=0" loading="lazy"></iframe>
+<div class="slides__frame">
+            <iframe title="retrospectiva jescri 2025 (pdf)" src="retrospectiva.pdf#view=FitH&toolbar=0&navpanes=0" loading="lazy" id="pdfFrame" tabindex="0"></iframe>
           </div>
         </div>
       </section>

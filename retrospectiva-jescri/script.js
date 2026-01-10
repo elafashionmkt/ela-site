@@ -1,8 +1,8 @@
 (function () {
   // =======================
   // auth (bloqueio visual)
+  // sempre pede senha ao carregar
   // =======================
-  const STORAGE_KEY = "jescri_retro_auth_v3";
   const PASSWORD = "jescri#2025";
 
   const body = document.body;
@@ -10,25 +10,24 @@
   const passInput = document.getElementById("authPass");
   const errorEl = document.getElementById("authError");
 
-  const logoutBtn = document.getElementById("logoutBtn");
-
   function setAuthed(ok){
     if (ok){
-      sessionStorage.setItem(STORAGE_KEY, "1");
       body.classList.add("is-auth");
+      // foco no pdf para setas funcionarem melhor
+      setTimeout(() => {
+        const pdf = document.getElementById("pdfFrame");
+        if (pdf) pdf.focus();
+      }, 250);
     } else {
-      sessionStorage.removeItem(STORAGE_KEY);
       body.classList.remove("is-auth");
       closeNav();
-      setTimeout(() => passInput && passInput.focus(), 120);
+      setTimeout(() => passInput && passInput.focus(), 160);
     }
   }
 
-  if (sessionStorage.getItem(STORAGE_KEY) === "1"){
-    setAuthed(true);
-  } else {
-    setTimeout(() => passInput && passInput.focus(), 200);
-  }
+  // sempre começa bloqueado
+  setAuthed(false);
+  setTimeout(() => passInput && passInput.focus(), 220);
 
   if (form){
     form.addEventListener("submit", (e) => {
@@ -36,17 +35,13 @@
       const val = (passInput?.value || "").trim();
       if (val === PASSWORD){
         if (errorEl) errorEl.style.display = "none";
-        setAuthed(true);
         if (passInput) passInput.value = "";
+        setAuthed(true);
       } else {
         if (errorEl) errorEl.style.display = "block";
         if (passInput) passInput.focus();
       }
     });
-  }
-
-  if (logoutBtn){
-    logoutBtn.addEventListener("click", () => setAuthed(false));
   }
 
   // =======================
@@ -55,6 +50,7 @@
   const navPanel = document.getElementById("navPanel");
   const toggle = document.querySelector(".nav__toggle");
   const closeBtn = document.querySelector(".navPanel__close");
+  const logoutBtn = document.getElementById("logoutBtn");
 
   function openNav(){
     if (!navPanel) return;
@@ -87,14 +83,87 @@
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") closeNav();
   });
-
-  // fechar menu ao clicar em link
   document.querySelectorAll(".navPanel__links a[href^='#']").forEach((a) => {
     a.addEventListener("click", () => closeNav());
   });
 
+  if (logoutBtn){
+    logoutBtn.addEventListener("click", () => setAuthed(false));
+  }
+
   // =======================
-  // avaliação
+  // fullscreen + keyboard
+  // =======================
+  const fsBtn = document.getElementById("fsBtn");
+  const pdf = document.getElementById("pdfFrame");
+  const kbdHint = document.getElementById("kbdHint");
+  const PDF_URL = "retrospectiva.pdf#view=FitH&toolbar=0&navpanes=0";
+
+  function inFullscreen(){
+    return !!document.fullscreenElement;
+  }
+
+  function setFsLabel(){
+    if (!fsBtn) return;
+    fsBtn.textContent = inFullscreen() ? "sair da tela cheia" : "tela cheia";
+  }
+
+  function openPdfTab(){
+    window.open(PDF_URL, "_blank", "noopener");
+  }
+
+  if (fsBtn){
+    fsBtn.addEventListener("click", async () => {
+      // iOS Safari e alguns webviews não suportam fullscreen em elementos
+      if (!document.fullscreenEnabled || !pdf || !pdf.requestFullscreen){
+        openPdfTab();
+        return;
+      }
+      try{
+        if (inFullscreen()){
+          await document.exitFullscreen();
+        } else {
+          // fullscreen no iframe funciona melhor pedindo fullscreen no próprio iframe
+          await pdf.requestFullscreen();
+        }
+      } catch(e){
+        openPdfTab();
+      }
+      setFsLabel();
+    });
+  }
+  document.addEventListener("fullscreenchange", setFsLabel);
+  setFsLabel();
+
+  // foco do pdf ao clicar, melhora setas
+  if (pdf){
+    pdf.addEventListener("load", () => {
+      // não força foco automático se ainda não passou na senha
+      if (body.classList.contains("is-auth")){
+        setTimeout(() => pdf.focus(), 200);
+      }
+    });
+    pdf.addEventListener("click", () => pdf.focus());
+  }
+
+  // Se a pessoa apertar setas fora do iframe, focamos o pdf e avisamos
+  const KEY_HINT_KEYS = new Set(["ArrowLeft","ArrowRight","ArrowUp","ArrowDown","PageDown","PageUp"," "]);
+  document.addEventListener("keydown", (e) => {
+    if (!body.classList.contains("is-auth")) return;
+    const tag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : "";
+    const inField = tag === "input" || tag === "textarea";
+    if (inField) return;
+
+    if (KEY_HINT_KEYS.has(e.key) && pdf && document.activeElement !== pdf){
+      pdf.focus();
+      if (kbdHint) kbdHint.textContent = "teclas ativas no pdf. aperte novamente.";
+      // não preventDefault, deixa o próximo keydown ir para o pdf
+      setTimeout(() => { if (kbdHint) kbdHint.textContent = ""; }, 1800);
+    }
+  });
+
+  // =======================
+  // avaliação (abre e-mail)
   // =======================
   const ratingBtns = Array.from(document.querySelectorAll(".rating__btn"));
   const feedbackBox = document.getElementById("feedback");
@@ -125,58 +194,11 @@
       }
       const comment = (feedbackBox?.value || "").trim();
       const subject = encodeURIComponent("avaliação | retrospectiva jescri 2025");
-      const body = encodeURIComponent(
+      const bodyMail = encodeURIComponent(
         `nota: ${selected}/5\n\ncomentário: ${comment || "(sem comentário)"}\n\n(enviado pela página da retrospectiva)`
       );
-
-      // abre o e-mail preenchido
-      window.location.href = `mailto:contato@elafashionmkt.com.br?subject=${subject}&body=${body}`;
-
+      window.location.href = `mailto:contato@elafashionmkt.com.br?subject=${subject}&body=${bodyMail}`;
       if (statusEl) statusEl.textContent = "e-mail aberto com a avaliação";
     });
   }
-
-  // =======================
-  // tela cheia (pdf)
-  // =======================
-  const fsBtn = document.getElementById("fsBtn");
-  const frame = document.getElementById("slidesFrame");
-  const pdfTab = document.getElementById("pdfTab");
-
-  function canFullscreen(){
-    return !!(document.fullscreenEnabled && frame && frame.requestFullscreen);
-  }
-
-  function inFullscreen(){
-    return !!document.fullscreenElement;
-  }
-
-  function setFsLabel(){
-    if (!fsBtn) return;
-    fsBtn.textContent = inFullscreen() ? "sair da tela cheia" : "tela cheia";
-  }
-
-  if (fsBtn){
-    fsBtn.addEventListener("click", async () => {
-      // iOS Safari costuma não suportar fullscreen API aqui, então mantém fallback
-      if (!canFullscreen()){
-        pdfTab && pdfTab.click();
-        return;
-      }
-      try{
-        if (inFullscreen()){
-          await document.exitFullscreen();
-        } else {
-          await frame.requestFullscreen();
-        }
-      } catch(e){
-        pdfTab && pdfTab.click();
-      }
-      setFsLabel();
-    });
-  }
-
-  document.addEventListener("fullscreenchange", setFsLabel);
-  setFsLabel();
-
 })();
