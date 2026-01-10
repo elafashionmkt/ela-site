@@ -3,112 +3,94 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Retrospectiva Jescri 2025 | elã</title>
+  <title>Retrospectiva 2025 | Jescri</title>
 
   <link rel="icon" href="assets/fav-ela.webp" type="image/webp" />
+
+  <!-- fonts (elã) -->
   <link rel="stylesheet" href="https://use.typekit.net/piy8ljr.css" />
+
   <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
-  <header class="topbar" id="topo">
-    <div class="container topbar__inner">
-      <a class="brand" href="#topo" aria-label="Topo">
-        <span class="brand__ela">elã</span>
-        <span class="brand__sep">|</span>
-        <span class="brand__sub">retrospectiva</span>
+  <!-- LOGIN -->
+  <div class="authLock" role="dialog" aria-modal="true" aria-label="Acesso restrito">
+    <div class="authCard">
+      <div class="authBrand">
+        <img src="assets/2-11.svg" alt="" aria-hidden="true" />
+        <p class="name">Acesso restrito</p>
+      </div>
+
+      <p>Esta retrospectiva reúne dados sensíveis. Digite a senha para continuar.</p>
+
+      <form class="authForm" id="authForm">
+        <input id="authPass" type="password" autocomplete="current-password" placeholder="Senha" aria-label="Senha" />
+        <button type="submit">Entrar</button>
+      </form>
+
+      <div class="authError" id="authError">Senha incorreta. Tente novamente.</div>
+    </div>
+  </div>
+
+  <div class="site">
+    <a class="skip" href="#conteudo">Pular para o conteúdo</a>
+
+    <!-- NAV (elã) -->
+    <nav class="nav" aria-label="Navegação principal">
+      <a class="brand" href="/" aria-label="Voltar para o site elã">
+        <img class="brand__logo" src="assets/2-11.svg" alt="Logo elã" />
       </a>
 
-      <nav class="nav" aria-label="Navegação">
-        <a class="nav__link" href="#slides">slides</a>
-        <a class="nav__link" href="#dados">dados</a>
-        <a
-          class="nav__btn"
-          href="https://drive.google.com/drive/folders/1_y-8F1quZGQLOMNvz91EvEPouMvE65X8?usp=sharing"
-          target="_blank"
-          rel="noopener"
-        >
-          dados brutos
-        </a>
-      </nav>
-    </div>
-  </header>
+      <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Abrir menu">
+        <span class="nav__toggle-line" aria-hidden="true"></span>
+        <span class="nav__toggle-line" aria-hidden="true"></span>
+        <span class="nav__toggle-line" aria-hidden="true"></span>
+      </button>
 
-  <main>
-    <section class="hero" id="slides">
-      <div class="container hero__inner">
-        <p class="kicker">JESCRI</p>
-        <h1>Retrospectiva anual 2025</h1>
-        <p class="lead">
-          Um ano de ajustes, testes e confirmações. Uma leitura dinâmica para entender o que funcionou,
-          o que pediu atenção e como seguir com mais clareza no próximo ciclo.
-        </p>
+      <div class="nav__links" id="nav-links">
+        <a href="#conteudo">retrospectiva</a>
+        <a class="btnLink" href="https://drive.google.com/drive/folders/1_y-8F1quZGQLOMNvz91EvEPouMvE65X8?usp=sharing" target="_blank" rel="noopener">dados brutos</a>
+        <a href="#topo" id="logoutLink" style="display:none;">sair</a>
       </div>
-    </section>
+    </nav>
 
-    <section class="stage" aria-label="Apresentação">
-      <div class="container">
-        <div class="frame">
-          <iframe
-            title="Retrospectiva Jescri 2025 (Figma Slides)"
-            src="https://embed.figma.com/slides/l57EiSJ6rGRFS73DMzf05k/-JESCRI--RETROSPECTIVA?node-id=0-1&embed-host=share"
-            allowfullscreen
-          ></iframe>
+    <main class="page" id="conteudo">
+      <section class="retroHero">
+        <div class="container">
+          <p class="kicker">jescri</p>
+          <h1>Retrospectiva 2025</h1>
+          <p>Uma retrospectiva dinâmica, feita para entender o que funcionou, o que pediu atenção e como seguir com mais clareza no próximo ciclo.</p>
+        </div>
+      </section>
 
-          <div class="frame__fallback">
-            <p>
-              Se a apresentação não carregar aqui, você pode abrir em uma nova aba.
-            </p>
-            <a
-              class="nav__btn nav__btn--soft"
-              href="https://embed.figma.com/slides/l57EiSJ6rGRFS73DMzf05k/-JESCRI--RETROSPECTIVA?node-id=0-1&embed-host=share"
-              target="_blank"
-              rel="noopener"
-            >
-              abrir slides
+      <section class="embedWrap">
+        <div class="container">
+          <div class="embedCard" role="region" aria-label="Apresentação da retrospectiva">
+            <iframe
+              title="Retrospectiva Jescri 2025 (Figma Slides)"
+              src="https://embed.figma.com/slides/l57EiSJ6rGRFS73DMzf05k/-JESCRI--RETROSPECTIVA?node-id=0-1&embed-host=share"
+              allowfullscreen
+            ></iframe>
+          </div>
+        </div>
+      </section>
+
+      <footer class="retroFooter">
+        <div class="container retroFooter__inner">
+          <div class="smallNote">elã | fashion mkt</div>
+          <div class="social" aria-label="Redes sociais">
+            <a href="https://wa.me/" target="_blank" rel="noopener" aria-label="WhatsApp">
+              <img src="assets/whatsapp.svg" alt="" aria-hidden="true" />
+            </a>
+            <a href="https://instagram.com/elafashionmkt" target="_blank" rel="noopener" aria-label="Instagram">
+              <img src="assets/instagram.svg" alt="" aria-hidden="true" />
             </a>
           </div>
         </div>
-      </div>
-    </section>
-
-    <section class="dados" id="dados">
-      <div class="container dados__inner">
-        <h2>Dados brutos para consulta</h2>
-        <p class="muted">
-          Os arquivos que embasam as leituras estão organizados em uma pasta separada para facilitar
-          conferência e cruzamentos.
-        </p>
-
-        <a
-          class="nav__btn nav__btn--wide"
-          href="https://drive.google.com/drive/folders/1_y-8F1quZGQLOMNvz91EvEPouMvE65X8?usp=sharing"
-          target="_blank"
-          rel="noopener"
-        >
-          abrir dados brutos
-        </a>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer" aria-label="Rodapé">
-    <div class="container footer__inner">
-      <div class="footer__left">
-        <span class="footer__mark">elã</span>
-        <span class="footer__muted">fashion mkt</span>
-      </div>
-
-      <div class="footer__right">
-        <a class="icon" href="https://wa.me/" target="_blank" rel="noopener" aria-label="WhatsApp">
-          <img src="assets/whatsapp.svg" alt="" />
-        </a>
-        <a class="icon" href="https://instagram.com/elafashionmkt" target="_blank" rel="noopener" aria-label="Instagram">
-          <img src="assets/instagram.svg" alt="" />
-        </a>
-      </div>
-    </div>
-  </footer>
+      </footer>
+    </main>
+  </div>
 
   <script src="script.js"></script>
 </body>
