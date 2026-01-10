@@ -645,3 +645,19 @@ body:not(.is-auth) .site{ filter: blur(10px); }
 .slides__frame iframe{
   background: rgba(255,255,255,.02);
 }
+
+/* ui tweaks v7 */
+.hero__chips{ margin-top: 16px; margin-bottom: 18px; }
+
+/* chip button should look like link chips */
+.chip{
+  cursor: pointer;
+  font-family: inherit;
+}
+button.chip{
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+/* extra respiro antes do pdf */
+.slides{ padding-top: 22px; }
