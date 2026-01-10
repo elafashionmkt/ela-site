@@ -2,7 +2,7 @@
   // =======================
   // auth (bloqueio visual)
   // =======================
-  const STORAGE_KEY = "jescri_retro_auth_v2";
+  const STORAGE_KEY = "jescri_retro_auth_v3";
   const PASSWORD = "jescri#2025";
 
   const body = document.body;
@@ -14,17 +14,17 @@
 
   function setAuthed(ok){
     if (ok){
-      localStorage.setItem(STORAGE_KEY, "1");
+      sessionStorage.setItem(STORAGE_KEY, "1");
       body.classList.add("is-auth");
     } else {
-      localStorage.removeItem(STORAGE_KEY);
+      sessionStorage.removeItem(STORAGE_KEY);
       body.classList.remove("is-auth");
       closeNav();
       setTimeout(() => passInput && passInput.focus(), 120);
     }
   }
 
-  if (localStorage.getItem(STORAGE_KEY) === "1"){
+  if (sessionStorage.getItem(STORAGE_KEY) === "1"){
     setAuthed(true);
   } else {
     setTimeout(() => passInput && passInput.focus(), 200);

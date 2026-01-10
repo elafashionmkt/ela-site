@@ -640,3 +640,8 @@ body:not(.is-auth) .site{ filter: blur(10px); }
 .nav__logo{
   filter: brightness(0) invert(1);
 }
+
+/* pdf tweaks */
+.slides__frame iframe{
+  background: rgba(255,255,255,.02);
+}
