@@ -17,6 +17,17 @@
   // 1) Reveal on scroll
   // -----------------------------
   const revealEls = Array.from(document.querySelectorAll(".reveal"));
+  // stagger leve (ex: modulos)
+  if (!prefersReduced) {
+    const staggerGroups = Array.from(document.querySelectorAll("[data-stagger-group]"));
+    staggerGroups.forEach((group) => {
+      const items = Array.from(group.querySelectorAll(".reveal"));
+      items.forEach((el, i) => {
+        el.style.transitionDelay = (i * 70) + "ms";
+      });
+    });
+  }
+
   if (!prefersReduced && "IntersectionObserver" in window) {
     const io = new IntersectionObserver(
       (entries) => {
@@ -96,7 +107,7 @@
     if (!nav || !navToggle || !navLinks) return;
     nav.classList.toggle("is-open", open);
     navToggle.setAttribute("aria-expanded", open ? "true" : "false");
-    navToggle.setAttribute("aria-label", open ? "Fechar menu" : "Abrir menu");
+    navToggle.setAttribute("aria-label", open ? "fechar menu" : "abrir menu");
     document.body.classList.toggle("nav-open", open);
     if (isMobileNav()) {
       navLinks.setAttribute("aria-hidden", open ? "false" : "true");
