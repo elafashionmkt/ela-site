@@ -57,4 +57,37 @@
       form.requestSubmit();
     }
   });
+
+  // acordeão do menu (subitens só aparecem ao clicar no título)
+  const cols = Array.from(document.querySelectorAll('.menuCol'));
+  function closeAll(except){
+    cols.forEach((col) => {
+      if(col === except) return;
+      col.classList.remove('is-open');
+      const b = col.querySelector('.menuCol__title');
+      if(b) b.setAttribute('aria-expanded', 'false');
+    });
+  }
+
+  cols.forEach((col, i) => {
+    const btn = col.querySelector('.menuCol__title');
+    const panel = col.querySelector('.menuCol__links');
+    if(!btn || !panel) return;
+
+    // liga aria-controls
+    if(!panel.id) panel.id = `menuPanel${i+1}`;
+    btn.setAttribute('aria-controls', panel.id);
+
+    btn.addEventListener('click', () => {
+      const isOpen = col.classList.contains('is-open');
+      if(isOpen){
+        col.classList.remove('is-open');
+        btn.setAttribute('aria-expanded', 'false');
+        return;
+      }
+      closeAll(col);
+      col.classList.add('is-open');
+      btn.setAttribute('aria-expanded', 'true');
+    });
+  });
 })();

@@ -49,19 +49,15 @@
   <main id="conteudo" class="cliente">
     <header class="cliente__hero" aria-label="capa">
       <div class="container cliente__heroInner">
-        <h2 class="cliente__title">área do cliente <span class="cliente__titleEm">jescri</span></h2>
+        <h2 class="cliente__title">área do cliente: <span class="cliente__titleEm">jescri</span></h2>
       </div>
     </header>
-
-    <section class="cliente__banner" aria-label="banner">
-      <img src="assets/box-header.jpg" alt="" loading="eager" />
-    </section>
 
     <section class="cliente__menu" aria-label="menu">
       <div class="container">
         <div class="menuGrid" role="navigation" aria-label="atalhos">
           <section class="menuCol">
-            <h3 class="menuCol__title">retrospectiva anual</h3>
+            <button class="menuCol__title" type="button" aria-expanded="false">retrospectiva anual</button>
             <div class="menuCol__links">
               <a href="../retrospectiva-jescri/">2025</a>
               <a href="#" data-placeholder="historico">histórico</a>
@@ -69,74 +65,77 @@
           </section>
 
           <section class="menuCol">
-            <h3 class="menuCol__title">relatórios</h3>
+            <button class="menuCol__title" type="button" aria-expanded="false">relatórios</button>
             <div class="menuCol__links">
               <a href="#" data-placeholder="relatorios-trimestral">trimestral</a>
-              <a href="#" data-placeholder="analise-criativos">análise de criativos</a>
+              <a href="#" data-placeholder="analise-criativos">análise: criativos</a>
             </div>
           </section>
 
           <section class="menuCol">
-            <h3 class="menuCol__title">calendário</h3>
+            <button class="menuCol__title" type="button" aria-expanded="false">calendário</button>
             <div class="menuCol__links">
-              <a href="#" data-placeholder="calendario-semestre">calendário do semestre</a>
+              <a href="#" data-placeholder="calendario-semestral">semestral</a>
+              <a href="#" data-placeholder="calendario-fevereiro">fevereiro</a>
+              <a href="#" data-placeholder="calendario-marco">março</a>
+              <a href="#" data-placeholder="calendario-abril">abril</a>
             </div>
           </section>
 
           <section class="menuCol">
-            <h3 class="menuCol__title">social media</h3>
+            <button class="menuCol__title" type="button" aria-expanded="false">social media</button>
             <div class="menuCol__links">
-              <a href="#" data-placeholder="programacao-mes">programação do mês</a>
-              <a href="#" data-placeholder="historico-programacao">histórico de programação</a>
-              <a href="#" data-placeholder="criativos-mes">criativos do mês</a>
-              <a href="#" data-placeholder="historico-criativos">histórico de criativos</a>
+              <a href="#" data-placeholder="social-fevereiro">fevereiro</a>
+              <a href="#" data-placeholder="social-marco">março</a>
+              <a href="#" data-placeholder="social-abril">abril</a>
+              <a href="#" data-placeholder="social-historico">histórico</a>
             </div>
           </section>
 
           <section class="menuCol">
-            <h3 class="menuCol__title">influência</h3>
+            <button class="menuCol__title" type="button" aria-expanded="false">influência</button>
             <div class="menuCol__links">
-              <a href="#" data-placeholder="influencia-ativacoes">ativações de influenciadoras</a>
+              <a href="#" data-placeholder="influencia-ativacoes">ativações do mês</a>
             </div>
           </section>
 
           <section class="menuCol">
-            <h3 class="menuCol__title">fotos</h3>
+            <button class="menuCol__title" type="button" aria-expanded="false">fotos</button>
             <div class="menuCol__links">
-              <a href="#" data-placeholder="fotos-campanha">fotos de campanha</a>
-              <a href="#" data-placeholder="lookbook">lookbook</a>
+              <a href="#" data-placeholder="fotos-vertice">vértice</a>
+              <a href="#" data-placeholder="fotos-florescer">florescer</a>
+              <a href="#" data-placeholder="fotos-bless">bless</a>
+              <a href="#" data-placeholder="fotos-doce-vitta">dolce vitta</a>
             </div>
           </section>
 
           <section class="menuCol">
-            <h3 class="menuCol__title">alinhamento</h3>
+            <button class="menuCol__title" type="button" aria-expanded="false">alinhamento</button>
             <div class="menuCol__links">
-              <a href="#" data-placeholder="form-alinhamento">formulário bimestral</a>
-              <a href="#" data-placeholder="historico-alinhamentos">histórico de alinhamentos</a>
+              <a href="#" data-placeholder="form-alinhamento">formulário (bim.)</a>
+              <a href="#" data-placeholder="historico-alinhamentos">histórico</a>
             </div>
           </section>
         </div>
       </div>
     </section>
 
-    <footer class="clienteFooter" aria-label="rodapé">
-      <div class="container clienteFooter__inner">
-        <div class="clienteFooter__brand" aria-label="marca">
+    <section class="cliente__banner" aria-label="banner">
+      <img src="assets/box-header.jpg" alt="" loading="eager" />
+    </section>
+
+    <footer class="footerBar" aria-label="Rodapé">
+      <div class="footerBar__inner">
+        <a class="footerBar__logo" href="#topo" aria-label="Voltar ao topo">
           <img src="../assets/logo-ela.svg" alt="elã" />
-        </div>
+        </a>
 
-        <div class="clienteFooter__copy">© 2026 elã fashion mkt. todos os direitos reservados.</div>
+        <p class="footerBar__copy">© 2026 todos os direitos reservados</p>
 
-        <div class="clienteFooter__social" aria-label="redes">
-          <a class="icon" href="https://wa.me/5522936289313" target="_blank" rel="noopener" aria-label="whatsapp">
-            <img src="../assets/whatsapp.svg" alt="" aria-hidden="true" />
-          </a>
-          <a class="icon" href="https://instagram.com/elafashionmkt" target="_blank" rel="noopener" aria-label="instagram">
-            <img src="../assets/instagram.svg" alt="" aria-hidden="true" />
-          </a>
-          <a class="icon" href="https://linkedin.com" target="_blank" rel="noopener" aria-label="linkedin">
-            <img src="../assets/linkedin.svg" alt="" aria-hidden="true" />
-          </a>
+        <div class="footerBar__social" aria-label="Redes e contato">
+          <a href="#" aria-label="WhatsApp"><img src="../assets/whatsapp.svg" alt="" aria-hidden="true" /></a>
+          <a href="#" aria-label="Instagram"><img src="../assets/instagram.svg" alt="" aria-hidden="true" /></a>
+          <a href="#" aria-label="Linkedin"><img src="../assets/linkedin.svg" alt="" aria-hidden="true" /></a>
         </div>
       </div>
     </footer>
