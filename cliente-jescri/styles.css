@@ -49,6 +49,72 @@ body{
   display: block;
 }
 
+/* conteúdo interno (ex: formulário / históricos) */
+.cliente__content{
+  background: var(--cliente-red);
+  padding: 0 0 80px;
+}
+
+.cliente__contentTitle{
+  margin: 0 0 12px;
+  color: var(--cliente-cream);
+  font-family: "IvyJournal", serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.25;
+}
+
+.cliente__contentText{
+  margin: 0 0 10px;
+  color: var(--cliente-cream);
+  font-family: "Inter Tight", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.6;
+  letter-spacing: .02em;
+}
+
+.cliente__contentLink{
+  position: relative;
+  display: inline-block;
+  width: fit-content;
+  padding-bottom: 6px;
+  color: inherit;
+  text-decoration: none;
+  transition: font-weight .18s ease;
+}
+.cliente__contentLink::after{
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform .22s ease;
+}
+.cliente__contentLink:hover,
+.cliente__contentLink:focus-visible{
+  font-weight: 600;
+}
+.cliente__contentLink:hover::after,
+.cliente__contentLink:focus-visible::after{
+  transform: scaleX(1);
+}
+
+.cliente__iframeWrap{
+  margin-top: 14px;
+  border: 1px solid rgba(244, 233, 230, .35);
+  border-radius: 16px;
+  overflow: hidden;
+}
+.cliente__iframeWrap iframe{
+  display: block;
+  border: 0;
+}
+
 /* menu */
 .cliente__menu{
   background: var(--cliente-red);
