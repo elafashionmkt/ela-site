@@ -1,155 +1,143 @@
+/* formulário semestral jescri
+ * envio via google forms (formResponse)
+ * tudo em caixa baixa por padrão do projeto
+ */
 (() => {
-  const ENDPOINT = window.__FORM_ENDPOINT__;
-  const PASS = window.__FORM_PASSWORD__;
-  const GATE_KEY = window.__FORM_GATE_KEY__ || "ela_cliente_gate_ok";
-
-  // gate
-  const gate = document.getElementById("gate");
-  const gateForm = document.getElementById("gateForm");
-  const gatePass = document.getElementById("gatePass");
-  const gateErr = document.getElementById("gateErr");
-
-  function showGate(){ gate?.setAttribute("aria-hidden","false"); setTimeout(()=>gatePass?.focus(),60); }
-  function hideGate(){ gate?.setAttribute("aria-hidden","true"); }
-
-  try { localStorage.getItem(GATE_KEY)==="1" ? hideGate() : showGate(); }
-  catch { showGate(); }
-
-  gateForm?.addEventListener("submit",(e)=>{
-    e.preventDefault();
-    const v=(gatePass?.value||"").trim();
-    if(v===PASS){
-      try{ localStorage.setItem(GATE_KEY,"1"); }catch{}
-      hideGate(); gateErr.textContent=""; gatePass.value="";
-    }else{
-      gateErr.textContent="senha incorreta";
-      gatePass?.select();
-    }
-  });
+  const __FORM_ENDPOINT__ = "https://docs.google.com/forms/d/e/1FAIpQLSeM22fzoLKsWeDQEkj8Mptf4FwOaBbghl9XIDH5WuEGWB2Beg/formResponse";
 
   const form = document.getElementById("customForm");
-  const statusEl = document.getElementById("status");
-  const submitBtn = document.getElementById("submitBtn");
+  const statusEl = document.getElementById("formStatus");
+  if(!form) return;
 
-  const setStatus = (m)=>{ if(statusEl) statusEl.textContent = m || ""; };
-  const clearErrors = ()=> document.querySelectorAll(".err[data-err]").forEach(p=>p.textContent="");
-  const setErr = (k,m)=>{ const p=document.querySelector(`.err[data-err="${k}"]`); if(p) p.textContent=m||""; };
+  const $ = (sel, root=document) => root.querySelector(sel);
+  const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
 
-  function setupChecks(container){
-    const max = Number(container.dataset.max || "999");
-    const min = Number(container.dataset.min || "0");
-    const required = (container.dataset.required || "false") === "true";
-    const entryName = container.dataset.entry;
-    const otherName = container.dataset.otherName;
-    const checkboxes = Array.from(container.querySelectorAll('input[type="checkbox"]'));
-    const otherInput = container.querySelector('[data-other-input]');
-
-    function enforceMax(){
-      const checked = checkboxes.filter(c=>c.checked);
-      if(checked.length >= max){
-        checkboxes.filter(c=>!c.checked).forEach(c=>c.disabled=true);
-      } else {
-        checkboxes.forEach(c=>c.disabled=false);
-      }
-    }
-    checkboxes.forEach(c=>c.addEventListener("change", ()=>{ enforceMax(); setErr(entryName,""); }));
-    otherInput?.addEventListener("input", ()=> setErr(entryName,""));
-    enforceMax();
-
-    function isValid(){
-      const checkedCount = checkboxes.filter(c=>c.checked).length;
-      const otherVal = (otherInput?.value || "").trim();
-      const total = checkedCount + (otherVal ? 1 : 0);
-      if(required && total < min) return false;
-      if(total > max) return false;
-      return true;
-    }
-
-    return {entryName, otherName, checkboxes, otherInput, min, max, required, isValid};
+  function setStatus(msg, kind="info"){
+    if(!statusEl) return;
+    statusEl.textContent = msg;
+    statusEl.dataset.kind = kind;
   }
 
-  const checkGroups = Array.from(document.querySelectorAll(".checks")).map(setupChecks);
+  function clearErrors(){
+    $$(".field.error", form).forEach(f => f.classList.remove("error"));
+    $$(".field__error", form).forEach(n => n.remove());
+  }
+
+  function markError(field, msg){
+    field.classList.add("error");
+    const div = document.createElement("div");
+    div.className = "field__error";
+    div.textContent = msg;
+    field.appendChild(div);
+  }
 
   function validate(){
     clearErrors();
-    let firstInvalid = null;
+    const fields = $$(".field", form);
+    let firstBad = null;
 
-    // required radio groups
-    const requiredRadios = Array.from(form.querySelectorAll('input[type="radio"][required]'));
-    const groups = {};
-    requiredRadios.forEach(r=>{ groups[r.name]=groups[r.name]||[]; groups[r.name].push(r); });
-
-    for(const name in groups){
-      if(!groups[name].some(r=>r.checked)){
-        setErr(name, "selecione uma opção");
-        if(!firstInvalid) firstInvalid = groups[name][0];
+    fields.forEach(field => {
+      // radio groups dentro do field
+      const radios = $$('input[type="radio"]', field);
+      if(radios.length){
+        const names = Array.from(new Set(radios.map(r => r.name).filter(Boolean)));
+        names.forEach(n => {
+          const any = radios.some(r => r.name === n && r.checked);
+          if(!any){
+            if(!firstBad) firstBad = field;
+            markError(field, "responda esta pergunta para enviar.");
+          }
+        });
       }
-    }
 
-    // required checkbox groups (min/max)
-    for(const g of checkGroups){
-      if(!g.isValid()){
-        setErr(g.entryName, `selecione de ${g.min} a ${g.max}`);
-        if(!firstInvalid) firstInvalid = g.checkboxes[0] || g.otherInput;
-      }
-    }
+      // checkbox groups (div.checks) dentro do field
+      const checks = $$(".checks", field);
+      checks.forEach(g => {
+        const checked = $$('input[type="checkbox"]:checked', g);
+        if(!checked.length){
+          if(!firstBad) firstBad = field;
+          markError(field, "selecione pelo menos uma opção.");
+        }
+      });
+    });
 
-    if(firstInvalid){
-      firstInvalid.scrollIntoView({behavior:"smooth", block:"center"});
+    if(firstBad){
+      firstBad.scrollIntoView({ behavior: "smooth", block: "center" });
       return false;
     }
     return true;
   }
 
-  form?.addEventListener("submit", async (e)=>{
-    e.preventDefault();
-    setStatus("");
+  function appendRadios(fd){
+    const checkedRadios = $$('input[type="radio"]:checked', form);
+    checkedRadios.forEach(r => fd.append(r.name, r.value));
+  }
+
+  function appendChecks(fd){
+    const groups = $$(".checks", form);
+    groups.forEach(g => {
+      const entry = g.dataset.entry;
+      if(!entry) return;
+
+      const checked = $$('input[type="checkbox"]:checked', g);
+      checked.forEach(c => fd.append(entry, c.value));
+
+      const otherKey = g.dataset.other;
+      const otherInput = otherKey ? $(`input[name="${otherKey}"]`, g) : null;
+      const otherVal = otherInput ? otherInput.value.trim() : "";
+      if(otherKey && otherVal){
+        // google forms costuma esperar o valor "outro" no entry e o texto em other_option_response
+        fd.append(entry, "Outro");
+        fd.append(otherKey, otherVal);
+      }
+    });
+  }
+
+  async function submit(){
+    const fd = new FormData();
+
+    // parâmetros "fantasmas" do google forms (aumenta compatibilidade)
+    fd.append("fvv", "1");
+    fd.append("fbzx", String(Date.now()));
+    fd.append("pageHistory", "0");
+
+    appendRadios(fd);
+    appendChecks(fd);
+
+    await fetch(__FORM_ENDPOINT__, {
+      method: "POST",
+      mode: "no-cors",
+      body: fd
+    });
+  }
+
+  form.addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    setStatus("", "info");
 
     if(!validate()){
-      setStatus("revise: há campos obrigatórios sem resposta");
+      setStatus("revise os campos marcados acima.", "error");
       return;
     }
 
-    submitBtn.disabled = true;
-    setStatus("enviando...");
-
-    const fd = new FormData();
-
-    // radios + text
-    Array.from(form.querySelectorAll('input[name^="entry."]')).forEach((el)=>{
-      const name = el.getAttribute("name");
-      if(!name) return;
-
-      if(el.type==="radio"){
-        if(el.checked) fd.append(name, el.value);
-      } else if(el.type==="text") {
-        const v=(el.value||"").trim();
-        if(v) fd.append(name, v);
-      }
-    });
-
-    // checkbox groups (we append correctly for Google)
-    checkGroups.forEach(g=>{
-      g.checkboxes.filter(c=>c.checked).forEach(c=>fd.append(g.entryName, c.value));
-      const otherVal = (g.otherInput?.value || "").trim();
-      if(otherVal){
-        fd.append(g.entryName, "Outro");
-        if(g.otherName) fd.append(g.otherName, otherVal);
-      }
-    });
+    const btn = $('button[type="submit"]', form);
+    if(btn){
+      btn.disabled = true;
+      btn.dataset.loading = "true";
+    }
 
     try{
-      await fetch(ENDPOINT, { method:"POST", mode:"no-cors", body: fd });
+      await submit();
       form.reset();
-      checkGroups.forEach(g=>g.checkboxes.forEach(c=>c.disabled=false));
-      clearErrors();
-      setStatus("enviado. obrigada!");
-      setTimeout(()=>setStatus(""), 5000);
-    } catch(err){
-      console.error(err);
-      setStatus("não foi possível enviar agora. tente novamente.");
-    } finally {
-      submitBtn.disabled = false;
+      setStatus("enviado. obrigada!", "ok");
+    }catch(e){
+      console.error(e);
+      setStatus("não consegui enviar agora. tente novamente em instantes.", "error");
+    }finally{
+      if(btn){
+        btn.disabled = false;
+        btn.dataset.loading = "false";
+      }
     }
   });
 })();
