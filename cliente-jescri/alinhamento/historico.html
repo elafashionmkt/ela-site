@@ -3,133 +3,136 @@
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
-  <meta content="#cd0005" name="theme-color"/>
-  <meta content="only light" name="color-scheme"/>
-  <title>histórico | alinhamento | área do cliente | jescri</title>
-  <link href="../../assets/fav-ela.webp" rel="icon" type="image/webp"/>
-  <link crossorigin="" href="https://use.typekit.net" rel="preconnect"/>
-  <link href="//use.typekit.net" rel="dns-prefetch"/>
-  <link href="https://use.typekit.net/piy8ljr.css" rel="stylesheet"/>
-  <link href="../../styles.css" rel="stylesheet"/>
-  <link href="../styles.css" rel="stylesheet"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+  <meta name="theme-color" content="#cd0005"/>
+  <meta name="color-scheme" content="only light"/>
+  <title>alinhamento | histórico | jescri</title>
+  <link rel="icon" type="image/webp" href="../../assets/fav-ela.webp"/>
+  <link rel="preconnect" href="https://use.typekit.net" crossorigin=""/>
+  <link rel="dns-prefetch" href="//use.typekit.net"/>
+  <link rel="stylesheet" href="https://use.typekit.net/piy8ljr.css"/>
+
+  <link rel="stylesheet" href="../../styles.css"/>
+  <link rel="stylesheet" href="../styles.css"/>
 </head>
+
 <body>
   <a class="skip" href="#conteudo">pular para o conteúdo</a>
-  <div aria-label="acesso restrito" aria-modal="true" class="auth" role="dialog">
-  <div class="auth__card">
-    <div class="auth__head">
-      <img alt="logo elã" class="auth__logo" src="../../assets/logo-ela.svg"/>
-      <div>
-        <h1 class="auth__title">área do cliente</h1>
-        <p class="auth__sub">jescri</p>
+
+  <div class="auth" role="dialog" aria-modal="true" aria-label="acesso restrito">
+    <div class="auth__card">
+      <div class="auth__head">
+        <img class="auth__logo" src="../../assets/logo-ela.svg" alt="logo elã"/>
+        <div>
+          <h1 class="auth__title">área do cliente</h1>
+          <p class="auth__sub">jescri</p>
+        </div>
       </div>
+      <p class="auth__text">esta área reúne materiais e rotinas de trabalho. digite a senha para continuar.</p>
+      <form class="auth__form" id="authForm">
+        <label class="sr" for="authPass">senha</label>
+        <input id="authPass" type="password" autocomplete="current-password" placeholder="senha"/>
+        <button type="submit">entrar</button>
+      </form>
+      <div class="auth__error" id="authError" aria-live="polite">senha incorreta. tente novamente.</div>
+      <p class="auth__note">dica: se você abrir em uma aba privada, vai pedir a senha de novo.</p>
     </div>
-    <p class="auth__text">esta área reúne materiais e rotinas de trabalho. digite a senha para continuar.</p>
-    <form class="auth__form" id="authForm">
-      <label class="sr" for="authPass">senha</label>
-      <input autocomplete="current-password" id="authPass" placeholder="senha" type="password"/>
-      <button type="submit">entrar</button>
-    </form>
-    <div aria-live="polite" class="auth__error" id="authError">senha incorreta. tente novamente.</div>
-    <p class="auth__note">dica: se você abrir em uma aba privada, vai pedir a senha de novo.</p>
   </div>
-</div>
 
   <main class="cliente" id="conteudo">
-    <header aria-label="capa" class="cliente__hero">
+    <header class="cliente__hero" aria-label="capa">
       <div class="container cliente__heroInner">
         <h2 class="cliente__title">área do cliente: <span class="cliente__titleEm">jescri</span></h2>
       </div>
     </header>
 
-    <section aria-label="menu" class="cliente__menu">
+    <section class="cliente__menu" aria-label="menu">
       <div class="container">
-        <div aria-label="atalhos" class="menuGrid" role="navigation">
-  <section class="menuCol">
-    <button aria-expanded="false" class="menuCol__title" type="button">retrospectiva anual</button>
-    <div class="menuCol__links">
-      <a href="https://www.elafashionmkt.com.br/retrospectiva-jescri" rel="noopener" target="_blank">2025</a>
-      <a data-placeholder="retrospectiva-historico" href="../opssss.html" rel="noopener" target="_blank">histórico</a>
-    </div>
-  </section>
+        <div class="menuGrid" role="navigation" aria-label="atalhos">
+          <section class="menuCol">
+            <button class="menuCol__title" type="button" aria-expanded="false">retrospectiva anual</button>
+            <div class="menuCol__links">
+              <a href="https://www.elafashionmkt.com.br/retrospectiva-jescri" target="_blank" rel="noopener">2025</a>
+              <a href="../opssss.html" target="_blank" rel="noopener">histórico</a>
+            </div>
+          </section>
 
-  <section class="menuCol">
-    <button aria-expanded="false" class="menuCol__title" type="button">relatórios</button>
-    <div class="menuCol__links">
-      <a data-placeholder="relatorios-trimestral" href="../opssss.html">trimestral</a>
-      <a data-placeholder="relatorios-analise-criativos" href="#">análise: criativos</a>
-    </div>
-  </section>
+          <section class="menuCol">
+            <button class="menuCol__title" type="button" aria-expanded="false">relatórios</button>
+            <div class="menuCol__links">
+              <a href="../opssss.html">trimestral</a>
+              <a href="#">análise: criativos</a>
+            </div>
+          </section>
 
-  <section class="menuCol">
-    <button aria-expanded="false" class="menuCol__title" type="button">calendário</button>
-    <div class="menuCol__links">
-      <a data-placeholder="calendario-semestral" href="#">calendário do semestre</a>
-    </div>
-  </section>
+          <section class="menuCol">
+            <button class="menuCol__title" type="button" aria-expanded="false">calendário</button>
+            <div class="menuCol__links">
+              <a href="#">calendário do semestre</a>
+            </div>
+          </section>
 
-  <section class="menuCol">
-    <button aria-expanded="false" class="menuCol__title" type="button">social media</button>
-    <div class="menuCol__links">
-      <a href="https://docs.google.com/document/d/1SGiBtv-jDjVF2-XcjbJ6krWrl4xKTKODz51_9hUiU3k/edit?usp=sharing" rel="noopener" target="_blank">programação do mês</a>
-      <a href="https://drive.google.com/drive/folders/1OVXCeFJ9dAV9iaEhD8JVMwmDsX-0xVt-?usp=sharing" rel="noopener" target="_blank">histórico de programação</a>
-      <a href="https://drive.google.com/drive/folders/1m5xox94UF75f-Hqm166SXZM2SWTI2UtP?usp=drive_link" rel="noopener" target="_blank">criativos do mês</a>
-      <a href="https://drive.google.com/drive/folders/1OVXCeFJ9dAV9iaEhD8JVMwmDsX-0xVt-?usp=sharing" rel="noopener" target="_blank">histórico de criativos</a>
-    </div>
-  </section>
+          <section class="menuCol">
+            <button class="menuCol__title" type="button" aria-expanded="false">social media</button>
+            <div class="menuCol__links">
+              <a href="https://docs.google.com/document/d/1SGiBtv-jDjVF2-XcjbJ6krWrl4xKTKODz51_9hUiU3k/edit?usp=sharing" target="_blank" rel="noopener">programação do mês</a>
+              <a href="https://drive.google.com/drive/folders/1OVXCeFJ9dAV9iaEhD8JVMwmDsX-0xVt-?usp=sharing" target="_blank" rel="noopener">histórico de programação</a>
+              <a href="https://drive.google.com/drive/folders/1m5xox94UF75f-Hqm166SXZM2SWTI2UtP?usp=drive_link" target="_blank" rel="noopener">criativos do mês</a>
+              <a href="https://drive.google.com/drive/folders/1OVXCeFJ9dAV9iaEhD8JVMwmDsX-0xVt-?usp=sharing" target="_blank" rel="noopener">histórico de criativos</a>
+            </div>
+          </section>
 
-  <section class="menuCol">
-    <button aria-expanded="false" class="menuCol__title" type="button">influência</button>
-    <div class="menuCol__links">
-      <a data-placeholder="influencia-ativacoes" href="#">ativações de influenciadoras</a>
-    </div>
-  </section>
+          <section class="menuCol">
+            <button class="menuCol__title" type="button" aria-expanded="false">influência</button>
+            <div class="menuCol__links">
+              <a href="#">ativações de influenciadoras</a>
+            </div>
+          </section>
 
-  <section class="menuCol">
-    <button aria-expanded="false" class="menuCol__title" type="button">fotos</button>
-    <div class="menuCol__links">
-      <a data-placeholder="fotos-campanha" href="#">fotos de campanha</a>
-      <a data-placeholder="fotos-lookbook" href="#">lookbook</a>
-    </div>
-  </section>
+          <section class="menuCol">
+            <button class="menuCol__title" type="button" aria-expanded="false">fotos</button>
+            <div class="menuCol__links">
+              <a href="#">fotos de campanha</a>
+              <a href="#">lookbook</a>
+            </div>
+          </section>
 
-  <section class="menuCol">
-    <button aria-expanded="false" class="menuCol__title" type="button">alinhamento</button>
-    <div class="menuCol__links">
-      <a data-placeholder="alinhamento-formulario" href="./">formulário bimestral</a>
-      <a data-placeholder="alinhamento-historico" href="./historico.html">histórico de alinhamentos</a>
-    </div>
-  </section>
-</div>
+          <section class="menuCol is-open">
+            <button class="menuCol__title" type="button" aria-expanded="true">alinhamento</button>
+            <div class="menuCol__links">
+              <a href="./">formulário semestral</a>
+              <a href="./historico.html">histórico de alinhamentos</a>
+            </div>
+          </section>
+        </div>
       </div>
     </section>
 
-    <section aria-label="histórico" class="cliente__content">
-  <div class="container">
-    <h3 class="cliente__contentTitle">histórico de alinhamentos</h3>
-    <p class="cliente__contentText">opssss! parece que não há nada por aqui.</p>
-    <p class="cliente__contentText"><a class="cliente__contentLink" href="../" rel="noopener">voltar para a área do cliente</a></p>
-  </div>
-</section>
-
-    <section aria-label="banner" class="cliente__banner">
-      <img alt="" loading="eager" src="../assets/box-header.jpg"/>
+    <section class="cliente__content" aria-label="conteúdo">
+      <div class="container">
+        <h3 class="cliente__contentTitle">histórico de alinhamentos</h3>
+        <p class="cliente__contentText">opssss! parece que não há nada por aqui.</p>
+        <a class="cliente__contentLink" href="../">voltar para a área do cliente</a>
+      </div>
     </section>
 
-    <footer aria-label="Rodapé" class="footerBar">
-  <div class="footerBar__inner">
-    <a aria-label="Voltar ao topo" class="footerBar__logo" href="#topo">
-      <img alt="elã" src="../../assets/logo-ela.svg"/>
-    </a>
-    <p class="footerBar__copy">© 2026 todos os direitos reservados</p>
-    <div aria-label="Redes e contato" class="footerBar__social">
-      <a aria-label="WhatsApp" href="#"><img alt="" aria-hidden="true" src="../../assets/whatsapp.svg"/></a>
-      <a aria-label="Instagram" href="#"><img alt="" aria-hidden="true" src="../../assets/instagram.svg"/></a>
-      <a aria-label="Linkedin" href="#"><img alt="" aria-hidden="true" src="../../assets/linkedin.svg"/></a>
-    </div>
-  </div>
-</footer>
+    <section class="cliente__banner" aria-label="banner">
+      <img src="../assets/box-header.jpg" loading="eager" alt=""/>
+    </section>
+
+    <footer class="footerBar" aria-label="rodapé">
+      <div class="footerBar__inner">
+        <a class="footerBar__logo" href="#topo" aria-label="voltar ao topo">
+          <img src="../../assets/logo-ela.svg" alt="elã"/>
+        </a>
+        <p class="footerBar__copy">© 2026 todos os direitos reservados</p>
+        <div class="footerBar__social" aria-label="redes e contato">
+          <a href="#" aria-label="whatsapp"><img src="../../assets/whatsapp.svg" alt="" aria-hidden="true"/></a>
+          <a href="#" aria-label="instagram"><img src="../../assets/instagram.svg" alt="" aria-hidden="true"/></a>
+          <a href="#" aria-label="linkedin"><img src="../../assets/linkedin.svg" alt="" aria-hidden="true"/></a>
+        </div>
+      </div>
+    </footer>
   </main>
 
   <script src="../script.js"></script>
