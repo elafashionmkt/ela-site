@@ -2,69 +2,79 @@
 
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
-<meta content="#cd0005" name="theme-color"/>
-<meta content="only light" name="color-scheme"/>
-<title>área do cliente | jescri</title>
-<link href="../assets/fav-ela.webp" rel="icon" type="image/webp"/>
-<link crossorigin="" href="https://use.typekit.net" rel="preconnect"/>
-<link href="//use.typekit.net" rel="dns-prefetch"/>
-<link href="https://use.typekit.net/piy8ljr.css" rel="stylesheet"/>
-<!-- base do site + ajustes locais -->
-<link href="../styles.css" rel="stylesheet"/>
-<link href="styles.css" rel="stylesheet"/>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+  <meta name="theme-color" content="#cd0005"/>
+  <meta name="color-scheme" content="only light"/>
+  <title>área do cliente: jescri</title>
+  <link rel="icon" type="image/webp" href="../assets/fav-ela.webp"/>
+  <link rel="preconnect" href="https://use.typekit.net" crossorigin=""/>
+  <link rel="dns-prefetch" href="//use.typekit.net"/>
+  <link rel="stylesheet" href="https://use.typekit.net/piy8ljr.css"/>
+
+  <link rel="stylesheet" href="../styles.css"/>
+  <link rel="stylesheet" href="./styles.css"/>
 </head>
+
 <body>
-<a class="skip" href="#conteudo">pular para o conteúdo</a>
-<!-- login (bloqueio visual) -->
-<div aria-label="acesso restrito" aria-modal="true" class="auth" role="dialog">
-<div class="auth__card">
-<div class="auth__head">
-<img alt="logo elã" class="auth__logo" src="../assets/logo-ela.svg"/>
-<div>
-<h1 class="auth__title">área do cliente</h1>
-<p class="auth__sub">jescri</p>
-</div>
-</div>
-<p class="auth__text">esta área reúne materiais e rotinas de trabalho. digite a senha para continuar.</p>
-<form class="auth__form" id="authForm">
-<label class="sr" for="authPass">senha</label>
-<input autocomplete="current-password" id="authPass" placeholder="senha" type="password"/>
-<button type="submit">entrar</button>
-</form>
-<div aria-live="polite" class="auth__error" id="authError">senha incorreta. tente novamente.</div>
-<p class="auth__note">dica: se você abrir em uma aba privada, vai pedir a senha de novo.</p>
-</div>
-</div>
-<main class="cliente" id="conteudo">
-<header aria-label="capa" class="cliente__hero">
-<div class="container cliente__heroInner">
-<h2 class="cliente__title">área do cliente: <span class="cliente__titleEm">jescri</span></h2>
-</div>
-</header>
-<section aria-label="menu" class="cliente__menu">
+  <a class="skip" href="#conteudo">pular para o conteúdo</a>
+
+  <!-- login (bloqueio visual) -->
+  <div class="auth" role="dialog" aria-modal="true" aria-label="acesso restrito">
+    <div class="auth__card">
+      <div class="auth__head">
+        <img class="auth__logo" src="../assets/logo-ela.svg" alt="logo elã"/>
+        <div>
+          <h1 class="auth__title">área do cliente</h1>
+          <p class="auth__sub">jescri</p>
+        </div>
+      </div>
+      <p class="auth__text">esta área reúne materiais e rotinas de trabalho. digite a senha para continuar.</p>
+      <form class="auth__form" id="authForm">
+        <label class="sr" for="authPass">senha</label>
+        <input id="authPass" type="password" autocomplete="current-password" placeholder="senha"/>
+        <button type="submit">entrar</button>
+      </form>
+      <div class="auth__error" id="authError" aria-live="polite">senha incorreta. tente novamente.</div>
+      <p class="auth__note">dica: se você abrir em uma aba privada, vai pedir a senha de novo.</p>
+    </div>
+  </div>
+
+
+  <main class="cliente" id="conteudo">
+    <header class="cliente__hero" aria-label="capa">
+      <div class="container cliente__heroInner">
+        <h2 class="cliente__title">área do cliente: <span class="cliente__titleEm">jescri</span></h2>
+      </div>
+    </header>
+
+    <section aria-label="menu" class="cliente__menu">
 <div class="container">
-<div aria-label="atalhos" class="menuGrid" role="navigation"><section class="menuCol"><button aria-expanded="false" class="menuCol__title" type="button">retrospectiva anual</button><div class="menuCol__links"><a href="https://www.elafashionmkt.com.br/retrospectiva-jescri" rel="noopener" target="_blank">2025</a><a data-placeholder="retrospectiva-historico" href="./opssss.html" rel="noopener" target="_blank">histórico</a></div></section><section class="menuCol"><button aria-expanded="false" class="menuCol__title" type="button">relatórios</button><div class="menuCol__links"><a data-placeholder="relatorios-trimestral" href="./opssss.html">trimestral</a><a data-placeholder="relatorios-analise-criativos" href="#">análise: criativos</a></div></section><section class="menuCol"><button aria-expanded="false" class="menuCol__title" type="button">calendário</button><div class="menuCol__links"><a data-placeholder="calendario-semestral" href="#">calendário do semestre</a></div></section><section class="menuCol"><button aria-expanded="false" class="menuCol__title" type="button">social media</button><div class="menuCol__links"><a href="https://docs.google.com/document/d/1SGiBtv-jDjVF2-XcjbJ6krWrl4xKTKODz51_9hUiU3k/edit?usp=sharing" rel="noopener" target="_blank">programação do mês</a><a href="https://drive.google.com/drive/folders/1OVXCeFJ9dAV9iaEhD8JVMwmDsX-0xVt-?usp=sharing" rel="noopener" target="_blank">histórico de programação</a><a href="https://drive.google.com/drive/folders/1m5xox94UF75f-Hqm166SXZM2SWTI2UtP?usp=drive_link" rel="noopener" target="_blank">criativos do mês</a><a href="https://drive.google.com/drive/folders/1OVXCeFJ9dAV9iaEhD8JVMwmDsX-0xVt-?usp=sharing" rel="noopener" target="_blank">histórico de criativos</a></div></section><section class="menuCol"><button aria-expanded="false" class="menuCol__title" type="button">influência</button><div class="menuCol__links"><a data-placeholder="influencia-ativacoes" href="#">ativações de influenciadoras</a></div></section><section class="menuCol"><button aria-expanded="false" class="menuCol__title" type="button">fotos</button><div class="menuCol__links"><a data-placeholder="fotos-campanha" href="#">fotos de campanha</a><a data-placeholder="fotos-lookbook" href="#">lookbook</a></div></section><section class="menuCol"><button aria-expanded="false" class="menuCol__title" type="button">alinhamento</button><div class="menuCol__links"><a data-placeholder="alinhamento-formulario" href="./alinhamento/">formulário semestral</a><a data-placeholder="alinhamento-historico" href="./alinhamento/historico.html">histórico de alinhamentos</a></div></section></div>
+<div class="menuGrid" role="navigation" aria-label="atalhos"><section class="menuCol"><button class="menuCol__title" type="button" aria-expanded="false">retrospectiva anual</button><div class="menuCol__links"><a href="https://www.elafashionmkt.com.br/retrospectiva-jescri" data-link-id="RETRO-2025" target="_blank" rel="noopener">2025</a><a href="/cliente-jescri/opssss.html" data-link-id="RETRO-HIST" target="_blank" rel="noopener">histórico</a></div></section><section class="menuCol"><button class="menuCol__title" type="button" aria-expanded="false">relatórios</button><div class="menuCol__links"><a href="/cliente-jescri/opssss.html" data-link-id="REL-TRI">trimestral</a><a href="https://docs.google.com/spreadsheets/d/1_NM8zC8NRFiLzMH3b4x9KfIXoSkVHUUbriHU1sqCYxQ/edit?gid=316240602#gid=316240602" data-link-id="REL-CRI" target="_blank" rel="noopener">análise: criativos</a></div></section><section class="menuCol"><button class="menuCol__title" type="button" aria-expanded="false">calendário</button><div class="menuCol__links"><a href="/cliente-jescri/calendario/" data-link-id="CAL-SEM">semestral</a><a href="/cliente-jescri/calendario/fevereiro.html" data-link-id="CAL-FEV">fevereiro</a><a href="/cliente-jescri/calendario/marco.html" data-link-id="CAL-MAR">março</a><a href="/cliente-jescri/calendario/abril.html" data-link-id="CAL-ABR">abril</a></div></section><section class="menuCol"><button class="menuCol__title" type="button" aria-expanded="false">social media</button><div class="menuCol__links"><a href="https://docs.google.com/document/d/1SGiBtv-jDjVF2-XcjbJ6krWrl4xKTKODz51_9hUiU3k/edit?usp=sharing" data-link-id="SM-FEV" target="_blank" rel="noopener">fevereiro</a><a href="https://drive.google.com/drive/folders/1IOSAaw2U-QOgShSrU8Ijere4ZjvGWe9Q?usp=sharing" data-link-id="SM-MAR" target="_blank" rel="noopener">março</a><a href="https://drive.google.com/drive/folders/1V0Qy6ijnmwiBUGy06QuQ-48Iy6QLNajy?usp=drive_link" data-link-id="SM-ABR" target="_blank" rel="noopener">abril</a><a href="https://drive.google.com/drive/folders/1OVXCeFJ9dAV9iaEhD8JVMwmDsX-0xVt-?usp=sharing" data-link-id="SM-HIST" target="_blank" rel="noopener">histórico</a></div></section><section class="menuCol"><button class="menuCol__title" type="button" aria-expanded="false">influência</button><div class="menuCol__links"><a href="/cliente-jescri/opssss.html" data-link-id="INF-ATV" target="_blank" rel="noopener">ativações do mês</a></div></section><section class="menuCol"><button class="menuCol__title" type="button" aria-expanded="false">fotos</button><div class="menuCol__links"><a href="https://drive.google.com/drive/folders/1bfLATnqRxa1rRFFYgQ4STIwqsTmlo3kd?usp=drive_link" data-link-id="FOT-VERTICE" target="_blank" rel="noopener">vértice</a><a href="https://drive.google.com/drive/folders/1_-4286F_eDhoEzVPaDQkuFwZIaDz9Du_" data-link-id="FOT-FLORESCER" target="_blank" rel="noopener">florescer</a><a href="https://drive.google.com/drive/folders/1vkYYwt-ANdTDQD__gI8FvSO1tUIEPq_Q" data-link-id="FOT-BLESS" target="_blank" rel="noopener">bless</a><a href="https://drive.google.com/drive/folders/1lK73Z8s7YW0YwRWpm3PuMvFwisUWE6Ot" data-link-id="FOT-DOLCEVITTA" target="_blank" rel="noopener">dolce vitta</a></div></section><section class="menuCol"><button class="menuCol__title" type="button" aria-expanded="false">alinhamento</button><div class="menuCol__links"><a href="/cliente-jescri/alinhamento/" data-link-id="ALIN-FORM">formulário semestral</a><a href="/cliente-jescri/opssss.html" data-link-id="ALIN-HIST" target="_blank" rel="noopener">histórico</a></div></section></div>
 </div>
 </section>
-<section aria-label="banner" class="cliente__banner">
-<img alt="" loading="eager" src="assets/box-header.jpg"/>
-</section>
-<footer aria-label="rodapé" class="footerBar">
-<div class="footerBar__inner">
-<a aria-label="voltar ao topo" class="footerBar__logo" href="#topo">
-<img alt="elã" src="../assets/logo-ela.svg"/>
-</a>
-<p class="footerBar__copy">© 2026 todos os direitos reservados</p>
-<div aria-label="redes e contato" class="footerBar__social">
-<a aria-label="whatsapp" href="#"><img alt="" aria-hidden="true" src="../assets/whatsapp.svg"/></a>
-<a aria-label="instagram" href="#"><img alt="" aria-hidden="true" src="../assets/instagram.svg"/></a>
-<a aria-label="linkedin" href="#"><img alt="" aria-hidden="true" src="../assets/linkedin.svg"/></a>
-</div>
-</div>
-</footer>
-</main>
-<script src="script.js"></script>
+
+
+
+    <section class="cliente__banner" aria-label="banner">
+      <img src="./assets/box-header.jpg" loading="eager" alt=""/>
+    </section>
+
+    <footer class="footerBar" aria-label="rodapé">
+      <div class="footerBar__inner">
+        <a class="footerBar__logo" href="#topo" aria-label="voltar ao topo">
+          <img src="../assets/logo-ela.svg" alt="elã"/>
+        </a>
+        <p class="footerBar__copy">© 2026 todos os direitos reservados</p>
+        <div class="footerBar__social" aria-label="redes e contato">
+          <a href="#" aria-label="whatsapp"><img src="../assets/whatsapp.svg" alt="" aria-hidden="true"/></a>
+          <a href="#" aria-label="instagram"><img src="../assets/instagram.svg" alt="" aria-hidden="true"/></a>
+          <a href="#" aria-label="linkedin"><img src="../assets/linkedin.svg" alt="" aria-hidden="true"/></a>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script src="./script.js"></script>
 </body>
 </html>
