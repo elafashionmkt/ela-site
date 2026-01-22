@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>alinhamento | jescri</title>
 
-  <!-- mantém as fontes do site (typekit), se já estiverem no projeto -->
   <link rel="preconnect" href="https://use.typekit.net" crossorigin>
   <link rel="stylesheet" href="https://use.typekit.net/piy8ljr.css">
 
@@ -13,42 +12,47 @@
 </head>
 
 <body>
-  <!-- gate de senha (mesmo padrão simples em overlay) -->
+  <!-- gate de senha -->
   <div id="gate" class="gate" aria-hidden="false">
     <div class="gate-card" role="dialog" aria-modal="true" aria-label="acesso restrito">
       <p class="gate-title">área do cliente: <strong>jescri</strong></p>
       <p class="gate-sub">digite a senha para acessar</p>
 
       <form id="gateForm" class="gate-form" autocomplete="off">
-        <input id="gatePass" type="password" inputmode="text" placeholder="senha" aria-label="senha" required />
+        <input id="gatePass" type="password" placeholder="senha" aria-label="senha" required />
         <button class="btn" type="submit">entrar</button>
-        <p id="gateErr" class="gate-err" role="status" aria-live="polite"></p>
       </form>
+
+      <p id="gateErr" class="gate-err" role="status" aria-live="polite"></p>
     </div>
   </div>
 
   <main class="page">
     <header class="head">
       <p class="kicker">alinhamento</p>
-      <h1 class="h1">mapa de ações do semestre</h1>
-      <p class="desc">vamos organizar o semestre com antecedência: quais ações entram, quais lançamentos e reposições precisam estar prontos e quais datas pedem esforço maior. o dia do consumidor (15/03) funciona melhor quando tratado como ação presenteável (como foi natal, porque reforça a ideia de ganhar algo – como um presente), ajudando a aquecer intenção de compra. e para dia das mães e dia dos namorados, a ideia é confirmar timing de coleção, janelas de aquecimento e prazos de entrega para garantir uma campanha redonda.</p>
+      <h1 class="h1">formulário semestral</h1>
+      <p class="desc">preencha para alinharmos as ações do semestre.</p>
     </header>
 
     <section class="card">
       <form id="customForm" class="form" novalidate>
         <!-- q1 -->
         <fieldset class="field">
-          <legend>qual verba disponível para realizarmos ação presenteável no dia da consumidora (15 de março)?</legend>
+          <legend>qual verba disponível para realizarmos ação presenteável no dia da consumidora (15 de março)? <span class="req">*</span></legend>
           <label class="opt"><input type="radio" name="entry.608355488" value="1.500 a 3.000" required> <span>1.500 a 3.000</span></label>
           <label class="opt"><input type="radio" name="entry.608355488" value="3.000 a 5.000"> <span>3.000 a 5.000</span></label>
           <label class="opt"><input type="radio" name="entry.608355488" value="verba indisponível, pensar em outro tipo de ação"> <span>verba indisponível, pensar em outro tipo de ação</span></label>
+          <p class="err" data-err="entry.608355488"></p>
         </fieldset>
 
         <!-- q2 -->
         <fieldset class="field">
-          <legend>objetivos principais da campanha de dia das mães (até três)</legend>
-          <div class="hint">selecione até 3</div>
-          <div class="checks" data-max="3" data-other="true" data-entry="entry.1282316341" data-other-name="entry.1282316341.other_option_response">
+          <legend>objetivos principais da campanha de dia das mães (até três) <span class="req">*</span></legend>
+          <div class="hint">selecione de 1 a 3</div>
+
+          <div class="checks"
+               data-required="true" data-min="1" data-max="3" data-other="true"
+               data-entry="entry.1282316341" data-other-name="entry.1282316341.other_option_response">
             <label class="opt"><input type="checkbox" value="conversão"> <span>conversão</span></label>
             <label class="opt"><input type="checkbox" value="aumentar ticket médio"> <span>aumentar ticket médio</span></label>
             <label class="opt"><input type="checkbox" value="atrair novos clientes"> <span>atrair novos clientes</span></label>
@@ -62,14 +66,17 @@
               </label>
             </div>
           </div>
+
+          <p class="err" data-err="entry.1282316341"></p>
         </fieldset>
 
         <!-- q3 -->
         <fieldset class="field">
-          <legend>para campanha conceitual de dia das mães, qual é o budget possível para a empresa?</legend>
+          <legend>para campanha conceitual de dia das mães, qual é o budget possível para a empresa? <span class="req">*</span></legend>
           <label class="opt"><input type="radio" name="entry.1150077510" value="até 5.000" required> <span>até 5.000</span></label>
           <label class="opt"><input type="radio" name="entry.1150077510" value="5.000 a 10.000"> <span>5.000 a 10.000</span></label>
           <label class="opt"><input type="radio" name="entry.1150077510" value="10.000 a 15.000"> <span>10.000 a 15.000</span></label>
+          <p class="err" data-err="entry.1150077510"></p>
         </fieldset>
 
         <!-- q4 -->
@@ -80,9 +87,12 @@
 
         <!-- q5 -->
         <fieldset class="field">
-          <legend>objetivos principais da campanha de dia dos namorados (até três)</legend>
-          <div class="hint">selecione até 3</div>
-          <div class="checks" data-max="3" data-other="true" data-entry="entry.2116269694" data-other-name="entry.2116269694.other_option_response">
+          <legend>objetivos principais da campanha de dia dos namorados (até três) <span class="req">*</span></legend>
+          <div class="hint">selecione de 1 a 3</div>
+
+          <div class="checks"
+               data-required="true" data-min="1" data-max="3" data-other="true"
+               data-entry="entry.2116269694" data-other-name="entry.2116269694.other_option_response">
             <label class="opt"><input type="checkbox" value="conversão"> <span>conversão</span></label>
             <label class="opt"><input type="checkbox" value="aumentar ticket médio"> <span>aumentar ticket médio</span></label>
             <label class="opt"><input type="checkbox" value="atrair novos clientes"> <span>atrair novos clientes</span></label>
@@ -96,38 +106,44 @@
               </label>
             </div>
           </div>
+
+          <p class="err" data-err="entry.2116269694"></p>
         </fieldset>
 
         <!-- q6 -->
         <fieldset class="field">
-          <legend>datas referentes à coleção de dia dos namorados que estão em responsabilidade da empresa conseguem ser atendidas?</legend>
+          <legend>datas referentes à coleção de dia dos namorados que estão em responsabilidade da empresa conseguem ser atendidas? <span class="req">*</span></legend>
           <label class="opt"><input type="radio" name="entry.1922232672" value="sim" required> <span>sim</span></label>
           <label class="opt"><input type="radio" name="entry.1922232672" value="não"> <span>não</span></label>
           <label class="opt"><input type="radio" name="entry.1922232672" value="parcialmente"> <span>parcialmente</span></label>
+          <p class="err" data-err="entry.1922232672"></p>
         </fieldset>
 
         <!-- q7 -->
         <fieldset class="field">
-          <legend>data de lançamento sugerida na planilha da coleção de dia dos namorados faz sentido para empresa?</legend>
+          <legend>data de lançamento sugerida na planilha da coleção de dia dos namorados faz sentido para empresa? <span class="req">*</span></legend>
           <label class="opt"><input type="radio" name="entry.1382130999" value="sim" required> <span>sim</span></label>
           <label class="opt"><input type="radio" name="entry.1382130999" value="não"> <span>não</span></label>
+          <p class="err" data-err="entry.1382130999"></p>
         </fieldset>
 
         <!-- q8 -->
         <fieldset class="field">
-          <legend>haverá algum outro lançamento dentro da janela de inverno e alto inverno (planilha [datas] lançamentos)</legend>
+          <legend>haverá algum outro lançamento dentro da janela de inverno e alto inverno? <span class="req">*</span></legend>
           <label class="opt"><input type="radio" name="entry.884541829" value="sim, teremos coleção completa" required> <span>sim, teremos coleção completa</span></label>
           <label class="opt"><input type="radio" name="entry.884541829" value="sim, teremos coleção cápsula"> <span>sim, teremos coleção cápsula</span></label>
           <label class="opt"><input type="radio" name="entry.884541829" value="não"> <span>não</span></label>
           <label class="opt"><input type="radio" name="entry.884541829" value="talvez"> <span>talvez</span></label>
+          <p class="err" data-err="entry.884541829"></p>
         </fieldset>
 
         <!-- q9 -->
         <fieldset class="field">
-          <legend>para campanha conceitual de dia dos namorados, qual é o budget possível para a empresa?</legend>
+          <legend>para campanha conceitual de dia dos namorados, qual é o budget possível para a empresa? <span class="req">*</span></legend>
           <label class="opt"><input type="radio" name="entry.511642861" value="até 5.000" required> <span>até 5.000</span></label>
           <label class="opt"><input type="radio" name="entry.511642861" value="5.000 a 10.000"> <span>5.000 a 10.000</span></label>
           <label class="opt"><input type="radio" name="entry.511642861" value="10.000 a 15.000"> <span>10.000 a 15.000</span></label>
+          <p class="err" data-err="entry.511642861"></p>
         </fieldset>
 
         <!-- q10 -->
@@ -141,7 +157,7 @@
           <span id="status" class="status" role="status" aria-live="polite"></span>
         </div>
 
-        <p class="fineprint">nunca envie senhas por aqui.</p>
+        <p class="fineprint">* campos obrigatórios</p>
       </form>
     </section>
   </main>
