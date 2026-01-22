@@ -2,211 +2,247 @@
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>elã | cliente jescri</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#CD0005" />
+  <title>área do cliente | jescri</title>
 
   <link rel="icon" href="../assets/fav-ela.webp" type="image/webp" />
+  <link rel="preconnect" href="https://use.typekit.net" crossorigin />
+  <link rel="dns-prefetch" href="//use.typekit.net" />
   <link rel="stylesheet" href="https://use.typekit.net/piy8ljr.css" />
+
   <link rel="stylesheet" href="../styles.css" />
-  <link rel="stylesheet" href="styles-cliente.css" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
-  <a class="skip" href="#conteudo">Pular para o conteúdo</a>
+  <a class="skip" href="#conteudo">pular para o conteúdo</a>
+
+  <!-- overlay de transição -->
   <div class="pageTransition" aria-hidden="true"></div>
 
-  <header class="hero hero--cliente" id="topo">
-    <div class="container hero__container">
-      <nav class="nav" aria-label="Navegação principal">
-        <a class="brand" href="../index.html" aria-label="Voltar ao site elã">
-          <img class="brand__logo" src="../assets/2-11.svg" alt="Logo elã" />
-        </a>
-
-        <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Abrir menu">
-          <span class="nav__toggle-line" aria-hidden="true"></span>
-          <span class="nav__toggle-line" aria-hidden="true"></span>
-          <span class="nav__toggle-line" aria-hidden="true"></span>
-        </button>
-
-        <div class="nav__links" id="nav-links">
-          <a href="#hub">hub</a>
-          <a href="#atalhos">atalhos</a>
-          <a href="#influencia">influência</a>
-          <a href="#alinhamento">alinhamento</a>
+  <!-- login (bloqueio visual) -->
+  <div class="auth" role="dialog" aria-modal="true" aria-label="acesso restrito">
+    <div class="auth__card">
+      <div class="auth__head">
+        <img class="auth__logo" src="../assets/logo-ela.svg" alt="logo elã" />
+        <div>
+          <p class="auth__kicker">elã</p>
+          <h1 class="auth__title">área do cliente: jescri</h1>
         </div>
-      </nav>
+      </div>
 
-      <div class="hero__grid hero__grid--cliente" id="conteudo">
-        <div class="hero__copy reveal">
-          <h1 class="h1">cliente <span class="h1__em">jescri</span></h1>
-          <p class="hero__sub">central de relatórios, calendário, social e influência.</p>
+      <p class="auth__text">digite a senha para continuar.</p>
 
-          <div class="clienteMeta">
-            <span class="clienteMeta__pill">semestral: fev–jul</span>
-            <span class="clienteMeta__pill">bimestral: alinhamento</span>
-            <span class="clienteMeta__pill">trimestral: relatórios</span>
+      <form class="auth__form" id="authForm">
+        <label class="sr" for="authPass">senha</label>
+        <input id="authPass" type="password" autocomplete="current-password" placeholder="senha" />
+        <button type="submit">entrar</button>
+      </form>
+
+      <div class="auth__error" id="authError" aria-live="polite">senha incorreta. tente novamente.</div>
+
+      <p class="auth__note">dica: ao atualizar a página, a senha será solicitada novamente.</p>
+    </div>
+  </div>
+
+  <div class="site" id="topo">
+    <nav class="nav" aria-label="navegação principal">
+      <a class="brand" href="/" aria-label="voltar para o site elã">
+        <img class="brand__logo" src="../assets/logo-ela.svg" alt="logo elã" />
+      </a>
+
+      <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="abrir menu">
+        <span class="nav__toggle-line" aria-hidden="true"></span>
+        <span class="nav__toggle-line" aria-hidden="true"></span>
+        <span class="nav__toggle-line" aria-hidden="true"></span>
+      </button>
+
+      <div class="nav__links" id="nav-links">
+        <a href="#retrospectiva">retrospectiva</a>
+        <a href="#relatorios">relatórios</a>
+        <a href="#calendario">calendário</a>
+        <a href="#social">social media</a>
+        <a href="#influencia">influência</a>
+        <a href="#fotos">fotos</a>
+        <a href="#alinhamento">alinhamento</a>
+      </div>
+    </nav>
+
+    <header class="clientHero" aria-label="banner">
+      <div class="container clientHero__inner" id="conteudo">
+        <p class="clientHero__kicker">área do cliente</p>
+        <h2 class="clientHero__title">jescri</h2>
+        <p class="clientHero__text">atalhos, relatórios e rotinas em um único lugar.</p>
+      </div>
+    </header>
+
+    <main>
+      <section class="section section--clientHub">
+        <div class="container">
+          <div class="modules modules--client">
+
+            <article class="module reveal" data-module id="retrospectiva">
+              <button class="module__head" type="button" aria-expanded="false" aria-controls="m-retrospectiva" id="t-retrospectiva">
+                <span class="module__title"><strong>retrospectiva anual</strong></span>
+                <span class="module__chev" aria-hidden="true"></span>
+              </button>
+              <div class="module__body" role="region" id="m-retrospectiva" aria-labelledby="t-retrospectiva" aria-hidden="true">
+                <div class="module__inner">
+                  <div class="clientLinks">
+                    <a class="clientLink" href="../retrospectiva-jescri/" target="_blank" rel="noopener">2025</a>
+                    <a class="clientLink" href="#" data-placeholder="hist-retros">histórico</a>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="module reveal" data-module id="relatorios">
+              <button class="module__head" type="button" aria-expanded="false" aria-controls="m-relatorios" id="t-relatorios">
+                <span class="module__title"><strong>relatórios</strong></span>
+                <span class="module__chev" aria-hidden="true"></span>
+              </button>
+              <div class="module__body" role="region" id="m-relatorios" aria-labelledby="t-relatorios" aria-hidden="true">
+                <div class="module__inner">
+                  <div class="clientGrid">
+                    <div class="clientGroup">
+                      <h3 class="clientGroup__title">trimestral</h3>
+                      <div class="clientLinks">
+                        <a class="clientLink" href="#" data-placeholder="tri-1">1º tri</a>
+                        <a class="clientLink" href="#" data-placeholder="tri-2">2º tri</a>
+                        <a class="clientLink" href="#" data-placeholder="tri-3">3º tri</a>
+                        <a class="clientLink" href="#" data-placeholder="tri-4">4º tri</a>
+                      </div>
+                    </div>
+                    <div class="clientGroup">
+                      <h3 class="clientGroup__title">análise de criativos</h3>
+                      <div class="clientLinks">
+                        <a class="clientLink" href="#" data-placeholder="cri-1">1º tri</a>
+                        <a class="clientLink" href="#" data-placeholder="cri-2">2º tri</a>
+                        <a class="clientLink" href="#" data-placeholder="cri-3">3º tri</a>
+                        <a class="clientLink" href="#" data-placeholder="cri-4">4º tri</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="module reveal" data-module id="calendario">
+              <button class="module__head" type="button" aria-expanded="false" aria-controls="m-calendario" id="t-calendario">
+                <span class="module__title"><strong>calendário</strong></span>
+                <span class="module__chev" aria-hidden="true"></span>
+              </button>
+              <div class="module__body" role="region" id="m-calendario" aria-labelledby="t-calendario" aria-hidden="true">
+                <div class="module__inner">
+                  <div class="clientLinks">
+                    <a class="clientLink" href="#" data-placeholder="cal-sem">calendário do semestre</a>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="module reveal" data-module id="social">
+              <button class="module__head" type="button" aria-expanded="false" aria-controls="m-social" id="t-social">
+                <span class="module__title"><strong>social media</strong></span>
+                <span class="module__chev" aria-hidden="true"></span>
+              </button>
+              <div class="module__body" role="region" id="m-social" aria-labelledby="t-social" aria-hidden="true">
+                <div class="module__inner">
+                  <div class="clientGrid">
+                    <div class="clientGroup">
+                      <h3 class="clientGroup__title">programação</h3>
+                      <div class="clientLinks">
+                        <a class="clientLink" href="#" data-placeholder="prog-mes">programação do mês</a>
+                        <a class="clientLink" href="#" data-placeholder="prog-hist">histórico de programação</a>
+                      </div>
+                    </div>
+                    <div class="clientGroup">
+                      <h3 class="clientGroup__title">criativos</h3>
+                      <div class="clientLinks">
+                        <a class="clientLink" href="#" data-placeholder="cria-mes">criativos do mês</a>
+                        <a class="clientLink" href="#" data-placeholder="cria-hist">histórico de criativos</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="module reveal" data-module id="influencia">
+              <button class="module__head" type="button" aria-expanded="false" aria-controls="m-influencia" id="t-influencia">
+                <span class="module__title"><strong>influência</strong></span>
+                <span class="module__chev" aria-hidden="true"></span>
+              </button>
+              <div class="module__body" role="region" id="m-influencia" aria-labelledby="t-influencia" aria-hidden="true">
+                <div class="module__inner">
+                  <div class="clientLinks">
+                    <a class="clientLink" href="#" data-placeholder="infl-cal">ativações de influenciadoras</a>
+                    <p class="clientHint">(calendário puxado do sheets, entra na próxima etapa)</p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="module reveal" data-module id="fotos">
+              <button class="module__head" type="button" aria-expanded="false" aria-controls="m-fotos" id="t-fotos">
+                <span class="module__title"><strong>fotos</strong></span>
+                <span class="module__chev" aria-hidden="true"></span>
+              </button>
+              <div class="module__body" role="region" id="m-fotos" aria-labelledby="t-fotos" aria-hidden="true">
+                <div class="module__inner">
+                  <div class="clientGrid">
+                    <div class="clientGroup">
+                      <h3 class="clientGroup__title">fotos de campanha</h3>
+                      <div class="clientLinks">
+                        <a class="clientLink" href="#" data-placeholder="camp-colecoes">coleções</a>
+                      </div>
+                    </div>
+                    <div class="clientGroup">
+                      <h3 class="clientGroup__title">lookbook</h3>
+                      <div class="clientLinks">
+                        <a class="clientLink" href="#" data-placeholder="look-colecoes">coleções</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="module reveal" data-module id="alinhamento">
+              <button class="module__head" type="button" aria-expanded="false" aria-controls="m-alinhamento" id="t-alinhamento">
+                <span class="module__title"><strong>alinhamento</strong></span>
+                <span class="module__chev" aria-hidden="true"></span>
+              </button>
+              <div class="module__body" role="region" id="m-alinhamento" aria-labelledby="t-alinhamento" aria-hidden="true">
+                <div class="module__inner">
+                  <div class="clientLinks">
+                    <a class="clientLink" href="#" data-placeholder="form-bim">formulário bimestral de alinhamento</a>
+                    <a class="clientLink" href="#" data-placeholder="hist-alinh">histórico de alinhamentos</a>
+                  </div>
+                </div>
+              </div>
+            </article>
+
           </div>
         </div>
+      </section>
 
-        <div class="hero__decor reveal northWrap" aria-hidden="true">
-          <img class="north north--hero" src="../assets/17-406.svg" alt="" />
+      <footer class="footerBar" aria-label="rodapé">
+        <div class="footerBar__inner">
+          <a class="footerBar__logo" href="#topo" aria-label="voltar ao topo">
+            <img src="../assets/logo-ela.svg" alt="elã" />
+          </a>
+          <p class="footerBar__copy">© 2026 todos os direitos reservados</p>
+          <div class="footerBar__social" aria-label="redes e contato">
+            <a href="#" aria-label="whatsapp"><img src="../assets/whatsapp.svg" alt="" aria-hidden="true" /></a>
+            <a href="#" aria-label="instagram"><img src="../assets/instagram.svg" alt="" aria-hidden="true" /></a>
+          </div>
         </div>
-      </div>
-    </div>
-  </header>
+      </footer>
+    </main>
+  </div>
 
-  <main>
-    <section class="section section--modules section--cliente" id="hub">
-      <div class="container">
-        <h2 class="h2 reveal"><span class="h2__bar">hub</span> <span class="h2__em">jescri</span></h2>
-
-        <div class="modules" id="atalhos">
-
-          <article class="module reveal" data-module>
-            <button class="module__head" type="button" aria-expanded="false" aria-controls="m-retro" id="m-retro-trigger">
-              <span class="module__title"><strong>retrospectiva anual</strong></span>
-              <span class="module__chev" aria-hidden="true"></span>
-            </button>
-            <div class="module__body" role="region" id="m-retro" aria-labelledby="m-retro-trigger" aria-hidden="true">
-              <div class="module__inner hubLinks">
-                <a href="#" data-placeholder>2025</a>
-                <a href="#" data-placeholder>histórico</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="module reveal" data-module>
-            <button class="module__head" type="button" aria-expanded="false" aria-controls="m-relatorios" id="m-relatorios-trigger">
-              <span class="module__title"><strong>relatórios</strong></span>
-              <span class="module__chev" aria-hidden="true"></span>
-            </button>
-            <div class="module__body" role="region" id="m-relatorios" aria-labelledby="m-relatorios-trigger" aria-hidden="true">
-              <div class="module__inner hubGrid">
-                <div class="hubCol">
-                  <p class="hubCol__title">trimestral</p>
-                  <div class="hubLinks">
-                    <a href="#" data-placeholder>1º tri</a>
-                    <a href="#" data-placeholder>2º tri</a>
-                    <a href="#" data-placeholder>3º tri</a>
-                    <a href="#" data-placeholder>4º tri</a>
-                  </div>
-                </div>
-
-                <div class="hubCol">
-                  <p class="hubCol__title">análise de criativos</p>
-                  <div class="hubLinks">
-                    <a href="#" data-placeholder>1º tri</a>
-                    <a href="#" data-placeholder>2º tri</a>
-                    <a href="#" data-placeholder>3º tri</a>
-                    <a href="#" data-placeholder>4º tri</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <article class="module reveal" data-module>
-            <button class="module__head" type="button" aria-expanded="false" aria-controls="m-calendario" id="m-calendario-trigger">
-              <span class="module__title"><strong>calendário</strong></span>
-              <span class="module__chev" aria-hidden="true"></span>
-            </button>
-            <div class="module__body" role="region" id="m-calendario" aria-labelledby="m-calendario-trigger" aria-hidden="true">
-              <div class="module__inner hubLinks">
-                <a href="#" data-placeholder>calendário do semestre</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="module reveal" data-module>
-            <button class="module__head" type="button" aria-expanded="false" aria-controls="m-social" id="m-social-trigger">
-              <span class="module__title"><strong>social media</strong></span>
-              <span class="module__chev" aria-hidden="true"></span>
-            </button>
-            <div class="module__body" role="region" id="m-social" aria-labelledby="m-social-trigger" aria-hidden="true">
-              <div class="module__inner hubGrid">
-                <div class="hubCol">
-                  <p class="hubCol__title">programação</p>
-                  <div class="hubLinks">
-                    <a href="#" data-placeholder>programação do mês</a>
-                    <a href="#" data-placeholder>histórico de programação</a>
-                  </div>
-                </div>
-
-                <div class="hubCol">
-                  <p class="hubCol__title">criativos</p>
-                  <div class="hubLinks">
-                    <a href="#" data-placeholder>criativos do mês</a>
-                    <a href="#" data-placeholder>histórico de criativos</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <article class="module reveal" data-module id="influencia">
-            <button class="module__head" type="button" aria-expanded="false" aria-controls="m-influencia" id="m-influencia-trigger">
-              <span class="module__title"><strong>influência</strong></span>
-              <span class="module__chev" aria-hidden="true"></span>
-            </button>
-            <div class="module__body" role="region" id="m-influencia" aria-labelledby="m-influencia-trigger" aria-hidden="true">
-              <div class="module__inner">
-                <div class="hubLinks">
-                  <a href="#" data-placeholder>ativações de influenciadoras</a>
-                </div>
-                <div class="hubNote">
-                  <p><strong>observação:</strong> este link pode apontar para uma página de calendário no site (renderizada via sheets) ou direto para o sheets.</p>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <article class="module reveal" data-module>
-            <button class="module__head" type="button" aria-expanded="false" aria-controls="m-fotos" id="m-fotos-trigger">
-              <span class="module__title"><strong>fotos</strong></span>
-              <span class="module__chev" aria-hidden="true"></span>
-            </button>
-            <div class="module__body" role="region" id="m-fotos" aria-labelledby="m-fotos-trigger" aria-hidden="true">
-              <div class="module__inner hubGrid">
-                <div class="hubCol">
-                  <p class="hubCol__title">fotos de campanha</p>
-                  <div class="hubLinks">
-                    <a href="#" data-placeholder>coleção 01</a>
-                    <a href="#" data-placeholder>coleção 02</a>
-                    <a href="#" data-placeholder>coleção 03</a>
-                  </div>
-                </div>
-
-                <div class="hubCol">
-                  <p class="hubCol__title">lookbook</p>
-                  <div class="hubLinks">
-                    <a href="#" data-placeholder>coleção 01</a>
-                    <a href="#" data-placeholder>coleção 02</a>
-                    <a href="#" data-placeholder>coleção 03</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <article class="module reveal" data-module id="alinhamento">
-            <button class="module__head" type="button" aria-expanded="false" aria-controls="m-alinhamento" id="m-alinhamento-trigger">
-              <span class="module__title"><strong>alinhamento</strong></span>
-              <span class="module__chev" aria-hidden="true"></span>
-            </button>
-            <div class="module__body" role="region" id="m-alinhamento" aria-labelledby="m-alinhamento-trigger" aria-hidden="true">
-              <div class="module__inner hubLinks">
-                <a href="#" data-placeholder>formulário bimestral de alinhamento</a>
-                <a href="#" data-placeholder>histórico de alinhamentos</a>
-              </div>
-            </div>
-          </article>
-
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <script src="../script.js"></script>
-  <script src="script-cliente.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

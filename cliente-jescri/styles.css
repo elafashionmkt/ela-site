@@ -1,0 +1,223 @@
+/* ===========================
+   CLIENTE JESCRI
+   - mantém base do site via ../styles.css
+   - adiciona auth + ajustes de layout
+   =========================== */
+
+:root{
+  --client-red: #cd0005;
+  --client-white: #fff;
+  --client-white18: rgba(255,255,255,.18);
+  --client-white12: rgba(255,255,255,.12);
+  --client-shadow: rgba(0,0,0,.22);
+  --client-radius: 20px;
+}
+
+/* acessibilidade */
+.sr{
+  position:absolute;
+  width:1px;
+  height:1px;
+  padding:0;
+  margin:-1px;
+  overflow:hidden;
+  clip:rect(0,0,0,0);
+  white-space:nowrap;
+  border:0;
+}
+
+
+/* wrapper: blur quando bloqueado */
+body.is-auth .auth{ display: none; }
+body:not(.is-auth){ overflow: hidden; }
+body:not(.is-auth) .site{ filter: blur(10px); }
+
+/* ===========================
+   AUTH (igual ao feeling da retrospectiva)
+   =========================== */
+.auth{
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background:
+    radial-gradient(900px 450px at 15% 10%, rgba(255,255,255,.10), transparent 60%),
+    radial-gradient(900px 450px at 85% 30%, rgba(255,255,255,.08), transparent 60%),
+    var(--client-red);
+}
+
+.auth__card{
+  width: min(560px, 100%);
+  border: 1px solid var(--client-white18);
+  border-radius: var(--client-radius);
+  background: rgba(255,255,255,.08);
+  box-shadow: 0 22px 50px var(--client-shadow);
+  padding: 18px 16px 16px;
+}
+
+.auth__head{
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.auth__logo{ width: 86px; height: auto; }
+
+.auth__kicker{
+  margin: 0;
+  opacity: .88;
+  font-size: 12px;
+  letter-spacing: .12em;
+  text-transform: lowercase;
+  color: rgba(255,255,255,.90);
+}
+
+.auth__title{
+  margin: 2px 0 0;
+  font-family: var(--display-font);
+  font-weight: 400;
+  font-size: 22px;
+  letter-spacing: -0.02em;
+  text-transform: lowercase;
+  color: rgba(255,255,255,.98);
+}
+
+.auth__text{
+  margin: 10px 0 12px;
+  opacity: .92;
+  line-height: 1.5;
+  font-size: 14px;
+  text-transform: lowercase;
+  color: rgba(255,255,255,.92);
+}
+
+.auth__form{ display: grid; gap: 10px; }
+
+.auth__form input{
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid var(--client-white18);
+  background: rgba(255,255,255,.10);
+  color: var(--client-white);
+  font-size: 14px;
+  outline: none;
+  text-transform: none;
+}
+.auth__form input::placeholder{ color: rgba(255,255,255,.70); }
+.auth__form input:focus{
+  border-color: rgba(255,255,255,.40);
+  box-shadow: 0 0 0 3px rgba(255,255,255,.10);
+}
+
+.auth__form button{
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.32);
+  background: rgba(255,255,255,.10);
+  color: var(--client-white);
+  font-size: 14px;
+  cursor: pointer;
+  text-transform: lowercase;
+}
+.auth__form button:hover{ background: rgba(255,255,255,.14); }
+
+.auth__error{
+  display: none;
+  margin-top: 10px;
+  font-size: 13px;
+  color: rgba(255,255,255,.92);
+  background: rgba(0,0,0,.16);
+  border: 1px solid rgba(255,255,255,.18);
+  padding: 10px 12px;
+  border-radius: 12px;
+  text-transform: lowercase;
+}
+
+.auth__note{
+  margin: 12px 0 0;
+  font-size: 12px;
+  opacity: .75;
+  line-height: 1.4;
+  text-transform: lowercase;
+  color: rgba(255,255,255,.88);
+}
+
+/* ===========================
+   HERO
+   =========================== */
+.clientHero{
+  background: var(--client-red);
+  color: var(--client-white);
+  padding: 110px 0 44px; /* compensa nav fixed + espaço de banner */
+}
+.clientHero__inner{ max-width: 920px; }
+.clientHero__kicker{
+  margin: 0;
+  font-size: 12px;
+  letter-spacing: .14em;
+  opacity: .92;
+  text-transform: lowercase;
+}
+.clientHero__title{
+  margin: 10px 0 8px;
+  font-family: var(--display-font);
+  font-weight: 400;
+  font-size: clamp(34px, 4.6vw, 52px);
+  line-height: 1.08;
+  text-transform: lowercase;
+}
+.clientHero__text{ margin: 0; opacity: .95; max-width: 54ch; }
+
+.section--clientHub{ padding-top: 64px; }
+.modules--client .module{ border-color: rgba(205,0,5,.18); }
+
+/* links internos com o mesmo hover do menu */
+.clientLinks{ display: flex; flex-wrap: wrap; gap: 14px 18px; align-items: center; }
+.clientLink{
+  position: relative;
+  display: inline-block;
+  padding-bottom: 6px;
+  font-weight: 300;
+  transition: font-weight .18s ease;
+}
+.clientLink::after{
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform .22s ease;
+}
+.clientLink:hover,
+.clientLink:focus-visible{ font-weight: 600; }
+.clientLink:hover::after,
+.clientLink:focus-visible::after{ transform: scaleX(1); }
+
+.clientGrid{ display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+.clientGroup__title{
+  margin: 0 0 10px;
+  font-size: 14px;
+  opacity: .75;
+  letter-spacing: .06em;
+  text-transform: lowercase;
+}
+
+.clientHint{
+  margin: 10px 0 0;
+  font-size: 13px;
+  opacity: .7;
+}
+
+@media (max-width: 760px){
+  .clientGrid{ grid-template-columns: 1fr; }
+  .clientHero{ padding: 106px 0 38px; }
+}
