@@ -16,7 +16,7 @@
   --display-font: ivyjournal, "IvyJournal", ivy-mode, "Ivy Mode", Georgia, serif;
 
   --container: 1180px;
-  --nav-h: 254px;
+  --nav-h: 78px;
 }
 
 /* ===========================
@@ -158,8 +158,7 @@ img{ max-width: 100%; height: auto; display: block; }
   top: 0;
   left: 0;
   right: 0;
-  height: auto;
-  min-height: var(--nav-h);
+  height: var(--nav-h);
   z-index: 200;
 
   display: flex;
@@ -167,22 +166,20 @@ img{ max-width: 100%; height: auto; display: block; }
   justify-content: space-between;
   gap: 24px;
 
-  padding: 0 calc((100vw - min(var(--container), calc(100% - 48px))) / 2);
+  padding: 18px calc((100vw - min(var(--container), calc(100% - 48px))) / 2);
   background: rgba(205,0,5,.92);
   backdrop-filter: blur(8px);
 }
 
 .brand{
-  padding: 63.8149px;
-  line-height: 0;
   display: inline-flex;
   align-items: center;
+  min-height: 42px;
 }
 
 .brand__logo{
-  height: 125px;
-  width: auto;
-  display: block;
+  width: 96px;
+  height: auto;
   transition: opacity .18s ease, transform .18s ease;
 }
 
@@ -251,8 +248,11 @@ img{ max-width: 100%; height: auto; display: block; }
 }
 
 @media (max-width: 980px){
-  .nav{ padding: 0 24px; }
+  :root{ --nav-h: 74px; }
+  body{ padding-top: var(--nav-h); }
+  .nav{ padding: 16px 24px; }
   .nav__links{ gap: 22px; font-size: 16px; }
+  .brand__logo{ width: 90px; }
 }
 
 @media (max-width: 768px){
@@ -456,27 +456,6 @@ img{ max-width: 100%; height: auto; display: block; }
 }
 .module__title strong{ font-weight: 700; }
 
-.module__kicker{
-  display: block;
-  font-weight: 700;
-  letter-spacing: .01em;
-}
-.module__lines{
-  display: block;
-  margin-top: 6px;
-}
-.module__accent{
-  display: block;
-  font-weight: 600;
-  color: rgba(244,233,230,.92);
-}
-.module__line{
-  display: block;
-  margin-top: 2px;
-  color: rgba(244,233,230,.86);
-}
-
-
 .module__chev{
   width: 18px;
   height: 18px;
@@ -511,28 +490,6 @@ img{ max-width: 100%; height: auto; display: block; }
   color: #f4e9e6;
 }
 .module__item:last-child p{ margin-bottom: 0; }
-
-
-
-.module__highlight{
-  margin: 10px 0 20px;
-  font-weight: 600;
-  color: var(--accent);
-  opacity: .95;
-}
-
-.modulesAfter{
-  width: min(920px, 100%);
-  margin: 42px auto 0;
-  color: var(--accent);
-  font-weight: 300;
-  line-height: 1.75;
-}
-.modulesAfter p{ margin: 0 0 14px; }
-.modulesAfter__accent{ margin-top: 2px; }
-
-.btn--hero{ margin-top: 18px; }
-.btn--mid{ margin-top: 8px; }
 
 /* ===========================
    METODOLOGIA (Figma: 1040 + gap 46)
@@ -588,43 +545,6 @@ img{ max-width: 100%; height: auto; display: block; }
   color: var(--accent);
   border-radius: 12px;
   font-weight: 600;
-  border: 1px solid transparent;
-  transition: transform .12s ease, filter .12s ease;
-}
-.btn:hover{ filter: brightness(1.05); }
-.btn:active{ transform: translateY(1px); }
-.btn:focus-visible{ outline: 2px solid var(--accent); outline-offset: 3px; }
-
-  transition: transform .12s ease, filter .12s ease;
-}
-.btn:hover{ filter: brightness(1.05); }
-.btn:active{ transform: translateY(1px); }
-.btn:focus-visible{ outline: 2px solid var(--accent); outline-offset: 3px; }
-
-  transition: transform .12s ease, filter .12s ease;
-}
-.btn:hover{ filter: brightness(1.05); }
-.btn:active{ transform: translateY(1px); }
-.btn:focus-visible{
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-}
-  transition: transform .12s ease, filter .12s ease;
-}
-.btn:hover{ filter: brightness(1.05); }
-.btn:active{ transform: translateY(1px); }
-.btn:focus-visible{
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-}
-
-  transition: transform .12s ease, filter .12s ease;
-}
-.btn:hover{ filter: brightness(1.05); }
-.btn:active{ transform: translateY(1px); }
-.btn:focus-visible{
-  outline: 2px solid var(--accent);
-  outline-offset: 4px;
 }
 
 .cta__stamp{
@@ -738,16 +658,3 @@ img{ max-width: 100%; height: auto; display: block; }
   opacity: 1;
   transform: translateY(0);
 }
-
-/* estados visiveis de interacao (hover, focus, active) */
-.btn{
-  border: 1px solid transparent;
-  transition: transform .12s ease, filter .12s ease;
-}
-.btn:hover{ filter: brightness(1.05); }
-.btn:active{ transform: translateY(1px); }
-.btn:focus-visible{
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-}
-
