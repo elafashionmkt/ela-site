@@ -1,191 +1,93 @@
-/* ===========================
-   CLIENTE JESCRI
-   - mantém base do site via ../styles.css
-   - adiciona auth + ajustes de layout
-   =========================== */
-
 :root{
-  --client-red: #cd0005;
-  --client-white: #fff;
-  --client-white18: rgba(255,255,255,.18);
-  --client-white12: rgba(255,255,255,.12);
-  --client-shadow: rgba(0,0,0,.22);
-  --client-radius: 20px;
+  --cliente-red: #cd0005;
+  --cliente-cream: #f4e9e6;
 }
 
-/* acessibilidade */
-.sr{
-  position:absolute;
-  width:1px;
-  height:1px;
-  padding:0;
-  margin:-1px;
-  overflow:hidden;
-  clip:rect(0,0,0,0);
-  white-space:nowrap;
-  border:0;
+/* base */
+body{
+  background: #fff;
 }
 
-
-/* wrapper: blur quando bloqueado */
-body.is-auth .auth{ display: none; }
-body:not(.is-auth){ overflow: hidden; }
-body:not(.is-auth) .site{ filter: blur(10px); }
-
-/* ===========================
-   AUTH (igual ao feeling da retrospectiva)
-   =========================== */
-.auth{
-  position: fixed;
-  inset: 0;
-  z-index: 999;
-  display: grid;
-  place-items: center;
-  padding: 18px;
-  background:
-    radial-gradient(900px 450px at 15% 10%, rgba(255,255,255,.10), transparent 60%),
-    radial-gradient(900px 450px at 85% 30%, rgba(255,255,255,.08), transparent 60%),
-    var(--client-red);
-}
-
-.auth__card{
-  width: min(560px, 100%);
-  border: 1px solid var(--client-white18);
-  border-radius: var(--client-radius);
-  background: rgba(255,255,255,.08);
-  box-shadow: 0 22px 50px var(--client-shadow);
-  padding: 18px 16px 16px;
-}
-
-.auth__head{
+.cliente{
+  min-height: 100vh;
   display: flex;
-  gap: 12px;
+  flex-direction: column;
+}
+
+/* hero */
+.cliente__hero{
+  background: var(--cliente-red);
+  padding: 38px 0 28px;
+}
+.cliente__heroInner{
+  display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  justify-content: center;
 }
-
-.auth__logo{ width: 86px; height: auto; }
-
-.auth__kicker{
+.cliente__title{
   margin: 0;
-  opacity: .88;
-  font-size: 12px;
-  letter-spacing: .12em;
-  text-transform: lowercase;
-  color: rgba(255,255,255,.90);
-}
-
-.auth__title{
-  margin: 2px 0 0;
-  font-family: var(--display-font);
+  text-align: center;
+  color: var(--cliente-cream);
+  font-family: "IvyJournal", serif;
   font-weight: 400;
-  font-size: 22px;
-  letter-spacing: -0.02em;
-  text-transform: lowercase;
-  color: rgba(255,255,255,.98);
+  font-size: 33.3333px;
+  line-height: 1.25;
+  letter-spacing: 0;
+}
+.cliente__titleEm{
+  display: block;
 }
 
-.auth__text{
-  margin: 10px 0 12px;
-  opacity: .92;
-  line-height: 1.5;
-  font-size: 14px;
-  text-transform: lowercase;
-  color: rgba(255,255,255,.92);
+.cliente__banner{
+  background: var(--cliente-red);
 }
-
-.auth__form{ display: grid; gap: 10px; }
-
-.auth__form input{
+.cliente__banner img{
   width: 100%;
-  padding: 12px 14px;
-  border-radius: 14px;
-  border: 1px solid var(--client-white18);
-  background: rgba(255,255,255,.10);
-  color: var(--client-white);
-  font-size: 14px;
-  outline: none;
-  text-transform: none;
-}
-.auth__form input::placeholder{ color: rgba(255,255,255,.70); }
-.auth__form input:focus{
-  border-color: rgba(255,255,255,.40);
-  box-shadow: 0 0 0 3px rgba(255,255,255,.10);
+  height: auto;
+  display: block;
 }
 
-.auth__form button{
-  width: 100%;
-  padding: 12px 14px;
-  border-radius: 999px;
-  border: 1px solid rgba(255,255,255,.32);
-  background: rgba(255,255,255,.10);
-  color: var(--client-white);
-  font-size: 14px;
-  cursor: pointer;
-  text-transform: lowercase;
-}
-.auth__form button:hover{ background: rgba(255,255,255,.14); }
-
-.auth__error{
-  display: none;
-  margin-top: 10px;
-  font-size: 13px;
-  color: rgba(255,255,255,.92);
-  background: rgba(0,0,0,.16);
-  border: 1px solid rgba(255,255,255,.18);
-  padding: 10px 12px;
-  border-radius: 12px;
-  text-transform: lowercase;
+/* menu */
+.cliente__menu{
+  padding: 56px 0 80px;
 }
 
-.auth__note{
-  margin: 12px 0 0;
-  font-size: 12px;
-  opacity: .75;
-  line-height: 1.4;
-  text-transform: lowercase;
-  color: rgba(255,255,255,.88);
+.menuGrid{
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 34px;
 }
 
-/* ===========================
-   HERO
-   =========================== */
-.clientHero{
-  background: var(--client-red);
-  color: var(--client-white);
-  padding: 110px 0 44px; /* compensa nav fixed + espaço de banner */
-}
-.clientHero__inner{ max-width: 920px; }
-.clientHero__kicker{
-  margin: 0;
-  font-size: 12px;
-  letter-spacing: .14em;
-  opacity: .92;
-  text-transform: lowercase;
-}
-.clientHero__title{
-  margin: 10px 0 8px;
-  font-family: var(--display-font);
+.menuCol__title{
+  margin: 0 0 14px;
+  font-family: "IvyJournal", serif;
   font-weight: 400;
-  font-size: clamp(34px, 4.6vw, 52px);
-  line-height: 1.08;
-  text-transform: lowercase;
+  font-size: 16px;
+  line-height: 1.2;
+  color: #1a1a1a;
 }
-.clientHero__text{ margin: 0; opacity: .95; max-width: 54ch; }
 
-.section--clientHub{ padding-top: 64px; }
-.modules--client .module{ border-color: rgba(205,0,5,.18); }
+.menuCol__links{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-family: "Inter Tight", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  letter-spacing: .02em;
+}
 
-/* links internos com o mesmo hover do menu */
-.clientLinks{ display: flex; flex-wrap: wrap; gap: 14px 18px; align-items: center; }
-.clientLink{
+/* mesmo hover do menu principal */
+.menuCol__links a{
   position: relative;
   display: inline-block;
+  width: fit-content;
   padding-bottom: 6px;
-  font-weight: 300;
+  color: inherit;
+  text-decoration: none;
   transition: font-weight .18s ease;
 }
-.clientLink::after{
+.menuCol__links a::after{
   content: "";
   position: absolute;
   left: 0;
@@ -197,27 +99,162 @@ body:not(.is-auth) .site{ filter: blur(10px); }
   transform-origin: center;
   transition: transform .22s ease;
 }
-.clientLink:hover,
-.clientLink:focus-visible{ font-weight: 600; }
-.clientLink:hover::after,
-.clientLink:focus-visible::after{ transform: scaleX(1); }
-
-.clientGrid{ display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
-.clientGroup__title{
-  margin: 0 0 10px;
-  font-size: 14px;
-  opacity: .75;
-  letter-spacing: .06em;
-  text-transform: lowercase;
+.menuCol__links a:hover,
+.menuCol__links a:focus-visible{
+  font-weight: 600;
+}
+.menuCol__links a:hover::after,
+.menuCol__links a:focus-visible::after{
+  transform: scaleX(1);
 }
 
-.clientHint{
-  margin: 10px 0 0;
-  font-size: 13px;
-  opacity: .7;
+/* rodapé */
+.clienteFooter{
+  margin-top: auto;
+  background: var(--cliente-red);
+  color: #fff;
+}
+.clienteFooter__inner{
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 16px;
+  padding: 48px 0;
+}
+.clienteFooter__brand img{
+  height: 57px;
+  width: auto;
+  display: block;
+}
+.clienteFooter__copy{
+  font-family: "Inter Tight", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-weight: 300;
+  letter-spacing: .05em;
+  font-size: 20px;
+  line-height: 1.25;
+  text-align: center;
+  white-space: nowrap;
+}
+.clienteFooter__social{
+  display: flex;
+  justify-content: flex-end;
+  gap: 18px;
+}
+.clienteFooter__social .icon{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  color: #fff;
+}
+.clienteFooter__social .icon img{
+  width: 20px;
+  height: 20px;
+  display: block;
+  filter: brightness(0) invert(1);
 }
 
-@media (max-width: 760px){
-  .clientGrid{ grid-template-columns: 1fr; }
-  .clientHero{ padding: 106px 0 38px; }
+/* auth (copiado e simplificado do padrão da retrospectiva) */
+.auth{
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  background: rgba(205, 0, 5, .94);
+  padding: 24px;
+}
+.auth.is-hidden{
+  display: none;
+}
+.auth__card{
+  width: min(520px, 100%);
+  background: rgba(244, 233, 230, .98);
+  border-radius: 22px;
+  padding: 24px;
+  box-shadow: 0 24px 70px rgba(0,0,0,.25);
+}
+.auth__head{
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+.auth__logo{
+  height: 40px;
+  width: auto;
+}
+.auth__title{
+  font-family: "IvyJournal", serif;
+  font-weight: 400;
+  font-size: 26px;
+  line-height: 1.15;
+  margin: 0;
+  color: #1a1a1a;
+}
+.auth__sub{
+  margin: 4px 0 0;
+  font-family: "Inter Tight", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-weight: 300;
+  letter-spacing: .05em;
+  color: #1a1a1a;
+}
+.auth__text,
+.auth__note{
+  margin: 0 0 14px;
+  font-family: "Inter Tight", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-weight: 300;
+  line-height: 1.55;
+  color: #1a1a1a;
+}
+.auth__form{
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  margin: 12px 0 10px;
+}
+.auth__form input{
+  border: 1px solid rgba(26,26,26,.25);
+  border-radius: 12px;
+  padding: 12px 12px;
+  font: inherit;
+}
+.auth__form button{
+  border: 0;
+  border-radius: 12px;
+  padding: 12px 16px;
+  background: var(--cliente-red);
+  color: var(--cliente-cream);
+  font-family: "Inter Tight", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+}
+.auth__form button:focus-visible,
+.auth__form input:focus-visible{
+  outline: 2px solid rgba(0,0,0,.4);
+  outline-offset: 2px;
+}
+.auth__error{
+  display: none;
+  margin: 8px 0 0;
+  font-family: "Inter Tight", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-weight: 400;
+  color: #1a1a1a;
+}
+.auth__error.is-on{
+  display: block;
+}
+
+@media (max-width: 1100px){
+  .menuGrid{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 720px){
+  .cliente__hero{ padding: 28px 0 22px; }
+  .cliente__title{ font-size: 28px; }
+  .menuGrid{ grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+  .clienteFooter__inner{ grid-template-columns: 1fr; justify-items: center; text-align: center; }
+  .clienteFooter__social{ justify-content: center; }
+  .clienteFooter__copy{ white-space: normal; font-size: 16px; letter-spacing: .03em; }
 }
