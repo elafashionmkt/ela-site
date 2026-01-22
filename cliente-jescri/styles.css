@@ -238,6 +238,68 @@ body{
 /* rodapé */
 /* rodapé: usamos o mesmo footerBar do site principal */
 
+/* ===========================
+   footer (igual ao padrão da retrospectiva)
+   =========================== */
+.footer{
+  border-top: 1px solid rgba(244,233,230,.12);
+  padding: 18px 0 28px;
+}
+
+.footer__inner{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.footer__left{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  opacity: .9;
+  color: var(--cliente-cream);
+  text-transform: lowercase;
+}
+
+.footer__sig{
+  font-family: "IvyJournal", serif;
+  font-weight: 400;
+  font-size: 16px;
+  letter-spacing: -0.01em;
+  text-transform: lowercase;
+}
+
+.footer__dot{ opacity: .7; }
+
+.footer__right{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.iconlink{
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  border: 1px solid rgba(244,233,230,.34);
+  background: rgba(244,233,230,.08);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: var(--cliente-cream);
+}
+
+.iconlink:hover{ background: rgba(244,233,230,.14); }
+
+.iconlink svg{ width: 18px; height: 18px; }
+
+@supports (padding: max(0px)) {
+  .footer{ padding-left: max(0px, env(safe-area-inset-left)); padding-right: max(0px, env(safe-area-inset-right)); }
+}
+
 /* auth (copiado e simplificado do padrão da retrospectiva) */
 .auth{
   position: fixed;
