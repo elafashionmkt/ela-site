@@ -8,6 +8,12 @@
   const VIEW = root.getAttribute('data-view') || 'semestral';
   const MONTH_ONLY = parseInt(root.getAttribute('data-month') || '', 10);
 
+  const CSV_SOURCES = [
+    { key: 'lancamentos', url: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRbaV1QRExs5RMeSiSRFDEbUzagw6TeZOVn4y8bPbj0CJMcTOZr8KIW4Oja4qiOsnUTtnqEtlM5CfQl/pub?gid=22436027&single=true&output=csv' },
+    { key: 'oportunidades', url: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRbaV1QRExs5RMeSiSRFDEbUzagw6TeZOVn4y8bPbj0CJMcTOZr8KIW4Oja4qiOsnUTtnqEtlM5CfQl/pub?gid=953716292&single=true&output=csv' },
+    { key: 'comerciais', url: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRbaV1QRExs5RMeSiSRFDEbUzagw6TeZOVn4y8bPbj0CJMcTOZr8KIW4Oja4qiOsnUTtnqEtlM5CfQl/pub?gid=614552034&single=true&output=csv' }
+  ];
+
   const TYPE_CLASS = {
     'lançamento': 'lancamento',
     'lancamento': 'lancamento',
@@ -29,7 +35,120 @@
 
   const DOW = ['seg', 'ter', 'qua', 'qui', 'sex', 'sáb', 'dom'];
 
-  function pad2(n){ return String(n).padStart(2, '0'); }
+  
+  function stripAccents(s){
+    try{ return (s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,''); }catch(e){ return (s||''); }
+  }
+
+  function csvParseLine(line){
+    const out = [];
+    let cur = '';
+    let inQ = false;
+    for(let i=0;i<line.length;i++){
+      const ch = line[i];
+      if(ch === '"'){
+        if(inQ && line[i+1] === '"'){ cur += '"'; i++; }
+        else { inQ = !inQ; }
+        continue;
+      }
+      if(ch === ',' && !inQ){
+        out.push(cur);
+        cur = '';
+        continue;
+      }
+      cur += ch;
+    }
+    out.push(cur);
+    return out.map(v => (v||'').trim());
+  }
+
+  function csvToRows(text){
+    const clean = (text||'').replace(/^\uFEFF/, '');
+    const lines = clean.split(/\r?\n/).filter(l => l.trim().length);
+    if(!lines.length) return { headers: [], rows: [] };
+    const headersRaw = csvParseLine(lines[0]);
+    const headersNorm = headersRaw.map(h => stripAccents(h.toLowerCase()));
+    const rows = [];
+    for(let i=1;i<lines.length;i++){
+      const cols = csvParseLine(lines[i]);
+      const obj = {};
+      headersNorm.forEach((h, idx) => { obj[h] = cols[idx] || ''; });
+      rows.push(obj);
+    }
+    return { headers: headersNorm, rows };
+  }
+
+  function parsePeriodoToStartEnd(periodo){
+    const p = (periodo||'').trim();
+    const m = p.match(/(\d{2})\/(\d{2})\/(\d{4})/g);
+    if(!m || !m.length) return null;
+    const start = m[0];
+    const end = m[1] || m[0];
+    return { start, end };
+  }
+
+  function ddmmyyyyToIso(d){
+    const [dd,mm,yyyy] = d.split('/');
+    return `${yyyy}-${mm}-${dd}`;
+  }
+
+  function coalesce(obj, keys){
+    for(const k of keys){
+      if(obj[k] && String(obj[k]).trim()) return String(obj[k]).trim();
+    }
+    return '';
+  }
+
+  function normalizeTipo(tipo){
+    const t = stripAccents((tipo||'').toLowerCase().trim());
+    if(t.includes('lan')) return 'lançamento';
+    if(t.includes('comercial')) return 'comercial';
+    if(t.includes('paga')) return 'pagamento';
+    if(t.includes('awareness') || t.includes('topo') || t.includes('marca')) return 'awareness';
+    return (tipo||'').toLowerCase().trim();
+  }
+
+  async function loadEventsFromCSVs(){
+    const all = [];
+    for(const src of CSV_SOURCES){
+      const res = await fetch(src.url, { cache: 'no-store' });
+      const text = await res.text();
+      const { rows } = csvToRows(text);
+
+      for(const r of rows){
+        const periodo = coalesce(r, ['periodo', 'período', 'data', 'dia']);
+        const evento = coalesce(r, ['evento', 'event']);
+        const tipoRaw = coalesce(r, ['tipo', 'type']);
+        const impacto = coalesce(r, ['por que impacta', 'porque impacta', 'por_que_impacta', 'por que impacta?', 'impacto']);
+
+        const pe = parsePeriodoToStartEnd(periodo);
+        if(!pe || !evento) continue;
+
+        const tipo = normalizeTipo(tipoRaw);
+        const startIso = ddmmyyyyToIso(pe.start);
+        const endIso = ddmmyyyyToIso(pe.end);
+
+        all.push({
+          evento: evento,
+          tipo: tipo,
+          impacto: impacto,
+          periodo: periodo,
+          start: startIso,
+          end: endIso
+        });
+      }
+    }
+    // dedupe simple
+    const seen = new Set();
+    return all.filter(e => {
+      const k = [e.start,e.end,e.evento,e.tipo].join('|');
+      if(seen.has(k)) return false;
+      seen.add(k);
+      return true;
+    });
+  }
+
+function pad2(n){ return String(n).padStart(2, '0'); }
 
   function parseISODate(s){
     const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(s || '').trim());
@@ -201,9 +320,7 @@
 
   async function init(){
     try{
-      const res = await fetch('./eventos-semestral-2026.json', { cache: 'no-cache' });
-      const data = await res.json();
-      const events = filterByView(data.events || []);
+      const events = filterByView(await loadEventsFromCSVs());
       const eventsByDay = groupByDay(events);
 
       const monthsToRender = VIEW === 'mensal' && MONTH_ONLY
