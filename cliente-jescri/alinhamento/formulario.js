@@ -9,85 +9,103 @@
   const gatePass = document.getElementById("gatePass");
   const gateErr = document.getElementById("gateErr");
 
-  function openGate() {
-    gate.setAttribute("aria-hidden", "false");
-    setTimeout(() => gatePass && gatePass.focus(), 50);
-  }
-  function closeGate() {
-    gate.setAttribute("aria-hidden", "true");
-  }
+  function showGate(){ gate?.setAttribute("aria-hidden","false"); setTimeout(()=>gatePass?.focus(),60); }
+  function hideGate(){ gate?.setAttribute("aria-hidden","true"); }
 
-  try {
-    if (localStorage.getItem(GATE_KEY) === "1") closeGate();
-    else openGate();
-  } catch {
-    openGate();
-  }
+  try { localStorage.getItem(GATE_KEY)==="1" ? hideGate() : showGate(); }
+  catch { showGate(); }
 
-  gateForm?.addEventListener("submit", (e) => {
+  gateForm?.addEventListener("submit",(e)=>{
     e.preventDefault();
-    const val = (gatePass?.value || "").trim();
-    if (val === PASS) {
-      try { localStorage.setItem(GATE_KEY, "1"); } catch {}
-      closeGate();
-      gateErr.textContent = "";
-      gatePass.value = "";
-    } else {
-      gateErr.textContent = "senha incorreta";
-      gatePass.select();
+    const v=(gatePass?.value||"").trim();
+    if(v===PASS){
+      try{ localStorage.setItem(GATE_KEY,"1"); }catch{}
+      hideGate(); gateErr.textContent=""; gatePass.value="";
+    }else{
+      gateErr.textContent="senha incorreta";
+      gatePass?.select();
     }
   });
-
-  // checkbox max + other handling helper
-  function setupChecks(container) {
-    const max = Number(container.dataset.max || "999");
-    const entryName = container.dataset.entry; // e.g. entry.128...
-    const otherName = container.dataset.otherName; // e.g. entry.128....other_option_response
-    const checkboxes = Array.from(container.querySelectorAll('input[type="checkbox"]'));
-    const otherInput = container.querySelector('[data-other-input]');
-
-    function enforce() {
-      const checked = checkboxes.filter(c => c.checked);
-      if (checked.length >= max) {
-        checkboxes.filter(c => !c.checked).forEach(c => c.disabled = true);
-      } else {
-        checkboxes.forEach(c => c.disabled = false);
-      }
-    }
-    checkboxes.forEach(c => c.addEventListener("change", enforce));
-    enforce();
-
-    return { entryName, otherName, checkboxes, otherInput };
-  }
-
-  const checksGroups = Array.from(document.querySelectorAll(".checks")).map(setupChecks);
 
   const form = document.getElementById("customForm");
   const statusEl = document.getElementById("status");
   const submitBtn = document.getElementById("submitBtn");
 
-  function setStatus(msg) {
-    if (statusEl) statusEl.textContent = msg || "";
+  const setStatus = (m)=>{ if(statusEl) statusEl.textContent = m || ""; };
+  const clearErrors = ()=> document.querySelectorAll(".err[data-err]").forEach(p=>p.textContent="");
+  const setErr = (k,m)=>{ const p=document.querySelector(`.err[data-err="${k}"]`); if(p) p.textContent=m||""; };
+
+  function setupChecks(container){
+    const max = Number(container.dataset.max || "999");
+    const min = Number(container.dataset.min || "0");
+    const required = (container.dataset.required || "false") === "true";
+    const entryName = container.dataset.entry;
+    const otherName = container.dataset.otherName;
+    const checkboxes = Array.from(container.querySelectorAll('input[type="checkbox"]'));
+    const otherInput = container.querySelector('[data-other-input]');
+
+    function enforceMax(){
+      const checked = checkboxes.filter(c=>c.checked);
+      if(checked.length >= max){
+        checkboxes.filter(c=>!c.checked).forEach(c=>c.disabled=true);
+      } else {
+        checkboxes.forEach(c=>c.disabled=false);
+      }
+    }
+    checkboxes.forEach(c=>c.addEventListener("change", ()=>{ enforceMax(); setErr(entryName,""); }));
+    otherInput?.addEventListener("input", ()=> setErr(entryName,""));
+    enforceMax();
+
+    function isValid(){
+      const checkedCount = checkboxes.filter(c=>c.checked).length;
+      const otherVal = (otherInput?.value || "").trim();
+      const total = checkedCount + (otherVal ? 1 : 0);
+      if(required && total < min) return false;
+      if(total > max) return false;
+      return true;
+    }
+
+    return {entryName, otherName, checkboxes, otherInput, min, max, required, isValid};
   }
 
-  function validateRequiredRadios() {
-    // we rely on native required for radios; but some browsers don't show messages in custom UI
-    // We'll do a lightweight check to block submit if missing.
+  const checkGroups = Array.from(document.querySelectorAll(".checks")).map(setupChecks);
+
+  function validate(){
+    clearErrors();
+    let firstInvalid = null;
+
+    // required radio groups
     const requiredRadios = Array.from(form.querySelectorAll('input[type="radio"][required]'));
     const groups = {};
-    requiredRadios.forEach(r => { groups[r.name] = groups[r.name] || []; groups[r.name].push(r); });
+    requiredRadios.forEach(r=>{ groups[r.name]=groups[r.name]||[]; groups[r.name].push(r); });
 
-    for (const name in groups) {
-      if (!groups[name].some(r => r.checked)) return false;
+    for(const name in groups){
+      if(!groups[name].some(r=>r.checked)){
+        setErr(name, "selecione uma opção");
+        if(!firstInvalid) firstInvalid = groups[name][0];
+      }
+    }
+
+    // required checkbox groups (min/max)
+    for(const g of checkGroups){
+      if(!g.isValid()){
+        setErr(g.entryName, `selecione de ${g.min} a ${g.max}`);
+        if(!firstInvalid) firstInvalid = g.checkboxes[0] || g.otherInput;
+      }
+    }
+
+    if(firstInvalid){
+      firstInvalid.scrollIntoView({behavior:"smooth", block:"center"});
+      return false;
     }
     return true;
   }
 
-  form?.addEventListener("submit", async (e) => {
+  form?.addEventListener("submit", async (e)=>{
     e.preventDefault();
     setStatus("");
 
-    if (!validateRequiredRadios()) {
+    if(!validate()){
       setStatus("revise: há campos obrigatórios sem resposta");
       return;
     }
@@ -97,46 +115,37 @@
 
     const fd = new FormData();
 
-    // Radios + text inputs (direct entry.* names)
-    Array.from(form.querySelectorAll('input[name^="entry."]')).forEach((el) => {
+    // radios + text
+    Array.from(form.querySelectorAll('input[name^="entry."]')).forEach((el)=>{
       const name = el.getAttribute("name");
-      if (!name) return;
+      if(!name) return;
 
-      if (el.type === "radio") {
-        if (el.checked) fd.append(name, el.value);
-      } else if (el.type === "text") {
-        const v = (el.value || "").trim();
-        if (v) fd.append(name, v);
+      if(el.type==="radio"){
+        if(el.checked) fd.append(name, el.value);
+      } else if(el.type==="text") {
+        const v=(el.value||"").trim();
+        if(v) fd.append(name, v);
       }
     });
 
-    // Checkbox groups (we intentionally DID NOT name them to avoid browser posting duplicates unexpectedly)
-    checksGroups.forEach(g => {
-      const chosen = g.checkboxes.filter(c => c.checked).map(c => c.value);
-      chosen.forEach(v => fd.append(g.entryName, v));
-
+    // checkbox groups (we append correctly for Google)
+    checkGroups.forEach(g=>{
+      g.checkboxes.filter(c=>c.checked).forEach(c=>fd.append(g.entryName, c.value));
       const otherVal = (g.otherInput?.value || "").trim();
-      if (otherVal) {
-        // include "Outro" in the selection + the other response field (Google standard)
+      if(otherVal){
         fd.append(g.entryName, "Outro");
-        if (g.otherName) fd.append(g.otherName, otherVal);
+        if(g.otherName) fd.append(g.otherName, otherVal);
       }
     });
 
-    try {
-      await fetch(ENDPOINT, {
-        method: "POST",
-        mode: "no-cors",
-        body: fd
-      });
-
-      // opção a: limpa
+    try{
+      await fetch(ENDPOINT, { method:"POST", mode:"no-cors", body: fd });
       form.reset();
-      // re-enable disabled checkboxes after reset
-      checksGroups.forEach(g => g.checkboxes.forEach(c => c.disabled = false));
+      checkGroups.forEach(g=>g.checkboxes.forEach(c=>c.disabled=false));
+      clearErrors();
       setStatus("enviado. obrigada!");
-      setTimeout(() => setStatus(""), 4500);
-    } catch (err) {
+      setTimeout(()=>setStatus(""), 5000);
+    } catch(err){
       console.error(err);
       setStatus("não foi possível enviar agora. tente novamente.");
     } finally {
