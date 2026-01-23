@@ -90,4 +90,12 @@
       btn.setAttribute('aria-expanded', 'true');
     });
   });
+
+  // ao clicar em qualquer link, o acordeão recolhe
+  const allLinks = Array.from(document.querySelectorAll('.menuCol__links a'));
+  allLinks.forEach((a) => {
+    a.addEventListener('click', () => {
+      closeAll();
+    });
+  });
 })();

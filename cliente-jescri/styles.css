@@ -15,6 +15,30 @@ body{
   flex-direction: column;
 }
 
+/* topo da área do cliente */
+.clientBar{
+  background: var(--cliente-red);
+  padding: 18px 0 8px;
+}
+.clientBar__inner{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+.clientBar__left{
+  color: #fff;
+  font-family: "Inter Tight", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: .02em;
+}
+.clientBar__logo{
+  width: min(180px, 42vw);
+  height: auto;
+  display: block;
+}
+
 /* hero */
 .cliente__hero{
   background: var(--cliente-red);

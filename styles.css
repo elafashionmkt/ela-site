@@ -16,7 +16,7 @@
   --display-font: ivyjournal, "IvyJournal", ivy-mode, "Ivy Mode", Georgia, serif;
 
   --container: 1180px;
-  --nav-h: 78px;
+  --nav-h: 170px;
 }
 
 /* ===========================
@@ -158,7 +158,7 @@ img{ max-width: 100%; height: auto; display: block; }
   top: 0;
   left: 0;
   right: 0;
-  height: var(--nav-h);
+  min-height: var(--nav-h);
   z-index: 200;
 
   display: flex;
@@ -175,11 +175,12 @@ img{ max-width: 100%; height: auto; display: block; }
   display: inline-flex;
   align-items: center;
   min-height: 42px;
+  padding: 0 63.8149px;
 }
 
 .brand__logo{
-  width: 96px;
-  height: auto;
+  height: 125px;
+  width: auto;
   transition: opacity .18s ease, transform .18s ease;
 }
 
@@ -248,11 +249,11 @@ img{ max-width: 100%; height: auto; display: block; }
 }
 
 @media (max-width: 980px){
-  :root{ --nav-h: 74px; }
+  :root{ --nav-h: 170px; }
   body{ padding-top: var(--nav-h); }
   .nav{ padding: 16px 24px; }
   .nav__links{ gap: 22px; font-size: 16px; }
-  .brand__logo{ width: 90px; }
+  .brand__logo{ height: 125px; width: auto; }
 }
 
 @media (max-width: 768px){

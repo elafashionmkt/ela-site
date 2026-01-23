@@ -333,11 +333,104 @@ function pad2(n){ return String(n).padStart(2, '0'); }
         wrap.appendChild(monthEl);
       });
 
+      initTooltip();
+
     }catch(err){
       wrap.innerHTML = '<div class="cal__loading">não foi possível carregar o calendário.</div>';
     }finally{
       if(loading) loading.remove();
     }
+  }
+
+  function initTooltip(){
+    const existing = document.querySelector('.calTip');
+    const tipEl = existing || document.createElement('div');
+    if(!existing){
+      tipEl.className = 'calTip';
+      document.body.appendChild(tipEl);
+    }
+
+    let active = null;
+
+    function clamp(n, min, max){
+      return Math.max(min, Math.min(max, n));
+    }
+
+    function hide(){
+      tipEl.classList.remove('is-on');
+      active = null;
+    }
+
+    function show(forEvt){
+      if(!forEvt) return;
+
+      const title = (forEvt.querySelector('.evt__title')?.textContent || '').trim();
+      const meta = (forEvt.querySelector('.evt__meta')?.textContent || '').trim();
+      const tipTitle = (forEvt.querySelector('.tip strong')?.textContent || 'por que impacta').trim();
+      const tipBody = (forEvt.querySelector('.tip')?.textContent || '').replace(tipTitle, '').trim();
+      const body = tipBody || 'sem observações no momento.';
+
+      tipEl.innerHTML = '';
+      const s = document.createElement('strong');
+      s.textContent = tipTitle;
+      const p = document.createElement('div');
+      p.textContent = body;
+      const h = document.createElement('div');
+      h.style.fontWeight = '600';
+      h.style.marginBottom = '6px';
+      h.textContent = title;
+      const m = document.createElement('div');
+      m.style.opacity = '0.9';
+      m.style.marginBottom = '8px';
+      m.textContent = meta;
+      tipEl.appendChild(h);
+      tipEl.appendChild(m);
+      tipEl.appendChild(s);
+      tipEl.appendChild(p);
+
+      tipEl.style.left = '12px';
+      tipEl.style.top = '12px';
+      tipEl.classList.add('is-on');
+
+      const rect = forEvt.getBoundingClientRect();
+      const tipRect = tipEl.getBoundingClientRect();
+      const pad = 12;
+
+      let x = clamp(rect.left, pad, window.innerWidth - tipRect.width - pad);
+      let y = rect.bottom + 12;
+      if(y + tipRect.height + pad > window.innerHeight){
+        y = rect.top - tipRect.height - 12;
+      }
+      y = clamp(y, pad, window.innerHeight - tipRect.height - pad);
+
+      tipEl.style.left = `${x}px`;
+      tipEl.style.top = `${y}px`;
+    }
+
+    function onEnter(evt){
+      const el = evt.target && evt.target.closest ? evt.target.closest('.evt') : null;
+      if(!el || el === active) return;
+      active = el;
+      show(el);
+    }
+
+    function onLeave(evt){
+      const rel = evt.relatedTarget;
+      if(rel && active && active.contains(rel)) return;
+      const insideTip = rel && tipEl.contains(rel);
+      if(insideTip) return;
+      hide();
+    }
+
+    wrap.addEventListener('mouseover', onEnter);
+    wrap.addEventListener('mouseout', onLeave);
+    wrap.addEventListener('focusin', onEnter);
+    wrap.addEventListener('focusout', onLeave);
+    window.addEventListener('scroll', hide, { passive: true });
+    window.addEventListener('resize', hide);
+    document.addEventListener('keydown', (e) => {
+      if(e.key === 'Escape') hide();
+    });
   }
 
   init();
