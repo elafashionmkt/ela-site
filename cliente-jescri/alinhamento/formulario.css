@@ -1,7 +1,7 @@
 :root{
   --bg: #cd0005;
-  --ink: #f4e9e6;
-  --muted: rgba(244,233,230,.82);
+  --ink: #fff;
+  --muted: rgba(255,255,255,.88);
   --line: rgba(244,233,230,.18);
   --glass: rgba(244,233,230,.07);
   --glass-strong: rgba(244,233,230,.10);
@@ -24,10 +24,9 @@ body{
 }
 
 .formCard{
-  border: 1px solid var(--line);
-  border-radius: 22px;
-  background: linear-gradient(180deg, rgba(244,233,230,.08), rgba(244,233,230,.04));
-  box-shadow: 0 24px 70px rgba(0,0,0,.22);
+  border: 1.5px solid rgba(255,255,255,0.92);
+  border-radius: 18px;
+  background: transparent;
   overflow: hidden;
 }
 
@@ -49,8 +48,8 @@ body{
   margin: 12px 0 0;
   max-width: 66ch;
   font-size: 16px;
-  line-height: 1.7;
-  color: var(--muted);
+  line-height: 1.75;
+  color: rgba(255,255,255,0.95);
   font-weight: 300;
 }
 
@@ -58,13 +57,13 @@ body{
   padding: 26px 22px 22px;
 }
 
-.stack{ display: grid; gap: 22px; }
+.stack{ display: grid; gap: 28px; }
 
 .field{
-  border: 1px solid var(--line);
+  border: 1.5px solid rgba(255,255,255,0.92);
   border-radius: 18px;
-  background: rgba(244,233,230,.06);
-  padding: 18px;
+  background: transparent;
+  padding: 20px;
 }
 
 .field__legend{
@@ -91,15 +90,15 @@ body{
   grid-template-columns: 22px 1fr;
   gap: 12px;
   align-items: start;
-  border: 1px solid rgba(244,233,230,.16);
+  border: 1.5px solid rgba(255,255,255,0.92);
   border-radius: 14px;
   padding: 14px 14px;
-  background: rgba(244,233,230,.05);
+  background: transparent;
   cursor: pointer;
   user-select: none;
 }
 
-.opt:hover{ background: rgba(244,233,230,.085); }
+.opt:hover{ text-decoration: underline; text-underline-offset: 2px; }
 
 .opt input{
   margin-top: 2px;

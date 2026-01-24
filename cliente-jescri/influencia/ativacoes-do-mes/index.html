@@ -7,11 +7,11 @@
   <meta name="color-scheme" content="only light" />
   <title>jescri | ativações do mês</title>
 
-  <link rel="icon" href="../../../assets/fav-ela.svg" type="image/svg+xml" />
+  <link rel="icon" type="image/webp" href="../../../assets/fav-ela.webp"/>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://use.typekit.net" crossorigin=""/>
+  <link rel="dns-prefetch" href="//use.typekit.net"/>
+  <link rel="stylesheet" href="https://use.typekit.net/piy8ljr.css"/>
 
   <link rel="stylesheet" href="../../../styles.css" />
   <link rel="stylesheet" href="../../styles.css" />
@@ -28,15 +28,17 @@
       <img class="brand__logo" src="../../../assets/logo-ela.svg" alt="logo elã" />
     </a>
 
-    <button class="nav__toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links">
-      menu
+    <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="abrir menu">
+      <span class="nav__toggle-line" aria-hidden="true"></span>
+      <span class="nav__toggle-line" aria-hidden="true"></span>
+      <span class="nav__toggle-line" aria-hidden="true"></span>
     </button>
 
     <div class="nav__links" id="nav-links">
       <a href="/#sobre">sobre nós</a>
       <a href="/#servicos">arquitetura de serviços</a>
       <a href="/#contato">que tal um café?</a>
-      <a href="/area-do-cliente/">área do cliente</a>
+      <a href="/area-do-cliente/">central do cliente</a>
     </div>
   </nav>
 
@@ -148,6 +150,8 @@
     </footer>
   </main>
 
+  <script src="../../../data/config-default.js"></script>
+  <script src="../../../data/config.js"></script>
   <script src="../../../script.js"></script>
   <script src="../../script.js"></script>
   <script src="./script.js"></script>

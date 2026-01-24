@@ -25,7 +25,8 @@
   }
 
   function findClient(instagram, password){
-    const list = Array.isArray(window.ELA_CLIENTS) ? window.ELA_CLIENTS : [];
+    const cfg = (window.elaGetConfig ? window.elaGetConfig() : window.ELA_CONFIG_DEFAULT) || {};
+    const list = Array.isArray(cfg.clients) ? cfg.clients : (Array.isArray(window.ELA_CLIENTS) ? window.ELA_CLIENTS : []);
     const insta = normalizeInsta(instagram);
     const pass = String(password || '').trim();
 

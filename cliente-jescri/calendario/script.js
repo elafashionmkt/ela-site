@@ -284,21 +284,28 @@ function pad2(n){ return String(n).padStart(2, '0'); }
     return monthEl;
   }
 
-  function filterByView(events){
-    // range fixo: fev a jul de 2026
-    const start = new Date(2026,1,1);
-    const end = new Date(2026,6,31);
+  function getViewYear(){
+    const yAttr = parseInt(root.getAttribute('data-year') || '', 10);
+    if(Number.isFinite(yAttr) && yAttr > 2000) return yAttr;
+    const today = new Date();
+    return today.getFullYear();
+  }
 
+  function getMonthsToRender(){
+    if(VIEW === 'mensal' && MONTH_ONLY) return [MONTH_ONLY];
+
+    const startAttr = parseInt(root.getAttribute('data-start') || '', 10);
+    const today = new Date();
+    const startMonth = (Number.isFinite(startAttr) && startAttr >= 1 && startAttr <= 12)
+      ? startAttr
+      : (today.getMonth() + 1);
+
+    const len = (VIEW === 'trimestral') ? 3 : 6;
     const out = [];
-    events.forEach(e => {
-      const d = parseISODate(e.start);
-      if(!d) return;
-      if(d < start || d > end) return;
-      if(VIEW === 'mensal' && MONTH_ONLY){
-        if(d.getMonth() !== MONTH_ONLY-1) return;
-      }
-      out.push(e);
-    });
+    for(let i=0;i<len;i++){
+      const m = startMonth + i;
+      out.push(((m - 1) % 12) + 1);
+    }
     return out;
   }
 
@@ -320,16 +327,13 @@ function pad2(n){ return String(n).padStart(2, '0'); }
 
   async function init(){
     try{
-      const events = filterByView(await loadEventsFromCSVs());
-      const eventsByDay = groupByDay(events);
-
-      const monthsToRender = VIEW === 'mensal' && MONTH_ONLY
-        ? [MONTH_ONLY]
-        : [2,3,4,5,6,7];
+      const eventsByDay = groupByDay(await loadEventsFromCSVs());
+      const year = getViewYear();
+      const monthsToRender = getMonthsToRender();
 
       wrap.innerHTML = '';
       monthsToRender.forEach(m => {
-        const monthEl = buildMonth(2026, m, eventsByDay);
+        const monthEl = buildMonth(year, m, eventsByDay);
         wrap.appendChild(monthEl);
       });
 

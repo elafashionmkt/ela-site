@@ -1,4 +1,4 @@
-/* calendário (visual mac clean, tudo dentro do vermelho) */
+/* calendário (vetor, alto contraste, pensado para leitura) */
 
 .cal{
   margin-top: 18px;
@@ -14,10 +14,10 @@
 .chip{
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  border: 1px solid rgba(255,255,255,0.85);
+  gap: 10px;
+  border: 1.5px solid #fff;
   border-radius: 999px;
-  padding: 8px 12px;
+  padding: 9px 12px;
   font-size: 12px;
   line-height: 1;
   background: #fff;
@@ -67,16 +67,16 @@
 }
 
 .month__title{
-  font-size: 24px;
-  line-height: 1.15;
-  font-weight: 600;
+  font-size: 28px;
+  line-height: 1.1;
+  font-weight: 700;
   color: #fff;
 }
 
 .month__range{
-  font-size: 13px;
+  font-size: 14px;
   color: #fff;
-  opacity: 0.9;
+  opacity: 0.95;
 }
 
 .dow{
@@ -101,13 +101,12 @@
 
 .day{
   position: relative;
-  border: 1px solid rgba(255,255,255,0.45);
+  border: 1.5px solid rgba(255,255,255,0.92);
   border-radius: 14px;
-  padding: 10px 10px 12px;
-  min-height: 118px;
+  padding: 12px 12px 14px;
+  min-height: 128px;
   overflow: visible;
-  background: rgba(255,255,255,0.10);
-  backdrop-filter: blur(12px);
+  background: transparent;
 }
 
 .day.is-empty{
@@ -115,10 +114,11 @@
 }
 
 .day__num{
-  font-size: 12px;
+  font-size: 13px;
   color: #fff;
-  opacity: 0.95;
-  margin-bottom: 10px;
+  opacity: 1;
+  margin-bottom: 12px;
+  font-weight: 600;
 }
 
 .evts{
@@ -131,13 +131,13 @@
   position: relative;
   display: grid;
   grid-template-columns: 10px 1fr;
-  gap: 8px;
+  gap: 10px;
   align-items: start;
   color: #fff;
-  background: rgba(255,255,255,0.14);
-  border: 1px solid rgba(255,255,255,0.38);
+  background: transparent;
+  border: 1.5px solid rgba(255,255,255,0.92);
   border-radius: 14px;
-  padding: 10px 10px 9px;
+  padding: 10px 12px 10px;
   margin-top: 10px;
   text-align: left;
   cursor: default;
@@ -152,17 +152,18 @@
 }
 
 .evt__title{
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.25;
   opacity: 1;
+  font-weight: 600;
 }
 
 .evt__meta{
   display: block;
-  margin-top: 2px;
-  font-size: 11px;
+  margin-top: 4px;
+  font-size: 12px;
   line-height: 1.2;
-  opacity: 0.9;
+  opacity: 0.95;
 }
 
 .evt:hover .evt__title,
@@ -183,9 +184,8 @@
   z-index: 9999;
   padding: 12px 12px 13px;
   border-radius: 16px;
-  border: 1px solid rgba(255,255,255,0.72);
-  background: rgba(255,255,255,0.18);
-  backdrop-filter: blur(16px);
+  border: 1.5px solid rgba(255,255,255,0.92);
+  background: #cd0005;
   color: #fff;
   font-size: 12px;
   line-height: 1.35;
@@ -208,7 +208,7 @@
 
 @media (max-width: 900px){
   .grid, .dow{ gap: 8px; }
-  .day{ min-height: 104px; padding: 10px; border-radius: 12px; }
+  .day{ min-height: 112px; padding: 11px; border-radius: 12px; }
 }
 
 @media (max-width: 640px){

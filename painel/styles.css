@@ -1,0 +1,79 @@
+.painel{
+  background: #cd0005;
+  color: #fff;
+}
+
+.painel__main{
+  padding: 160px 0 80px;
+}
+
+.painel__head{
+  margin-bottom: 18px;
+}
+
+.painel__title{
+  margin: 0 0 6px;
+  font-size: 32px;
+  line-height: 1.1;
+  font-weight: 700;
+  color: #fff;
+}
+
+.painel__sub{
+  margin: 0;
+  max-width: 760px;
+  opacity: 0.95;
+}
+
+.painel__card{
+  border: 1.5px solid rgba(255,255,255,0.92);
+  border-radius: 18px;
+  padding: 16px;
+}
+
+.painel__row{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 12px;
+  align-items: center;
+}
+
+.btnSmall{
+  appearance: none;
+  border: 1.5px solid rgba(255,255,255,0.92);
+  background: #fff;
+  color: #cd0005;
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: 12px;
+  line-height: 1;
+  cursor: pointer;
+  user-select: none;
+}
+
+.btnSmall:hover{
+  text-decoration: underline;
+}
+
+#fileImport{ display: none; }
+
+.painel__json{
+  width: 100%;
+  min-height: 420px;
+  resize: vertical;
+  padding: 14px;
+  border-radius: 14px;
+  border: 1.5px solid rgba(255,255,255,0.92);
+  background: transparent;
+  color: #fff;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.painel__status{
+  margin-top: 10px;
+  font-size: 12px;
+  opacity: 0.95;
+}

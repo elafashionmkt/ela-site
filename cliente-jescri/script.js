@@ -1,6 +1,8 @@
 (function(){
-  const PASSWORD = "OzX223";
-  const STORAGE_KEY = "ela_auth_cliente_jescri";
+  const cfg = (window.elaGetConfig ? window.elaGetConfig() : window.ELA_CONFIG_DEFAULT) || {};
+  const client = (cfg.clients || []).find(c => c && c.id === 'jescri') || (cfg.clients || [])[0] || {};
+  const PASSWORD = String(client.password || 'jescri');
+  const STORAGE_KEY = "ela_auth_cliente_" + String(client.id || 'jescri');
 
   const auth = document.querySelector('.auth');
   const form = document.getElementById('authForm');

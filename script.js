@@ -13,6 +13,17 @@
   const navToggle = document.querySelector(".nav__toggle");
   const navLinks = document.querySelector(".nav__links");
 
+  // aplica config (rótulos simples)
+  try {
+    const cfg = window.elaGetConfig ? window.elaGetConfig() : null;
+    if (cfg && cfg.site && cfg.site.navClientLabel) {
+      const label = String(cfg.site.navClientLabel || "").toLowerCase();
+      Array.from(document.querySelectorAll('a[href="/area-do-cliente/"]')).forEach((a) => {
+        a.textContent = label;
+      });
+    }
+  } catch (e) {}
+
   // -----------------------------
   // 1) Reveal on scroll
   // -----------------------------
