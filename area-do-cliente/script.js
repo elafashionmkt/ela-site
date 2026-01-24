@@ -19,7 +19,8 @@
   }
 
   function saveSession(clientId){
-    const payload = { clientId, ts: Date.now() };
+    const ttlMs = 1000 * 60 * 60 * 12; // 12h
+    const payload = { clientId, ts: Date.now(), expiresAt: Date.now() + ttlMs };
     try{ localStorage.setItem(SESSION_KEY, JSON.stringify(payload)); }catch(e){}
     try{ localStorage.setItem(`ela_auth_cliente_${clientId}`, '1'); }catch(e){}
   }
@@ -58,6 +59,11 @@
     }
 
     saveSession(client.id);
-    window.location.href = client.redirect || '/cliente-jescri/';
+
+    const params = new URLSearchParams(window.location.search || '');
+    const next = (params.get('next') || '').trim();
+    const safeNext = (next.startsWith('/cliente-') || next.startsWith('/cliente-jescri')) ? next : '';
+
+    window.location.href = safeNext || client.redirect || '/cliente-jescri/';
   });
 })();

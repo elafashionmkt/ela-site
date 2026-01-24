@@ -1,0 +1,45 @@
+{
+  "macros": [
+    {
+      "id": "foundation",
+      "titleStrong": "fundação",
+      "titleText": "o que organiza a marca por dentro e define direção",
+      "items": [
+        {
+          "title": "planejamento estratégico de comunicação",
+          "text": "estruturamos o plano do período a partir de uma leitura da marca, do produto, do discurso e dos números. definimos pilares, mensagens e prioridades que sustentam o que a marca comunica."
+        }
+      ]
+    },
+    {
+      "id": "desire",
+      "titleStrong": "desejo",
+      "titleText": "o que constrói imagem, linguagem e vontade de pertencer",
+      "items": [
+        {
+          "title": "direção criativa e produção executiva",
+          "text": "traduzimos o norte em conceito e direção de produção. linguagem visual, referências, casting, styling e organização de set para executar sem ruído."
+        },
+        {
+          "title": "social media e editorial de conteúdo",
+          "text": "definimos linha editorial e presença nas redes. pauta, formatos e ritmo, com consistência estética e narrativa ao longo do tempo."
+        }
+      ]
+    },
+    {
+      "id": "relationship",
+      "titleStrong": "relacionamento",
+      "titleText": "o que coloca a marca em circulação com contexto",
+      "items": [
+        {
+          "title": "marketing de influência",
+          "text": "mapeamos, prospectamos e gerimos influenciadoras com critério. cuidamos de acordos, entregas e acompanhamento, orientados por posicionamento e resultado."
+        },
+        {
+          "title": "ativações de marca e eventos de experiência",
+          "text": "planejamos e produzimos ativações, lançamentos e encontros que materializam a marca no mundo real. isso vira conteúdo, relacionamento e repercussão."
+        }
+      ]
+    }
+  ]
+}

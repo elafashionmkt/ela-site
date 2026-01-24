@@ -47,7 +47,26 @@
         <p class="painel__sub">este painel salva ajustes no navegador (localstorage). para aplicar para todos, exporte o json e substitua no projeto.</p>
       </header>
 
-      <section class="painel__card" aria-label="config">
+      <section class="painelGate" id="painelGate" aria-label="acesso">
+        <div class="painelGate__card">
+          <p class="painelGate__title">acesso ao painel editorial</p>
+          <p class="painelGate__text">digite a senha do painel para continuar.</p>
+          <form class="painelGate__form" id="gateForm">
+            <label class="sr" for="gatePass">senha</label>
+            <input id="gatePass" type="password" autocomplete="current-password" placeholder="senha" />
+            <button class="btnSmall" type="submit">entrar</button>
+          </form>
+          <div class="painelGate__error" id="gateError" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section class="painel__card" id="painelBody" aria-label="config">
+        <div class="painel__tabs" role="tablist" aria-label="seções">
+          <button class="painel__tab is-on" type="button" role="tab" aria-selected="true" aria-controls="tab-config" id="tabBtnConfig">config</button>
+          <button class="painel__tab" type="button" role="tab" aria-selected="false" aria-controls="tab-accordion" id="tabBtnAccordion">acordeão</button>
+        </div>
+
+        <div class="painel__tabPanel is-on" role="tabpanel" id="tab-config" aria-labelledby="tabBtnConfig">
         <div class="painel__row">
           <button class="btnSmall" id="btnLoad" type="button">carregar config atual</button>
           <button class="btnSmall" id="btnSave" type="button">salvar override</button>
@@ -60,6 +79,64 @@
         <label class="sr" for="configJson">config</label>
         <textarea id="configJson" class="painel__json" spellcheck="false"></textarea>
         <div class="painel__status" id="status" aria-live="polite"></div>
+        </div>
+
+        <div class="painel__tabPanel" role="tabpanel" id="tab-accordion" aria-labelledby="tabBtnAccordion">
+          <div class="painel__row">
+            <button class="btnSmall" id="btnAccLoad" type="button">carregar acordeão</button>
+            <button class="btnSmall" id="btnAccSave" type="button">salvar override</button>
+            <button class="btnSmall" id="btnAccClear" type="button">limpar override</button>
+            <button class="btnSmall" id="btnAccExport" type="button">exportar json</button>
+            <label class="btnSmall" for="fileAccImport">importar json</label>
+            <input id="fileAccImport" type="file" accept="application/json" />
+          </div>
+
+          <div class="accEdit" aria-label="editor do acordeão">
+            <div class="accEdit__left">
+              <div class="accEdit__head">
+                <p class="accEdit__title">macros</p>
+                <button class="btnSmall" id="btnMacroAdd" type="button">adicionar macro</button>
+              </div>
+              <div class="accEdit__list" id="macroList"></div>
+            </div>
+
+            <div class="accEdit__right">
+              <div class="accEdit__empty" id="macroEmpty">selecione uma macro para editar</div>
+              <div class="accEdit__form" id="macroForm" hidden>
+                <div class="accEdit__row">
+                  <label class="field">
+                    <span class="field__label">id</span>
+                    <input id="macroId" type="text" placeholder="ex: fundacao" />
+                  </label>
+                  <label class="field">
+                    <span class="field__label">título forte</span>
+                    <input id="macroStrong" type="text" placeholder="ex: fundação" />
+                  </label>
+                </div>
+
+                <label class="field">
+                  <span class="field__label">título</span>
+                  <input id="macroText" type="text" placeholder="ex: o que organiza a marca" />
+                </label>
+
+                <div class="accEdit__itemsHead">
+                  <p class="accEdit__title">itens</p>
+                  <button class="btnSmall" id="btnItemAdd" type="button">adicionar item</button>
+                </div>
+
+                <div class="accEdit__items" id="itemsList"></div>
+
+                <div class="accEdit__danger">
+                  <button class="btnSmall" id="btnMacroRemove" type="button">remover macro</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <label class="sr" for="accordionJson">acordeão</label>
+          <textarea id="accordionJson" class="painel__json" spellcheck="false"></textarea>
+          <div class="painel__status" id="statusAcc" aria-live="polite"></div>
+        </div>
       </section>
     </div>
   </main>

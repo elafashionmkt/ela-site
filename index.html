@@ -15,7 +15,7 @@
 </head>
 
 <body>
-  <a class="skip" href="#conteudo">Pular para o conteúdo</a>
+  <a class="skip" href="#conteudo">pular para o conteúdo</a>
 
   <!-- overlay de transição -->
   <div class="pageTransition" aria-hidden="true"></div>
@@ -23,7 +23,7 @@
   <header class="hero" id="topo">
     <div class="container hero__container">
       <nav class="nav" aria-label="Navegação principal">
-        <a class="brand" href="#topo" aria-label="Voltar ao topo">
+        <a class="brand" href="#topo" aria-label="voltar ao topo">
           <!-- logo normal -->
           <img class="brand__logo" src="assets/logo-ela.svg" alt="Logo elã" />
         </a>
@@ -95,66 +95,7 @@
       <div class="container">
         <h2 class="h2 reveal">nossos <span class="h2__em">módulos</span></h2>
 
-        <div class="modules">
-          <!-- COMEÇA FECHADO -->
-          <article class="module reveal" data-module>
-            <button class="module__head" type="button" aria-expanded="false" aria-controls="module-foundation" id="module-foundation-trigger">
-              <span class="module__title"><strong>fundação:</strong> o que organiza a marca por dentro e define direção</span>
-              <span class="module__chev" aria-hidden="true"></span>
-            </button>
-
-            <div class="module__body" role="region" id="module-foundation" aria-labelledby="module-foundation-trigger" aria-hidden="true">
-              <div class="module__inner">
-                <div class="module__item">
-                  <h3>planejamento estratégico de comunicação:</h3>
-                  <p>estruturamos o plano do período a partir de uma leitura da marca, do produto, do discurso e dos números. definimos pilares, mensagens e prioridades que sustentam o que a marca comunica.</p>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <article class="module reveal" data-module>
-            <button class="module__head" type="button" aria-expanded="false" aria-controls="module-desire" id="module-desire-trigger">
-              <span class="module__title"><strong>desejo:</strong> o que constrói imagem, linguagem e vontade de pertencer</span>
-              <span class="module__chev" aria-hidden="true"></span>
-            </button>
-
-            <div class="module__body" role="region" id="module-desire" aria-labelledby="module-desire-trigger" aria-hidden="true">
-              <div class="module__inner">
-                <div class="module__item">
-                  <h3>direção criativa e produção executiva:</h3>
-                  <p>traduzimos o norte em conceito e direção de produção. linguagem visual, referências, casting, styling e organização de set para executar sem ruído.</p>
-                </div>
-
-                <div class="module__item">
-                  <h3>social media e editorial de conteúdo:</h3>
-                  <p>definimos linha editorial e presença nas redes. pauta, formatos e ritmo, com consistência estética e narrativa ao longo do tempo.</p>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <article class="module reveal" data-module>
-            <button class="module__head" type="button" aria-expanded="false" aria-controls="module-relationship" id="module-relationship-trigger">
-              <span class="module__title"><strong>relacionamento:</strong> o que coloca a marca em circulação com contexto</span>
-              <span class="module__chev" aria-hidden="true"></span>
-            </button>
-
-            <div class="module__body" role="region" id="module-relationship" aria-labelledby="module-relationship-trigger" aria-hidden="true">
-              <div class="module__inner">
-                <div class="module__item">
-                  <h3>marketing de influência:</h3>
-                  <p>mapeamos, prospectamos e gerimos influenciadoras com critério. cuidamos de acordos, entregas e acompanhamento, orientados por posicionamento e resultado.</p>
-                </div>
-
-                <div class="module__item">
-                  <h3>ativações de marca e eventos de experiência:</h3>
-                  <p>planejamos e produzimos ativações, lançamentos e encontros que materializam a marca no mundo real. isso vira conteúdo, relacionamento e repercussão.</p>
-                </div>
-              </div>
-            </div>
-          </article>
-        </div>
+        <div class="modules" id="modules" data-ela-accordion></div>
       </div>
 
       <a class="scrollHint scrollHint--section" href="#metodologia" aria-label="descer para metodologia">
@@ -207,23 +148,24 @@
     </section>
   </main>
 
-  <footer class="footerBar" aria-label="Rodapé">
+  <footer class="footerBar" aria-label="rodapé">
     <div class="footerBar__inner">
-      <a class="footerBar__logo" href="#topo" aria-label="Voltar ao topo">
+      <a class="footerBar__logo" href="#topo" aria-label="voltar ao topo">
         <img src="assets/logo-ela.svg" alt="elã" />
       </a>
 
       <p class="footerBar__copy">© 2026 todos os direitos reservados</p>
 
-      <div class="footerBar__social" aria-label="Redes e contato">
-        <a href="#" aria-label="WhatsApp"><img src="assets/whatsapp.svg" alt="" aria-hidden="true" /></a>
-        <a href="#" aria-label="Instagram"><img src="assets/instagram.svg" alt="" aria-hidden="true" /></a>
-        <a href="#" aria-label="Linkedin"><img src="assets/linkedin.svg" alt="" aria-hidden="true" /></a></div>
+      <div class="footerBar__social" aria-label="redes e contato">
+        <a href="#" aria-label="whatsapp"><img src="assets/whatsapp.svg" alt="" aria-hidden="true" /></a>
+        <a href="#" aria-label="instagram"><img src="assets/instagram.svg" alt="" aria-hidden="true" /></a>
+        <a href="#" aria-label="linkedin"><img src="assets/linkedin.svg" alt="" aria-hidden="true" /></a></div>
     </div>
   </footer>
 
   <script src="data/config-default.js"></script>
   <script src="data/config.js"></script>
+  <script src="scripts/accordion-render.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

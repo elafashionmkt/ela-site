@@ -34,9 +34,22 @@ body{
   letter-spacing: .02em;
 }
 .clientBar__logo{
-  width: min(180px, 42vw);
-  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: min(200px, 42vw);
+  height: 30px;
+}
+
+.clientBar__logo svg{
+  height: 30px;
+  width: auto;
   display: block;
+}
+
+.clientBar__logo svg *{
+  fill: #fff !important;
+  stroke: #fff !important;
 }
 
 /* hero */
@@ -142,7 +155,7 @@ body{
 /* menu */
 .cliente__menu{
   background: var(--cliente-red);
-  padding: 40px 0 66px;
+  padding: 22px 0 40px;
 }
 
 .menuGrid{

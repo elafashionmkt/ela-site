@@ -107,7 +107,7 @@
     if (!nav || !navToggle || !navLinks) return;
     nav.classList.toggle("is-open", open);
     navToggle.setAttribute("aria-expanded", open ? "true" : "false");
-    navToggle.setAttribute("aria-label", open ? "Fechar menu" : "Abrir menu");
+    navToggle.setAttribute("aria-label", open ? "fechar menu" : "abrir menu");
     document.body.classList.toggle("nav-open", open);
     if (isMobileNav()) {
       navLinks.setAttribute("aria-hidden", open ? "false" : "true");
