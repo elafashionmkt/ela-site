@@ -1,26 +1,15 @@
-(function(){
-  const wrap = document.getElementById('calWrap');
-  const loading = document.getElementById('calLoading');
-  const root = document.querySelector('.cal');
+(() => {
+  'use strict';
 
-  if(!wrap || !root) return;
+  // sem travessão, tudo em caixa baixa
+  const CAL_ID = 'calRoot';
+  const wrap = document.getElementById(CAL_ID);
+  if(!wrap) return;
 
-  const VIEW = root.getAttribute('data-view') || 'semestral';
-  const MONTH_ONLY = parseInt(root.getAttribute('data-month') || '', 10);
-
-  const CSV_SOURCES = [
-    { key: 'lancamentos', url: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRbaV1QRExs5RMeSiSRFDEbUzagw6TeZOVn4y8bPbj0CJMcTOZr8KIW4Oja4qiOsnUTtnqEtlM5CfQl/pub?gid=22436027&single=true&output=csv' },
-    { key: 'oportunidades', url: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRbaV1QRExs5RMeSiSRFDEbUzagw6TeZOVn4y8bPbj0CJMcTOZr8KIW4Oja4qiOsnUTtnqEtlM5CfQl/pub?gid=953716292&single=true&output=csv' },
-    { key: 'comerciais', url: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRbaV1QRExs5RMeSiSRFDEbUzagw6TeZOVn4y8bPbj0CJMcTOZr8KIW4Oja4qiOsnUTtnqEtlM5CfQl/pub?gid=614552034&single=true&output=csv' }
+  const VIEW = wrap.getAttribute('data-view') || 'semestral'; // 'semestral' | 'mensal'
+  const MONTHS = [
+    '', 'janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'
   ];
-
-  const TYPE_CLASS = {
-    'lançamento': 'lancamento',
-    'lancamento': 'lancamento',
-    'comercial': 'comercial',
-    'pagamento': 'pagamento',
-    'awareness': 'awareness'
-  };
 
   // cores com mais leitura (mesma lógica do bullet/legenda)
   const TYPE_DOT = {
@@ -30,9 +19,13 @@
     'awareness': '#a77800'
   };
 
-  const MONTHS = [
-    '', 'janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'
-  ];
+  const TYPE_CLASS = {
+    'lançamento': 'lancamento',
+    'lancamento': 'lancamento',
+    'comercial': 'comercial',
+    'pagamento': 'pagamento',
+    'awareness': 'awareness'
+  };
 
   const DOW = ['seg', 'ter', 'qua', 'qui', 'sex', 'sáb', 'dom'];
 
@@ -86,25 +79,32 @@
     return { headers: headersNorm, rows };
   }
 
-  function parsePeriodoToStartEnd(periodo){
-    const p = (periodo||'').trim();
-    const m = p.match(/(\d{2})\/(\d{2})\/(\d{4})/g);
-    if(!m || !m.length) return null;
-    const start = m[0];
-    const end = m[1] || m[0];
-    return { start, end };
-  }
-
-  function ddmmyyyyToIso(d){
-    const [dd,mm,yyyy] = d.split('/');
-    return `${yyyy}-${mm}-${dd}`;
-  }
-
   function coalesce(obj, keys){
     for(const k of keys){
-      if(obj[k] && String(obj[k]).trim()) return String(obj[k]).trim();
+      const nk = stripAccents(k.toLowerCase());
+      if(obj[nk] != null && String(obj[nk]).trim() !== '') return String(obj[nk]).trim();
     }
     return '';
+  }
+
+  function parsePeriodoToStartEnd(periodo){
+    // aceita "dd/mm/aaaa" ou "dd/mm/aaaa a dd/mm/aaaa"
+    const s = String(periodo || '').trim();
+    let m = s.match(/^(\d{2})\/(\d{2})\/(\d{4})\s*a\s*(\d{2})\/(\d{2})\/(\d{4})$/i);
+    if(m){
+      return { start: `${m[1]}/${m[2]}/${m[3]}`, end: `${m[4]}/${m[5]}/${m[6]}` };
+    }
+    m = s.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+    if(m){
+      return { start: `${m[1]}/${m[2]}/${m[3]}`, end: `${m[1]}/${m[2]}/${m[3]}` };
+    }
+    return null;
+  }
+
+  function ddmmyyyyToIso(ddmmyyyy){
+    const m = String(ddmmyyyy || '').match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+    if(!m) return '';
+    return `${m[3]}-${m[2]}-${m[1]}`;
   }
 
   function normalizeTipo(tipo){
@@ -115,6 +115,17 @@
     if(t.includes('awareness') || t.includes('topo') || t.includes('marca')) return 'awareness';
     return (tipo||'').toLowerCase().trim();
   }
+
+  const CSV_SOURCES = [
+    {
+      name: 'lançamentos',
+      url: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRbaV1QRExs5RMeSiSRFDEbUzagw6TeZOVn4y8bPbj0CJMcTOZr8KIW4Oja4qiOsnUTtnqEtlM5CfQl/pub?gid=22436027&single=true&output=csv'
+    },
+    {
+      name: 'oportunidades',
+      url: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRbaV1QRExs5RMeSiSRFDEbUzagw6TeZOVn4y8bPbj0CJMcTOZr8KIW4Oja4qiOsnUTtnqEtlM5CfQl/pub?gid=0&single=true&output=csv'
+    }
+  ];
 
   async function loadEventsFromCSVs(){
     const all = [];
@@ -241,7 +252,8 @@ function pad2(n){ return String(n).padStart(2, '0'); }
     const dow = document.createElement('div');
     dow.className = 'dow';
     DOW.forEach(d => {
-      const s = document.createElement('span');
+      const s = document.createElement('div');
+      s.className = 'dow__item';
       s.textContent = d;
       dow.appendChild(s);
     });
@@ -249,12 +261,11 @@ function pad2(n){ return String(n).padStart(2, '0'); }
     const grid = document.createElement('div');
     grid.className = 'grid';
 
-    // blanks before
+    // blanks
     for(let i=0;i<firstIdx;i++){
-      const d = document.createElement('div');
-      d.className = 'day is-empty';
-      d.innerHTML = '<div class="day__num">&nbsp;</div>';
-      grid.appendChild(d);
+      const cell = document.createElement('div');
+      cell.className = 'day is-empty';
+      grid.appendChild(cell);
     }
 
     // days
@@ -328,157 +339,215 @@ function pad2(n){ return String(n).padStart(2, '0'); }
     return monthEl;
   }
 
-  function getViewYear(){
-    const yAttr = parseInt(root.getAttribute('data-year') || '', 10);
-    if(Number.isFinite(yAttr) && yAttr > 2000) return yAttr;
-    const today = new Date();
-    return today.getFullYear();
+  function groupByDay(events){
+    const map = new Map();
+    (events || []).forEach(e => {
+      const s = parseISODate(e.start);
+      const end = parseISODate(e.end || e.start);
+      if(!s || !end) return;
+
+      // inclusive range
+      const cur = new Date(s.getTime());
+      while(cur <= end){
+        const key = `${cur.getFullYear()}-${pad2(cur.getMonth()+1)}-${pad2(cur.getDate())}`;
+        if(!map.has(key)) map.set(key, []);
+        map.get(key).push(e);
+        cur.setDate(cur.getDate()+1);
+      }
+    });
+
+    // sort within day by type then title
+    for(const [k, list] of map.entries()){
+      list.sort((a,b) => {
+        const ta = TYPE_CLASS[String(a.tipo||'').toLowerCase()] || 'z';
+        const tb = TYPE_CLASS[String(b.tipo||'').toLowerCase()] || 'z';
+        if(ta < tb) return -1;
+        if(ta > tb) return 1;
+        return String(a.evento||'').localeCompare(String(b.evento||''), 'pt-BR');
+      });
+    }
+    return map;
+  }
+
+  function initTooltip(){
+    const tipEl = document.createElement('div');
+    tipEl.className = 'calTip';
+    tipEl.innerHTML = `
+      <div class="calTip__inner">
+        <div class="calTip__title"></div>
+        <div class="calTip__meta"></div>
+        <div class="calTip__body"></div>
+      </div>
+    `;
+    document.body.appendChild(tipEl);
+
+    const titleEl = tipEl.querySelector('.calTip__title');
+    const metaEl = tipEl.querySelector('.calTip__meta');
+    const bodyEl = tipEl.querySelector('.calTip__body');
+
+    let activeTarget = null;
+    let hideT = null;
+
+    function positionNear(target){
+      const r = target.getBoundingClientRect();
+      const pad = 12;
+      const w = tipEl.offsetWidth;
+      const h = tipEl.offsetHeight;
+
+      let left = r.left + window.scrollX + (r.width / 2) - (w / 2);
+      let top = r.top + window.scrollY - h - 10;
+
+      // keep inside viewport
+      const minLeft = window.scrollX + pad;
+      const maxLeft = window.scrollX + window.innerWidth - w - pad;
+      left = Math.max(minLeft, Math.min(maxLeft, left));
+
+      const minTop = window.scrollY + pad;
+      if(top < minTop){
+        top = r.bottom + window.scrollY + 10;
+      }
+
+      tipEl.style.left = `${left}px`;
+      tipEl.style.top = `${top}px`;
+    }
+
+    function show(target){
+      if(!target) return;
+      const t = target.querySelector('.evt__title');
+      const m = target.querySelector('.evt__meta');
+      const p = target.querySelector('.tip > div:last-child');
+
+      titleEl.textContent = t ? t.textContent : '';
+      metaEl.textContent = m ? m.textContent : '';
+      bodyEl.textContent = p ? p.textContent : '';
+
+      tipEl.classList.add('is-visible');
+      positionNear(target);
+      activeTarget = target;
+    }
+
+    function hide(){
+      tipEl.classList.remove('is-visible');
+      activeTarget = null;
+    }
+
+    function scheduleHide(){
+      clearTimeout(hideT);
+      hideT = setTimeout(hide, 120);
+    }
+
+    // events
+    wrap.addEventListener('mouseover', (e) => {
+      const evt = e.target.closest('.evt');
+      if(!evt || !wrap.contains(evt)) return;
+      clearTimeout(hideT);
+      show(evt);
+    });
+
+    wrap.addEventListener('mouseout', (e) => {
+      const evt = e.target.closest('.evt');
+      if(!evt || !wrap.contains(evt)) return;
+      scheduleHide();
+    });
+
+    // keep open when hovering tooltip itself
+    tipEl.addEventListener('mouseover', () => {
+      clearTimeout(hideT);
+    });
+    tipEl.addEventListener('mouseout', () => {
+      scheduleHide();
+    });
+
+    // keyboard
+    wrap.addEventListener('focusin', (e) => {
+      const evt = e.target.closest('.evt');
+      if(!evt || !wrap.contains(evt)) return;
+      clearTimeout(hideT);
+      show(evt);
+    });
+    wrap.addEventListener('focusout', (e) => {
+      const evt = e.target.closest('.evt');
+      if(!evt || !wrap.contains(evt)) return;
+      scheduleHide();
+    });
+
+    // click outside to close
+    document.addEventListener('click', (e) => {
+      if(!activeTarget) return;
+      if(activeTarget.contains(e.target)) return;
+      if(tipEl.contains(e.target)) return;
+      hide();
+    });
+
+    // reposition on scroll/resize
+    window.addEventListener('scroll', () => {
+      if(activeTarget) positionNear(activeTarget);
+    }, { passive: true });
+
+    window.addEventListener('resize', () => {
+      if(activeTarget) positionNear(activeTarget);
+    });
+  }
+
+  function renderLegenda(){
+    const legend = wrap.querySelector('[data-legend]');
+    if(!legend) return;
+
+    legend.innerHTML = `
+      <span class="chip chip--lancamento"><span class="chip__dot"></span> lançamento</span>
+      <span class="chip chip--comercial"><span class="chip__dot"></span> comercial</span>
+      <span class="chip chip--pagamento"><span class="chip__dot"></span> pagamento</span>
+      <span class="chip chip--awareness"><span class="chip__dot"></span> awareness</span>
+    `;
   }
 
   function getMonthsToRender(){
-    if(VIEW === 'mensal' && MONTH_ONLY) return [MONTH_ONLY];
-
-    const startAttr = parseInt(root.getAttribute('data-start') || '', 10);
-    const today = new Date();
-    const startMonth = (Number.isFinite(startAttr) && startAttr >= 1 && startAttr <= 12)
-      ? startAttr
-      : (today.getMonth() + 1);
-
-    const len = (VIEW === 'trimestral') ? 3 : 6;
-    const out = [];
-    for(let i=0;i<len;i++){
-      const m = startMonth + i;
-      out.push(((m - 1) % 12) + 1);
+    if(VIEW === 'mensal'){
+      const y = parseInt(wrap.getAttribute('data-year') || '2026', 10);
+      const m = parseInt(wrap.getAttribute('data-month') || '2', 10);
+      return [{ y, m }];
     }
-    return out;
+    // semestral default: fev a jul 2026
+    return [
+      { y: 2026, m: 2 },
+      { y: 2026, m: 3 },
+      { y: 2026, m: 4 },
+      { y: 2026, m: 5 },
+      { y: 2026, m: 6 },
+      { y: 2026, m: 7 }
+    ];
   }
 
-  function groupByDay(events){
-    const map = new Map();
-    events.forEach(e => {
-      const key = String(e.start);
-      if(!map.has(key)) map.set(key, []);
-      map.get(key).push(e);
-    });
+  function renderMonths(eventsByDay){
+    const host = wrap.querySelector('[data-months]');
+    if(!host) return;
+    host.innerHTML = '';
 
-    // ordena dentro do dia
-    map.forEach((arr) => {
-      arr.sort((a,b) => String(a.tipo).localeCompare(String(b.tipo)));
+    const months = getMonthsToRender();
+    months.forEach(({y,m}) => {
+      host.appendChild(buildMonth(y, m, eventsByDay));
     });
+  }
 
-    return map;
+  function setLoading(isLoading){
+    const el = wrap.querySelector('[data-loading]');
+    if(!el) return;
+    el.style.display = isLoading ? 'block' : 'none';
   }
 
   async function init(){
     try{
-      const eventsByDay = groupByDay(await loadEvents());
-      const year = getViewYear();
-      const monthsToRender = getMonthsToRender();
-
-      wrap.innerHTML = '';
-      monthsToRender.forEach(m => {
-        const monthEl = buildMonth(year, m, eventsByDay);
-        wrap.appendChild(monthEl);
-      });
-
+      setLoading(true);
+      renderLegenda();
       initTooltip();
 
+      const eventsByDay = groupByDay(await loadEvents());
+      renderMonths(eventsByDay);
     }catch(err){
-      wrap.innerHTML = '<div class="cal__loading">não foi possível carregar o calendário.</div>';
+      // fail silently (sem travessão, sem texto extra)
     }finally{
-      if(loading) loading.remove();
+      setLoading(false);
     }
-  }
-
-  function initTooltip(){
-    const existing = document.querySelector('.calTip');
-    const tipEl = existing || document.createElement('div');
-    if(!existing){
-      tipEl.className = 'calTip';
-      document.body.appendChild(tipEl);
-    }
-
-    let active = null;
-
-    function clamp(n, min, max){
-      return Math.max(min, Math.min(max, n));
-    }
-
-    function hide(){
-      tipEl.classList.remove('is-on');
-      active = null;
-    }
-
-    function show(forEvt){
-      if(!forEvt) return;
-
-      const title = (forEvt.querySelector('.evt__title')?.textContent || '').trim();
-      const meta = (forEvt.querySelector('.evt__meta')?.textContent || '').trim();
-      const tipTitle = (forEvt.querySelector('.tip strong')?.textContent || 'por que impacta').trim();
-      const tipBody = (forEvt.querySelector('.tip')?.textContent || '').replace(tipTitle, '').trim();
-      const body = tipBody || 'sem observações no momento.';
-
-      tipEl.innerHTML = '';
-      const s = document.createElement('strong');
-      s.textContent = tipTitle;
-      const p = document.createElement('div');
-      p.textContent = body;
-      const h = document.createElement('div');
-      h.style.fontWeight = '600';
-      h.style.marginBottom = '6px';
-      h.textContent = title;
-      const m = document.createElement('div');
-      m.style.opacity = '0.9';
-      m.style.marginBottom = '8px';
-      m.textContent = meta;
-      tipEl.appendChild(h);
-      tipEl.appendChild(m);
-      tipEl.appendChild(s);
-      tipEl.appendChild(p);
-
-      tipEl.style.left = '12px';
-      tipEl.style.top = '12px';
-      tipEl.classList.add('is-on');
-
-      const rect = forEvt.getBoundingClientRect();
-      const tipRect = tipEl.getBoundingClientRect();
-      const pad = 12;
-
-      let x = clamp(rect.left, pad, window.innerWidth - tipRect.width - pad);
-      let y = rect.bottom + 12;
-      if(y + tipRect.height + pad > window.innerHeight){
-        y = rect.top - tipRect.height - 12;
-      }
-      y = clamp(y, pad, window.innerHeight - tipRect.height - pad);
-
-      tipEl.style.left = `${x}px`;
-      tipEl.style.top = `${y}px`;
-    }
-
-    function onEnter(evt){
-      const el = evt.target && evt.target.closest ? evt.target.closest('.evt') : null;
-      if(!el || el === active) return;
-      active = el;
-      show(el);
-    }
-
-    function onLeave(evt){
-      const rel = evt.relatedTarget;
-      if(rel && active && active.contains(rel)) return;
-      const insideTip = rel && tipEl.contains(rel);
-      if(insideTip) return;
-      hide();
-    }
-
-    wrap.addEventListener('mouseover', onEnter);
-    wrap.addEventListener('mouseout', onLeave);
-    wrap.addEventListener('focusin', onEnter);
-    wrap.addEventListener('focusout', onLeave);
-    window.addEventListener('scroll', hide, { passive: true });
-    window.addEventListener('resize', hide);
-    document.addEventListener('keydown', (e) => {
-      if(e.key === 'Escape') hide();
-    });
   }
 
   init();
