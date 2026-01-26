@@ -1,8 +1,12 @@
 /* ativações do mês (js puro)
    - fonte: csv publicado (aba data limpas) + fallback local
-   - mapeamento: col a (influenciadora) | col e (data + hora) | col f (tipo)
+   - mapeamento:
+     - coluna a: influenciadora
+     - coluna d: tipo (tooltip)
+     - coluna e: data + hora (data + hora)
+     - coluna f: formato (texto visível junto do nome)
    - exibição: a + f (visível)
-   - tooltip: somente a hora (da coluna e)
+   - tooltip: tipo (d) + hora (extraída de e)
    - mês: mês atual se tiver evento; senão próximo mês futuro com eventos; senão último mês passado
    - sem texto de mês na interface
 */
@@ -39,7 +43,7 @@
 
   function normalizeText(v) {
     return String(v || '')
-      .replace(/[—–]/g, '-') // não deixa travessão invisível entrar
+      .replace(/[—–]/g, '-') // evita travessão invisível
       .trim()
       .toLowerCase();
   }
@@ -121,7 +125,7 @@
       return isNaN(d.getTime()) ? null : d;
     }
 
-    // fallback: tenta parse nativo
+    // fallback
     const d = new Date(s);
     if (isNaN(d.getTime())) return null;
     d.__hasTime = true;
@@ -168,10 +172,11 @@
           obj[h] = row[i] != null ? row[i] : '';
         });
 
-        // mapeamento por posição (a, e, f)
-        obj.a = row[0] != null ? row[0] : '';
-        obj.e = row[4] != null ? row[4] : '';
-        obj.f = row[5] != null ? row[5] : '';
+        // posições fixas
+        obj.a = row[0] != null ? row[0] : ''; // influenciadora
+        obj.d = row[3] != null ? row[3] : ''; // tipo (tooltip)
+        obj.e = row[4] != null ? row[4] : ''; // data + hora
+        obj.f = row[5] != null ? row[5] : ''; // formato (visível)
         return obj;
       });
     } catch (e) {
@@ -186,18 +191,23 @@
 
   function extractItem(r) {
     const nome = r.a || r['influenciadora'] || r['nome'] || '';
+    const tipo = r.d || r['tipo'] || '';
     const dtRaw = r.e || r['data + hora'] || r['data e hora'] || r['data'] || '';
-    const tipo = r.f || r['tipo'] || '';
+    const formato = r.f || r['formato'] || '';
 
     const dt = parseDateTime(dtRaw);
     if (!dt) return null;
 
     const dayKey = `${dt.getFullYear()}-${pad2(dt.getMonth() + 1)}-${pad2(dt.getDate())}`;
-
-    const title = [normalizeText(nome), normalizeText(tipo)].filter(Boolean).join(' ').trim();
     const hour = dt.__hasTime ? `${pad2(dt.getHours())}:${pad2(dt.getMinutes())}` : '';
 
-    return { title, hour, dt, _dayKey: dayKey };
+    const title = [normalizeText(nome), normalizeText(formato)].filter(Boolean).join(' ').trim();
+
+    // tooltip: tipo + hora (sem travessão)
+    const tipTipo = normalizeText(tipo);
+    const tip = [tipTipo, hour].filter(Boolean).join(' ').trim();
+
+    return { title, tip, dt, _dayKey: dayKey };
   }
 
   function pickTargetMonth(items) {
@@ -208,10 +218,8 @@
 
     const monthSet = new Set(items.map((it) => it.dt.getFullYear() * 12 + it.dt.getMonth()));
 
-    // mês atual se tiver eventos
     if (monthSet.has(nowIndex)) return { year: now.getFullYear(), month: now.getMonth() };
 
-    // próximo mês futuro com eventos
     const future = [];
     const past = [];
     monthSet.forEach((idx) => {
@@ -225,7 +233,6 @@
       return { year: Math.floor(idx / 12), month: idx % 12 };
     }
 
-    // último mês passado com eventos
     past.sort((a, b) => b - a);
     const idx = past[0];
     return { year: Math.floor(idx / 12), month: idx % 12 };
@@ -313,7 +320,6 @@
       byDay.get(k).push(it);
     });
 
-    // ordena por horário
     for (const entry of byDay.entries()) {
       const k = entry[0];
       const list = entry[1];
@@ -324,7 +330,6 @@
     const monthEl = document.createElement('section');
     monthEl.className = 'month';
 
-    // sem cabeçalho de mês
     const dow = document.createElement('div');
     dow.className = 'dow';
     DOW.forEach((d) => {
@@ -364,15 +369,14 @@
         evt.className = 'evt evt--awareness';
         evt.setAttribute('tabindex', '0');
 
-        // visível: a + f
         const t = document.createElement('div');
         t.className = 'evt__title';
         t.textContent = it.title;
 
-        // tooltip: hora
+        // tooltip: tipo + hora
         const tip = document.createElement('div');
         tip.className = 'tip';
-        tip.innerHTML = `<div class="tip__body">${escapeHtml(it.hour)}</div>`;
+        tip.innerHTML = `<div class="tip__body">${escapeHtml(it.tip)}</div>`;
 
         evt.appendChild(t);
         evt.appendChild(tip);
