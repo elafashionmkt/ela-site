@@ -54,7 +54,7 @@
 
             <div class="clientPanels" aria-label="subitens">
               <div class="clientPanel" data-panel="retrospectiva" aria-hidden="true">
-                <a href="https://www.elafashionmkt.com.br/retrospectiva-jescri" target="_blank" rel="noopener">2025</a>
+<a href="/retrospectiva-jescri/" target="_blank" rel="noopener">2025</a>
                 <a href="/cliente-jescri/retrospectiva/historico.html">histórico</a>
               </div>
 
