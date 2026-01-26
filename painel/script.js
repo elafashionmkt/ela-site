@@ -191,7 +191,13 @@
   // editor do acordeão
   // -----------------------------
   const OV_ACC_KEY = 'ela_accordion_override';
-  const ACC_SRC = '/data/accordion-config.json';
+  // suporta publicação na raiz do domínio e também em subpasta (ex: /ela-site/)
+  const ACC_BASE = (function(){
+    const p = window.location.pathname || '/';
+    if(p.startsWith('/ela-site/')) return '/ela-site';
+    return '';
+  })();
+  const ACC_SRC = `${ACC_BASE}/data/accordion-config.json`;
 
   const taAcc = document.getElementById('accordionJson');
   const stAcc = document.getElementById('statusAcc');

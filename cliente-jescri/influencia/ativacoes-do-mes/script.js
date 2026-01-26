@@ -31,9 +31,7 @@
 
   function stripAccents(s) {
     try {
-      return (s || '')
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '');
+      return (s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '');
     } catch (e) {
       return s || '';
     }
@@ -84,9 +82,11 @@
     return lines.map(csvParseLine);
   }
 
-  function parsePtDateTime(raw) {
-    const s = String(raw || '').trim();
-    if (!s) return null;
+  function parseDateTime(raw) {
+    const s0 = String(raw || '').trim();
+    if (!s0) return null;
+
+    const s = s0.replace(/\s+/g, ' ');
 
     // dd/mm/aaaa hh:mm:ss, dd/mm/aaaa hh:mm ou dd/mm/aaaa
     const m = s.match(
@@ -98,10 +98,28 @@
       const yyyy = parseInt(m[3], 10);
       const hh = m[4] != null ? parseInt(m[4], 10) : null;
       const mi = m[5] != null ? parseInt(m[5], 10) : null;
+      const ss = m[6] != null ? parseInt(m[6], 10) : 0;
 
-      const d = new Date(yyyy, mm - 1, dd, hh || 0, mi || 0, 0);
+      const d = new Date(yyyy, mm - 1, dd, hh || 0, mi || 0, ss || 0);
       d.__hasTime = hh != null && mi != null;
-      return d;
+      return isNaN(d.getTime()) ? null : d;
+    }
+
+    // yyyy-mm-dd hh:mm(:ss) ou yyyy-mm-dd
+    m = s.match(
+      /^(\d{4})-(\d{1,2})-(\d{1,2})(?:\s+(\d{1,2}):(\d{2})(?::(\d{2}))?)?$/
+    );
+    if (m) {
+      const yyyy = parseInt(m[1], 10);
+      const mm = parseInt(m[2], 10);
+      const dd = parseInt(m[3], 10);
+      const hh = m[4] != null ? parseInt(m[4], 10) : null;
+      const mi = m[5] != null ? parseInt(m[5], 10) : null;
+      const ss = m[6] != null ? parseInt(m[6], 10) : 0;
+
+      const d = new Date(yyyy, mm - 1, dd, hh || 0, mi || 0, ss || 0);
+      d.__hasTime = hh != null && mi != null;
+      return isNaN(d.getTime()) ? null : d;
     }
 
     // yyyy-mm-dd hh:mm:ss, yyyy-mm-dd hh:mm ou yyyy-mm-dd
@@ -213,23 +231,15 @@
     return { title, hour, tip, dt, _dayKey: dayKey };
   }
 
-  // regra nova:
-  // 1) se tiver evento no mês atual, usa ele
-  // 2) senão, usa o próximo mês futuro com eventos (o mais próximo)
-  // 3) se não existir futuro, usa o último mês passado com eventos
   function pickTargetMonth(items) {
     if (!items.length) return null;
 
     const now = new Date();
     const nowIndex = now.getFullYear() * 12 + now.getMonth();
 
-    const monthSet = new Set(
-      items.map((it) => it.dt.getFullYear() * 12 + it.dt.getMonth())
-    );
+    const monthSet = new Set(items.map((it) => it.dt.getFullYear() * 12 + it.dt.getMonth()));
 
-    if (monthSet.has(nowIndex)) {
-      return { year: now.getFullYear(), month: now.getMonth() };
-    }
+    if (monthSet.has(nowIndex)) return { year: now.getFullYear(), month: now.getMonth() };
 
     const future = [];
     const past = [];
@@ -257,8 +267,7 @@
     el = document.createElement('div');
     el.className = 'calTip';
     el.setAttribute('aria-hidden', 'true');
-    el.innerHTML =
-      '<div class="calTip__title"></div><div class="calTip__meta"></div><div class="calTip__body"></div>';
+    el.innerHTML = '<div class="calTip__body"></div>';
     document.body.appendChild(el);
     return el;
   }
@@ -304,13 +313,7 @@
     const m = tipEl.querySelector('.calTip__meta');
     const b = tipEl.querySelector('.calTip__body');
 
-    t.textContent = '';
-    m.textContent = '';
     b.textContent = body;
-
-    t.style.display = 'none';
-    m.style.display = 'none';
-    b.style.display = body ? 'block' : 'none';
 
     tipEl.classList.add('is-visible');
     tipEl.setAttribute('aria-hidden', 'false');
@@ -346,7 +349,6 @@
       byDay.get(k).push(it);
     });
 
-    // ordena por horário
     for (const entry of byDay.entries()) {
       const k = entry[0];
       const list = entry[1];
@@ -357,7 +359,6 @@
     const monthEl = document.createElement('section');
     monthEl.className = 'month';
 
-    // sem cabeçalho do mês (não exibir mês escrito)
     const dow = document.createElement('div');
     dow.className = 'dow';
     DOW.forEach((d) => {
@@ -398,7 +399,6 @@
         evt.setAttribute('tabindex', '0');
         evt.dataset.hour = it.hour || '';
 
-        // visível: a + f
         const t = document.createElement('div');
         t.className = 'evt__title';
         t.textContent = it.title;
@@ -470,13 +470,10 @@
       });
     });
 
-    window.addEventListener(
-      'scroll',
-      () => {
-        if (active) positionTip(active, tipEl);
-      },
-      { passive: true }
-    );
+    window.addEventListener('scroll', () => {
+      if (active) positionTip(active, tipEl);
+    }, { passive: true });
+
     window.addEventListener('resize', () => {
       if (active) positionTip(active, tipEl);
     });

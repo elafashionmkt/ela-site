@@ -5,6 +5,25 @@
 
   const SESSION_KEY = 'ela_auth_session_v1';
 
+  // base path (suporta publicação em subpasta, ex: /ela-site/)
+  const BASE_PATH = (function(){
+    const p = window.location.pathname || '/';
+    if(p.startsWith('/ela-site/')) return '/ela-site';
+    return '';
+  })();
+
+  function withBase(path){
+    const raw = String(path || '');
+    if(!raw.startsWith('/')) return `${BASE_PATH}/${raw}`;
+    return `${BASE_PATH}${raw}`;
+  }
+
+  function stripBase(path){
+    const raw = String(path || '');
+    if(BASE_PATH && raw.startsWith(BASE_PATH + '/')) return raw.slice(BASE_PATH.length);
+    return raw;
+  }
+
   function readSession(){
     try{ return JSON.parse(localStorage.getItem(SESSION_KEY) || 'null'); }catch(e){ return null; }
   }
@@ -19,8 +38,8 @@
   // guard
   const sess = readSession();
   if(!isValidSession(sess, 'jescri')){
-    const next = encodeURIComponent(window.location.pathname || '/cliente-jescri/');
-    window.location.replace(`/area-do-cliente/?next=${next}`);
+    const next = encodeURIComponent(stripBase(window.location.pathname || '/cliente-jescri/'));
+    window.location.replace(withBase(`/area-do-cliente/?next=${next}`));
     return;
   }
 
@@ -54,20 +73,20 @@
 
             <div class="clientPanels" aria-label="subitens">
               <div class="clientPanel" data-panel="retrospectiva" aria-hidden="true">
-<a href="/retrospectiva-jescri/" target="_blank" rel="noopener">2025</a>
-                <a href="/cliente-jescri/retrospectiva/historico.html">histórico</a>
+                <a href="${BASE_PATH}/retrospectiva-jescri/" target="_blank" rel="noopener">2025</a>
+                <a href="${BASE_PATH}/cliente-jescri/retrospectiva/historico.html">histórico</a>
               </div>
 
               <div class="clientPanel" data-panel="relatorios" aria-hidden="true">
-                <a href="/cliente-jescri/relatorios/trimestral.html">trimestral</a>
+                <a href="${BASE_PATH}/cliente-jescri/relatorios/trimestral.html">trimestral</a>
                 <a href="https://docs.google.com/spreadsheets/d/1_NM8zC8NRFiLzMH3b4x9KfIXoSkVHUUbriHU1sqCYxQ/edit?gid=316240602#gid=316240602" target="_blank" rel="noopener">análise de criativos</a>
               </div>
 
               <div class="clientPanel" data-panel="calendario" aria-hidden="true">
-                <a href="/cliente-jescri/calendario/">semestral</a>
-                <a href="/cliente-jescri/calendario/fevereiro.html">fevereiro</a>
-                <a href="/cliente-jescri/calendario/marco.html">março</a>
-                <a href="/cliente-jescri/calendario/abril.html">abril</a>
+                <a href="${BASE_PATH}/cliente-jescri/calendario/">semestral</a>
+                <a href="${BASE_PATH}/cliente-jescri/calendario/fevereiro.html">fevereiro</a>
+                <a href="${BASE_PATH}/cliente-jescri/calendario/marco.html">março</a>
+                <a href="${BASE_PATH}/cliente-jescri/calendario/abril.html">abril</a>
               </div>
 
               <div class="clientPanel" data-panel="social" aria-hidden="true">
@@ -89,8 +108,8 @@
               </div>
 
               <div class="clientPanel" data-panel="alinhamento" aria-hidden="true">
-                <a href="/cliente-jescri/alinhamento/">formulário semestral</a>
-                <a href="/cliente-jescri/alinhamento/historico.html">histórico</a>
+                <a href="${BASE_PATH}/cliente-jescri/alinhamento/">formulário semestral</a>
+                <a href="${BASE_PATH}/cliente-jescri/alinhamento/historico.html">histórico</a>
               </div>
             </div>
           </div>
@@ -106,7 +125,7 @@
     const targets = Array.from(document.querySelectorAll('[data-client-logo]'));
     if(!targets.length) return;
 
-    const url = '/assets/jescri_logo.svg';
+    const url = withBase('/assets/jescri_logo.svg');
 
     let svgText = '';
     try{

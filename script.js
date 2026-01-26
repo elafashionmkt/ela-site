@@ -3,7 +3,7 @@
 // - accordion (single open, starts all closed) [FIX: height via scrollHeight]
 // - fixed nav (logo estável)
 // - transition overlay for hash navigation
-// marca páginas da área do cliente para ajustes de navegação
+
 (function(){
   const p = window.location.pathname || '';
   if (p.startsWith('/cliente-jescri/') || p.startsWith('/area-do-cliente/')) {
