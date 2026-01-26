@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#cd0005" />
+  <meta name="color-scheme" content="only light" />
+  <title>retrospectiva | histórico | jescri</title>
+
+  <link rel="icon" type="image/webp" href="/assets/fav-ela.webp" />
+
+  <link rel="preconnect" href="https://use.typekit.net" crossorigin="" />
+  <link rel="dns-prefetch" href="//use.typekit.net" />
+  <link rel="stylesheet" href="https://use.typekit.net/piy8ljr.css" />
+
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/cliente-jescri/styles.css" />
+</head>
+
+<body>
+  <a class="skip" href="#conteudo">pular para o conteúdo</a>
+
+  <div class="pageTransition" aria-hidden="true"></div>
+
+  <nav class="nav" id="topo" aria-label="navegação principal">
+    <a class="brand" href="/" aria-label="voltar para o site">
+      <img class="brand__logo" src="/assets/logo-ela.svg" alt="logo elã" />
+    </a>
+
+    <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="abrir menu">
+      <span class="nav__toggle-line" aria-hidden="true"></span>
+      <span class="nav__toggle-line" aria-hidden="true"></span>
+      <span class="nav__toggle-line" aria-hidden="true"></span>
+    </button>
+
+    <div class="nav__links" id="nav-links">
+      <a href="/#sobre">sobre nós</a>
+      <a href="/#servicos">arquitetura de serviços</a>
+      <a href="/#contato">que tal um café?</a>
+      <a href="/area-do-cliente/">área do cliente</a>
+    </div>
+  </nav>
+
+  <main class="cliente" id="conteudo">
+    <div data-client-top></div>
+
+    <section class="cliente__content" aria-label="conteúdo">
+      <div class="container">
+        <h3 class="cliente__contentTitle">histórico</h3>
+        <p class="cliente__contentText">este espaço reúne as retrospectivas anteriores, quando disponíveis.</p>
+      </div>
+    </section>
+
+    <section class="cliente__banner" aria-label="banner">
+      <img src="/cliente-jescri/assets/box-header.jpg" loading="eager" alt="" />
+    </section>
+
+    <footer class="footerBar" aria-label="rodapé">
+      <div class="footerBar__inner">
+        <a class="footerBar__logo" href="#topo" aria-label="voltar ao topo">
+          <img src="/assets/logo-ela.svg" alt="elã" />
+        </a>
+
+        <p class="footerBar__copy">© 2026 todos os direitos reservados</p>
+
+        <div class="footerBar__social" aria-label="redes e contato">
+          <a href="#" aria-label="whatsapp"><img src="/assets/whatsapp.svg" alt="" aria-hidden="true" /></a>
+          <a href="#" aria-label="instagram"><img src="/assets/instagram.svg" alt="" aria-hidden="true" /></a>
+          <a href="#" aria-label="linkedin"><img src="/assets/linkedin.svg" alt="" aria-hidden="true" /></a>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script src="/data/config-default.js"></script>
+  <script src="/data/config.js"></script>
+  <script src="/script.js"></script>
+  <script src="/cliente-jescri/script.js"></script>
+</body>
+</html>
