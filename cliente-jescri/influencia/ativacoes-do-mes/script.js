@@ -3,7 +3,8 @@
 (function(){
   const cfg = (window.elaGetConfig ? window.elaGetConfig() : window.ELA_CONFIG_DEFAULT) || {};
 
-  const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRBp1ORyL7U0f1PJNho0_vrsJjoXjSCU1O1-p_BzlAjL6ggO7LktE0se1DtjeITVc1h2RmXWaodhhWU/pub?output=csv';
+  // aba: datas (gid fixo)
+  const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRBp1ORyL7U0f1PJNho0_vrsJjoXjSCU1O1-p_BzlAjL6ggO7LktE0se1DtjeITVc1h2RmXWaodhhWU/pub?gid=1397300240&single=true&output=csv';
 
   const loading = document.getElementById('loading');
   const monthsEl = document.getElementById('months');
@@ -57,26 +58,28 @@
     const s = String(v||'').trim();
     if(!s) return null;
 
-    // dd/mm/yyyy hh:mm (ou só data)
-    let m = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})(?:\s+(\d{1,2}):(\d{2}))?$/);
+    // dd/mm/yyyy hh:mm (ou só data) | aceita também hh:mm:ss
+    let m = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})(?:\s+(\d{1,2}):(\d{2})(?::(\d{2}))?)?$/);
     if(m){
       const dd = parseInt(m[1],10);
       const mm = parseInt(m[2],10);
       const yyyy = parseInt(m[3],10);
       const hh = parseInt(m[4] || '0',10);
       const mi = parseInt(m[5] || '0',10);
-      return new Date(yyyy, mm-1, dd, hh, mi, 0, 0);
+      const ss = parseInt(m[6] || '0',10);
+      return new Date(yyyy, mm-1, dd, hh, mi, ss, 0);
     }
 
-    // yyyy-mm-dd hh:mm
-    m = s.match(/^(\d{4})-(\d{2})-(\d{2})(?:\s+(\d{1,2}):(\d{2}))?$/);
+    // yyyy-mm-dd hh:mm | aceita também hh:mm:ss
+    m = s.match(/^(\d{4})-(\d{2})-(\d{2})(?:\s+(\d{1,2}):(\d{2})(?::(\d{2}))?)?$/);
     if(m){
       const yyyy = parseInt(m[1],10);
       const mm = parseInt(m[2],10);
       const dd = parseInt(m[3],10);
       const hh = parseInt(m[4] || '0',10);
       const mi = parseInt(m[5] || '0',10);
-      return new Date(yyyy, mm-1, dd, hh, mi, 0, 0);
+      const ss = parseInt(m[6] || '0',10);
+      return new Date(yyyy, mm-1, dd, hh, mi, ss, 0);
     }
 
     return null;

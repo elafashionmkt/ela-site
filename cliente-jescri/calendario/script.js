@@ -22,11 +22,12 @@
     'awareness': 'awareness'
   };
 
+  // cores com mais leitura (mesma lógica do bullet/legenda)
   const TYPE_DOT = {
-    'lancamento': '#f2c1c8',
-    'comercial': '#b8f2ff',
-    'pagamento': '#c8f7c5',
-    'awareness': '#ffe8a3'
+    'lancamento': '#b93a4b',
+    'comercial': '#197c9b',
+    'pagamento': '#1f8a3e',
+    'awareness': '#a77800'
   };
 
   const MONTHS = [
@@ -34,6 +35,13 @@
   ];
 
   const DOW = ['seg', 'ter', 'qua', 'qui', 'sex', 'sáb', 'dom'];
+
+  function normalizeVisibleText(v){
+    return String(v || '')
+      .replace(/—/g, '-')
+      .trim()
+      .toLowerCase();
+  }
 
   
   function stripAccents(s){
@@ -111,11 +119,13 @@
   async function loadEventsFromCSVs(){
     const all = [];
     for(const src of CSV_SOURCES){
-      const res = await fetch(src.url, { cache: 'no-store' });
-      const text = await res.text();
-      const { rows } = csvToRows(text);
+      try{
+        const res = await fetch(src.url, { cache: 'no-store' });
+        if(!res.ok) throw new Error(`fetch failed: ${res.status}`);
+        const text = await res.text();
+        const { rows } = csvToRows(text);
 
-      for(const r of rows){
+        for(const r of rows){
         const periodo = coalesce(r, ['periodo', 'período', 'data', 'dia']);
         const evento = coalesce(r, ['evento', 'event']);
         const tipoRaw = coalesce(r, ['tipo', 'type']);
@@ -128,14 +138,18 @@
         const startIso = ddmmyyyyToIso(pe.start);
         const endIso = ddmmyyyyToIso(pe.end);
 
-        all.push({
-          evento: evento,
+          all.push({
+          evento: normalizeVisibleText(evento),
           tipo: tipo,
-          impacto: impacto,
+          impacto: normalizeVisibleText(impacto),
           periodo: periodo,
           start: startIso,
           end: endIso
         });
+        }
+      }catch(err){
+        // se uma fonte falhar, seguimos com as outras
+        continue;
       }
     }
     // dedupe simple
@@ -146,6 +160,36 @@
       seen.add(k);
       return true;
     });
+  }
+
+  async function loadEvents(){
+    const csvEvents = await loadEventsFromCSVs().catch(() => []);
+    if(csvEvents && csvEvents.length) return csvEvents;
+
+    // fallback local (mesmo layout do site) para não quebrar em produção se o google bloquear cors
+    try{
+      const res = await fetch('eventos-semestral-2026.json', { cache: 'no-store' });
+      if(!res.ok) throw new Error('fallback json missing');
+      const data = await res.json();
+      const out = [];
+      (Array.isArray(data) ? data : []).forEach(e => {
+        const pe = parsePeriodoToStartEnd(e.data || e.periodo || '');
+        const startIso = ddmmyyyyToIso(pe ? pe.start : '');
+        if(!startIso) return;
+        const tipo = normalizeTipo(e.tipo || '');
+        out.push({
+          evento: normalizeVisibleText(e.evento),
+          tipo: tipo,
+          impacto: normalizeVisibleText(e.impacto),
+          periodo: e.data || '',
+          start: startIso,
+          end: startIso
+        });
+      });
+      return out;
+    }catch(err){
+      return [];
+    }
   }
 
 function pad2(n){ return String(n).padStart(2, '0'); }
@@ -243,14 +287,14 @@ function pad2(n){ return String(n).padStart(2, '0'); }
 
         const ttl = document.createElement('div');
         ttl.className = 'evt__title';
-        ttl.textContent = String(evt.evento || '').trim();
+        ttl.textContent = normalizeVisibleText(evt.evento);
 
         const meta = document.createElement('span');
         meta.className = 'evt__meta';
 
         const rangeTxt = evt.end ? formatRange(evt.periodo) : '';
         const labelBits = [];
-        labelBits.push(String(evt.tipo || '').toLowerCase());
+        labelBits.push(normalizeVisibleText(evt.tipo));
         if(rangeTxt) labelBits.push(rangeTxt);
         meta.textContent = labelBits.filter(Boolean).join(' · ');
 
@@ -259,7 +303,7 @@ function pad2(n){ return String(n).padStart(2, '0'); }
         const strong = document.createElement('strong');
         strong.textContent = 'por que impacta';
         const p = document.createElement('div');
-        p.textContent = String(evt.impacto || '').trim() || 'sem observações no momento.';
+        p.textContent = normalizeVisibleText(evt.impacto) || 'sem observações no momento.';
         tip.appendChild(strong);
         tip.appendChild(p);
 
@@ -327,7 +371,7 @@ function pad2(n){ return String(n).padStart(2, '0'); }
 
   async function init(){
     try{
-      const eventsByDay = groupByDay(await loadEventsFromCSVs());
+      const eventsByDay = groupByDay(await loadEvents());
       const year = getViewYear();
       const monthsToRender = getMonthsToRender();
 

@@ -42,6 +42,20 @@
       if(svg){
         svg.setAttribute('aria-hidden', 'true');
         svg.setAttribute('focusable', 'false');
+        svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+
+        // remove possíveis retângulos de fundo (evita bloco sólido)
+        svg.querySelectorAll('rect').forEach((r) => {
+          const fill = String(r.getAttribute('fill') || '').trim().toLowerCase();
+          const w = parseFloat(r.getAttribute('width') || '0');
+          const h = parseFloat(r.getAttribute('height') || '0');
+          if(!fill || fill === 'none') return;
+          // se for um retângulo grande, tratamos como fundo
+          if(w >= 80 && h >= 30){
+            r.setAttribute('fill', 'none');
+            r.style.fill = 'none';
+          }
+        });
       }
     });
   }

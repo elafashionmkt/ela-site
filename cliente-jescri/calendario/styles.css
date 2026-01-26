@@ -33,15 +33,20 @@
   background: rgba(255,255,255,0.7);
 }
 
-.chip--lancamento::before{ background: #f2c1c8; }
-.chip--comercial::before{ background: #b8f2ff; }
-.chip--pagamento::before{ background: #c8f7c5; }
-.chip--awareness::before{ background: #ffe8a3; }
+.chip{
+  font-weight: 600;
+}
 
-.chip--lancamento{ color: #f2c1c8; }
-.chip--comercial{ color: #b8f2ff; }
-.chip--pagamento{ color: #c8f7c5; }
-.chip--awareness{ color: #ffe8a3; }
+/* cores com mais leitura, mantendo a regra: pill branca, bolinha colorida, texto na cor correspondente */
+.chip--lancamento::before{ background: #b93a4b; }
+.chip--comercial::before{ background: #197c9b; }
+.chip--pagamento::before{ background: #1f8a3e; }
+.chip--awareness::before{ background: #a77800; }
+
+.chip--lancamento{ color: #b93a4b; }
+.chip--comercial{ color: #197c9b; }
+.chip--pagamento{ color: #1f8a3e; }
+.chip--awareness{ color: #a77800; }
 
 .cal__wrap{
   position: relative;
@@ -120,6 +125,53 @@
   background: transparent;
 }
 
+/* semestral: mini calendários (menos altura, eventos em dots, tooltip no hover) */
+.cal[data-view="semestral"] .day{
+  min-height: 70px;
+  padding: 10px 10px 10px;
+  border-radius: 12px;
+}
+
+.cal[data-view="semestral"] .day__num{
+  margin-bottom: 8px;
+  font-size: 12px;
+}
+
+.cal[data-view="semestral"] .evts{
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.cal[data-view="semestral"] .evt{
+  padding: 0;
+  min-height: 0;
+  border-radius: 999px;
+  background: transparent;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 12px;
+  height: 12px;
+}
+
+.cal[data-view="semestral"] .evt__dot{
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  box-shadow: 0 0 0 1.5px rgba(255,255,255,0.92);
+}
+
+.cal[data-view="semestral"] .evt__title,
+.cal[data-view="semestral"] .evt__meta{
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
 .day.is-empty{
   opacity: 0.38;
 }
@@ -131,6 +183,7 @@
   margin-bottom: 12px;
   font-weight: 600;
 }
+
 
 .evts{
   display: flex;
