@@ -3,6 +3,13 @@
    =========================== */
 /* fonte principal via Typekit (Acumin) */
 
+/* na área do cliente, esconder links redundantes do menu superior */
+body.is-client-area .nav__links a[href$="#contato"],
+body.is-client-area .nav__links a[href="/#contato"],
+body.is-client-area .nav__links a[href="/area-do-cliente/"]{
+  display: none;
+}
+
 /* ===========================
    TOKENS
    =========================== */

@@ -28,7 +28,7 @@
   // auth
   // esta página usa o mesmo login da área do cliente.
   // =======================
-  const SESSION_KEY = "ela_client_session_v1";
+  const SESSION_KEY = "ela_auth_session_v1";
   const body = document.body;
 
   function requireSession(){
@@ -36,7 +36,7 @@
       const raw = localStorage.getItem(SESSION_KEY);
       if (!raw) throw new Error("sem sessão");
       const data = JSON.parse(raw);
-      if (!data || data.clientKey !== "jescri") throw new Error("cliente inválido");
+      if (!data || data.clientId !== "jescri") throw new Error("cliente inválido");
       if (!data.expiresAt || Date.now() > data.expiresAt) throw new Error("sessão expirada");
       body.classList.add("is-auth");
       setTimeout(() => {

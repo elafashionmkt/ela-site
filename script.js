@@ -4,6 +4,13 @@
 // - fixed nav (logo estável)
 // - transition overlay for hash navigation
 
+(function(){
+  const p = window.location.pathname || '';
+  if (p.startsWith('/cliente-jescri/') || p.startsWith('/area-do-cliente/')) {
+    document.body.classList.add('is-client-area');
+  }
+})();
+
 (function () {
   const prefersReduced =
     window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
