@@ -677,11 +677,3 @@ img{ max-width: 100%; height: auto; display: block; }
   opacity: 1;
   transform: translateY(0);
 }
-/* na área do cliente, esconder "que tal um café?" do menu superior */
-body.is-client-area .nav__links a[href$="#contato"]{
-  display: none;
-}
-/* na área do cliente, esconder link para "área do cliente" */
-body.is-client-area .nav__links a[href="/area-do-cliente/"]{
-  display: none;
-}
