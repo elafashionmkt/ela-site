@@ -6,6 +6,25 @@
 
   const SESSION_KEY = 'ela_auth_session_v1';
 
+  // base path (suporta publicação em subpasta, ex: /ela-site/)
+  const BASE_PATH = (function(){
+    const p = window.location.pathname || '/';
+    if(p.startsWith('/ela-site/')) return '/ela-site';
+    return '';
+  })();
+
+  function withBase(path){
+    const raw = String(path || '');
+    if(!raw.startsWith('/')) return `${BASE_PATH}/${raw}`;
+    return `${BASE_PATH}${raw}`;
+  }
+
+  function stripBase(path){
+    const raw = String(path || '');
+    if(BASE_PATH && raw.startsWith(BASE_PATH + '/')) return raw.slice(BASE_PATH.length);
+    return raw;
+  }
+
   function normalizeInsta(value){
     const raw = String(value || '').trim();
     if(!raw) return '';
@@ -62,8 +81,12 @@
 
     const params = new URLSearchParams(window.location.search || '');
     const next = (params.get('next') || '').trim();
-    const safeNext = (next.startsWith('/cliente-') || next.startsWith('/cliente-jescri')) ? next : '';
 
-    window.location.href = safeNext || client.redirect || '/cliente-jescri/';
+    // aceita next com ou sem base path e normaliza
+    const nextNoBase = stripBase(next);
+    const safeNext = (nextNoBase.startsWith('/cliente-') || nextNoBase.startsWith('/cliente-jescri')) ? nextNoBase : '';
+
+    const dest = safeNext || client.redirect || '/cliente-jescri/';
+    window.location.href = withBase(stripBase(dest));
   });
 })();

@@ -5,7 +5,14 @@
   if(!mount) return;
 
   const OV_KEY = 'ela_accordion_override';
-  const SRC = '/data/accordion-config.json';
+  // suporta publicação na raiz do domínio e também em subpasta (ex: /ela-site/)
+  const basePath = (function(){
+    const p = window.location.pathname || '/';
+    if(p.startsWith('/ela-site/')) return '/ela-site';
+    return '';
+  })();
+
+  const SRC = `${basePath}/data/accordion-config.json`;
 
   function safeJsonParse(str){
     try{ return JSON.parse(str); }catch(e){ return null; }

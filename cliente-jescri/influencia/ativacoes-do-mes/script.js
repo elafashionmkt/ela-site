@@ -13,12 +13,26 @@
   const root = document.querySelector('[data-ativacoes-root]');
   if (!root) return;
 
+  // base path (suporta publicação em subpasta, ex: /ela-site/)
+  const BASE_PATH = (function(){
+    const p = window.location.pathname || '/';
+    if(p.startsWith('/ela-site/')) return '/ela-site';
+    return '';
+  })();
+
+  function withBase(path){
+    const raw = String(path || '');
+    if(!raw.startsWith('/')) return `${BASE_PATH}/${raw}`;
+    return `${BASE_PATH}${raw}`;
+  }
+
   const loadingEl = root.querySelector('[data-loading]');
   const emptyEl = root.querySelector('[data-empty]');
   const gridHost = root.querySelector('[data-grid]');
 
-  const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRBp1ORyL7U0f1PJNho0_vrsJjoXjSCU1O1-p_BzlAjL6ggO7LktE0se1DtjeITVc1h2RmXWaodhhWU/pub?gid=1397300240&single=true&output=csv';
-  const FALLBACK_JSON = '/cliente-jescri/influencia/ativacoes-do-mes/ativacoes-fallback.json';
+  // fonte: aba data limpas
+  const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRBp1ORyL7U0f1PJNho0_vrsJjoXjSCU1O1-p_BzlAjL6ggO7LktE0se1DtjeITVc1h2RmXWaodhhWU/pub?gid=1514873684&single=true&output=csv';
+  const FALLBACK_JSON = withBase('/cliente-jescri/influencia/ativacoes-do-mes/ativacoes-fallback.json');
 
   const DOW = ['seg', 'ter', 'qua', 'qui', 'sex', 'sáb', 'dom'];
 

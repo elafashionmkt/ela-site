@@ -1,4 +1,22 @@
 (function () {
+  // base path (suporta publicação em subpasta, ex: /ela-site/)
+  const BASE_PATH = (function(){
+    const p = window.location.pathname || '/';
+    if(p.startsWith('/ela-site/')) return '/ela-site';
+    return '';
+  })();
+
+  function withBase(path){
+    const raw = String(path || '');
+    if(!raw.startsWith('/')) return `${BASE_PATH}/${raw}`;
+    return `${BASE_PATH}${raw}`;
+  }
+
+  function stripBase(path){
+    const raw = String(path || '');
+    if(BASE_PATH && raw.startsWith(BASE_PATH + '/')) return raw.slice(BASE_PATH.length);
+    return raw;
+  }
   // =======================
   // helpers (sem TDZ)
   // =======================
@@ -44,8 +62,8 @@
         if (pdf) pdf.focus();
       }, 250);
     } catch(_e){
-      const next = encodeURIComponent(location.pathname + location.search + location.hash);
-      location.href = `/area-do-cliente/?next=${next}`;
+      const next = encodeURIComponent(stripBase(location.pathname + location.search + location.hash));
+      location.href = withBase(`/area-do-cliente/?next=${next}`);
     }
   }
 
@@ -85,8 +103,8 @@
   if (logoutBtn){
     logoutBtn.addEventListener("click", () => {
       try{ localStorage.removeItem(SESSION_KEY); } catch(_e){}
-      const next = encodeURIComponent(location.pathname + location.search + location.hash);
-      location.href = `/area-do-cliente/?next=${next}`;
+      const next = encodeURIComponent(stripBase(location.pathname + location.search + location.hash));
+      location.href = withBase(`/area-do-cliente/?next=${next}`);
     });
   }
 
