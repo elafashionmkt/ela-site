@@ -5,7 +5,7 @@
   if(!mount) return;
 
   const OV_KEY = 'ela_accordion_override';
-  const SRC = '/data/accordion-config.json';
+  const SRC = new URL('data/accordion-config.json', window.location.href).toString();
 
   function safeJsonParse(str){
     try{ return JSON.parse(str); }catch(e){ return null; }
@@ -79,6 +79,7 @@
     .then((cfg) => {
       const macros = Array.isArray(cfg.macros) ? cfg.macros : [];
       mount.innerHTML = macros.map(buildMacro).join('');
+      window.dispatchEvent(new CustomEvent('ela:accordion-ready'));
     })
     .catch(() => {
       mount.innerHTML = '';

@@ -1,8 +1,9 @@
 /* ativações do mês (js puro)
    - fonte: csv publicado (aba datas) + fallback local
-   - mapeamento: col a (influenciadora) | col e (data + hora) | col f (tipo)
+   - mapeamento: col a (influenciadora) | col d (tipo) | col e (data + hora) | col f (formato)
+   - compatível com data e hora em colunas separadas
    - exibição no calendário: a + f
-   - tooltip: hora (da coluna e)
+   - tooltip: d + hora (da coluna e)
    - mês: usa mês atual se tiver eventos; se não tiver, usa o próximo mês futuro com eventos
    - sem mês escrito na interface
 */
@@ -18,7 +19,7 @@
   const gridHost = root.querySelector('[data-grid]');
 
   const CSV_URL =
-    'https://docs.google.com/spreadsheets/d/e/2PACX-1vRBp1ORyL7U0f1PJNho0_vrsJjoXjSCU1O1-p_BzlAjL6ggO7LktE0se1DtjeITVc1h2RmXWaodhhWU/pub?gid=1397300240&single=true&output=csv';
+    'https://docs.google.com/spreadsheets/d/e/2PACX-1vRBp1ORyL7U0f1PJNho0_vrsJjoXjSCU1O1-p_BzlAjL6ggO7LktE0se1DtjeITVc1h2RmXWaodhhWU/pub?gid=1514873684&single=true&output=csv';
   const FALLBACK_JSON =
     '/cliente-jescri/influencia/ativacoes-do-mes/ativacoes-fallback.json';
 
@@ -87,9 +88,9 @@
     const s = String(raw || '').trim();
     if (!s) return null;
 
-    // dd/mm/aaaa hh:mm ou dd/mm/aaaa
+    // dd/mm/aaaa hh:mm:ss, dd/mm/aaaa hh:mm ou dd/mm/aaaa
     const m = s.match(
-      /^(\d{1,2})\/(\d{1,2})\/(\d{4})(?:\s+(\d{1,2}):(\d{2}))?$/
+      /^(\d{1,2})\/(\d{1,2})\/(\d{4})(?:\s+(\d{1,2}):(\d{2})(?::(\d{2}))?)?$/
     );
     if (m) {
       const dd = parseInt(m[1], 10);
@@ -99,6 +100,23 @@
       const mi = m[5] != null ? parseInt(m[5], 10) : null;
 
       const d = new Date(yyyy, mm - 1, dd, hh || 0, mi || 0, 0);
+      d.__hasTime = hh != null && mi != null;
+      return d;
+    }
+
+    // yyyy-mm-dd hh:mm:ss, yyyy-mm-dd hh:mm ou yyyy-mm-dd
+    const iso = s.match(
+      /^(\d{4})-(\d{2})-(\d{2})(?:[ t](\d{2}):(\d{2})(?::(\d{2}))?)?$/
+    );
+    if (iso) {
+      const yyyy = parseInt(iso[1], 10);
+      const mm = parseInt(iso[2], 10);
+      const dd = parseInt(iso[3], 10);
+      const hh = iso[4] != null ? parseInt(iso[4], 10) : null;
+      const mi = iso[5] != null ? parseInt(iso[5], 10) : null;
+      const ss = iso[6] != null ? parseInt(iso[6], 10) : 0;
+
+      const d = new Date(yyyy, mm - 1, dd, hh || 0, mi || 0, ss || 0);
       d.__hasTime = hh != null && mi != null;
       return d;
     }
@@ -149,8 +167,11 @@
           obj[h] = row[i] != null ? row[i] : '';
         });
 
-        // mapeamento obrigatório por posição (a, e, f)
+        // mapeamento obrigatório por posição (a, d, e, f)
         obj.a = row[0] != null ? row[0] : '';
+        obj.b = row[1] != null ? row[1] : '';
+        obj.c = row[2] != null ? row[2] : '';
+        obj.d = row[3] != null ? row[3] : '';
         obj.e = row[4] != null ? row[4] : '';
         obj.f = row[5] != null ? row[5] : '';
         return obj;
@@ -167,20 +188,29 @@
 
   function extractItem(r) {
     const nome = r.a || r['influenciadora'] || r['nome'] || '';
-    const dtRaw = r.e || r['data + hora'] || r['data e hora'] || r['data'] || '';
-    const tipo = r.f || r['tipo'] || '';
+    const dateRaw = r.b || r['data'] || '';
+    const timeRaw = r.c || r['hora'] || '';
+    const dtRaw = r.e || r['data + hora'] || r['data e hora'] || '';
+    const dtCombined = [dateRaw, timeRaw].filter(Boolean).join(' ').trim();
+    const dtValue = dtRaw || dtCombined;
+    const tipo = r.d || r['tipo'] || '';
+    const formato = r.f || r['formato'] || tipo;
 
-    const dt = parsePtDateTime(dtRaw);
+    const dt = parsePtDateTime(dtValue);
     if (!dt) return null;
 
     const dayKey = `${dt.getFullYear()}-${pad2(dt.getMonth() + 1)}-${pad2(
       dt.getDate()
     )}`;
 
-    const title = [normalizeText(nome), normalizeText(tipo)].filter(Boolean).join(' ').trim();
+    const title = [normalizeText(nome), normalizeText(formato)]
+      .filter(Boolean)
+      .join(' ')
+      .trim();
     const hour = dt.__hasTime ? `${pad2(dt.getHours())}:${pad2(dt.getMinutes())}` : '';
+    const tip = [normalizeText(tipo), normalizeText(hour)].filter(Boolean).join(' ').trim();
 
-    return { title, hour, dt, _dayKey: dayKey };
+    return { title, hour, tip, dt, _dayKey: dayKey };
   }
 
   // regra nova:
@@ -263,7 +293,7 @@
     const raw = evtEl.querySelector('.tip');
     if (!raw) return;
 
-    // tooltip só com hora
+    // tooltip com tipo + hora
     const body = (raw.querySelector('.tip__body')?.textContent || '').trim();
     if (!body) {
       hideTip(tipEl);
@@ -373,11 +403,11 @@
         t.className = 'evt__title';
         t.textContent = it.title;
 
-        // tooltip: hora
+        // tooltip: tipo + hora
         const tip = document.createElement('div');
         tip.className = 'tip';
         tip.innerHTML =
-          `<div class="tip__body">${escapeHtml(it.hour)}</div>`;
+          `<div class="tip__body">${escapeHtml(it.tip)}</div>`;
 
         evt.appendChild(t);
         evt.appendChild(tip);
