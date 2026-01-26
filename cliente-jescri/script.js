@@ -78,7 +78,7 @@
               </div>
 
               <div class="clientPanel" data-panel="influencia" aria-hidden="true">
-                <a href="/cliente-jescri/influencia/ativacoes-do-mes/">ativações do mês</a>
+                <a href="/cliente-jescri/influencia/ativacoes-do-mes/">ativações</a>
               </div>
 
               <div class="clientPanel" data-panel="fotos" aria-hidden="true">

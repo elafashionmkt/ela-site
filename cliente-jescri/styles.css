@@ -1,4 +1,11 @@
-/* ativações do mês: estética em blocos (leitura tipo trello) */
+/* ativações: estética em blocos (leitura tipo trello) */
+:root{
+  --client-card-bg: rgba(255,255,255,0.08);
+  --client-card-bg-strong: rgba(255,255,255,0.14);
+  --client-card-border: rgba(255,255,255,0.7);
+  --client-card-border-strong: rgba(255,255,255,0.9);
+  --client-card-shadow: 0 10px 24px rgba(0,0,0,0.08);
+}
 [data-ativacoes-root] .month__head{ display: none; } /* sem mês escrito */
 
 [data-ativacoes-root] .grid{
@@ -7,8 +14,8 @@
 
 [data-ativacoes-root] .day{
   border-radius: 16px;
-  border: 1.5px solid rgba(255,255,255,0.85);
-  background: rgba(255,255,255,0.04);
+  border: 1.5px solid var(--client-card-border);
+  background: var(--client-card-bg);
   min-height: 150px;
 }
 
@@ -25,8 +32,9 @@
   grid-template-columns: 1fr;
   gap: 0;
   border-radius: 12px;
-  border: 1px solid rgba(255,255,255,0.55);
-  background: rgba(255,255,255,0.08);
+  border: 1.5px solid var(--client-card-border);
+  background: var(--client-card-bg);
+  box-shadow: var(--client-card-shadow);
   padding: 10px 12px;
   margin-top: 10px;
 }
@@ -41,8 +49,8 @@
 
 [data-ativacoes-root] .evt:hover,
 [data-ativacoes-root] .evt:focus-visible{
-  background: rgba(255,255,255,0.12);
-  border-color: rgba(255,255,255,0.85);
+  background: var(--client-card-bg-strong);
+  border-color: var(--client-card-border-strong);
 }
 /* unidade visual: campos em estilo card (mesma linguagem dos calendários) */
 .cliente form .field,
@@ -91,4 +99,3 @@
 .cliente form .btn:hover{
   background: rgba(255,255,255,0.16);
 }
-
