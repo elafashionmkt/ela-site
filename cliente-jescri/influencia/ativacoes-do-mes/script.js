@@ -1,14 +1,11 @@
 /* ativações do mês (js puro)
-   - fonte: csv publicado (aba data limpas) + fallback local
-   - mapeamento:
-     - coluna a: influenciadora
-     - coluna d: tipo (tooltip)
-     - coluna e: data + hora (data + hora)
-     - coluna f: formato (texto visível junto do nome)
-   - exibição: a + f (visível)
-   - tooltip: tipo (d) + hora (extraída de e)
-   - mês: mês atual se tiver evento; senão próximo mês futuro com eventos; senão último mês passado
-   - sem texto de mês na interface
+   - fonte: csv publicado (aba datas) + fallback local
+   - mapeamento: col a (influenciadora) | col d (tipo) | col e (data + hora) | col f (formato)
+   - compatível com data e hora em colunas separadas
+   - exibição no calendário: a + f
+   - tooltip: d + hora (da coluna e)
+   - mês: usa mês atual se tiver eventos; se não tiver, usa o próximo mês futuro com eventos
+   - sem mês escrito na interface
 */
 
 (function () {
@@ -23,7 +20,6 @@
 
   const CSV_URL =
     'https://docs.google.com/spreadsheets/d/e/2PACX-1vRBp1ORyL7U0f1PJNho0_vrsJjoXjSCU1O1-p_BzlAjL6ggO7LktE0se1DtjeITVc1h2RmXWaodhhWU/pub?gid=1514873684&single=true&output=csv';
-
   const FALLBACK_JSON =
     '/cliente-jescri/influencia/ativacoes-do-mes/ativacoes-fallback.json';
 
@@ -43,7 +39,8 @@
 
   function normalizeText(v) {
     return String(v || '')
-      .replace(/[—–]/g, '-') // evita travessão invisível
+      .replace(/[—–]/g, ' ') /* evita travessão visível */
+      .replace(/\s+/g, ' ')
       .trim()
       .toLowerCase();
   }
@@ -91,8 +88,8 @@
 
     const s = s0.replace(/\s+/g, ' ');
 
-    // dd/mm/aaaa hh:mm(:ss)
-    let m = s.match(
+    // dd/mm/aaaa hh:mm:ss, dd/mm/aaaa hh:mm ou dd/mm/aaaa
+    const m = s.match(
       /^(\d{1,2})\/(\d{1,2})\/(\d{4})(?:\s+(\d{1,2}):(\d{2})(?::(\d{2}))?)?$/
     );
     if (m) {
@@ -125,7 +122,23 @@
       return isNaN(d.getTime()) ? null : d;
     }
 
-    // fallback
+    // yyyy-mm-dd hh:mm:ss, yyyy-mm-dd hh:mm ou yyyy-mm-dd
+    const iso = s.match(
+      /^(\d{4})-(\d{2})-(\d{2})(?:[ t](\d{2}):(\d{2})(?::(\d{2}))?)?$/
+    );
+    if (iso) {
+      const yyyy = parseInt(iso[1], 10);
+      const mm = parseInt(iso[2], 10);
+      const dd = parseInt(iso[3], 10);
+      const hh = iso[4] != null ? parseInt(iso[4], 10) : null;
+      const mi = iso[5] != null ? parseInt(iso[5], 10) : null;
+      const ss = iso[6] != null ? parseInt(iso[6], 10) : 0;
+
+      const d = new Date(yyyy, mm - 1, dd, hh || 0, mi || 0, ss || 0);
+      d.__hasTime = hh != null && mi != null;
+      return d;
+    }
+
     const d = new Date(s);
     if (isNaN(d.getTime())) return null;
     d.__hasTime = true;
@@ -172,11 +185,13 @@
           obj[h] = row[i] != null ? row[i] : '';
         });
 
-        // posições fixas
-        obj.a = row[0] != null ? row[0] : ''; // influenciadora
-        obj.d = row[3] != null ? row[3] : ''; // tipo (tooltip)
-        obj.e = row[4] != null ? row[4] : ''; // data + hora
-        obj.f = row[5] != null ? row[5] : ''; // formato (visível)
+        // mapeamento obrigatório por posição (a, d, e, f)
+        obj.a = row[0] != null ? row[0] : '';
+        obj.b = row[1] != null ? row[1] : '';
+        obj.c = row[2] != null ? row[2] : '';
+        obj.d = row[3] != null ? row[3] : '';
+        obj.e = row[4] != null ? row[4] : '';
+        obj.f = row[5] != null ? row[5] : '';
         return obj;
       });
     } catch (e) {
@@ -191,23 +206,29 @@
 
   function extractItem(r) {
     const nome = r.a || r['influenciadora'] || r['nome'] || '';
+    const dateRaw = r.b || r['data'] || '';
+    const timeRaw = r.c || r['hora'] || '';
+    const dtRaw = r.e || r['data + hora'] || r['data e hora'] || '';
+    const dtCombined = [dateRaw, timeRaw].filter(Boolean).join(' ').trim();
+    const dtValue = dtRaw || dtCombined;
     const tipo = r.d || r['tipo'] || '';
-    const dtRaw = r.e || r['data + hora'] || r['data e hora'] || r['data'] || '';
-    const formato = r.f || r['formato'] || '';
+    const formato = r.f || r['formato'] || tipo;
 
-    const dt = parseDateTime(dtRaw);
+    const dt = parsePtDateTime(dtValue);
     if (!dt) return null;
 
-    const dayKey = `${dt.getFullYear()}-${pad2(dt.getMonth() + 1)}-${pad2(dt.getDate())}`;
+    const dayKey = `${dt.getFullYear()}-${pad2(dt.getMonth() + 1)}-${pad2(
+      dt.getDate()
+    )}`;
+
+    const title = [normalizeText(nome), normalizeText(formato)]
+      .filter(Boolean)
+      .join(' ')
+      .trim();
     const hour = dt.__hasTime ? `${pad2(dt.getHours())}:${pad2(dt.getMinutes())}` : '';
+    const tip = [normalizeText(tipo), normalizeText(hour)].filter(Boolean).join(' ').trim();
 
-    const title = [normalizeText(nome), normalizeText(formato)].filter(Boolean).join(' ').trim();
-
-    // tooltip: tipo + hora (sem travessão)
-    const tipTipo = normalizeText(tipo);
-    const tip = [tipTipo, hour].filter(Boolean).join(' ').trim();
-
-    return { title, tip, dt, _dayKey: dayKey };
+    return { title, hour, tip, dt, _dayKey: dayKey };
   }
 
   function pickTargetMonth(items) {
@@ -281,7 +302,15 @@
     const raw = evtEl.querySelector('.tip');
     if (!raw) return;
 
+    // tooltip com tipo + hora
     const body = (raw.querySelector('.tip__body')?.textContent || '').trim();
+    if (!body) {
+      hideTip(tipEl);
+      return;
+    }
+
+    const t = tipEl.querySelector('.calTip__title');
+    const m = tipEl.querySelector('.calTip__meta');
     const b = tipEl.querySelector('.calTip__body');
 
     b.textContent = body;
@@ -368,6 +397,7 @@
         const evt = document.createElement('div');
         evt.className = 'evt evt--awareness';
         evt.setAttribute('tabindex', '0');
+        evt.dataset.hour = it.hour || '';
 
         const t = document.createElement('div');
         t.className = 'evt__title';
@@ -376,7 +406,8 @@
         // tooltip: tipo + hora
         const tip = document.createElement('div');
         tip.className = 'tip';
-        tip.innerHTML = `<div class="tip__body">${escapeHtml(it.tip)}</div>`;
+        tip.innerHTML =
+          `<div class="tip__body">${escapeHtml(it.tip)}</div>`;
 
         evt.appendChild(t);
         evt.appendChild(tip);

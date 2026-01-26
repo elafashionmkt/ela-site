@@ -55,8 +55,6 @@
   // -----------------------------
   // 2) Accordion (single open) - FIXED
   // -----------------------------
-  const modules = Array.from(document.querySelectorAll("[data-module]"));
-
   const setOpen = (moduleEl, open) => {
     const btn = moduleEl.querySelector(".module__head");
     const body = moduleEl.querySelector(".module__body");
@@ -75,34 +73,43 @@
     }
   };
 
-  const closeAllExcept = (keepEl) => {
+  const initAccordion = () => {
+    const modules = Array.from(document.querySelectorAll("[data-module]"));
+    if (!modules.length) return;
+
+    const closeAllExcept = (keepEl) => {
+      modules.forEach((m) => {
+        if (m !== keepEl) setOpen(m, false);
+      });
+    };
+
     modules.forEach((m) => {
-      if (m !== keepEl) setOpen(m, false);
+      if (m.dataset.accordionBound === "true") return;
+      m.dataset.accordionBound = "true";
+
+      const btn = m.querySelector(".module__head");
+      const body = m.querySelector(".module__body");
+      if (!btn || !body) return;
+
+      setOpen(m, false);
+
+      btn.addEventListener("click", () => {
+        const isOpen = m.classList.contains("is-open");
+        closeAllExcept(m);
+        setOpen(m, !isOpen);
+      });
+
+      // recalcula altura aberta no resize (mantém animado/preciso)
+      window.addEventListener("resize", () => {
+        if (m.classList.contains("is-open")) {
+          body.style.height = body.scrollHeight + "px";
+        }
+      });
     });
   };
 
-  // init: tudo fechado
-  modules.forEach((m) => setOpen(m, false));
-
-  // click
-  modules.forEach((m) => {
-    const btn = m.querySelector(".module__head");
-    const body = m.querySelector(".module__body");
-    if (!btn || !body) return;
-
-    btn.addEventListener("click", () => {
-      const isOpen = m.classList.contains("is-open");
-      closeAllExcept(m);
-      setOpen(m, !isOpen);
-    });
-
-    // recalcula altura aberta no resize (mantém animado/preciso)
-    window.addEventListener("resize", () => {
-      if (m.classList.contains("is-open")) {
-        body.style.height = body.scrollHeight + "px";
-      }
-    });
-  });
+  initAccordion();
+  window.addEventListener("ela:accordion-ready", initAccordion);
 
   // -----------------------------
   // 3) Mobile menu (hamburger)

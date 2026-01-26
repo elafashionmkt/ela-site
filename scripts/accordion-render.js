@@ -7,6 +7,8 @@
   if (!mount) return;
 
   const OV_KEY = 'ela_accordion_override';
+  const scriptUrl = (document.currentScript && document.currentScript.src) || window.location.href;
+  const SRC = new URL('../data/accordion-config.json', scriptUrl).toString();
 
   // suporta publicação na raiz do domínio e também em subpasta (ex: /ela-site/)
   const basePath = (function () {
@@ -78,6 +80,14 @@
 
     if (override && override.macros) return override;
 
+    const inlineData = document.getElementById('accordionData');
+    if(inlineData){
+      const parsed = safeJsonParse(inlineData.textContent || '');
+      if(parsed && parsed.macros){
+        return parsed;
+      }
+    }
+
     const res = await fetch(SRC, { cache: 'no-store' });
     if (!res.ok) return { macros: [] };
     return await res.json();
@@ -133,7 +143,7 @@
     .then((cfg) => {
       const macros = Array.isArray(cfg.macros) ? cfg.macros : [];
       mount.innerHTML = macros.map(buildMacro).join('');
-      initAccordionBehavior();
+      window.dispatchEvent(new CustomEvent('ela:accordion-ready'));
     })
     .catch(() => {
       mount.innerHTML = '';
