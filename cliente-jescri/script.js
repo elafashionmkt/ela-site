@@ -1,28 +1,26 @@
-/* área do cliente (js puro) */
+(() => {
+  'use strict';
 
-(function(){
-  const SESSION_KEY = 'ela_auth_session_v1';
+  // auth simples por sessionStorage
+  const SESSION_KEY = 'ela_client_session_v1';
 
   function readSession(){
-    try{ return JSON.parse(localStorage.getItem(SESSION_KEY) || 'null'); }catch(e){ return null; }
+    try{
+      const raw = sessionStorage.getItem(SESSION_KEY);
+      if(!raw) return null;
+      return JSON.parse(raw);
+    }catch(e){
+      return null;
+    }
   }
 
-  function isValidSession(session, clientId){
-    if(!session || typeof session !== 'object') return false;
-    if(session.clientId !== clientId) return false;
-    if(!session.expiresAt || typeof session.expiresAt !== 'number') return false;
-    return Date.now() < session.expiresAt;
+  function isValidSession(sess){
+    if(!sess) return false;
+    if(!sess.clientId) return false;
+    if(!sess.createdAt) return false;
+    return true;
   }
 
-  // guard
-  const sess = readSession();
-  if(!isValidSession(sess, 'jescri')){
-    const next = encodeURIComponent(window.location.pathname || '/cliente-jescri/');
-    window.location.replace(`/area-do-cliente/?next=${next}`);
-    return;
-  }
-
-  // logo svg do cliente (sem alterar o arquivo)
   async function injectClientLogo(){
     const targets = Array.from(document.querySelectorAll('[data-client-logo]'));
     if(!targets.length) return;
@@ -87,16 +85,38 @@
           btn.setAttribute('aria-expanded', 'true');
         }
       });
-
-      col.querySelectorAll('a').forEach((a) => {
-        a.addEventListener('click', () => closeAll());
-      });
     });
 
-    // começa fechado
+    // ao clicar em qualquer link, recolhe
+    menu.addEventListener('click', (e) => {
+      const a = e.target.closest('a');
+      if(!a) return;
+      closeAll();
+    });
+
+    // inicia fechado
     closeAll();
   }
 
-  injectClientLogo();
+  function guardClient(){
+    // páginas públicas não devem redirecionar
+    const isClientArea = document.body && document.body.getAttribute('data-client-area') === 'true';
+    if(!isClientArea) return;
+
+    const sess = readSession();
+    if(!isValidSession(sess)){
+      window.location.href = '/area-do-cliente/';
+      return;
+    }
+
+    // por enquanto: apenas jescri
+    if(sess.clientId !== 'jescri'){
+      window.location.href = '/area-do-cliente/';
+      return;
+    }
+  }
+
+  guardClient();
   initMenu();
+  injectClientLogo();
 })();
