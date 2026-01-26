@@ -1,18 +1,24 @@
-/* ativações do mês (dados via csv publicado) */
+(() => {
+  'use strict';
 
-(function(){
-  const cfg = (window.elaGetConfig ? window.elaGetConfig() : window.ELA_CONFIG_DEFAULT) || {};
+  const root = document.getElementById('ativacoesRoot');
+  if(!root) return;
+
+  const monthLabel = root.querySelector('[data-month-label]');
+  const gridHost = root.querySelector('[data-grid]');
+  const loadingEl = root.querySelector('[data-loading]');
+  const emptyEl = root.querySelector('[data-empty]');
 
   // aba: datas (gid fixo)
   const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRBp1ORyL7U0f1PJNho0_vrsJjoXjSCU1O1-p_BzlAjL6ggO7LktE0se1DtjeITVc1h2RmXWaodhhWU/pub?gid=1397300240&single=true&output=csv';
 
-  const loading = document.getElementById('loading');
-  const monthsEl = document.getElementById('months');
-  const calRoot = document.getElementById('cal');
-  if(!monthsEl || !calRoot) return;
+  const MONTHS = [
+    'janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'
+  ];
 
-  const MONTHS = ['', 'janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
-  const DOW = ['seg', 'ter', 'qua', 'qui', 'sex', 'sáb', 'dom'];
+  const DOW = ['seg','ter','qua','qui','sex','sáb','dom'];
+
+  function pad2(n){ return String(n).padStart(2,'0'); }
 
   function stripAccents(s){
     try{ return (s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,''); }catch(e){ return (s||''); }
@@ -29,7 +35,11 @@
         else { inQ = !inQ; }
         continue;
       }
-      if(ch === ',' && !inQ){ out.push(cur); cur = ''; continue; }
+      if(ch === ',' && !inQ){
+        out.push(cur);
+        cur = '';
+        continue;
+      }
       cur += ch;
     }
     out.push(cur);
@@ -43,225 +53,210 @@
     const headersRaw = csvParseLine(lines[0]);
     const headersNorm = headersRaw.map(h => stripAccents(h.toLowerCase()));
     const rows = [];
-    const rowsArr = [];
     for(let i=1;i<lines.length;i++){
       const cols = csvParseLine(lines[i]);
       const obj = {};
       headersNorm.forEach((h, idx) => { obj[h] = cols[idx] || ''; });
       rows.push(obj);
-      rowsArr.push(cols);
     }
-    return { headers: headersNorm, rows, rowsArr };
+    return { headers: headersNorm, rows };
   }
 
-  function parseDateTime(v){
-    const s = String(v||'').trim();
+  function normalizeVisibleText(v){
+    return String(v || '')
+      .replace(/—/g, '-')
+      .trim()
+      .toLowerCase();
+  }
+
+  function parseDateTime(raw){
+    const s = String(raw || '').trim();
     if(!s) return null;
 
-    // dd/mm/yyyy hh:mm (ou só data) | aceita também hh:mm:ss
+    // dd/mm/yyyy hh:mm(:ss) (ou só data)
     let m = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})(?:\s+(\d{1,2}):(\d{2})(?::(\d{2}))?)?$/);
     if(m){
       const dd = parseInt(m[1],10);
       const mm = parseInt(m[2],10);
       const yyyy = parseInt(m[3],10);
-      const hh = parseInt(m[4] || '0',10);
-      const mi = parseInt(m[5] || '0',10);
-      const ss = parseInt(m[6] || '0',10);
-      return new Date(yyyy, mm-1, dd, hh, mi, ss, 0);
+      const hh = m[4] != null ? parseInt(m[4],10) : 0;
+      const min = m[5] != null ? parseInt(m[5],10) : 0;
+      const ss = m[6] != null ? parseInt(m[6],10) : 0;
+      return new Date(yyyy, mm-1, dd, hh, min, ss);
     }
 
-    // yyyy-mm-dd hh:mm | aceita também hh:mm:ss
-    m = s.match(/^(\d{4})-(\d{2})-(\d{2})(?:\s+(\d{1,2}):(\d{2})(?::(\d{2}))?)?$/);
-    if(m){
-      const yyyy = parseInt(m[1],10);
-      const mm = parseInt(m[2],10);
-      const dd = parseInt(m[3],10);
-      const hh = parseInt(m[4] || '0',10);
-      const mi = parseInt(m[5] || '0',10);
-      const ss = parseInt(m[6] || '0',10);
-      return new Date(yyyy, mm-1, dd, hh, mi, ss, 0);
-    }
-
-    return null;
+    // iso fallback
+    const d = new Date(s);
+    if(isNaN(d.getTime())) return null;
+    return d;
   }
 
-  function pad2(n){ return String(n).padStart(2, '0'); }
+  function mondayFirstIndex(d){
+    // js: 0 dom..6 sáb
+    return (d.getDay() + 6) % 7;
+  }
 
-  function monthKey(y, m){ return `${y}-${pad2(m)}`; }
-
-  function buildMonth(y, m, eventsByDay){
-    const first = new Date(y, m-1, 1);
-    const last = new Date(y, m, 0);
+  function buildGrid(year, month, itemsByDay){
+    const first = new Date(year, month, 1);
+    const last = new Date(year, month+1, 0);
     const daysInMonth = last.getDate();
-    const firstIdx = (first.getDay() + 6) % 7; // monday first
-
-    const monthEl = document.createElement('section');
-    monthEl.className = 'month';
-    monthEl.setAttribute('data-month', monthKey(y,m));
-
-    const head = document.createElement('div');
-    head.className = 'month__head';
-
-    const title = document.createElement('h1');
-    title.className = 'month__title';
-    title.textContent = MONTHS[m];
-
-    const range = document.createElement('div');
-    range.className = 'month__range';
-    range.textContent = `${pad2(1)}/${pad2(m)}/${y} a ${pad2(daysInMonth)}/${pad2(m)}/${y}`;
-
-    head.appendChild(title);
-    head.appendChild(range);
-
-    const dow = document.createElement('div');
-    dow.className = 'dow';
-    DOW.forEach(d => {
-      const s = document.createElement('span');
-      s.textContent = d;
-      dow.appendChild(s);
-    });
 
     const grid = document.createElement('div');
-    grid.className = 'grid';
+    grid.className = 'calGrid';
 
-    const totalCells = Math.ceil((firstIdx + daysInMonth) / 7) * 7;
+    const dow = document.createElement('div');
+    dow.className = 'calDow';
+    DOW.forEach(t => {
+      const el = document.createElement('div');
+      el.className = 'calDow__item';
+      el.textContent = t;
+      dow.appendChild(el);
+    });
 
-    for(let cell=0; cell<totalCells; cell++){
-      const dayEl = document.createElement('div');
-      dayEl.className = 'day';
+    const cells = document.createElement('div');
+    cells.className = 'calCells';
 
-      const dayNum = cell - firstIdx + 1;
-      if(dayNum < 1 || dayNum > daysInMonth){
-        dayEl.classList.add('is-empty');
-        const n = document.createElement('div');
-        n.className = 'day__num';
-        n.textContent = '';
-        dayEl.appendChild(n);
-        grid.appendChild(dayEl);
-        continue;
-      }
+    // blanks
+    const firstIdx = mondayFirstIndex(first);
+    for(let i=0;i<firstIdx;i++){
+      const cell = document.createElement('div');
+      cell.className = 'calDay is-empty';
+      cells.appendChild(cell);
+    }
 
-      const n = document.createElement('div');
-      n.className = 'day__num';
-      n.textContent = String(dayNum);
-      dayEl.appendChild(n);
+    for(let day=1; day<=daysInMonth; day++){
+      const cell = document.createElement('div');
+      cell.className = 'calDay';
+
+      const num = document.createElement('div');
+      num.className = 'calDay__num';
+      num.textContent = String(day);
+      cell.appendChild(num);
 
       const list = document.createElement('div');
-      list.className = 'evts';
+      list.className = 'calDay__events';
 
-      const key = `${y}-${pad2(m)}-${pad2(dayNum)}`;
-      const evts = eventsByDay.get(key) || [];
-      evts.sort((a,b) => (a.time || '').localeCompare(b.time || ''));
+      const key = `${year}-${pad2(month+1)}-${pad2(day)}`;
+      const items = itemsByDay.get(key) || [];
 
-      evts.forEach((evt) => {
-        const b = document.createElement('div');
-        b.className = 'evt';
+      items.forEach((it) => {
+        const evt = document.createElement('div');
+        evt.className = 'calEvt';
 
-        const dot = document.createElement('div');
-        dot.className = 'evt__dot';
-        dot.style.background = evt.dot || 'rgba(255,255,255,0.7)';
+        const t1 = document.createElement('div');
+        t1.className = 'calEvt__title';
+        t1.textContent = normalizeVisibleText(it.nome);
 
-        const wrap = document.createElement('div');
+        const meta = document.createElement('div');
+        meta.className = 'calEvt__meta';
 
-        const t = document.createElement('div');
-        t.className = 'evt__title';
-        t.textContent = evt.name;
+        const time = it.hora ? it.hora : '';
+        const tipo = normalizeVisibleText(it.tipo);
+        const metaBits = [];
+        if(time) metaBits.push(time);
+        if(tipo) metaBits.push(tipo);
 
-        const meta = document.createElement('span');
-        meta.className = 'evt__meta';
-        meta.textContent = `${evt.time} • ${evt.type}`;
+        meta.textContent = metaBits.join(' · ');
 
-        wrap.appendChild(t);
-        wrap.appendChild(meta);
-
-        b.appendChild(dot);
-        b.appendChild(wrap);
-        list.appendChild(b);
+        evt.appendChild(t1);
+        evt.appendChild(meta);
+        list.appendChild(evt);
       });
 
-      dayEl.appendChild(list);
-      grid.appendChild(dayEl);
+      cell.appendChild(list);
+      cells.appendChild(cell);
     }
 
-    monthEl.appendChild(head);
-    monthEl.appendChild(dow);
-    monthEl.appendChild(grid);
-
-    return monthEl;
+    grid.appendChild(dow);
+    grid.appendChild(cells);
+    return grid;
   }
 
-  function typeDot(type){
-    const t = stripAccents(String(type||'').toLowerCase());
-    if(t.includes('reel')) return '#b8f2ff';
-    if(t.includes('stories')) return '#ffe8a3';
-    if(t.includes('carrossel')) return '#f2c1c8';
-    return '#c8f7c5';
+  function setLoading(v){
+    if(loadingEl) loadingEl.style.display = v ? 'block' : 'none';
   }
 
-  async function init(){
-    if(loading) loading.style.display = 'block';
+  function setEmpty(v){
+    if(emptyEl) emptyEl.style.display = v ? 'block' : 'none';
+  }
 
-    let text = '';
-    try{
-      const res = await fetch(CSV_URL, { cache: 'no-store' });
-      text = await res.text();
-    }catch(e){
-      if(loading) loading.textContent = 'não foi possível carregar os dados.';
-      return;
-    }
+  async function fetchCsv(){
+    const res = await fetch(CSV_URL, { cache: 'no-store' });
+    if(!res.ok) throw new Error('csv fetch failed');
+    return res.text();
+  }
 
-    const { rows, rowsArr } = csvToRows(text);
+  function groupItems(rows, targetYear, targetMonth){
+    const map = new Map();
 
-    const events = [];
-    // mapeamento fixo por coluna: a = nome, e = data + hora, f = tipo
-    // fallback: tenta pelos nomes de header caso a linha venha curta.
-    (rowsArr || []).forEach((cols, idx) => {
-      const a = (cols && cols[0]) ? String(cols[0]).trim() : '';
-      const e = (cols && cols[4]) ? String(cols[4]).trim() : '';
-      const f = (cols && cols[5]) ? String(cols[5]).trim() : '';
+    rows.forEach((r) => {
+      // mapeamento fixo: coluna a (nome), e (data+hora), f (tipo)
+      // como estamos lendo csv, usamos índice real via headers quando existir, mas mantemos fallback
+      const keys = Object.keys(r);
 
-      const r = rows[idx] || {};
-      const name = a || String(r['nome'] || r['influenciadora'] || r['a'] || r['name'] || '').trim();
-      const dtRaw = e || String(r['data + hora'] || r['data e hora'] || r['datahora'] || r['e'] || r['datetime'] || '').trim();
-      const type = f || String(r['tipo'] || r['f'] || '').trim();
-      if(!name || !dtRaw) return;
+      // tenta por header “a” etc caso exista (alguns csvs trazem headers reais)
+      const nome = r['a'] || r['nome'] || r['influenciadora'] || r[keys[0]] || '';
+      const dtRaw = r['e'] || r['data'] || r['data e hora'] || r['data+hora'] || r[keys[4]] || '';
+      const tipo = r['f'] || r['tipo'] || r[keys[5]] || '';
+
       const dt = parseDateTime(dtRaw);
       if(!dt) return;
 
-      events.push({
-        name: name.toLowerCase(),
-        type: (type || '').toLowerCase(),
-        dt
+      if(dt.getFullYear() !== targetYear) return;
+      if(dt.getMonth() !== targetMonth) return;
+
+      const key = `${dt.getFullYear()}-${pad2(dt.getMonth()+1)}-${pad2(dt.getDate())}`;
+      if(!map.has(key)) map.set(key, []);
+      map.get(key).push({
+        nome: normalizeVisibleText(nome),
+        tipo: normalizeVisibleText(tipo),
+        hora: `${pad2(dt.getHours())}:${pad2(dt.getMinutes())}`
       });
     });
 
-    if(!events.length){
-      if(loading) loading.textContent = 'sem ativações no csv.';
-      return;
+    // ordena eventos do dia por hora, depois nome
+    for(const [k, list] of map.entries()){
+      list.sort((a,b) => {
+        if(a.hora < b.hora) return -1;
+        if(a.hora > b.hora) return 1;
+        return a.nome.localeCompare(b.nome, 'pt-BR');
+      });
     }
 
-    // escolhe o mês mais recente presente nos dados
-    events.sort((a,b) => a.dt - b.dt);
-    const last = events[events.length-1].dt;
-    const y = last.getFullYear();
-    const m = last.getMonth() + 1;
+    return map;
+  }
 
-    const eventsByDay = new Map();
-    events.filter(e => e.dt.getFullYear() === y && (e.dt.getMonth()+1) === m).forEach((e) => {
-      const key = `${y}-${pad2(m)}-${pad2(e.dt.getDate())}`;
-      if(!eventsByDay.has(key)) eventsByDay.set(key, []);
-      eventsByDay.get(key).push({
-        name: e.name,
-        time: `${pad2(e.dt.getHours())}:${pad2(e.dt.getMinutes())}`,
-        type: e.type,
-        dot: typeDot(e.type)
-      });
-    });
+  async function init(){
+    try{
+      setLoading(true);
+      setEmpty(false);
 
-    monthsEl.innerHTML = '';
-    monthsEl.appendChild(buildMonth(y, m, eventsByDay));
+      const now = new Date();
+      const y = now.getFullYear();
+      const m = now.getMonth();
 
-    if(loading) loading.style.display = 'none';
+      if(monthLabel){
+        monthLabel.textContent = `${MONTHS[m]} ${y}`;
+      }
+
+      const csvText = await fetchCsv();
+      const { rows } = csvToRows(csvText);
+
+      const itemsByDay = groupItems(rows, y, m);
+
+      if(gridHost) gridHost.innerHTML = '';
+      if(itemsByDay.size === 0){
+        setEmpty(true);
+        return;
+      }
+
+      const grid = buildGrid(y, m, itemsByDay);
+      if(gridHost) gridHost.appendChild(grid);
+    }catch(err){
+      setEmpty(true);
+    }finally{
+      setLoading(false);
+    }
   }
 
   init();
