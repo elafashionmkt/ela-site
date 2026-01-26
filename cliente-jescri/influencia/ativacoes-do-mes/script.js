@@ -40,7 +40,8 @@
 
   function normalizeText(v) {
     return String(v || '')
-      .replace(/[—–]/g, '-') /* evita travessão invisível */
+      .replace(/[—–]/g, ' ') /* evita travessão visível */
+      .replace(/\s+/g, ' ')
       .trim()
       .toLowerCase();
   }
@@ -264,6 +265,10 @@
 
     // tooltip só com hora
     const body = (raw.querySelector('.tip__body')?.textContent || '').trim();
+    if (!body) {
+      hideTip(tipEl);
+      return;
+    }
 
     const t = tipEl.querySelector('.calTip__title');
     const m = tipEl.querySelector('.calTip__meta');
@@ -361,6 +366,7 @@
         const evt = document.createElement('div');
         evt.className = 'evt evt--awareness';
         evt.setAttribute('tabindex', '0');
+        evt.dataset.hour = it.hour || '';
 
         // visível: a + f
         const t = document.createElement('div');

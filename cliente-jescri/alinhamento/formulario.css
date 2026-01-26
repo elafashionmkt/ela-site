@@ -26,7 +26,7 @@ body{
 .formCard{
   border: 1.5px solid rgba(255,255,255,0.92);
   border-radius: 18px;
-  background: transparent;
+  background: rgba(255,255,255,0.04);
   overflow: hidden;
 }
 
@@ -60,9 +60,9 @@ body{
 .stack{ display: grid; gap: 36px; }
 
 .field{
-  border: 1.5px solid rgba(255,255,255,0.92);
+  border: 1.5px solid rgba(255,255,255,0.75);
   border-radius: 18px;
-  background: transparent;
+  background: rgba(255,255,255,0.06);
   padding: 24px;
 }
 
@@ -90,10 +90,10 @@ body{
   grid-template-columns: 22px 1fr;
   gap: 12px;
   align-items: start;
-  border: 1.5px solid rgba(255,255,255,0.92);
+  border: 1.5px solid rgba(255,255,255,0.7);
   border-radius: 14px;
   padding: 14px 14px;
-  background: transparent;
+  background: rgba(255,255,255,0.08);
   cursor: pointer;
   user-select: none;
 }
@@ -122,9 +122,9 @@ body{
   width: 100%;
   min-height: 44px;
   padding: 12px 12px;
-  border: 1px solid rgba(244,233,230,.22);
+  border: 1.5px solid rgba(255,255,255,0.55);
   border-radius: 12px;
-  background: rgba(244,233,230,.06);
+  background: rgba(255,255,255,0.08);
   color: var(--ink);
   font-size: 14px;
   outline: none;
@@ -133,8 +133,8 @@ body{
 .input::placeholder{ color: rgba(244,233,230,.6); }
 
 .input:focus{
-  border-color: rgba(244,233,230,.5);
-  background: rgba(244,233,230,.08);
+  border-color: rgba(255,255,255,0.85);
+  background: rgba(255,255,255,0.12);
 }
 
 .field.error{
@@ -159,11 +159,11 @@ body{
 
 .btn{
   appearance: none;
-  border: 1px solid rgba(244,233,230,.32);
-  border-radius: 999px;
-  padding: 14px 18px;
+  border: 1.5px solid rgba(255,255,255,0.85);
+  border-radius: 12px;
+  padding: 12px 16px;
   min-height: 48px;
-  background: rgba(244,233,230,.12);
+  background: rgba(255,255,255,0.1);
   color: var(--ink);
   font-size: 14px;
   font-weight: 600;
@@ -172,7 +172,7 @@ body{
   cursor: pointer;
 }
 
-.btn:hover{ background: rgba(244,233,230,.18); }
+.btn:hover{ background: rgba(255,255,255,0.16); }
 .btn[disabled]{ opacity: .55; cursor: default; }
 
 .status{
