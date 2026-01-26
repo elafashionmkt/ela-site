@@ -7,47 +7,71 @@
   <meta name="theme-color" content="#cd0005"/>
   <meta name="color-scheme" content="only light"/>
   <title>calendário | março | jescri</title>
-  <link rel="icon" type="image/webp" href="../../assets/fav-ela.webp"/>
+  <link rel="icon" type="image/webp" href="/assets/fav-ela.webp"/>
   <link rel="preconnect" href="https://use.typekit.net" crossorigin=""/>
   <link rel="dns-prefetch" href="//use.typekit.net"/>
   <link rel="stylesheet" href="https://use.typekit.net/piy8ljr.css"/>
 
-  <link rel="stylesheet" href="../../styles.css"/>
-  <link rel="stylesheet" href="../styles.css"/>
-  <link rel="stylesheet" href="./styles.css"/>
+  <link rel="stylesheet" href="/styles.css"/>
+  <link rel="stylesheet" href="/cliente-jescri/styles.css"/>
+  <link rel="stylesheet" href="/cliente-jescri/calendario/styles.css"/>
+<link rel="stylesheet" href="../styles.css"/>
 </head>
 
 <body>
   <a class="skip" href="#conteudo">pular para o conteúdo</a>
 
-  <main class="cliente" id="conteudo">
-    <header class="cliente__hero" aria-label="capa">
-      <div class="container cliente__heroInner">
-        <h2 class="cliente__title">área do cliente: <span class="cliente__titleEm">jescri</span></h2>
+  
+
+  <div class="pageTransition" aria-hidden="true"></div>
+
+  <nav class="nav nav--compact" id="topo" aria-label="navegação principal">
+    <a class="brand" href="/" aria-label="voltar para o site">
+      <img class="brand__logo" src="/assets/logo-ela.svg" alt="logo elã" />
+    </a>
+
+    <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="abrir menu">
+      <span class="nav__toggle-line" aria-hidden="true"></span>
+      <span class="nav__toggle-line" aria-hidden="true"></span>
+      <span class="nav__toggle-line" aria-hidden="true"></span>
+    </button>
+
+    <div class="nav__links" id="nav-links">
+      <a href="/#sobre">sobre nós</a>
+      <a href="/#servicos">arquitetura de serviços</a>
+      <a href="/#contato">que tal um café?</a>
+      <a href="/area-do-cliente/">área do cliente</a>
+    </div>
+  </nav>
+<main class="cliente" id="conteudo">
+    <header class="clientBar" aria-label="topo da área do cliente">
+      <div class="container clientBar__inner">
+        <span class="clientBar__left">área do cliente</span>
+        <div class="clientBar__logo" data-client-logo role="img" aria-label="jescri"></div>
       </div>
     </header>
 
-    <section aria-label="menu" class="cliente__menu">
+<section aria-label="menu" class="cliente__menu">
       <div class="container">
         <div class="menuGrid" role="navigation" aria-label="atalhos">
           <section class="menuCol">
             <button class="menuCol__title" type="button" aria-expanded="false">retrospectiva anual</button>
             <div class="menuCol__links">
               <a href="https://www.elafashionmkt.com.br/retrospectiva-jescri" data-link-id="RETRO-2025" target="_blank" rel="noopener">2025</a>
-              <a href="/cliente-jescri/opssss.html" data-link-id="RETRO-HIST" target="_blank" rel="noopener">histórico</a>
+              <a href="/cliente-jescri/retrospectiva/historico.html" data-link-id="RETRO-HIST">histórico</a>
             </div>
           </section>
 
           <section class="menuCol">
             <button class="menuCol__title" type="button" aria-expanded="false">relatórios</button>
             <div class="menuCol__links">
-              <a href="/cliente-jescri/opssss.html" data-link-id="REL-TRI">trimestral</a>
-              <a href="https://docs.google.com/spreadsheets/d/1_NM8zC8NRFiLzMH3b4x9KfIXoSkVHUUbriHU1sqCYxQ/edit?gid=316240602#gid=316240602" data-link-id="REL-CRI" target="_blank" rel="noopener">análise: criativos</a>
+              <a href="/cliente-jescri/relatorios/trimestral.html" data-link-id="REL-TRI">trimestral</a>
+              <a href="https://docs.google.com/spreadsheets/d/1_NM8zC8NRFiLzMH3b4x9KfIXoSkVHUUbriHU1sqCYxQ/edit?gid=316240602#gid=316240602" data-link-id="REL-CRI" target="_blank" rel="noopener">análise de criativos</a>
             </div>
           </section>
 
-          <section class="menuCol is-open">
-            <button class="menuCol__title" type="button" aria-expanded="true">calendário</button>
+          <section class="menuCol">
+            <button class="menuCol__title" type="button" aria-expanded="false">calendário</button>
             <div class="menuCol__links">
               <a href="/cliente-jescri/calendario/" data-link-id="CAL-SEM">semestral</a>
               <a href="/cliente-jescri/calendario/fevereiro.html" data-link-id="CAL-FEV">fevereiro</a>
@@ -87,7 +111,7 @@
             <button class="menuCol__title" type="button" aria-expanded="false">alinhamento</button>
             <div class="menuCol__links">
               <a href="/cliente-jescri/alinhamento/" data-link-id="ALIN-FORM">formulário semestral</a>
-              <a href="/cliente-jescri/opssss.html" data-link-id="ALIN-HIST" target="_blank" rel="noopener">histórico</a>
+              <a href="/cliente-jescri/alinhamento/historico.html" data-link-id="ALIN-HIST">histórico</a>
             </div>
           </section>
         </div>
@@ -115,27 +139,29 @@
     </section>
 
     <section class="cliente__banner" aria-label="banner">
-      <img src="../assets/box-header.jpg" loading="eager" alt=""/>
+      <img src="/cliente-jescri/assets/box-header.jpg" loading="eager" alt=""/>
     </section>
 
     <footer class="footerBar" aria-label="rodapé">
       <div class="footerBar__inner">
         <a class="footerBar__logo" href="#topo" aria-label="voltar ao topo">
-          <img src="../../assets/logo-ela.svg" alt="elã" />
+          <img src="/assets/logo-ela.svg" alt="elã" />
         </a>
 
         <p class="footerBar__copy">© 2026 todos os direitos reservados</p>
 
         <div class="footerBar__social" aria-label="redes e contato">
-          <a href="#" aria-label="whatsapp"><img src="../../assets/whatsapp.svg" alt="" aria-hidden="true" /></a>
-          <a href="#" aria-label="instagram"><img src="../../assets/instagram.svg" alt="" aria-hidden="true" /></a>
-          <a href="#" aria-label="linkedin"><img src="../../assets/linkedin.svg" alt="" aria-hidden="true" /></a></div>
+          <a href="#" aria-label="whatsapp"><img src="/assets/whatsapp.svg" alt="" aria-hidden="true" /></a>
+          <a href="#" aria-label="instagram"><img src="/assets/instagram.svg" alt="" aria-hidden="true" /></a>
+          <a href="#" aria-label="linkedin"><img src="/assets/linkedin.svg" alt="" aria-hidden="true" /></a></div>
       </div>
     </footer>
   </main>
 
-  <script src="../../script.js"></script>
-  <script src="../script.js"></script>
-  <script src="./script.js"></script>
+  <script src="/data/config-default.js"></script>
+  <script src="/data/config.js"></script>
+  <script src="/script.js"></script>
+  <script src="/cliente-jescri/script.js"></script>
+  <script src="/cliente-jescri/calendario/script.js"></script>
 </body>
 </html>
