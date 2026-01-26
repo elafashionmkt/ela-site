@@ -71,6 +71,14 @@
       return override;
     }
 
+    const inlineData = document.getElementById('accordionData');
+    if(inlineData){
+      const parsed = safeJsonParse(inlineData.textContent || '');
+      if(parsed && parsed.macros){
+        return parsed;
+      }
+    }
+
     const res = await fetch(SRC, { cache: 'no-store' });
     if(!res.ok) return { macros: [] };
     return await res.json();
