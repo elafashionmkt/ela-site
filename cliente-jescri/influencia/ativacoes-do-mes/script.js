@@ -3,7 +3,8 @@
    - mapeamento: col a (influenciadora) | col e (data + hora) | col f (tipo)
    - exibição no calendário: a + f
    - tooltip: hora (da coluna e)
-   - mês: prioriza mês atual; se vazio, usa o mês mais recente com eventos
+   - mês: usa mês atual se tiver eventos; se não tiver, usa o próximo mês futuro com eventos
+   - sem mês escrito na interface
 */
 
 (function () {
@@ -12,7 +13,6 @@
   const root = document.querySelector('[data-ativacoes-root]');
   if (!root) return;
 
-  const titleEl = document.getElementById('ativacoesTitle');
   const loadingEl = root.querySelector('[data-loading]');
   const emptyEl = root.querySelector('[data-empty]');
   const gridHost = root.querySelector('[data-grid]');
@@ -22,20 +22,6 @@
   const FALLBACK_JSON =
     '/cliente-jescri/influencia/ativacoes-do-mes/ativacoes-fallback.json';
 
-  const MONTHS = [
-    'janeiro',
-    'fevereiro',
-    'março',
-    'abril',
-    'maio',
-    'junho',
-    'julho',
-    'agosto',
-    'setembro',
-    'outubro',
-    'novembro',
-    'dezembro'
-  ];
   const DOW = ['seg', 'ter', 'qua', 'qui', 'sex', 'sáb', 'dom'];
 
   function pad2(n) {
@@ -100,7 +86,7 @@
     const s = String(raw || '').trim();
     if (!s) return null;
 
-    // aceita dd/mm/aaaa hh:mm ou dd/mm/aaaa
+    // dd/mm/aaaa hh:mm ou dd/mm/aaaa
     const m = s.match(
       /^(\d{1,2})\/(\d{1,2})\/(\d{4})(?:\s+(\d{1,2}):(\d{2}))?$/
     );
@@ -116,7 +102,6 @@
       return d;
     }
 
-    // fallback: tenta date parse nativo
     const d = new Date(s);
     if (isNaN(d.getTime())) return null;
     d.__hasTime = true;
@@ -191,42 +176,46 @@
       dt.getDate()
     )}`;
 
-    const nomeN = normalizeText(nome);
-    const tipoN = normalizeText(tipo);
-
-    const title = [nomeN, tipoN].filter(Boolean).join(' ').trim();
+    const title = [normalizeText(nome), normalizeText(tipo)].filter(Boolean).join(' ').trim();
     const hour = dt.__hasTime ? `${pad2(dt.getHours())}:${pad2(dt.getMinutes())}` : '';
 
-    return {
-      title,
-      hour,
-      dt,
-      _dayKey: dayKey
-    };
+    return { title, hour, dt, _dayKey: dayKey };
   }
 
+  // regra nova:
+  // 1) se tiver evento no mês atual, usa ele
+  // 2) senão, usa o próximo mês futuro com eventos (o mais próximo)
+  // 3) se não existir futuro, usa o último mês passado com eventos
   function pickTargetMonth(items) {
     if (!items.length) return null;
 
     const now = new Date();
-    const curKey = `${now.getFullYear()}-${pad2(now.getMonth() + 1)}`;
+    const nowIndex = now.getFullYear() * 12 + now.getMonth();
 
-    const monthKeys = new Set(
-      items.map((it) => `${it.dt.getFullYear()}-${pad2(it.dt.getMonth() + 1)}`)
+    const monthSet = new Set(
+      items.map((it) => it.dt.getFullYear() * 12 + it.dt.getMonth())
     );
 
-    if (monthKeys.has(curKey)) {
+    if (monthSet.has(nowIndex)) {
       return { year: now.getFullYear(), month: now.getMonth() };
     }
 
-    let best = null;
-    monthKeys.forEach((k) => {
-      if (!best || k > best) best = k;
+    const future = [];
+    const past = [];
+    monthSet.forEach((idx) => {
+      if (idx > nowIndex) future.push(idx);
+      else past.push(idx);
     });
-    if (!best) return null;
 
-    const parts = best.split('-');
-    return { year: parseInt(parts[0], 10), month: parseInt(parts[1], 10) - 1 };
+    if (future.length) {
+      future.sort((a, b) => a - b);
+      const idx = future[0];
+      return { year: Math.floor(idx / 12), month: idx % 12 };
+    }
+
+    past.sort((a, b) => b - a);
+    const idx = past[0];
+    return { year: Math.floor(idx / 12), month: idx % 12 };
   }
 
   // tooltip global
@@ -273,13 +262,20 @@
     const raw = evtEl.querySelector('.tip');
     if (!raw) return;
 
-    const title = (raw.querySelector('.tip__title')?.textContent || '').trim();
-    const meta = (raw.querySelector('.tip__meta')?.textContent || '').trim();
-    const body = raw.querySelector('.tip__body')?.innerHTML || '';
+    // tooltip só com hora
+    const body = (raw.querySelector('.tip__body')?.textContent || '').trim();
 
-    tipEl.querySelector('.calTip__title').textContent = title;
-    tipEl.querySelector('.calTip__meta').textContent = meta;
-    tipEl.querySelector('.calTip__body').innerHTML = body;
+    const t = tipEl.querySelector('.calTip__title');
+    const m = tipEl.querySelector('.calTip__meta');
+    const b = tipEl.querySelector('.calTip__body');
+
+    t.textContent = '';
+    m.textContent = '';
+    b.textContent = body;
+
+    t.style.display = 'none';
+    m.style.display = 'none';
+    b.style.display = body ? 'block' : 'none';
 
     tipEl.classList.add('is-visible');
     tipEl.setAttribute('aria-hidden', 'false');
@@ -326,21 +322,7 @@
     const monthEl = document.createElement('section');
     monthEl.className = 'month';
 
-    const head = document.createElement('div');
-    head.className = 'month__head';
-
-    const h2 = document.createElement('h2');
-    h2.className = 'month__title';
-    h2.textContent = MONTHS[month];
-
-    const range = document.createElement('div');
-    range.className = 'month__range';
-    range.textContent = `mês ${MONTHS[month]} ${year}`;
-
-    head.appendChild(h2);
-    head.appendChild(range);
-    monthEl.appendChild(head);
-
+    // sem cabeçalho do mês (não exibir mês escrito)
     const dow = document.createElement('div');
     dow.className = 'dow';
     DOW.forEach((d) => {
@@ -361,7 +343,6 @@
     }
 
     for (let day = 1; day <= daysInMonth; day++) {
-      const cellDate = new Date(year, month, day);
       const key = `${year}-${pad2(month + 1)}-${pad2(day)}`;
 
       const cell = document.createElement('div');
@@ -381,11 +362,6 @@
         evt.className = 'evt evt--awareness';
         evt.setAttribute('tabindex', '0');
 
-        const dot = document.createElement('span');
-        dot.className = 'evt__dot';
-
-        const textWrap = document.createElement('div');
-
         // visível: a + f
         const t = document.createElement('div');
         t.className = 'evt__title';
@@ -395,18 +371,10 @@
         const tip = document.createElement('div');
         tip.className = 'tip';
         tip.innerHTML =
-          `<div class="tip__title">${escapeHtml(it.title)}</div>` +
-          `<div class="tip__meta">${escapeHtml(MONTHS[cellDate.getMonth()])} ${escapeHtml(
-            String(cellDate.getFullYear())
-          )}</div>` +
           `<div class="tip__body">${escapeHtml(it.hour)}</div>`;
 
-        textWrap.appendChild(t);
-
-        evt.appendChild(dot);
-        evt.appendChild(textWrap);
+        evt.appendChild(t);
         evt.appendChild(tip);
-
         list.appendChild(evt);
       });
 
@@ -436,10 +404,6 @@
       setEmpty(true);
       setLoading(false);
       return;
-    }
-
-    if (titleEl) {
-      titleEl.textContent = `ativações de ${MONTHS[target.month]} ${target.year}`;
     }
 
     if (gridHost) {
