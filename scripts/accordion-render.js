@@ -5,7 +5,8 @@
   if(!mount) return;
 
   const OV_KEY = 'ela_accordion_override';
-  const SRC = new URL('data/accordion-config.json', window.location.href).toString();
+  const scriptUrl = (document.currentScript && document.currentScript.src) || window.location.href;
+  const SRC = new URL('../data/accordion-config.json', scriptUrl).toString();
 
   function safeJsonParse(str){
     try{ return JSON.parse(str); }catch(e){ return null; }
