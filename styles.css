@@ -677,3 +677,8 @@ img{ max-width: 100%; height: auto; display: block; }
   opacity: 1;
   transform: translateY(0);
 }
+/* na área do cliente, esconder "que tal um café?" do menu superior */
+body.is-client-area .nav__links a[href$="#contato"]{
+  display: none;
+}
+
