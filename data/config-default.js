@@ -2,7 +2,7 @@
 
 window.ELA_CONFIG_DEFAULT = {
   site: {
-    navClientLabel: "central do cliente"
+    navClientLabel: "área do cliente"
   },
   clients: [
     {

@@ -42,13 +42,15 @@
     const headersRaw = csvParseLine(lines[0]);
     const headersNorm = headersRaw.map(h => stripAccents(h.toLowerCase()));
     const rows = [];
+    const rowsArr = [];
     for(let i=1;i<lines.length;i++){
       const cols = csvParseLine(lines[i]);
       const obj = {};
       headersNorm.forEach((h, idx) => { obj[h] = cols[idx] || ''; });
       rows.push(obj);
+      rowsArr.push(cols);
     }
-    return { headers: headersNorm, rows };
+    return { headers: headersNorm, rows, rowsArr };
   }
 
   function parseDateTime(v){
@@ -205,13 +207,20 @@
       return;
     }
 
-    const { rows } = csvToRows(text);
+    const { rows, rowsArr } = csvToRows(text);
 
     const events = [];
-    rows.forEach((r) => {
-      const name = String(r['coluna a'] || r['nome'] || r['a'] || r['name'] || '').trim();
-      const dtRaw = String(r['coluna e'] || r['data + hora'] || r['data e hora'] || r['e'] || r['datetime'] || '').trim();
-      const type = String(r['coluna f'] || r['tipo'] || r['f'] || '').trim();
+    // mapeamento fixo por coluna: a = nome, e = data + hora, f = tipo
+    // fallback: tenta pelos nomes de header caso a linha venha curta.
+    (rowsArr || []).forEach((cols, idx) => {
+      const a = (cols && cols[0]) ? String(cols[0]).trim() : '';
+      const e = (cols && cols[4]) ? String(cols[4]).trim() : '';
+      const f = (cols && cols[5]) ? String(cols[5]).trim() : '';
+
+      const r = rows[idx] || {};
+      const name = a || String(r['nome'] || r['influenciadora'] || r['a'] || r['name'] || '').trim();
+      const dtRaw = e || String(r['data + hora'] || r['data e hora'] || r['datahora'] || r['e'] || r['datetime'] || '').trim();
+      const type = f || String(r['tipo'] || r['f'] || '').trim();
       if(!name || !dtRaw) return;
       const dt = parseDateTime(dtRaw);
       if(!dt) return;

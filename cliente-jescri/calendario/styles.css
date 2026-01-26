@@ -47,6 +47,17 @@
   position: relative;
 }
 
+/* layout semestral: 6 meses em grade (desktop: 3 por linha) */
+.cal[data-view="semestral"] .cal__wrap{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 42px;
+}
+
+.cal[data-view="semestral"] .month{
+  margin: 0;
+}
+
 .cal__loading{
   padding: 28px 0;
   font-size: 14px;
@@ -211,7 +222,12 @@
   .day{ min-height: 112px; padding: 11px; border-radius: 12px; }
 }
 
+@media (max-width: 980px){
+  .cal[data-view="semestral"] .cal__wrap{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
 @media (max-width: 640px){
+  .cal[data-view="semestral"] .cal__wrap{ grid-template-columns: 1fr; }
   .month__head{ flex-direction: column; align-items: flex-start; }
   .grid{ grid-template-columns: repeat(2, 1fr); }
   .dow{ display: none; }

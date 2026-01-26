@@ -25,49 +25,31 @@
   }
 
   // =======================
-  // auth (bloqueio visual)
-  // sempre pede senha ao carregar
+  // auth
+  // esta página usa o mesmo login da área do cliente.
   // =======================
-  const PASSWORD = "jescri#2025";
-
+  const SESSION_KEY = "ela_client_session_v1";
   const body = document.body;
-  const form = document.getElementById("authForm");
-  const passInput = document.getElementById("authPass");
-  const errorEl = document.getElementById("authError");
 
-  function setAuthed(ok){
-    if (ok){
+  function requireSession(){
+    try{
+      const raw = localStorage.getItem(SESSION_KEY);
+      if (!raw) throw new Error("sem sessão");
+      const data = JSON.parse(raw);
+      if (!data || data.clientKey !== "jescri") throw new Error("cliente inválido");
+      if (!data.expiresAt || Date.now() > data.expiresAt) throw new Error("sessão expirada");
       body.classList.add("is-auth");
-      // foco no pdf para setas funcionarem melhor
       setTimeout(() => {
         const pdf = document.getElementById("pdfFrame");
         if (pdf) pdf.focus();
       }, 250);
-    } else {
-      body.classList.remove("is-auth");
-      closeNav();
-      setTimeout(() => passInput && passInput.focus(), 160);
+    } catch(_e){
+      const next = encodeURIComponent(location.pathname + location.search + location.hash);
+      location.href = `/area-do-cliente/?next=${next}`;
     }
   }
 
-  // sempre começa bloqueado
-  setAuthed(false);
-  setTimeout(() => passInput && passInput.focus(), 220);
-
-  if (form){
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const val = (passInput?.value || "").trim();
-      if (val === PASSWORD){
-        if (errorEl) errorEl.style.display = "none";
-        if (passInput) passInput.value = "";
-        setAuthed(true);
-      } else {
-        if (errorEl) errorEl.style.display = "block";
-        if (passInput) passInput.focus();
-      }
-    });
-  }
+  requireSession();
 
   // =======================
   // mobile nav
@@ -101,7 +83,11 @@
   });
 
   if (logoutBtn){
-    logoutBtn.addEventListener("click", () => setAuthed(false));
+    logoutBtn.addEventListener("click", () => {
+      try{ localStorage.removeItem(SESSION_KEY); } catch(_e){}
+      const next = encodeURIComponent(location.pathname + location.search + location.hash);
+      location.href = `/area-do-cliente/?next=${next}`;
+    });
   }
 
   // =======================

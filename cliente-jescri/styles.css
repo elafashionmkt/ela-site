@@ -18,7 +18,7 @@ body{
 /* topo da área do cliente */
 .clientBar{
   background: var(--cliente-red);
-  padding: 18px 0 8px;
+  padding: 18px 0 10px;
 }
 .clientBar__inner{
   display: flex;
@@ -28,21 +28,22 @@ body{
 }
 .clientBar__left{
   color: #fff;
-  font-family: "Inter Tight", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  font-weight: 600;
-  font-size: 16px;
-  letter-spacing: .02em;
+  font-family: "IvyJournal", serif;
+  font-weight: 400;
+  font-size: clamp(28px, 4vw, 40px);
+  line-height: 1.05;
+  letter-spacing: 0;
 }
 .clientBar__logo{
   display: flex;
   align-items: center;
   justify-content: flex-end;
   width: min(200px, 42vw);
-  height: 30px;
+  height: 40px;
 }
 
 .clientBar__logo svg{
-  height: 30px;
+  height: 40px;
   width: auto;
   display: block;
 }
@@ -155,13 +156,13 @@ body{
 /* menu */
 .cliente__menu{
   background: var(--cliente-red);
-  padding: 22px 0 40px;
+  padding: 14px 0 26px;
 }
 
 .menuGrid{
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 26px;
+  gap: 18px;
 }
 
 
