@@ -2,31 +2,28 @@
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#cd0005" />
+  <meta name="color-scheme" content="only light" />
   <title>painel | elã</title>
 
-  <link rel="icon" href="/assets/fav-ela.webp" type="image/webp" />
+  <link rel="icon" href="../assets/fav-ela.webp" type="image/webp" />
+  <link rel="preconnect" href="https://use.typekit.net" crossorigin />
+  <link rel="dns-prefetch" href="//use.typekit.net" />
   <link rel="stylesheet" href="https://use.typekit.net/piy8ljr.css" />
-  <link rel="stylesheet" href="/styles.css" />
-  <link rel="stylesheet" href="/clientes/clientes.css" />
 
-  <style>
-    .tabs{ display:flex; gap:10px; flex-wrap:wrap; margin-top:14px; }
-    .tab{ border:1px solid rgba(205,0,5,.22); background: rgba(255,255,255,.7); color:#cd0005; padding:10px 14px; border-radius:999px; cursor:pointer; }
-    .tab.is-active{ background:#cd0005; color:#fff; }
-    textarea{ width:100%; min-height:260px; border-radius:16px; border:1px solid rgba(205,0,5,.22); padding:12px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size:13px; color:#cd0005; background: rgba(255,255,255,.75); }
-    .row{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
-    @media (max-width: 860px){ .row{ grid-template-columns:1fr; } }
-  </style>
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="stylesheet" href="./styles.css" />
 </head>
 
-<body>
+<body class="painel">
   <a class="skip" href="#conteudo">pular para o conteúdo</a>
+
   <div class="pageTransition" aria-hidden="true"></div>
 
-  <nav class="nav nav--compact" aria-label="navegação principal">
-    <a class="brand" href="/clientes/" aria-label="voltar para área do cliente">
-      <img class="brand__logo" src="/assets/logo-ela.svg" alt="logo elã" />
+  <nav class="nav" id="topo" aria-label="navegação principal">
+    <a class="brand" href="/" aria-label="voltar para o site">
+      <img class="brand__logo" src="../assets/logo-ela.svg" alt="logo elã" />
     </a>
 
     <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="abrir menu">
@@ -36,72 +33,117 @@
     </button>
 
     <div class="nav__links" id="nav-links">
-      <a href="/clientes/">área do cliente</a>
-      <a href="/#servicos">serviços</a>
-      <a href="/#contato">contato</a>
+      <a href="/#sobre">sobre nós</a>
+      <a href="/#servicos">arquitetura de serviços</a>
+      <a href="/#contato">que tal um café?</a>
+      <a href="/area-do-cliente/">área do cliente</a>
     </div>
   </nav>
 
-  <main id="conteudo" class="client-wrap">
+  <main id="conteudo" class="painel__main">
     <div class="container">
-      <section class="client-card glass">
-        <h1 class="client-title">painel</h1>
-        <p class="client-sub">edite conteúdo e configurações sem mexer no repositório. o que você salvar aqui fica no seu navegador.</p>
+      <header class="painel__head">
+        <h1 class="painel__title">painel</h1>
+        <p class="painel__sub">este painel salva ajustes no navegador (localstorage). para aplicar para todos, exporte o json e substitua no projeto.</p>
+      </header>
 
-        <div class="tabs">
-          <button class="tab is-active" type="button" data-tab="accordion">acordeão de serviços</button>
-          <button class="tab" type="button" data-tab="clientes">clientes e acessos</button>
+      <section class="painelGate" id="painelGate" aria-label="acesso">
+        <div class="painelGate__card">
+          <p class="painelGate__title">acesso ao painel editorial</p>
+          <p class="painelGate__text">digite a senha do painel para continuar.</p>
+          <form class="painelGate__form" id="gateForm">
+            <label class="sr" for="gatePass">senha</label>
+            <input id="gatePass" type="password" autocomplete="current-password" placeholder="senha" />
+            <button class="btnSmall" type="submit">entrar</button>
+          </form>
+          <div class="painelGate__error" id="gateError" aria-live="polite"></div>
         </div>
       </section>
 
-      <section class="client-card glass" style="margin-top:24px;" data-pane="accordion">
-        <h2 class="client-title" style="font-size:28px;">acordeão de serviços</h2>
-        <p style="margin:0 0 12px; max-width:80ch;">cole e ajuste o json. ao salvar, o site usa o conteúdo do seu navegador.</p>
-
-        <div class="row">
-          <div>
-            <div class="label">json do acordeão</div>
-            <textarea id="ela-accordion-json" spellcheck="false"></textarea>
-          </div>
-          <div>
-            <div class="label">ações</div>
-            <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
-              <button class="btn-client" type="button" id="ela-accordion-save">salvar</button>
-              <button class="btn-client" type="button" id="ela-accordion-export">baixar json</button>
-              <button class="btn-client" type="button" id="ela-accordion-reset">resetar</button>
-            </div>
-            <p id="ela-accordion-msg" style="margin:12px 0 0; font-size:13px; opacity:.9;"></p>
-          </div>
+      <section class="painel__card" id="painelBody" aria-label="config">
+        <div class="painel__tabs" role="tablist" aria-label="seções">
+          <button class="painel__tab is-on" type="button" role="tab" aria-selected="true" aria-controls="tab-config" id="tabBtnConfig">config</button>
+          <button class="painel__tab" type="button" role="tab" aria-selected="false" aria-controls="tab-accordion" id="tabBtnAccordion">acordeão</button>
         </div>
-      </section>
 
-      <section class="client-card glass" style="margin-top:24px; display:none;" data-pane="clientes">
-        <h2 class="client-title" style="font-size:28px;">clientes e acessos</h2>
-        <p style="margin:0 0 12px; max-width:80ch;">edite usuário, senha e link de redirecionamento.</p>
+        <div class="painel__tabPanel is-on" role="tabpanel" id="tab-config" aria-labelledby="tabBtnConfig">
+        <div class="painel__row">
+          <button class="btnSmall" id="btnLoad" type="button">carregar config atual</button>
+          <button class="btnSmall" id="btnSave" type="button">salvar override</button>
+          <button class="btnSmall" id="btnClear" type="button">limpar override</button>
+          <button class="btnSmall" id="btnExport" type="button">exportar json</button>
+          <label class="btnSmall" for="fileImport">importar json</label>
+          <input id="fileImport" type="file" accept="application/json" />
+        </div>
 
-        <div class="row">
-          <div>
-            <div class="label">json de config (override)</div>
-            <textarea id="ela-config-json" spellcheck="false"></textarea>
+        <label class="sr" for="configJson">config</label>
+        <textarea id="configJson" class="painel__json" spellcheck="false"></textarea>
+        <div class="painel__status" id="status" aria-live="polite"></div>
+        </div>
+
+        <div class="painel__tabPanel" role="tabpanel" id="tab-accordion" aria-labelledby="tabBtnAccordion">
+          <div class="painel__row">
+            <button class="btnSmall" id="btnAccLoad" type="button">carregar acordeão</button>
+            <button class="btnSmall" id="btnAccSave" type="button">salvar override</button>
+            <button class="btnSmall" id="btnAccClear" type="button">limpar override</button>
+            <button class="btnSmall" id="btnAccExport" type="button">exportar json</button>
+            <label class="btnSmall" for="fileAccImport">importar json</label>
+            <input id="fileAccImport" type="file" accept="application/json" />
           </div>
-          <div>
-            <div class="label">ações</div>
-            <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
-              <button class="btn-client" type="button" id="ela-config-save">salvar</button>
-              <button class="btn-client" type="button" id="ela-config-export">baixar json</button>
-              <button class="btn-client" type="button" id="ela-config-reset">resetar</button>
+
+          <div class="accEdit" aria-label="editor do acordeão">
+            <div class="accEdit__left">
+              <div class="accEdit__head">
+                <p class="accEdit__title">macros</p>
+                <button class="btnSmall" id="btnMacroAdd" type="button">adicionar macro</button>
+              </div>
+              <div class="accEdit__list" id="macroList"></div>
             </div>
-            <p id="ela-config-msg" style="margin:12px 0 0; font-size:13px; opacity:.9;"></p>
+
+            <div class="accEdit__right">
+              <div class="accEdit__empty" id="macroEmpty">selecione uma macro para editar</div>
+              <div class="accEdit__form" id="macroForm" hidden>
+                <div class="accEdit__row">
+                  <label class="field">
+                    <span class="field__label">id</span>
+                    <input id="macroId" type="text" placeholder="ex: fundacao" />
+                  </label>
+                  <label class="field">
+                    <span class="field__label">título forte</span>
+                    <input id="macroStrong" type="text" placeholder="ex: fundação" />
+                  </label>
+                </div>
+
+                <label class="field">
+                  <span class="field__label">título</span>
+                  <input id="macroText" type="text" placeholder="ex: o que organiza a marca" />
+                </label>
+
+                <div class="accEdit__itemsHead">
+                  <p class="accEdit__title">itens</p>
+                  <button class="btnSmall" id="btnItemAdd" type="button">adicionar item</button>
+                </div>
+
+                <div class="accEdit__items" id="itemsList"></div>
+
+                <div class="accEdit__danger">
+                  <button class="btnSmall" id="btnMacroRemove" type="button">remover macro</button>
+                </div>
+              </div>
+            </div>
           </div>
+
+          <label class="sr" for="accordionJson">acordeão</label>
+          <textarea id="accordionJson" class="painel__json" spellcheck="false"></textarea>
+          <div class="painel__status" id="statusAcc" aria-live="polite"></div>
         </div>
       </section>
     </div>
   </main>
 
-  <script src="/data/config-default.js"></script>
-  <script src="/data/config.js"></script>
-  <script src="/clientes/app.js"></script>
-  <script src="/painel/painel.js"></script>
-  <script src="/script.js"></script>
+  <script src="../data/config-default.js"></script>
+  <script src="../data/config.js"></script>
+  <script src="../script.js"></script>
+  <script src="./script.js"></script>
 </body>
 </html>

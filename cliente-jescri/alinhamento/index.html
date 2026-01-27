@@ -2,12 +2,204 @@
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8" />
-  <meta http-equiv="refresh" content="0; url=/clientes/jescri/alinhamento/" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>redirecionando...</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#cd0005" />
+  <meta name="color-scheme" content="only light" />
+  <title>alinhamento | formulário semestral | jescri</title>
+
+  <link rel="icon" type="image/webp" href="/assets/fav-ela.webp" />
+
+  <link rel="preconnect" href="https://use.typekit.net" crossorigin="" />
+  <link rel="dns-prefetch" href="//use.typekit.net" />
+  <link rel="stylesheet" href="https://use.typekit.net/piy8ljr.css" />
+
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/cliente-jescri/styles.css" />
+  <link rel="stylesheet" href="/cliente-jescri/alinhamento/formulario.css" />
 </head>
+
 <body>
-  <script>window.location.replace("/clientes/jescri/alinhamento/");</script>
-  <p>redirecionando para <a href="/clientes/jescri/alinhamento/">/clientes/jescri/alinhamento/</a></p>
+  <a class="skip" href="#conteudo">pular para o conteúdo</a>
+
+  <div class="pageTransition" aria-hidden="true"></div>
+
+  <nav class="nav" id="topo" aria-label="navegação principal">
+    <a class="brand" href="/" aria-label="voltar para o site">
+      <img class="brand__logo" src="/assets/logo-ela.svg" alt="logo elã" />
+    </a>
+
+    <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="abrir menu">
+      <span class="nav__toggle-line" aria-hidden="true"></span>
+      <span class="nav__toggle-line" aria-hidden="true"></span>
+      <span class="nav__toggle-line" aria-hidden="true"></span>
+    </button>
+
+    <div class="nav__links" id="nav-links">
+      <a href="/#sobre">sobre nós</a>
+      <a href="/#servicos">arquitetura de serviços</a>
+      <a href="/#contato">que tal um café?</a>
+      <a href="/area-do-cliente/">área do cliente</a>
+    </div>
+  </nav>
+
+  <main class="cliente" id="conteudo">
+    <div data-client-top></div>
+
+    <section class="cliente__content" aria-label="conteúdo">
+      <div class="container">
+        <h3 class="cliente__contentTitle">mapa de ações do semestre</h3>
+        <p class="cliente__contentText">este briefing é para organizar decisões do semestre com antecedência, evitando retrabalho e mantendo o ritmo de campanha. atenção especial ao dia da consumidora, com uma ação presenteável, e às janelas de dia das mães e dia dos namorados.</p>
+
+        <div class="formWrap">
+          <div class="formCard">
+            <div class="formBody">
+              <form id="customForm" class="stack" data-endpoint="https://docs.google.com/forms/d/e/1FAIpQLSeM22fzoLKsWeDQEkj8Mptf4FwOaBbghl9XIDH5WuEGWB2Beg/formResponse" novalidate>
+
+                <fieldset class="field" id="q1" data-entry="entry.608355488" data-required="true">
+                  <legend class="field__legend">qual verba disponível para realizarmos ação presenteável no dia da consumidora (15 de março)?</legend>
+                  <div class="choices">
+                    <label class="opt"><input type="radio" name="entry.608355488" value="1.500 a 3.000"/><span>1.500 a 3.000</span></label>
+                    <label class="opt"><input type="radio" name="entry.608355488" value="3.000 a 5.000"/><span>3.000 a 5.000</span></label>
+                    <label class="opt"><input type="radio" name="entry.608355488" value="verba indisponível, pensar em outro tipo de ação"/><span>verba indisponível, pensar em outro tipo de ação</span></label>
+                  </div>
+                  <div class="err" data-err-for="q1"></div>
+                </fieldset>
+
+                <fieldset class="field" id="q2" data-group="true" data-entry="entry.1282316341" data-required="true" data-max="3" data-other="true" data-other-name="entry.1282316341.other_option_response">
+                  <legend class="field__legend">objetivos principais da campanha de dia das mães (até três)</legend>
+                  <p class="field__hint">selecione até 3 opções</p>
+                  <div class="choices">
+                    <label class="opt"><input type="checkbox" value="conversão"/><span>conversão</span></label>
+                    <label class="opt"><input type="checkbox" value="aumentar ticket médio"/><span>aumentar ticket médio</span></label>
+                    <label class="opt"><input type="checkbox" value="atrair novos clientes"/><span>atrair novos clientes</span></label>
+                    <label class="opt"><input type="checkbox" value="reativar antigos clientes"/><span>reativar antigos clientes</span></label>
+                    <label class="opt"><input type="checkbox" value="criar força de marca"/><span>criar força de marca</span></label>
+                  </div>
+                  <div class="optOther">
+                    <input class="input" data-other-input name="entry.1282316341.other_option_response" type="text" placeholder="se você marcou outro, escreva aqui"/>
+                  </div>
+                  <div class="err" data-err-for="q2"></div>
+                </fieldset>
+
+                <fieldset class="field" id="q3" data-entry="entry.1150077510" data-required="true">
+                  <legend class="field__legend">para campanha conceitual de dia das mães, qual é o budget possível para a empresa?</legend>
+                  <div class="choices">
+                    <label class="opt"><input type="radio" name="entry.1150077510" value="até 5.000"/><span>até 5.000</span></label>
+                    <label class="opt"><input type="radio" name="entry.1150077510" value="5.000 a 10.000"/><span>5.000 a 10.000</span></label>
+                    <label class="opt"><input type="radio" name="entry.1150077510" value="10.000 a 15.000"/><span>10.000 a 15.000</span></label>
+                  </div>
+                  <div class="err" data-err-for="q3"></div>
+                </fieldset>
+
+                <div class="field" id="q4" data-text-input="entry.1244538217">
+                  <p class="field__legend">para a campanha de dia das mães, haverá verba extra para ugc e mkt de influência? se sim, quanto?</p>
+                  <input class="input" name="entry.1244538217" type="text" placeholder="sua resposta"/>
+                </div>
+
+                <fieldset class="field" id="q5" data-group="true" data-entry="entry.2116269694" data-required="true" data-max="3" data-other="true" data-other-name="entry.2116269694.other_option_response">
+                  <legend class="field__legend">objetivos principais da campanha de dia dos namorados (até três)</legend>
+                  <p class="field__hint">selecione até 3 opções</p>
+                  <div class="choices">
+                    <label class="opt"><input type="checkbox" value="conversão"/><span>conversão</span></label>
+                    <label class="opt"><input type="checkbox" value="aumentar ticket médio"/><span>aumentar ticket médio</span></label>
+                    <label class="opt"><input type="checkbox" value="atrair novos clientes"/><span>atrair novos clientes</span></label>
+                    <label class="opt"><input type="checkbox" value="reativar antigos clientes"/><span>reativar antigos clientes</span></label>
+                    <label class="opt"><input type="checkbox" value="criar força de marca"/><span>criar força de marca</span></label>
+                  </div>
+                  <div class="optOther">
+                    <input class="input" data-other-input name="entry.2116269694.other_option_response" type="text" placeholder="se você marcou outro, escreva aqui"/>
+                  </div>
+                  <div class="err" data-err-for="q5"></div>
+                </fieldset>
+
+                <fieldset class="field" id="q6" data-entry="entry.1922232672" data-required="true">
+                  <legend class="field__legend">datas referentes à coleção de dia dos namorados que estão em responsabilidade da empresa conseguem ser atendidas?</legend>
+                  <div class="choices">
+                    <label class="opt"><input type="radio" name="entry.1922232672" value="sim"/><span>sim</span></label>
+                    <label class="opt"><input type="radio" name="entry.1922232672" value="não"/><span>não</span></label>
+                    <label class="opt"><input type="radio" name="entry.1922232672" value="parcialmente"/><span>parcialmente</span></label>
+                  </div>
+                  <div class="err" data-err-for="q6"></div>
+                </fieldset>
+
+                <fieldset class="field" id="q7" data-entry="entry.1382130999" data-required="true">
+                  <legend class="field__legend">data de lançamento sugerida na planilha da coleção de dia dos namorados faz sentido para empresa?</legend>
+                  <div class="choices">
+                    <label class="opt"><input type="radio" name="entry.1382130999" value="sim"/><span>sim</span></label>
+                    <label class="opt"><input type="radio" name="entry.1382130999" value="não"/><span>não</span></label>
+                  </div>
+                  <div class="err" data-err-for="q7"></div>
+                </fieldset>
+
+                <fieldset class="field" id="q8" data-entry="entry.884541829" data-required="true">
+                  <legend class="field__legend">haverá algum outro lançamento dentro da janela de inverno e alto inverno (planilha [datas] lançamentos)</legend>
+                  <div class="choices">
+                    <label class="opt"><input type="radio" name="entry.884541829" value="sim, teremos coleção completa"/><span>sim, teremos coleção completa</span></label>
+                    <label class="opt"><input type="radio" name="entry.884541829" value="sim, teremos coleção cápsula"/><span>sim, teremos coleção cápsula</span></label>
+                    <label class="opt"><input type="radio" name="entry.884541829" value="não"/><span>não</span></label>
+                    <label class="opt"><input type="radio" name="entry.884541829" value="talvez"/><span>talvez</span></label>
+                  </div>
+                  <div class="err" data-err-for="q8"></div>
+                </fieldset>
+
+                <fieldset class="field" id="q9" data-entry="entry.511642861" data-required="true">
+                  <legend class="field__legend">para campanha conceitual de dia dos namorados, qual é o budget possível para a empresa?</legend>
+                  <div class="choices">
+                    <label class="opt"><input type="radio" name="entry.511642861" value="até 5.000"/><span>até 5.000</span></label>
+                    <label class="opt"><input type="radio" name="entry.511642861" value="5.000 a 10.000"/><span>5.000 a 10.000</span></label>
+                    <label class="opt"><input type="radio" name="entry.511642861" value="10.000 a 15.000"/><span>10.000 a 15.000</span></label>
+                  </div>
+                  <div class="err" data-err-for="q9"></div>
+                </fieldset>
+
+                <div class="field" id="q10" data-text-input="entry.1970810601">
+                  <p class="field__legend">para a campanha de dia dos namorados, haverá verba extra para ugc e mkt de influência? se sim, quanto?</p>
+                  <input class="input" name="entry.1970810601" type="text" placeholder="sua resposta"/>
+                </div>
+
+                <div class="actions">
+                  <button class="btn" type="submit">enviar</button>
+                  <span class="status" id="status" aria-live="polite"></span>
+                </div>
+
+                <p class="fineprint">nunca envie senhas por aqui.</p>
+              </form>
+
+              <div class="success" id="success" hidden>
+                <p class="success__title">enviado.</p>
+                <p class="success__text">obrigada. seguimos com o planejamento a partir dessas respostas.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cliente__banner" aria-label="banner">
+      <img src="/cliente-jescri/assets/box-header.jpg" loading="eager" alt="" />
+    </section>
+
+    <footer class="footerBar" aria-label="rodapé">
+      <div class="footerBar__inner">
+        <a class="footerBar__logo" href="#topo" aria-label="voltar ao topo">
+          <img src="/assets/logo-ela.svg" alt="elã" />
+        </a>
+
+        <p class="footerBar__copy">© 2026 todos os direitos reservados</p>
+
+        <div class="footerBar__social" aria-label="redes e contato">
+          <a href="#" aria-label="whatsapp"><img src="/assets/whatsapp.svg" alt="" aria-hidden="true" /></a>
+          <a href="#" aria-label="instagram"><img src="/assets/instagram.svg" alt="" aria-hidden="true" /></a>
+          <a href="#" aria-label="linkedin"><img src="/assets/linkedin.svg" alt="" aria-hidden="true" /></a>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script src="/data/config-default.js"></script>
+  <script src="/data/config.js"></script>
+  <script src="/script.js"></script>
+  <script src="/cliente-jescri/script.js"></script>
+  <script src="/cliente-jescri/alinhamento/formulario.js"></script>
 </body>
 </html>
