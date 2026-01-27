@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>painel | elã</title>
+
+  <link rel="icon" href="/assets/fav-ela.webp" type="image/webp" />
+  <link rel="stylesheet" href="https://use.typekit.net/piy8ljr.css" />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/clientes/clientes.css" />
+
+  <style>
+    .tabs{ display:flex; gap:10px; flex-wrap:wrap; margin-top:14px; }
+    .tab{ border:1px solid rgba(205,0,5,.22); background: rgba(255,255,255,.7); color:#cd0005; padding:10px 14px; border-radius:999px; cursor:pointer; }
+    .tab.is-active{ background:#cd0005; color:#fff; }
+    textarea{ width:100%; min-height:260px; border-radius:16px; border:1px solid rgba(205,0,5,.22); padding:12px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size:13px; color:#cd0005; background: rgba(255,255,255,.75); }
+    .row{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    @media (max-width: 860px){ .row{ grid-template-columns:1fr; } }
+  </style>
+</head>
+
+<body>
+  <a class="skip" href="#conteudo">pular para o conteúdo</a>
+  <div class="pageTransition" aria-hidden="true"></div>
+
+  <nav class="nav nav--compact" aria-label="navegação principal">
+    <a class="brand" href="/clientes/" aria-label="voltar para área do cliente">
+      <img class="brand__logo" src="/assets/logo-ela.svg" alt="logo elã" />
+    </a>
+
+    <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="abrir menu">
+      <span class="nav__toggle-line" aria-hidden="true"></span>
+      <span class="nav__toggle-line" aria-hidden="true"></span>
+      <span class="nav__toggle-line" aria-hidden="true"></span>
+    </button>
+
+    <div class="nav__links" id="nav-links">
+      <a href="/clientes/">área do cliente</a>
+      <a href="/#servicos">serviços</a>
+      <a href="/#contato">contato</a>
+    </div>
+  </nav>
+
+  <main id="conteudo" class="client-wrap">
+    <div class="container">
+      <section class="client-card glass">
+        <h1 class="client-title">painel</h1>
+        <p class="client-sub">edite conteúdo e configurações sem mexer no repositório. o que você salvar aqui fica no seu navegador.</p>
+
+        <div class="tabs">
+          <button class="tab is-active" type="button" data-tab="accordion">acordeão de serviços</button>
+          <button class="tab" type="button" data-tab="clientes">clientes e acessos</button>
+        </div>
+      </section>
+
+      <section class="client-card glass" style="margin-top:24px;" data-pane="accordion">
+        <h2 class="client-title" style="font-size:28px;">acordeão de serviços</h2>
+        <p style="margin:0 0 12px; max-width:80ch;">cole e ajuste o json. ao salvar, o site usa o conteúdo do seu navegador.</p>
+
+        <div class="row">
+          <div>
+            <div class="label">json do acordeão</div>
+            <textarea id="ela-accordion-json" spellcheck="false"></textarea>
+          </div>
+          <div>
+            <div class="label">ações</div>
+            <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
+              <button class="btn-client" type="button" id="ela-accordion-save">salvar</button>
+              <button class="btn-client" type="button" id="ela-accordion-export">baixar json</button>
+              <button class="btn-client" type="button" id="ela-accordion-reset">resetar</button>
+            </div>
+            <p id="ela-accordion-msg" style="margin:12px 0 0; font-size:13px; opacity:.9;"></p>
+          </div>
+        </div>
+      </section>
+
+      <section class="client-card glass" style="margin-top:24px; display:none;" data-pane="clientes">
+        <h2 class="client-title" style="font-size:28px;">clientes e acessos</h2>
+        <p style="margin:0 0 12px; max-width:80ch;">edite usuário, senha e link de redirecionamento.</p>
+
+        <div class="row">
+          <div>
+            <div class="label">json de config (override)</div>
+            <textarea id="ela-config-json" spellcheck="false"></textarea>
+          </div>
+          <div>
+            <div class="label">ações</div>
+            <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
+              <button class="btn-client" type="button" id="ela-config-save">salvar</button>
+              <button class="btn-client" type="button" id="ela-config-export">baixar json</button>
+              <button class="btn-client" type="button" id="ela-config-reset">resetar</button>
+            </div>
+            <p id="ela-config-msg" style="margin:12px 0 0; font-size:13px; opacity:.9;"></p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script src="/data/config-default.js"></script>
+  <script src="/data/config.js"></script>
+  <script src="/clientes/app.js"></script>
+  <script src="/painel/painel.js"></script>
+  <script src="/script.js"></script>
+</body>
+</html>

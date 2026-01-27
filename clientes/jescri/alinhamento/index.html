@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>jescri | alinhamento</title>
+
+  <link rel="icon" href="/assets/fav-ela.webp" type="image/webp" />
+  <link rel="stylesheet" href="https://use.typekit.net/piy8ljr.css" />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/clientes/clientes.css" />
+</head>
+
+<body>
+  <a class="skip" href="#conteudo">pular para o conteúdo</a>
+  <div class="pageTransition" aria-hidden="true"></div>
+
+  <nav class="nav nav--compact" aria-label="navegação do cliente">
+    <a class="brand" href="/clientes/jescri/" aria-label="voltar ao portal">
+      <img class="brand__logo" src="/assets/logo-ela.svg" alt="logo elã" />
+    </a>
+
+    <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="abrir menu">
+      <span class="nav__toggle-line" aria-hidden="true"></span>
+      <span class="nav__toggle-line" aria-hidden="true"></span>
+      <span class="nav__toggle-line" aria-hidden="true"></span>
+    </button>
+
+    <div class="nav__links" id="nav-links">
+      <a href="/clientes/jescri/">portal</a>
+      <a href="/clientes/jescri/calendario/">calendário</a>
+      <a href="/clientes/jescri/influencia/ativacoes-do-mes/">influência</a>
+      <a href="/clientes/jescri/alinhamento/">alinhamento</a>
+    </div>
+  </nav>
+
+  <main id="conteudo" class="client-wrap">
+    <div class="container">
+      <section class="client-card glass">
+        <h1 class="client-title">alinhamento</h1>
+        <p class="client-sub">um espaço para registrar decisões e pendências sem perder contexto.</p>
+      </section>
+
+      <div class="client-grid" style="margin-top:24px;">
+        <section class="client-card glass">
+          <h2 class="client-title" style="font-size:28px; margin-bottom:12px;">pontos do período</h2>
+          <form class="form">
+            <div>
+              <div class="label">janela de campanha</div>
+              <input class="input" type="text" placeholder="ex: 05 a 12/02" />
+            </div>
+            <div>
+              <div class="label">lançamentos e reposições</div>
+              <input class="input" type="text" placeholder="ex: reposição microfibra" />
+            </div>
+            <div>
+              <div class="label">o que precisa de aprovação</div>
+              <input class="input" type="text" placeholder="ex: criativos, verba, kit" />
+            </div>
+            <button class="btn-client" type="button">salvar no navegador</button>
+          </form>
+          <p style="margin:12px 0 0; font-size:13px; opacity:.9;">este formulário salva localmente. use o painel se quiser exportar.</p>
+        </section>
+
+        <aside class="client-card glass">
+          <h2 class="client-title" style="font-size:28px; margin-bottom:12px;">atalhos</h2>
+          <div class="client-menu">
+            <a class="client-link" href="/painel/">
+              <span>painel</span>
+              <span class="badge">editor</span>
+            </a>
+            <a class="client-link" href="/clientes/jescri/influencia/ativacoes-do-mes/">
+              <span>ativações do mês</span>
+              <span class="badge">calendário</span>
+            </a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <script src="/data/config-default.js"></script>
+  <script src="/data/config.js"></script>
+  <script src="/clientes/app.js"></script>
+  <script src="/clientes/jescri/jescri.js"></script>
+  <script src="/script.js"></script>
+</body>
+</html>

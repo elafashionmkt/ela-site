@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>área do cliente | elã</title>
+
+  <link rel="icon" href="/assets/fav-ela.webp" type="image/webp" />
+  <link rel="stylesheet" href="https://use.typekit.net/piy8ljr.css" />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/clientes/clientes.css" />
+</head>
+
+<body>
+  <a class="skip" href="#conteudo">pular para o conteúdo</a>
+  <div class="pageTransition" aria-hidden="true"></div>
+
+  <nav class="nav nav--compact" aria-label="navegação principal">
+    <a class="brand" href="/" aria-label="voltar para o site">
+      <img class="brand__logo" src="/assets/logo-ela.svg" alt="logo elã" />
+    </a>
+
+    <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="abrir menu">
+      <span class="nav__toggle-line" aria-hidden="true"></span>
+      <span class="nav__toggle-line" aria-hidden="true"></span>
+      <span class="nav__toggle-line" aria-hidden="true"></span>
+    </button>
+
+    <div class="nav__links" id="nav-links">
+      <a href="/#sobre">sobre nós</a>
+      <a href="/#servicos">arquitetura de serviços</a>
+      <a href="/#contato">que tal um café?</a>
+      <a href="/clientes/">área do cliente</a>
+    </div>
+  </nav>
+
+  <main id="conteudo" class="client-wrap">
+    <div class="container">
+      <div class="client-grid">
+        <section class="client-card glass">
+          <h1 class="client-title">área do cliente</h1>
+          <p class="client-sub">acesso rápido aos painéis e páginas do seu projeto.</p>
+
+          <form class="form" id="ela-login-form" autocomplete="off">
+            <div>
+              <div class="label">cliente</div>
+              <select class="select" id="ela-client" required></select>
+            </div>
+
+            <div>
+              <div class="label">usuário</div>
+              <input class="input" id="ela-user" type="text" required />
+            </div>
+
+            <div>
+              <div class="label">senha</div>
+              <input class="input" id="ela-pass" type="password" required />
+            </div>
+
+            <button class="btn-client" type="submit">entrar</button>
+            <p id="ela-login-msg" style="margin:0; font-size:13px; opacity:.9;"></p>
+          </form>
+        </section>
+
+        <aside class="client-card glass">
+          <h2 class="client-title" style="font-size:28px; margin-bottom:10px;">atalhos</h2>
+          <div class="client-menu">
+            <a class="client-link" href="/clientes/jescri/">
+              <span>jescri</span>
+              <span class="badge">portal</span>
+            </a>
+            <a class="client-link" href="/painel/">
+              <span>painel</span>
+              <span class="badge">editor</span>
+            </a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <script src="/data/config-default.js"></script>
+  <script src="/data/config.js"></script>
+  <script src="/clientes/app.js"></script>
+  <script src="/script.js"></script>
+</body>
+</html>

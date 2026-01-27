@@ -1,0 +1,13 @@
+{
+  "meta": {
+    "client": "jescri"
+  },
+  "events": [
+    {
+      "date": "2026-02-05",
+      "title": "exemplo de evento",
+      "tooltip": "edite este evento no painel em /painel/",
+      "color": "#cd0005"
+    }
+  ]
+}
