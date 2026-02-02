@@ -4,7 +4,7 @@
    - helpers para calendário
 */
 (function () {
-  const cfg = window.elaGetConfig ? window.elaGetConfig() : { clients: {} };
+  const cfg = window.elaGetConfig ? window.elaGetConfig() : { clients: [] };
 
   const $ = (sel, root) => (root || document).querySelector(sel);
   const $$ = (sel, root) => Array.from((root || document).querySelectorAll(sel));
@@ -57,44 +57,69 @@
   });
 
   // -----------------------------
-  // login
-  // -----------------------------
-  const loginForm = $('#ela-login-form');
-  if (loginForm) {
-    const clientSelect = $('#ela-client');
-    const userInput = $('#ela-user');
-    const passInput = $('#ela-pass');
-    const msg = $('#ela-login-msg');
+// login (pixso: jescri fixo)
+// -----------------------------
+const SESSION_KEY = 'ela_auth_session_v1';
+const loginForm = $('#ela-login-form');
+if (loginForm) {
+  const userInput = $('#ela-user');
+  const passInput = $('#ela-pass');
+  const msg = $('#ela-login-msg');
 
-    const clients = cfg && cfg.clients ? cfg.clients : {};
-    const ids = Object.keys(clients);
+  function normalizeUserInput(u) {
+    return String(u || '').trim().toLowerCase().replace(/^@+/, '');
+  }
 
-    if (clientSelect && ids.length) {
-      clientSelect.innerHTML = ids
-        .map((id) => `<option value="${id}">${String(clients[id].label || id).toLowerCase()}</option>`)
-        .join('');
+  function findJescriClient(raw) {
+    const arr = Array.isArray(raw) ? raw : (raw && typeof raw === 'object' ? Object.keys(raw).map((k) => raw[k]) : []);
+    let found = arr.find((c) => c && typeof c === 'object' && String(c.id || '').trim().toLowerCase() === 'jescri');
+    if (found) return found;
+    found = arr.find((c) => c && typeof c === 'object' && String(c.label || '').trim().toLowerCase().includes('jescri'));
+    if (found) return found;
+    return arr[0] || null;
+  }
+
+  loginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const u = normalizeUserInput(userInput ? userInput.value : '');
+    const p = String(passInput ? passInput.value : '').trim();
+
+    const c = findJescriClient(cfg && cfg.clients ? cfg.clients : []);
+    if (!c) {
+      if (msg) msg.textContent = 'configuração incompleta';
+      return;
     }
 
-    loginForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const id = clientSelect ? clientSelect.value : '';
-      const u = (userInput ? userInput.value : '').trim();
-      const p = (passInput ? passInput.value : '').trim();
+    const expectedUser = normalizeUserInput(c.username || c.instagram || c.user || '');
+    const expectedPass = String(c.password || '').trim();
 
-      const c = clients[id];
-      if (!c) {
-        if (msg) msg.textContent = 'cliente não encontrado';
-        return;
-      }
-      if (u.toLowerCase() !== String(c.username || '').toLowerCase() || p !== String(c.password || '')) {
-        if (msg) msg.textContent = 'acesso inválido';
-        return;
-      }
+    if (!expectedUser || !expectedPass) {
+      if (msg) msg.textContent = 'configuração incompleta';
+      return;
+    }
 
-      const target = String(c.redirect || '/clientes/') || '/clientes/';
-      window.location.href = target;
-    });
-  }
+    if (u !== expectedUser || p !== expectedPass) {
+      if (msg) msg.textContent = 'acesso inválido';
+      return;
+    }
+
+    const session = {
+      clientId: 'jescri',
+      createdAt: Date.now(),
+      expiresAt: Date.now() + (24 * 60 * 60 * 1000)
+    };
+
+    try { localStorage.setItem(SESSION_KEY, JSON.stringify(session)); } catch (_e) {}
+
+    const params = new URLSearchParams(window.location.search || '');
+    const next = params.get('next');
+    const fallback = String(c.redirect || '/clientes/jescri/') || '/clientes/jescri/';
+    const target = next ? decodeURIComponent(next) : fallback;
+
+    window.location.href = target;
+  });
+}
 
   // -----------------------------
   // csv helper
