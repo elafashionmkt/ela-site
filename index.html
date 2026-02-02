@@ -11,7 +11,7 @@
   <!-- fonts -->
   <link rel="stylesheet" href="https://use.typekit.net/piy8ljr.css" />
 
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles-v2.css" />
 </head>
 
 <body>
@@ -20,27 +20,27 @@
   <!-- overlay de transição -->
   <div class="pageTransition" aria-hidden="true"></div>
 
+  <nav class="nav" aria-label="Navegação principal">
+    <a class="brand" href="#topo" aria-label="voltar ao topo">
+      <img class="brand__logo" src="assets/logo-ela.svg" alt="Logo elã" />
+    </a>
+
+    <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Abrir menu">
+      <span class="nav__toggle-line" aria-hidden="true"></span>
+      <span class="nav__toggle-line" aria-hidden="true"></span>
+      <span class="nav__toggle-line" aria-hidden="true"></span>
+    </button>
+
+    <div class="nav__links" id="nav-links">
+      <a href="#sobre">sobre nós</a>
+      <a href="#servicos">arquitetura de serviços</a>
+      <a href="#contato">que tal um café?</a>
+      <a href="/area-do-cliente/">área do cliente</a>
+    </div>
+  </nav>
+
   <header class="hero" id="topo">
     <div class="container hero__container">
-      <nav class="nav" aria-label="Navegação principal">
-        <a class="brand" href="#topo" aria-label="voltar ao topo">
-          <!-- logo normal -->
-          <img class="brand__logo" src="assets/logo-ela.svg" alt="Logo elã" />
-        </a>
-
-        <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Abrir menu">
-          <span class="nav__toggle-line" aria-hidden="true"></span>
-          <span class="nav__toggle-line" aria-hidden="true"></span>
-          <span class="nav__toggle-line" aria-hidden="true"></span>
-        </button>
-
-        <div class="nav__links" id="nav-links">
-          <a href="#sobre">sobre nós</a>
-          <a href="#servicos">arquitetura de serviços</a>
-          <a href="#contato">que tal um café?</a>
-          <a href="/area-do-cliente/">área do cliente</a>
-        </div>
-      </nav>
 
       <div class="hero__grid" id="conteudo">
         <div class="hero__copy reveal">
@@ -53,7 +53,7 @@
         </div>
 
         <div class="hero__decor reveal northWrap" aria-hidden="true">
-          <img class="north north--hero" src="assets/norte-bussola.svg" alt="" />
+          <img class="north north--hero" src="assets/norte-bussola-vermelha.svg" alt="" />
         </div>
       </div>
 
