@@ -18,7 +18,7 @@
     const cfg = window.elaGetConfig ? window.elaGetConfig() : null;
     if (cfg && cfg.site && cfg.site.navClientLabel) {
       const label = String(cfg.site.navClientLabel || "").toLowerCase();
-      Array.from(document.querySelectorAll('a[href="/area-do-cliente/"]')).forEach((a) => {
+      Array.from(document.querySelectorAll('a[href="/area-do-cliente/"], a[href="/clientes/"]')).forEach((a) => {
         a.textContent = label;
       });
     }
