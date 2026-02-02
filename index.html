@@ -1,137 +1,67 @@
-<!doctype html>
-<html lang="pt-br">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>elã | fashion mkt</title>
-
-  <link rel="icon" href="assets/fav-ela.webp" type="image/webp" />
-  <link rel="stylesheet" href="https://use.typekit.net/piy8ljr.css" />
-  <link rel="stylesheet" href="styles.css" />
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Elã - Direção de Marca</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              primary: "#D30000",
+              "primary-dark": "#B00000",
+              "background-light": "#FFFFFF",
+              "off-white": "#F9F9F9",
+            },
+            fontFamily: {
+              serif: ['"DM Serif Display"', "serif"],
+              sans: ['"Inter"', "sans-serif"],
+            },
+          },
+        },
+      }
+    </script>
+    <style>
+      body {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      /* Custom Scrollbar for a premium feel */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #e5e5e5;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #d4d4d4;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "react": "https://esm.sh/react@^19.2.4",
+    "lucide-react": "https://esm.sh/lucide-react@^0.563.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
 </head>
-
-<body>
-  <a class="skip" href="#conteudo">pular para o conteúdo</a>
-
-  <div class="pageTransition" aria-hidden="true"></div>
-
-  <nav class="nav" aria-label="navegação principal">
-    <a class="brand" href="#topo" aria-label="voltar ao topo">
-      <img class="brand__logo" src="assets/logo-ela.svg" alt="elã" />
-    </a>
-
-    <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="abrir menu">
-      <span class="nav__toggle-line" aria-hidden="true"></span>
-      <span class="nav__toggle-line" aria-hidden="true"></span>
-      <span class="nav__toggle-line" aria-hidden="true"></span>
-    </button>
-
-    <div class="nav__links" id="nav-links">
-      <a href="#sobre">sobre nós</a>
-      <a href="#servicos">arquitetura de serviços</a>
-      <a href="#contato">que tal um café?</a>
-      <a href="/clientes/">área do cliente</a>
-    </div>
-  </nav>
-
-  <header class="homeTop section section--red" id="topo">
-    <div class="container homeTop__container" id="conteudo">
-      <div class="homeHero">
-        <h1 class="homeHero__title">
-          marcas não precisam de mais posts.
-          <span class="homeHero__titleEm">precisam de direção.</span>
-        </h1>
-
-        <div class="homeHero__north northWrap" aria-hidden="true">
-          <img class="north north--hero" src="assets/estrela-norte.svg" alt="" />
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <main>
-    <section class="section section--red aboutV2" id="sobre">
-      <div class="container aboutV2__container">
-        <div class="aboutV2__text">
-          <h2 class="titleItalic">sobre nós</h2>
-
-          <div class="copy copy--onRed">
-            <p>somos um estúdio que trata <strong>marca como ecossistema</strong>, não como ação isolada. a gente começa pelo que vem antes do conteúdo: <strong>posicionamento e direção</strong>.</p>
-            <p>entendemos o momento da marca, o que ela sustenta hoje, o que precisa ser ajustado e quais escolhas deixam tudo mais coerente. atuamos a partir de <strong>posicionamento, narrativa e estética</strong>, conectando números para guiar e feeling para criar.</p>
-            <p>isso vira direção criativa, editorial, social e influência com o mesmo norte. <strong>consistência no tempo, com decisões claras.</strong></p>
-          </div>
-        </div>
-
-        <figure class="aboutV2__media" aria-label="imagem de apoio">
-          <img src="assets/foto-sobre.png" alt="imagem de apoio" loading="lazy" />
-        </figure>
-      </div>
-    </section>
-
-    <section class="section section--light servicesV2" id="servicos">
-      <div class="container">
-        <h2 class="titleItalic titleItalic--red">arquitetura de serviços</h2>
-
-        <div class="modules" id="modules" data-ela-accordion></div>
-      </div>
-    </section>
-
-    <section class="section section--light methodV2" id="metodologia">
-      <div class="container">
-        <h2 class="titleItalic titleItalic--red">nossa metodologia</h2>
-
-        <div class="copy copy--onLight">
-          <p><strong>é a forma como damos direção.</strong> começamos lendo o que a marca sustenta hoje e transformamos isso em escolhas práticas: <strong>o que dizer, como dizer e onde aparecer</strong>. a partir daí, organizamos prioridades, calendário e critérios de consistência.</p>
-
-          <p>os módulos, que estão acima, entram como <strong>partes de uma arquitetura</strong>. você pode começar pela fundação e evoluir para desejo e relacionamento, ou entrar pelo ponto que resolve o seu momento. o sistema existe para <strong>manter coerência entre posicionamento, direção e execução</strong>.</p>
-
-          <p>o acompanhamento funciona como bússola. <strong>você não fica com um pdf bonito e sozinho</strong>. a gente volta no plano, ajusta o foco e garante continuidade.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="section section--red coffeeV2" id="contato">
-      <div class="container coffeeV2__container">
-        <div class="coffeeV2__copy">
-          <h2 class="titleItalic">que tal um café?</h2>
-
-          <p class="coffeeV2__text">
-            um convite simples para <strong>conversar sobre a sua marca</strong>, entender o momento e pensar juntos os próximos passos.
-            <strong>conversa leve, com clareza e sem pressão.</strong>
-          </p>
-
-          <a class="btn btn--light" href="https://wa.me/5522936289313?text=Ei%2C%20encontrei%20voc%C3%AAs%21%20Quero%20ajudar%20com%20minha%20marca%20%E2%9D%A4%EF%B8%8F" target="_blank" rel="noopener">agendar :)</a>
-        </div>
-
-        <div class="coffeeV2__stamp">
-          <div class="northWrap" aria-hidden="true">
-            <img class="north north--cta" src="assets/estrela-norte.svg" alt="" />
-          </div>
-          <p class="coffeeV2__stampText">estúdio de direção de marca<br>posicionamento • social • influência<br>desde 2025</p>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footerV2" aria-label="rodapé">
-    <div class="container footerV2__container">
-      <a class="footerV2__logo" href="#topo" aria-label="voltar ao topo">
-        <img src="assets/logo-ela.svg" alt="elã" />
-      </a>
-
-      <div class="footerV2__social" aria-label="redes e contato">
-        <a href="#" aria-label="whatsapp"><img src="assets/whatsapp.svg" alt="" aria-hidden="true" /></a>
-        <a href="#" aria-label="instagram"><img src="assets/instagram.svg" alt="" aria-hidden="true" /></a>
-        <a href="#" aria-label="linkedin"><img src="assets/linkedin.svg" alt="" aria-hidden="true" /></a>
-      </div>
-
-      <p class="footerV2__copy">© 2026 todos os direitos reservados</p>
-    </div>
-  </footer>
-
-  <script src="data/config-default.js"></script>
-  <script src="data/config.js"></script>
-  <script src="scripts/accordion-render.js"></script>
-  <script src="script.js"></script>
+  <body>
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
 </body>
 </html>
