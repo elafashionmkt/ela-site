@@ -27,91 +27,74 @@
   // -----------------------------
   // 1) Reveal on scroll
   // -----------------------------
-  let revealObserver = null;
-
-  const registerReveals = (els) => {
-    const list = Array.from(els || []).filter(Boolean);
-    if (!list.length) return;
-
-    if (!prefersReduced && "IntersectionObserver" in window) {
-      if (!revealObserver) {
-        revealObserver = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((e) => {
-              if (e.isIntersecting) {
-                e.target.classList.add("is-visible");
-                revealObserver.unobserve(e.target);
-              }
-            });
-          },
-          { threshold: 0.12 }
-        );
-      }
-      list.forEach((el) => revealObserver.observe(el));
-    } else {
-      list.forEach((el) => el.classList.add("is-visible"));
-    }
-  };
-
-  registerReveals(document.querySelectorAll(".reveal"));
+  const revealEls = Array.from(document.querySelectorAll(".reveal"));
+  if (!prefersReduced && "IntersectionObserver" in window) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add("is-visible");
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+    revealEls.forEach((el) => io.observe(el));
+  } else {
+    revealEls.forEach((el) => el.classList.add("is-visible"));
+  }
 
   // -----------------------------
-  // 2) Accordion (single open)
+  // 2) Accordion (single open) - FIXED
   // -----------------------------
+  const modules = Array.from(document.querySelectorAll("[data-module]"));
+
   const setOpen = (moduleEl, open) => {
     const btn = moduleEl.querySelector(".module__head");
     const body = moduleEl.querySelector(".module__body");
+
     if (!btn || !body) return;
 
     moduleEl.classList.toggle("is-open", open);
     btn.setAttribute("aria-expanded", open ? "true" : "false");
     body.setAttribute("aria-hidden", open ? "false" : "true");
 
-    if (open) body.style.height = body.scrollHeight + "px";
-    else body.style.height = "0px";
+    // FIX: mede via scrollHeight (robusto mesmo com overflow/height 0)
+    if (open) {
+      body.style.height = body.scrollHeight + "px";
+    } else {
+      body.style.height = "0px";
+    }
   };
 
   const closeAllExcept = (keepEl) => {
-    const all = Array.from(document.querySelectorAll("[data-module]"));
-    all.forEach((m) => {
+    modules.forEach((m) => {
       if (m !== keepEl) setOpen(m, false);
     });
   };
 
-  const initAccordion = () => {
-    const modules = Array.from(document.querySelectorAll("[data-module]"));
-    if (!modules.length) return;
+  // init: tudo fechado
+  modules.forEach((m) => setOpen(m, false));
 
-    modules.forEach((m) => {
-      const btn = m.querySelector(".module__head");
-      const body = m.querySelector(".module__body");
-      if (!btn || !body) return;
+  // click
+  modules.forEach((m) => {
+    const btn = m.querySelector(".module__head");
+    const body = m.querySelector(".module__body");
+    if (!btn || !body) return;
 
-      if (m.dataset.accordionBound === "true") return;
-      m.dataset.accordionBound = "true";
-
-      setOpen(m, false);
-
-      btn.addEventListener("click", () => {
-        const isOpen = m.classList.contains("is-open");
-        closeAllExcept(m);
-        setOpen(m, !isOpen);
-      });
-
-      window.addEventListener("resize", () => {
-        if (m.classList.contains("is-open")) {
-          body.style.height = body.scrollHeight + "px";
-        }
-      });
+    btn.addEventListener("click", () => {
+      const isOpen = m.classList.contains("is-open");
+      closeAllExcept(m);
+      setOpen(m, !isOpen);
     });
 
-    registerReveals(modules);
-  };
-
-  initAccordion();
-
-  window.addEventListener("ela:accordion:rendered", () => {
-    initAccordion();
+    // recalcula altura aberta no resize (mantém animado/preciso)
+    window.addEventListener("resize", () => {
+      if (m.classList.contains("is-open")) {
+        body.style.height = body.scrollHeight + "px";
+      }
+    });
   });
 
   // -----------------------------
