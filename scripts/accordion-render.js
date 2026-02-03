@@ -5,7 +5,8 @@
   if(!mount) return;
 
   const OV_KEY = 'ela_accordion_override';
-  const SRC = '/data/accordion-config.json';
+  // usa caminho relativo para funcionar em root e também quando o site estiver em subpasta
+  const SRC = 'data/accordion-config.json';
 
   function safeJsonParse(str){
     try{ return JSON.parse(str); }catch(e){ return null; }
@@ -68,9 +69,20 @@
       return override;
     }
 
-    const res = await fetch(SRC, { cache: 'no-store' });
-    if(!res.ok) return { macros: [] };
-    return await res.json();
+    // tenta primeiro o caminho relativo; se falhar (ambiente legado), tenta o absoluto
+    const tryFetch = async (url) => {
+      const res = await fetch(url, { cache: 'no-store' });
+      if(!res.ok) return null;
+      return await res.json();
+    };
+
+    const dataRel = await tryFetch(SRC);
+    if(dataRel && dataRel.macros) return dataRel;
+
+    const dataAbs = await tryFetch('/' + SRC);
+    if(dataAbs && dataAbs.macros) return dataAbs;
+
+    return { macros: [] };
   }
 
   loadConfig()
