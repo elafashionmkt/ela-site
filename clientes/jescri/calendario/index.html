@@ -1,87 +1,74 @@
 <!doctype html>
-<html lang="pt-BR" class="clienteTheme--invert">
+<html lang="pt-br">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#cd0005" />
-  <meta name="color-scheme" content="only light" />
-  <title>calendário semestral | jescri</title>
-
-  <link rel="icon" type="image/webp" href="/assets/fav-ela.webp" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>elã | calendário jescri</title>
+  <link rel="icon" href="/assets/fav-ela.webp" type="image/webp" />
 
   <link rel="stylesheet" href="/styles.css" />
-  <link rel="stylesheet" href="/clientes/jescri/styles.css" />
-  <link rel="stylesheet" href="/clientes/jescri/calendario/styles.css" />
+  <link rel="stylesheet" href="/clientes/cliente-pixso-calendario.css" />
+  <script src="/clientes/cliente-config.js"></script>
 </head>
 
-<body>
-  <a class="skip" href="#conteudo">pular para o conteúdo</a>
-  <div class="pageTransition" aria-hidden="true"></div>
+<body class="elaCliente" data-ela-requires-auth="1" data-ela-client-id="jescri">
+  <div class="scroll-container-0_1">
+    <div id="0_1" class="Pixso-canvas-0_1">
+      <div id="83_249" class="Pixso-frame-83_249">
 
-  <nav class="nav" id="topo" aria-label="navegação principal">
-    <a class="brand" href="/" aria-label="voltar para o site">
-      <img class="brand__logo" src="/assets/logo-ela.svg" alt="logo elã" />
-    </a>
+        <div id="83_251" class="Pixso-frame-83_251" aria-label="tabs">
+          <nav id="83_252" class="Pixso-group-83_252" aria-label="atalhos jescri">
+            <a id="83_253" class="Pixso-paragraph-83_253" href="/clientes/jescri/">retrospectiva anual</a>
+            <a id="83_254" class="Pixso-paragraph-83_254" href="/clientes/jescri/relatorios.html">relatórios</a>
+            <a id="83_255" class="Pixso-paragraph-83_255" href="/clientes/jescri/calendario/">calendário</a>
+            <a id="83_256" class="Pixso-paragraph-83_256" href="/clientes/jescri/social-media.html">social media</a>
+            <a id="83_257" class="Pixso-paragraph-83_257" href="/clientes/jescri/material.html">material</a>
+            <a id="83_258" class="Pixso-paragraph-83_258" href="/clientes/jescri/alinhamento.html">alinhamento</a>
+          </nav>
+        </div>
 
-    <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="abrir menu">
-      <span class="nav__toggle-line" aria-hidden="true"></span>
-      <span class="nav__toggle-line" aria-hidden="true"></span>
-      <span class="nav__toggle-line" aria-hidden="true"></span>
-    </button>
+        <header id="83_259" class="Pixso-frame-83_259" aria-label="header">
+          <a id="83_260" class="Pixso-vector-83_260" href="/" aria-label="voltar para o site"></a>
+          <nav id="83_261" class="Pixso-frame-83_261" aria-label="menu do site">
+            <a id="83_262" class="Pixso-paragraph-83_262" href="/#sobre">sobre nós</a>
+            <a id="83_263" class="Pixso-paragraph-83_263" href="/#servicos">arquitetura de serviços</a>
+            <a id="83_264" class="Pixso-paragraph-83_264" href="/#contato">sugestões?</a>
+            <a id="83_265" class="Pixso-paragraph-83_265" href="/area-do-cliente/">área do cliente</a>
+          </nav>
+        </header>
 
-    <div class="nav__links" id="nav-links">
-      <a href="/#sobre">sobre nós</a>
-      <a href="/#servicos">arquitetura de serviços</a>
-      <a href="/#contato">que tal um café?</a>
-      <a href="/area-do-cliente/">área do cliente</a>
+        <div id="83_266" class="Pixso-frame-83_266" aria-label="título">
+          <div id="83_267" class="Pixso-text-83_267">
+            <p id="83_267_0" class="Pixso-paragraph-83_267_0"><span id="83_267_0_1" class="Pixso-span-83_267_0_1">área do </span></p>
+            <p id="83_267_1" class="Pixso-paragraph-83_267_1"><span id="83_267_1_1" class="Pixso-span-83_267_1_1">cliente</span></p>
+          </div>
+          <p class="elaCalTitle">calendário</p>
+        </div>
+
+        <footer id="83_269" class="Pixso-frame-83_269" aria-label="rodapé">
+          <p id="83_270" class="Pixso-paragraph-83_270">© 2026 todos os direitos reservados</p>
+          <a id="83_271" class="Pixso-vector-83_271" href="#" aria-label="whatsapp" rel="nofollow"></a>
+          <a id="83_272" class="Pixso-vector-83_272" href="#" aria-label="instagram" rel="nofollow"></a>
+          <a id="83_273" class="Pixso-vector-83_273" href="#" aria-label="linkedin" rel="nofollow"></a>
+        </footer>
+
+        <section class="elaCal" aria-label="eventos">
+          <div class="elaCal__legend">
+            <span class="elaCal__chip">influenciadora</span>
+            <span class="elaCal__chip">oportunidade</span>
+            <span class="elaCal__chip">comercial</span>
+            <span class="elaCal__chip">lançamento</span>
+          </div>
+
+          <div class="elaCal__list" data-ela-calendar-list aria-live="polite"></div>
+          <p class="elaCal__empty" data-ela-calendar-empty hidden>sem dados disponíveis no momento.</p>
+        </section>
+
+        <a class="elaClienteLogout" href="#" data-ela-logout>logout</a>
+      </div>
     </div>
-  </nav>
+  </div>
 
-  <main class="cliente" id="conteudo">
-    <div data-client-top></div>
-
-    <section class="cliente__content" aria-label="calendário semestral">
-      <div class="container">
-        <h1 class="cliente__contentTitle">calendário semestral</h1>
-        <p class="cliente__contentText">fev a jul em visão rápida, com eventos do semestre.</p>
-
-        <div class="cal" data-cal-root data-view="semestral" data-year="2026" data-start-month="2" aria-label="calendário">
-          <div class="cal__legend" data-legend aria-label="tipos">
-            <span class="chip chip--lancamento">lançamento</span>
-            <span class="chip chip--comercial">comercial</span>
-            <span class="chip chip--pagamento">pagamento</span>
-            <span class="chip chip--awareness">awareness</span>
-          </div>
-
-          <div class="cal__wrap" data-months aria-label="meses">
-            <div class="cal__loading" data-loading>carregando…</div>
-            <div class="cal__loading" data-empty style="display:none;">sem dados disponíveis no momento.</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <footer class="footerBar" aria-label="rodapé">
-      <div class="footerBar__inner">
-        <a class="footerBar__logo" href="#topo" aria-label="voltar ao topo">
-          <img src="/assets/logo-ela.svg" alt="elã" />
-        </a>
-
-        <p class="footerBar__copy">© 2026 todos os direitos reservados</p>
-
-        <div class="footerBar__social" aria-label="redes e contato">
-          <a href="#" aria-label="whatsapp"><img src="/assets/whatsapp.svg" alt="" aria-hidden="true" /></a>
-          <a href="#" aria-label="instagram"><img src="/assets/instagram.svg" alt="" aria-hidden="true" /></a>
-          <a href="#" aria-label="linkedin"><img src="/assets/linkedin.svg" alt="" aria-hidden="true" /></a>
-        </div>
-      </div>
-    </footer>
-  </main>
-
-  <script src="/data/config-default.js"></script>
-  <script src="/data/config.js"></script>
-  <script src="/script.js"></script>
-  <script src="/clientes/jescri/script.js"></script>
-  <script src="/clientes/jescri/calendario/script.js"></script>
+  <script src="/clientes/cliente.js"></script>
 </body>
 </html>

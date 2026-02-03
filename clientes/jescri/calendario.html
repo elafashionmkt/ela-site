@@ -4,42 +4,14 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>elã | calendário jescri</title>
-  <link rel="icon" href="/assets/fav-ela.webp" type="image/webp" />
-  <link rel="stylesheet" href="/styles.css" />
-  <link rel="stylesheet" href="/clientes/cliente.css" />
-  <script src="/clientes/cliente-config.js"></script>
+  <meta http-equiv="refresh" content="0; url=/clientes/jescri/calendario/" />
 </head>
-<body class="clientPage" data-ela-requires-auth="1" data-ela-client-id="jescri" data-ela-nav="calendario">
-
-  <div class="clientInternalTop">
-    <div class="clientShell">
-      <header class="clientTopBar">
-        <img class="clientLogo" src="/clientes/assets/logo-ela-white.png" alt="elã" style="filter: invert(0);"/>
-        <nav class="clientTopLinks" aria-label="menu jescri">
-          <a href="/clientes/jescri/" data-ela-nav-item="retrospectiva">retrospectiva anual</a>
-          <a href="/clientes/jescri/relatorios.html" data-ela-nav-item="relatorios">relatórios</a>
-          <a href="/clientes/jescri/calendario.html" data-ela-nav-item="calendario">calendário</a>
-          <a href="/clientes/jescri/social-media.html" data-ela-nav-item="social_media">social media</a>
-          <a href="/clientes/jescri/material.html" data-ela-nav-item="material">material</a>
-          <a href="/clientes/jescri/alinhamento.html" data-ela-nav-item="alinhamento">alinhamento</a>
-          <a href="#" data-ela-logout>logout</a>
-        </nav>
-      </header>
-    </div>
-  </div>
-
-  <main class="clientShell clientPanel" id="conteudo">
-    <section class="clientCard" aria-label="calendário">
-      <div class="clientCardTitle">
-        <h1>calendário</h1>
-        <div></div>
-      </div>
-
-      <div class="clientCalMount" data-ela-calendar></div>
-      <div data-ela-calendar-side></div>
-    </section>
-  </main>
-
-  <script src="/clientes/cliente.js"></script>
+<body>
+  <script>
+    (function(){
+      try { window.location.replace("/clientes/jescri/calendario/"); }
+      catch (e) { window.location.href = "/clientes/jescri/calendario/"; }
+    })();
+  </script>
 </body>
 </html>

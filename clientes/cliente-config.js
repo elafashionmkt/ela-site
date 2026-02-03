@@ -19,6 +19,10 @@ window.ELA_CLIENTE_CONFIG = {
     retrospectiva_jescri_2025: "/clientes/jescri/assets/jescri-retrospectiva-2025.pdf"
   },
 
+  calendario: {
+    json_url: "/clientes/jescri/calendario/calendario.json"
+  },
+
   redirects: {
     relatorios: "",
     social_media: "",

@@ -1,0 +1,283 @@
+/* estilos exportados do pixso, isolados para o calendário */
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+ol, ul, menu { padding-inline-start: 0; list-style: none; }
+html, body { width: 100%; height: 100%; }
+body { width: 100%; height: 100%; margin: 0; background-color: white; }
+span { word-break: break-word; }
+
+.scroll-container-0_1 { height: 100%; width: 100%; overflow: auto; }
+.Pixso-canvas-0_1 { width: 100%; height: 100%; position: absolute; left: 0px; top: 0px; }
+
+/* base exportada */
+.Pixso-frame-83_249 {
+  width: 1280px;
+  height: 918px;
+  overflow: hidden;
+  position: relative;
+  flex-shrink: 0;
+  overflow-y: auto;
+  background-color: rgba(255, 255, 255, 1);
+}
+
+.Pixso-frame-83_251 {
+  width: 1041px;
+  height: auto;
+  position: absolute;
+  left: 120px;
+  top: 190px;
+}
+
+.Pixso-group-83_252 {
+  width: 772px;
+  height: 20px;
+  position: relative;
+}
+
+/* tabs */
+.Pixso-paragraph-83_253,
+.Pixso-paragraph-83_254,
+.Pixso-paragraph-83_255,
+.Pixso-paragraph-83_256,
+.Pixso-paragraph-83_257,
+.Pixso-paragraph-83_258 {
+  font-size: 20px;
+  font-family: "Inter Tight-Regular";
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  color: rgba(205, 0, 5, 1);
+  text-decoration: none;
+  position: absolute;
+  top: 0px;
+  white-space: pre;
+}
+
+.Pixso-paragraph-83_253 { left: 0px; }
+.Pixso-paragraph-83_254 { left: 193px; }
+.Pixso-paragraph-83_255 { left: 313px; font-family: "Inter Tight-Bold"; font-weight: 700; }
+.Pixso-paragraph-83_256 { left: 434px; }
+.Pixso-paragraph-83_257 { left: 581px; }
+.Pixso-paragraph-83_258 { left: 677px; }
+
+/* header */
+.Pixso-frame-83_259 {
+  width: 1041px;
+  height: auto;
+  position: absolute;
+  left: 120px;
+  top: 63px;
+  display: flex;
+  flex-direction: row;
+  gap: 351px;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.Pixso-vector-83_260 {
+  width: 92px;
+  height: 57px;
+  background-image: url(/clientes/assets/logo-ela-white.png);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  position: relative;
+  flex-shrink: 0;
+  display: block;
+}
+
+.Pixso-frame-83_261 {
+  width: 509px;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  align-items: center;
+}
+
+.Pixso-paragraph-83_262,
+.Pixso-paragraph-83_263,
+.Pixso-paragraph-83_264,
+.Pixso-paragraph-83_265 {
+  font-size: 17px;
+  font-family: "Acumin Pro-Regular";
+  font-weight: 400;
+  letter-spacing: 0em;
+  color: rgba(205, 0, 5, 1);
+  text-decoration: none;
+  white-space: pre;
+}
+
+.Pixso-paragraph-83_265 { font-family: "Acumin Pro-Bold"; font-weight: 700; }
+
+/* título */
+.Pixso-frame-83_266 {
+  width: 1041px;
+  height: auto;
+  position: absolute;
+  left: 120px;
+  top: 271px;
+}
+
+.Pixso-text-83_267 {
+  width: auto;
+  height: auto;
+  position: relative;
+}
+
+.Pixso-paragraph-83_267_0,
+.Pixso-paragraph-83_267_1 {
+  font-size: 54px;
+  font-family: "Acumin Pro-Regular";
+  font-weight: 400;
+  letter-spacing: 0em;
+  line-height: 60px;
+  color: rgba(205, 0, 5, 1);
+}
+
+.Pixso-span-83_267_1_1 { font-family: "Acumin Pro-Bold"; font-weight: 700; }
+
+.elaCalTitle {
+  margin-top: 22px;
+  font-size: 20px;
+  font-family: "Inter Tight-Bold";
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: rgba(205, 0, 5, 1);
+}
+
+/* rodapé */
+.Pixso-frame-83_269 {
+  width: 826px;
+  height: auto;
+  position: absolute;
+  left: 50%;
+  top: 860px;
+  transform: translateX(calc(-50% + 0px));
+  display: flex;
+  flex-direction: row;
+  gap: 122px;
+  align-items: center;
+}
+
+.Pixso-paragraph-83_270 {
+  font-size: 20px;
+  font-family: "Inter Tight-Light";
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  line-height: 25px;
+  color: rgba(205, 0, 5, 1);
+}
+
+.Pixso-vector-83_271,
+.Pixso-vector-83_272,
+.Pixso-vector-83_273 {
+  width: 24px;
+  height: 24px;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  display: block;
+}
+
+.Pixso-vector-83_271 { background-image: url(/clientes/jescri/assets/icon-whatsapp-red.png); }
+.Pixso-vector-83_272 { background-image: url(/clientes/jescri/assets/icon-instagram-red.png); }
+.Pixso-vector-83_273 { background-image: url(/clientes/jescri/assets/icon-linkedin-red.png); }
+
+/* conteúdo do calendário, compatível com o layout */
+.elaCal {
+  position: absolute;
+  left: 120px;
+  top: 360px;
+  width: 1041px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.elaCal__legend {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.elaCal__chip {
+  border-radius: 999px;
+  padding: 8px 14px;
+  border: 1px solid rgba(205, 0, 5, 1);
+  font-size: 14px;
+  font-family: "Inter Tight-Regular";
+  letter-spacing: 0.04em;
+  color: rgba(205, 0, 5, 1);
+}
+
+.elaCal__list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-bottom: 24px;
+}
+
+.elaCalCard {
+  border-radius: 20px;
+  border: 1px solid rgba(205, 0, 5, 0.25);
+  padding: 18px 20px;
+  background: rgba(255, 255, 255, 1);
+}
+
+.elaCalCard__head {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: baseline;
+}
+
+.elaCalCard__title {
+  font-size: 18px;
+  font-family: "Inter Tight-Bold";
+  letter-spacing: 0.03em;
+  color: rgba(205, 0, 5, 1);
+}
+
+.elaCalCard__meta {
+  font-size: 14px;
+  font-family: "Inter Tight-Regular";
+  letter-spacing: 0.03em;
+  color: rgba(205, 0, 5, 1);
+}
+
+.elaCalCard__desc {
+  margin-top: 10px;
+  font-size: 15px;
+  font-family: "Inter Tight-Regular";
+  letter-spacing: 0.02em;
+  line-height: 20px;
+  color: rgba(205, 0, 5, 1);
+}
+
+.elaCal__empty {
+  font-size: 16px;
+  font-family: "Inter Tight-Regular";
+  color: rgba(205, 0, 5, 1);
+}
+
+.elaClienteLogout {
+  position: absolute;
+  right: 120px;
+  top: 140px;
+  font-size: 14px;
+  font-family: "Acumin Pro-Regular";
+  color: rgba(205, 0, 5, 1);
+  text-decoration: underline;
+}
+
+@media (max-width: 1280px) {
+  .Pixso-frame-83_249 { width: 100%; }
+}
+
+@media (max-width: 720px) {
+  .Pixso-frame-83_259 { left: 24px; top: 32px; width: calc(100% - 48px); gap: 24px; }
+  .Pixso-frame-83_251 { left: 24px; width: calc(100% - 48px); }
+  .Pixso-frame-83_266 { left: 24px; width: calc(100% - 48px); }
+  .elaCal { left: 24px; width: calc(100% - 48px); }
+  .Pixso-frame-83_269 { width: calc(100% - 48px); left: 24px; transform: none; top: 860px; gap: 18px; }
+  .Pixso-paragraph-83_270 { width: auto; font-size: 16px; }
+  .elaClienteLogout { right: 24px; }
+}
