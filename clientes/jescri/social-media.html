@@ -1,74 +1,43 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>elã | social media</title>
-
   <link rel="icon" href="/assets/fav-ela.webp" type="image/webp" />
-  <link rel="stylesheet" href="https://use.typekit.net/piy8ljr.css" />
-
   <link rel="stylesheet" href="/styles.css" />
   <link rel="stylesheet" href="/clientes/cliente.css" />
+  <script src="/clientes/cliente-config.js"></script>
 </head>
+<body class="clientPage" data-ela-requires-auth="1" data-ela-client-id="jescri" data-ela-nav="social_media" data-ela-redirect-key="social_media">
 
-<body class="clientPage" data-ela-requires-auth="1" data-ela-client="jescri">
-  <a class="skip" href="#conteudo">pular para o conteúdo</a>
-
-  <div class="pageTransition" aria-hidden="true"></div>
-
-  <header id="topo">
-    <nav class="nav nav--compact nav--client" aria-label="navegação principal">
-      <a class="brand" href="/" aria-label="voltar para a home">
-        <img class="brand__logo" src="/assets/logo-ela.svg" alt="logo elã" />
-      </a>
-
-      <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="abrir menu">
-        <span class="nav__toggle-line" aria-hidden="true"></span>
-        <span class="nav__toggle-line" aria-hidden="true"></span>
-        <span class="nav__toggle-line" aria-hidden="true"></span>
-      </button>
-
-      <div class="nav__links" id="nav-links">
-        <a href="/#sobre">sobre nós</a>
-        <a href="/#servicos">arquitetura de serviços</a>
-        <a href="/#contato">sugestões?</a>
-        <a href="/clientes/jescri/">área do cliente</a>
-      </div>
-    </nav>
-  </header>
-
-  <main class="clientWrap" id="conteudo">
-    <div class="container">
-      <div class="clientTop">
-        <h1 class="clientTop__title">área do<br />cliente</h1>
-        <img class="clientTop__logo" src="/clientes/jescri/assets/logo-jescri.svg" alt="jescri" />
-      </div>
-
-      <nav class="clientTabs" aria-label="seções do cliente">
-        <a href="/clientes/jescri/">retrospectiva anual</a>
-        <a href="/clientes/jescri/relatorios.html">relatórios</a>
-        <a href="/clientes/jescri/calendario.html">calendário</a>
-        <a class="is-active" href="/clientes/jescri/social-media.html">social media</a>
-        <a href="/clientes/jescri/material.html">material</a>
-        <a href="/clientes/jescri/alinhamento.html">alinhamento</a>
-      </nav>
-
-      <section class="clientPanel" aria-label="conteúdo">
-        <div class="clientPlaceholder">
-          <h2 class="clientPlaceholder__title">social media</h2>
-          <p class="clientPlaceholder__text">em breve.</p>
-        </div>
-      </section>
+  <div class="clientInternalTop">
+    <div class="clientShell">
+      <header class="clientTopBar">
+        <img class="clientLogo" src="/clientes/assets/logo-ela-white.png" alt="elã" style="filter: invert(0);"/>
+        <nav class="clientTopLinks" aria-label="menu jescri">
+          <a href="/clientes/jescri/" data-ela-nav-item="retrospectiva">retrospectiva anual</a>
+          <a href="/clientes/jescri/relatorios.html" data-ela-nav-item="relatorios">relatórios</a>
+          <a href="/clientes/jescri/calendario.html" data-ela-nav-item="calendario">calendário</a>
+          <a href="/clientes/jescri/social-media.html" data-ela-nav-item="social_media">social media</a>
+          <a href="/clientes/jescri/material.html" data-ela-nav-item="material">material</a>
+          <a href="/clientes/jescri/alinhamento.html" data-ela-nav-item="alinhamento">alinhamento</a>
+          <a href="#" data-ela-logout>logout</a>
+        </nav>
+      </header>
     </div>
+  </div>
+
+  <main class="clientShell clientPanel" id="conteudo">
+    <section class="clientCard" aria-label="social media">
+      <div class="clientCardTitle">
+        <h1>social media</h1>
+        <div></div>
+      </div>
+      <p class="clientMsg" data-ela-redirect-status>redirecionando</p>
+    </section>
   </main>
 
-  <div data-ela-footer="deep"></div>
-
-  <script src="/data/config-default.js"></script>
-  <script src="/data/config.js"></script>
-  <script src="/components/include.js"></script>
-  <script src="/script.js"></script>
   <script src="/clientes/cliente.js"></script>
 </body>
 </html>

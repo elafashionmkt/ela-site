@@ -1,230 +1,390 @@
-/* scripts da área do cliente (sem frameworks) */
+/* scripts exclusivos da area do cliente */
 
-(function(){
-  function getConfig(){
-    try{
-      if(window.elaGetConfig) return window.elaGetConfig();
-    }catch(e){}
-    return window.ELA_CONFIG_DEFAULT || {};
+(function () {
+  function cfg() {
+    return window.ELA_CLIENTE_CONFIG || {};
   }
 
-  function setSession(clientId){
-    try{
-      localStorage.setItem('ela_client_session', JSON.stringify({ id: String(clientId || ''), t: Date.now() }));
-    }catch(e){}
+  function normIg(v) {
+    return String(v || "")
+      .trim()
+      .toLowerCase()
+      .replace(/^@+/, "");
   }
 
-  function getSession(){
-    try{ return JSON.parse(localStorage.getItem('ela_client_session') || 'null'); }
-    catch(e){ return null; }
+  function setSession(clientId) {
+    var c = cfg();
+    var key = (c.session && c.session.storage_key) || "ela_client_session";
+    var ttl = (c.session && c.session.ttl_ms) || 1000 * 60 * 60 * 24 * 7;
+    var payload = { id: String(clientId || ""), exp: Date.now() + ttl };
+
+    try {
+      localStorage.setItem(key, JSON.stringify(payload));
+    } catch (e) {}
   }
 
-  function clearSession(){
-    try{ localStorage.removeItem('ela_client_session'); }catch(e){}
+  function getSession() {
+    var c = cfg();
+    var key = (c.session && c.session.storage_key) || "ela_client_session";
+
+    try {
+      var raw = localStorage.getItem(key);
+      if (!raw) return null;
+      var s = JSON.parse(raw);
+      if (!s || !s.id || !s.exp) return null;
+      if (Date.now() > Number(s.exp)) {
+        clearSession();
+        return null;
+      }
+      return s;
+    } catch (e) {
+      return null;
+    }
   }
 
-  function normIg(v){
-    return String(v || '').trim().toLowerCase().replace(/^@+/, '');
+  function clearSession() {
+    var c = cfg();
+    var key = (c.session && c.session.storage_key) || "ela_client_session";
+    try {
+      localStorage.removeItem(key);
+    } catch (e) {}
   }
 
-  // ---------------------------------
-  // 1) login
-  // ---------------------------------
-  function initLogin(){
-    var form = document.querySelector('[data-ela-login]');
-    if(!form) return;
+  function redirectTo(url) {
+    try {
+      window.location.replace(String(url || "/"));
+    } catch (e) {
+      window.location.href = String(url || "/");
+    }
+  }
 
-    var msg = document.querySelector('[data-ela-login-msg]');
-    var cfg = getConfig();
-    var clients = (cfg && cfg.clients) ? cfg.clients : [];
+  function initAuthGate() {
+    var requires = document.body && document.body.getAttribute("data-ela-requires-auth");
+    if (requires !== "1") return;
 
-    function setMsg(text){
-      if(!msg) return;
-      msg.textContent = (text || '').toLowerCase();
-      msg.hidden = !msg.textContent;
+    var s = getSession();
+    if (!s || !s.id) {
+      redirectTo((cfg().rotas && cfg().rotas.login) || "/area-do-cliente/");
+      return;
     }
 
-    form.addEventListener('submit', function(e){
+    var expected = document.body.getAttribute("data-ela-client-id") || "jescri";
+    if (String(expected) !== String(s.id)) {
+      redirectTo((cfg().rotas && cfg().rotas.login) || "/area-do-cliente/");
+    }
+  }
+
+  function initLogin() {
+    var form = document.querySelector("[data-ela-login]");
+    if (!form) return;
+
+    var message = document.querySelector("[data-ela-login-msg]");
+    function setMsg(t) {
+      if (!message) return;
+      message.textContent = String(t || "").toLowerCase();
+      message.hidden = !message.textContent;
+    }
+
+    var s = getSession();
+    if (s && s.id) {
+      redirectTo((cfg().rotas && cfg().rotas.home_cliente) || "/clientes/jescri/");
+      return;
+    }
+
+    form.addEventListener("submit", function (e) {
       e.preventDefault();
 
       var igEl = form.querySelector('input[name="instagram"]');
-      var pwEl = form.querySelector('input[name="password"]') || form.querySelector('input[name="senha"]');
+      var pwEl = form.querySelector('input[name="password"]');
 
-      var ig = normIg((igEl || {}).value || '');
-      var pw = String((pwEl || {}).value || '').trim().toLowerCase();
+      var ig = normIg((igEl && igEl.value) || "");
+      var pw = String((pwEl && pwEl.value) || "").trim().toLowerCase();
 
-      var ok = null;
-      for(var i=0; i<clients.length; i++){
-        var c = clients[i] || {};
-        var cIg = normIg(c.instagram || '');
-        var cPw = String(c.password || '').trim().toLowerCase();
-        if(ig === cIg && pw === cPw){ ok = c; break; }
-      }
+      var c = cfg();
+      var igOk = normIg(c.auth && c.auth.instagram_permitido);
+      var pwOk = String((c.auth && c.auth.senha) || "").trim().toLowerCase();
 
-      if(!ok){
-        setMsg('login inválido');
+      if (!ig || !pw || ig !== igOk || pw !== pwOk) {
+        setMsg("login inválido");
         return;
       }
 
-      setMsg('');
-      setSession(ok.id || '');
-      window.location.href = String(ok.redirect || '/');
+      setMsg("");
+      setSession("jescri");
+      redirectTo((c.rotas && c.rotas.home_cliente) || "/clientes/jescri/");
     });
 
-    var logout = document.querySelector('[data-ela-logout]');
-    if(logout){
-      logout.addEventListener('click', function(e){
+    var logout = document.querySelector("[data-ela-logout]");
+    if (logout) {
+      logout.addEventListener("click", function (e) {
         e.preventDefault();
         clearSession();
-        window.location.href = '/area-do-cliente/';
+        redirectTo((cfg().rotas && cfg().rotas.login) || "/area-do-cliente/");
       });
     }
   }
 
-  // ---------------------------------
-  // 2) proteção de páginas
-  // ---------------------------------
-  function initAuthGate(){
-    var requires = document.body ? document.body.getAttribute('data-ela-requires-auth') : null;
-    if(requires !== '1') return;
-
-    var sess = getSession();
-    if(!sess || !sess.id){
-      window.location.replace('/area-do-cliente/');
-      return;
-    }
-
-    var expected = document.body.getAttribute('data-ela-client-id') || document.body.getAttribute('data-ela-client') || '';
-    if(expected && String(expected) !== String(sess.id)){
-      window.location.replace('/area-do-cliente/');
-    }
-  }
-
-  // ---------------------------------
-  // 3) tela cheia
-  // ---------------------------------
-  function initFullscreen(){
-    var btn = document.querySelector('[data-ela-fullscreen]');
-    if(!btn) return;
-
-    var sel = btn.getAttribute('data-ela-fullscreen') || '';
-    var target = sel ? document.querySelector(sel) : null;
-
-    btn.addEventListener('click', function(e){
+  function initLogout() {
+    var logout = document.querySelector("[data-ela-logout]");
+    if (!logout) return;
+    logout.addEventListener("click", function (e) {
       e.preventDefault();
-
-      if(target && target.requestFullscreen){
-        try{ target.requestFullscreen(); return; }catch(err){}
-      }
-
-      var url = new URL(window.location.href);
-      url.searchParams.set('tela', 'cheia');
-      window.open(url.toString(), '_blank', 'noopener');
+      clearSession();
+      redirectTo((cfg().rotas && cfg().rotas.login) || "/area-do-cliente/");
     });
-
-    // modo full via query param
-    try{
-      var qs = new URLSearchParams(window.location.search);
-      if(qs.get('tela') === 'cheia'){
-        document.documentElement.classList.add('clientFull');
-      }
-    }catch(e){}
   }
 
-  // ---------------------------------
-  // 4) calendário simples (mês fixo ou via data-ela-month)
-  // ---------------------------------
-  function pad2(n){ return String(n).padStart(2,'0'); }
+  function initPdf() {
+    var frame = document.querySelector("[data-ela-pdf-frame]");
+    if (!frame) return;
 
-  function buildCalendar(root, ym, events){
-    var parts = String(ym || '').split('-');
+    var url = (cfg().pdf && cfg().pdf.retrospectiva_jescri_2025) || "";
+    if (!url) return;
+
+    frame.setAttribute("src", url + "#view=fitH");
+
+    var btn = document.querySelector("[data-ela-pdf-fullscreen]");
+    var wrap = document.querySelector("[data-ela-pdf-wrap]") || frame;
+
+    if (btn) {
+      btn.addEventListener("click", function (e) {
+        e.preventDefault();
+
+        var ok = false;
+        try {
+          if (wrap && wrap.requestFullscreen) {
+            wrap.requestFullscreen();
+            ok = true;
+          }
+        } catch (err) {}
+
+        if (!ok) {
+          window.open(url, "_blank", "noopener");
+        }
+      });
+    }
+  }
+
+  function pad2(n) {
+    return String(n).padStart(2, "0");
+  }
+
+  function monthLabel(ym) {
+    var parts = String(ym || "").split("-");
     var y = parseInt(parts[0], 10);
     var m = parseInt(parts[1], 10);
-    if(!y || !m) return;
+    var names = [
+      "janeiro",
+      "fevereiro",
+      "março",
+      "abril",
+      "maio",
+      "junho",
+      "julho",
+      "agosto",
+      "setembro",
+      "outubro",
+      "novembro",
+      "dezembro"
+    ];
+    return (names[m - 1] || "") + " " + y;
+  }
 
-    var first = new Date(y, m-1, 1);
-    var startDay = first.getDay();
-    // semana começando domingo (0)
-    var daysInMonth = new Date(y, m, 0).getDate();
+  function buildCalendar(root, ym, data) {
+    var parts = String(ym || "").split("-");
+    var y = parseInt(parts[0], 10);
+    var m = parseInt(parts[1], 10);
+    if (!y || !m) return;
 
-    var monthNames = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
-    var label = monthNames[m-1] || '';
+    var tags = (data && data.tags) || {};
+    var events = (data && data.events) || [];
+
+    var first = new Date(y, m - 1, 1);
+    var start = first.getDay();
+    var dim = new Date(y, m, 0).getDate();
 
     var evMap = {};
-    (events || []).forEach(function(ev){
-      var d = String(ev.date || '').trim();
-      if(!d) return;
-      if(!evMap[d]) evMap[d] = [];
+    events.forEach(function (ev) {
+      var d = String(ev.date || "").trim();
+      if (!d) return;
+      if (!evMap[d]) evMap[d] = [];
       evMap[d].push(ev);
     });
 
-    var html = '';
-    html += '<div class="calHeader">';
-    html += '<div class="calHeader__title">' + label + '</div>';
-    html += '</div>';
+    var dows = ["dom", "seg", "ter", "qua", "qui", "sex", "sáb"];
 
-    html += '<div class="calGrid" role="grid" aria-label="calendário mensal">';
-    var dayLabels = ['dom','seg','ter','qua','qui','sex','sáb'];
-    for(var i=0; i<7; i++){
-      html += '<div class="calDow" role="columnheader">' + dayLabels[i] + '</div>';
+    var html = "";
+    html += '<div class="clientCalHead">';
+    html += '<div class="clientCalTitle">' + monthLabel(ym) + "</div>";
+    html += '<div class="clientCalMeta">dados locais</div>';
+    html += "</div>";
+
+    html += '<div class="clientCalGrid" role="grid" aria-label="calendário">';
+    for (var i = 0; i < 7; i++) {
+      html += '<div class="clientCalDow" role="columnheader">' + dows[i] + "</div>";
     }
 
-    var cells = 42; // 6 linhas
-    for(var c=0; c<cells; c++){
-      var dayNum = c - startDay + 1;
-      var inMonth = dayNum >= 1 && dayNum <= daysInMonth;
-      var dateStr = inMonth ? (y + '-' + pad2(m) + '-' + pad2(dayNum)) : '';
+    var cells = 42;
+    for (var c = 0; c < cells; c++) {
+      var dayNum = c - start + 1;
+      var inMonth = dayNum >= 1 && dayNum <= dim;
+      var dateStr = inMonth ? y + "-" + pad2(m) + "-" + pad2(dayNum) : "";
 
-      html += '<div class="calCell' + (inMonth ? '' : ' is-out') + '" role="gridcell">';
-      html += '<div class="calDay">' + (inMonth ? dayNum : '') + '</div>';
+      html += '<div class="clientCalCell' + (inMonth ? "" : " is-out") + '" role="gridcell">';
+      html += '<div class="clientCalDay">' + (inMonth ? dayNum : "") + "</div>";
 
-      if(inMonth && evMap[dateStr]){
-        evMap[dateStr].slice(0,3).forEach(function(ev){
-          var title = String(ev.title || '').toLowerCase();
-          var tip = String(ev.tooltip || '').toLowerCase();
-          var col = String(ev.color || '#cd0005');
-          html += '<div class="calEvent" style="background:' + col + '" title="' + tip.replace(/\"/g,'&quot;') + '">' + title + '</div>';
+      if (inMonth && evMap[dateStr]) {
+        evMap[dateStr].slice(0, 3).forEach(function (ev) {
+          var tag = String(ev.tag || "").trim().toLowerCase();
+          var t = tags[tag] || {};
+          var color = String(t.color || "#cd0005");
+          var title = String(ev.title || "").toLowerCase();
+          html += '<div class="clientCalPill" style="background:' + color + '">';
+          html += title;
+          html += "</div>";
         });
       }
 
-      html += '</div>';
+      html += "</div>";
     }
 
-    html += '</div>';
-    root.innerHTML = html;
-  }
+    html += "</div>";
 
-  function initCalendar(){
-    var root = document.querySelector('[data-ela-calendar]');
-    if(!root) return;
+    var list = "";
+    list += '<div class="clientList">';
+    list += '<div class="clientListTitle">itens do mês</div>';
 
-    var ym = root.getAttribute('data-ela-month') || '';
-    if(!ym){
-      var d = new Date();
-      ym = d.getFullYear() + '-' + pad2(d.getMonth()+1);
-    }
-
-    var clientId = document.body.getAttribute('data-ela-client-id') || document.body.getAttribute('data-ela-client') || 'jescri';
-    var url = '/data/calendario-' + String(clientId) + '.json';
-
-    fetch(url, { cache: 'no-store' })
-      .then(function(r){ return r.ok ? r.json() : { events: [] }; })
-      .then(function(data){ buildCalendar(root, ym, (data || {}).events || []); })
-      .catch(function(){ buildCalendar(root, ym, []); });
-  }
-
-  // init
-  if(document.readyState === 'loading'){
-    document.addEventListener('DOMContentLoaded', function(){
-      initLogin();
-      initAuthGate();
-      initFullscreen();
-      initCalendar();
+    var ordered = events.slice().sort(function (a, b) {
+      return String(a.date || "").localeCompare(String(b.date || ""));
     });
-  }else{
+
+    if (!ordered.length) {
+      list += '<div class="clientEmpty">nenhum item configurado</div>';
+    } else {
+      ordered.forEach(function (ev) {
+        var tag = String(ev.tag || "").trim().toLowerCase();
+        var t = tags[tag] || {};
+        var color = String(t.color || "#cd0005");
+        var date = String(ev.date || "").trim();
+        var time = String(ev.time || "").trim();
+        var title = String(ev.title || "").toLowerCase();
+        var note = String(ev.note || "").toLowerCase();
+
+        list += '<div class="clientListItem">';
+        list += '<span class="clientDot" style="background:' + color + '"></span>';
+        list += '<div class="clientListBody">';
+        list += '<div class="clientListRow">';
+        list += '<span class="clientListDate">' + date + (time ? " " + time : "") + "</span>";
+        list += '<span class="clientListTag">' + (t.label ? String(t.label).toLowerCase() : tag) + "</span>";
+        list += "</div>";
+        list += '<div class="clientListName">' + title + "</div>";
+        if (note) list += '<div class="clientListNote">' + note + "</div>";
+        list += "</div>";
+        list += "</div>";
+      });
+    }
+
+    list += "</div>";
+
+    root.innerHTML = html;
+
+    var side = document.querySelector("[data-ela-calendar-side]");
+    if (side) side.innerHTML = list;
+  }
+
+  function initCalendar() {
+    var root = document.querySelector("[data-ela-calendar]");
+    if (!root) return;
+
+    var url = "/clientes/data/calendario-jescri.json";
+
+    fetch(url, { cache: "no-store" })
+      .then(function (r) {
+        return r.ok ? r.json() : null;
+      })
+      .then(function (data) {
+        var ym = (data && data.month) || "";
+        if (!ym) {
+          var d = new Date();
+          ym = d.getFullYear() + "-" + pad2(d.getMonth() + 1);
+        }
+        buildCalendar(root, ym, data || {});
+      })
+      .catch(function () {
+        var d = new Date();
+        var ym = d.getFullYear() + "-" + pad2(d.getMonth() + 1);
+        buildCalendar(root, ym, { events: [], tags: {} });
+      });
+  }
+
+  function initRedirectPages() {
+    var key = document.body && document.body.getAttribute("data-ela-redirect-key");
+    if (!key) return;
+
+    var map = (cfg().redirects || {});
+    var url = String(map[key] || "").trim();
+
+    var box = document.querySelector("[data-ela-redirect-status]");
+    function show(text) {
+      if (!box) return;
+      box.textContent = String(text || "").toLowerCase();
+    }
+
+    if (!url) {
+      show("link não configurado");
+      return;
+    }
+
+    show("redirecionando");
+    setTimeout(function () {
+      window.location.href = url;
+    }, 200);
+  }
+
+  function initAlinhamento() {
+    var frame = document.querySelector("[data-ela-alinhamento-frame]");
+    if (!frame) return;
+
+    var url = String(cfg().alinhamento_form_url || "").trim();
+    var status = document.querySelector("[data-ela-alinhamento-status]");
+
+    if (!url) {
+      if (status) {
+        status.textContent = "link não configurado";
+        status.hidden = false;
+      }
+      return;
+    }
+
+    if (status) status.hidden = true;
+    frame.setAttribute("src", url);
+  }
+
+  function initNavActive() {
+    var current = (document.body && document.body.getAttribute("data-ela-nav")) || "";
+    if (!current) return;
+    var els = document.querySelectorAll("[data-ela-nav-item]");
+    for (var i = 0; i < els.length; i++) {
+      var el = els[i];
+      var k = el.getAttribute("data-ela-nav-item");
+      if (k === current) el.classList.add("is-active");
+    }
+  }
+
+  function boot() {
     initLogin();
     initAuthGate();
-    initFullscreen();
+    initLogout();
+    initPdf();
     initCalendar();
+    initRedirectPages();
+    initAlinhamento();
+    initNavActive();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", boot);
+  } else {
+    boot();
   }
 })();

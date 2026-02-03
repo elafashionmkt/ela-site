@@ -1,44 +1,53 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>elã | área do cliente</title>
-
   <link rel="icon" href="/assets/fav-ela.webp" type="image/webp" />
-  <link rel="stylesheet" href="https://use.typekit.net/piy8ljr.css" />
-
   <link rel="stylesheet" href="/styles.css" />
   <link rel="stylesheet" href="/clientes/cliente.css" />
+  <script src="/clientes/cliente-config.js"></script>
 </head>
+<body class="clientLoginPage">
+  <main class="clientShell" id="conteudo">
+    <header class="clientTopBar">
+      <img class="clientLogo" src="/clientes/assets/logo-ela-white.png" alt="elã" />
+      <nav class="clientTopLinks" aria-label="atalhos">
+        <a href="/" rel="nofollow">início</a>
+        <a href="/area-do-cliente/" rel="nofollow">área do cliente</a>
+      </nav>
+    </header>
 
-<body class="body--noNav">
-  <a class="skip" href="#conteudo">pular para o conteúdo</a>
+    <section class="clientLoginCard" aria-label="login">
+      <h1 class="clientLoginTitle">área do cliente</h1>
 
-  <main class="clientLogin" id="conteudo">
-    <div class="container clientLogin__wrap">
-      <p class="clientLogin__kicker">início área do cliente</p>
-      <h1 class="clientLogin__title">área do cliente</h1>
+      <form data-ela-login>
+        <div class="clientField">
+          <label for="ig">seu instagram</label>
+          <input id="ig" name="instagram" autocomplete="username" inputmode="text" placeholder="@jescri" />
+        </div>
 
-      <form class="clientLogin__form" data-ela-login>
-        <label class="clientLogin__label" for="ig">seu instagram</label>
-        <input class="clientLogin__input" id="ig" name="instagram" type="text" autocomplete="username" inputmode="text" required />
+        <div class="clientField">
+          <label for="pw">senha do onbording</label>
+          <input id="pw" name="password" type="password" autocomplete="current-password" placeholder="senha" />
+        </div>
 
-        <label class="clientLogin__label" for="pw">senha do onbording</label>
-        <input class="clientLogin__input" id="pw" name="password" type="password" autocomplete="current-password" required />
-
-        <button class="clientLogin__button" type="submit">fazer login</button>
-
-        <p class="clientLogin__msg" data-ela-login-msg hidden aria-live="polite"></p>
+        <button class="clientLoginBtn" type="submit">fazer login</button>
+        <p class="clientMsg" data-ela-login-msg hidden></p>
       </form>
-    </div>
+    </section>
+
+    <footer class="clientFooter" aria-label="rodapé">
+      <div>© 2026 todos os direitos reservados</div>
+      <div class="clientIcons" aria-label="redes">
+        <a href="#" aria-label="whatsapp" rel="nofollow"><img src="/clientes/assets/icon-whatsapp-white.png" alt="" /></a>
+        <a href="#" aria-label="instagram" rel="nofollow"><img src="/clientes/assets/icon-instagram-white.png" alt="" /></a>
+        <a href="#" aria-label="linkedin" rel="nofollow"><img src="/clientes/assets/icon-linkedin-white.png" alt="" /></a>
+      </div>
+    </footer>
   </main>
 
-  <div data-ela-footer="deep"></div>
-
-  <script src="/data/config-default.js"></script>
-  <script src="/data/config.js"></script>
-  <script src="/components/include.js"></script>
   <script src="/clientes/cliente.js"></script>
 </body>
 </html>
