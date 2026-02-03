@@ -1,16 +1,44 @@
 <!doctype html>
-<html lang="pt-br">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta http-equiv="refresh" content="0; url=/clientes/" />
-    <title>redirect</title>
-    <script>
-      (function(){
-        try { window.location.replace('/clientes/'); }
-        catch(e) { window.location.href = '/clientes/'; }
-      })();
-    </script>
-  </head>
-  <body></body>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>elã | área do cliente</title>
+
+  <link rel="icon" href="/assets/fav-ela.webp" type="image/webp" />
+  <link rel="stylesheet" href="https://use.typekit.net/piy8ljr.css" />
+
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/clientes/cliente.css" />
+</head>
+
+<body class="body--noNav">
+  <a class="skip" href="#conteudo">pular para o conteúdo</a>
+
+  <main class="clientLogin" id="conteudo">
+    <div class="container clientLogin__wrap">
+      <p class="clientLogin__kicker">início área do cliente</p>
+      <h1 class="clientLogin__title">área do cliente</h1>
+
+      <form class="clientLogin__form" data-ela-login>
+        <label class="clientLogin__label" for="ig">seu instagram</label>
+        <input class="clientLogin__input" id="ig" name="instagram" type="text" autocomplete="username" inputmode="text" required />
+
+        <label class="clientLogin__label" for="pw">senha do onbording</label>
+        <input class="clientLogin__input" id="pw" name="password" type="password" autocomplete="current-password" required />
+
+        <button class="clientLogin__button" type="submit">fazer login</button>
+
+        <p class="clientLogin__msg" data-ela-login-msg hidden aria-live="polite"></p>
+      </form>
+    </div>
+  </main>
+
+  <div data-ela-footer="deep"></div>
+
+  <script src="/data/config-default.js"></script>
+  <script src="/data/config.js"></script>
+  <script src="/components/include.js"></script>
+  <script src="/clientes/cliente.js"></script>
+</body>
 </html>

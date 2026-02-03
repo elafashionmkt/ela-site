@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>elã | área do cliente</title>
+  <title>elã | calendário</title>
 
   <link rel="icon" href="/assets/fav-ela.webp" type="image/webp" />
   <link rel="stylesheet" href="https://use.typekit.net/piy8ljr.css" />
@@ -46,21 +46,23 @@
       </div>
 
       <nav class="clientTabs" aria-label="seções do cliente">
-        <a class="is-active" href="/clientes/jescri/">retrospectiva anual</a>
+        <a href="/clientes/jescri/">retrospectiva anual</a>
         <a href="/clientes/jescri/relatorios.html">relatórios</a>
-        <a href="/clientes/jescri/calendario.html">calendário</a>
+        <a class="is-active" href="/clientes/jescri/calendario.html">calendário</a>
         <a href="/clientes/jescri/social-media.html">social media</a>
         <a href="/clientes/jescri/material.html">material</a>
         <a href="/clientes/jescri/alinhamento.html">alinhamento</a>
       </nav>
 
       <section class="clientPanel" aria-label="conteúdo">
-        <div class="clientHero" data-ela-fullscreen-target>
-          <button class="clientHero__btn" type="button" data-ela-fullscreen="[data-ela-fullscreen-target]">entre em tela cheia</button>
-
-          <h2 class="clientHero__title">retrospectiva anual</h2>
-          <p class="clientHero__sub">2025 foi um ano de ajustes, testes e confirmações.</p>
+        <div class="clientFilters" aria-label="filtros">
+          <span class="clientTag clientTag--influ">influenciadora</span>
+          <span class="clientTag clientTag--opp">oportunidade</span>
+          <span class="clientTag clientTag--com">comercial</span>
+          <span class="clientTag clientTag--lan">lançamento</span>
         </div>
+
+        <div class="clientCalendar" data-ela-calendar data-ela-month="2026-02" aria-label="calendário"></div>
       </section>
     </div>
   </main>
