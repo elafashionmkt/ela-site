@@ -23,7 +23,7 @@
   const sanitizeText = (s) => {
     return String(s || '')
       .replace(/—/g, '')
-      .replace(/–/g, '-')
+      .replace(/\u2013/g, '-')
       .toLowerCase();
   };
 
