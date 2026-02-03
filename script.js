@@ -48,56 +48,88 @@
   // -----------------------------
   // 2) Accordion (single open) - FIXED
   // -----------------------------
-  const modules = Array.from(document.querySelectorAll("[data-module]"));
+  const initAccordion = () => {
+    const modules = Array.from(document.querySelectorAll("[data-module]"));
+    if (!modules.length) return;
 
-  const setOpen = (moduleEl, open) => {
-    const btn = moduleEl.querySelector(".module__head");
-    const body = moduleEl.querySelector(".module__body");
+    const setOpen = (moduleEl, open) => {
+      const btn = moduleEl.querySelector(".module__head");
+      const body = moduleEl.querySelector(".module__body");
+      if (!btn || !body) return;
 
-    if (!btn || !body) return;
+      moduleEl.classList.toggle("is-open", open);
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+      body.setAttribute("aria-hidden", open ? "false" : "true");
 
-    moduleEl.classList.toggle("is-open", open);
-    btn.setAttribute("aria-expanded", open ? "true" : "false");
-    body.setAttribute("aria-hidden", open ? "false" : "true");
-
-    // FIX: mede via scrollHeight (robusto mesmo com overflow/height 0)
-    if (open) {
-      body.style.height = body.scrollHeight + "px";
-    } else {
-      body.style.height = "0px";
-    }
-  };
-
-  const closeAllExcept = (keepEl) => {
-    modules.forEach((m) => {
-      if (m !== keepEl) setOpen(m, false);
-    });
-  };
-
-  // init: tudo fechado
-  modules.forEach((m) => setOpen(m, false));
-
-  // click
-  modules.forEach((m) => {
-    const btn = m.querySelector(".module__head");
-    const body = m.querySelector(".module__body");
-    if (!btn || !body) return;
-
-    btn.addEventListener("click", () => {
-      const isOpen = m.classList.contains("is-open");
-      closeAllExcept(m);
-      setOpen(m, !isOpen);
-    });
-
-    // recalcula altura aberta no resize (mantém animado/preciso)
-    window.addEventListener("resize", () => {
-      if (m.classList.contains("is-open")) {
+      // anim: height 0 <-> scrollHeight, finaliza em auto para permitir conteúdo dinâmico
+      if (open) {
         body.style.height = body.scrollHeight + "px";
-      }
-    });
-  });
 
-  // -----------------------------
+        const onEnd = (ev) => {
+          if (ev.propertyName !== "height") return;
+          body.removeEventListener("transitionend", onEnd);
+          if (moduleEl.classList.contains("is-open")) body.style.height = "auto";
+        };
+        body.addEventListener("transitionend", onEnd);
+      } else {
+        // se estava em auto, fixa no valor atual antes de animar para 0
+        if (body.style.height === "auto") {
+          body.style.height = body.scrollHeight + "px";
+          body.offsetHeight; // force reflow
+        }
+        body.style.height = "0px";
+      }
+    };
+
+    const closeAllExcept = (keepEl) => {
+      modules.forEach((m) => {
+        if (m !== keepEl) setOpen(m, false);
+      });
+    };
+
+    // listeners (apenas uma vez por módulo)
+    modules.forEach((m) => {
+      if (m.dataset.accordionInit === "true") return;
+      m.dataset.accordionInit = "true";
+
+      const btn = m.querySelector(".module__head");
+      const body = m.querySelector(".module__body");
+      if (!btn || !body) return;
+
+      btn.addEventListener("click", () => {
+        const isOpen = m.classList.contains("is-open");
+        closeAllExcept(m);
+        setOpen(m, !isOpen);
+      });
+
+      window.addEventListener("resize", () => {
+        if (!m.classList.contains("is-open")) return;
+        // se estiver em auto, recalcula (volta para px e retorna para auto após a transição)
+        if (body.style.height === "auto") {
+          body.style.height = body.scrollHeight + "px";
+          const onEnd = (ev) => {
+            if (ev.propertyName !== "height") return;
+            body.removeEventListener("transitionend", onEnd);
+            if (m.classList.contains("is-open")) body.style.height = "auto";
+          };
+          body.addEventListener("transitionend", onEnd);
+        } else {
+          body.style.height = body.scrollHeight + "px";
+        }
+      });
+    });
+
+    // init: fecha todos e abre o primeiro
+    modules.forEach((m) => setOpen(m, false));
+    setOpen(modules[0], true);
+  };
+
+  // roda quando o render do acordeão terminar
+  window.addEventListener("ela:accordion-rendered", initAccordion);
+
+  // fallback: caso já esteja no html (ou render muito rápido)
+  initAccordion();
+// -----------------------------
   // 3) Mobile menu (hamburger)
   // -----------------------------
   const isMobileNav = () =>

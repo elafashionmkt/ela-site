@@ -34,14 +34,12 @@
     const titleStrong = esc((macro.titleStrong || '').toLowerCase());
     const titleText = esc((macro.titleText || '').toLowerCase());
 
-    const items = Array.isArray(macro.items) ? macro.items : [];
-    const itemsHtml = items.map((it) => {
-      const t = esc((it.title || '').toLowerCase());
-      const p = esc((it.text || '').toLowerCase());
+    const paragraphs = Array.isArray(macro.paragraphs) ? macro.paragraphs : [];
+    const itemsHtml = paragraphs.map((p) => {
+      const text = esc((p || '').toLowerCase());
       return `
         <div class="module__item">
-          <h3>${t}</h3>
-          <p>${p}</p>
+          <p>${text}</p>
         </div>
       `.trim();
     }).join('');
@@ -49,7 +47,7 @@
     return `
       <article class="module reveal" data-module>
         <button class="module__head" type="button" aria-expanded="false" aria-controls="${bodyId}" id="${triggerId}">
-          <span class="module__title"><strong>${titleStrong}</strong> <span aria-hidden="true">•</span> ${titleText}</span>
+          <span class="module__title"><strong>${titleStrong}</strong> ${titleText}</span>
           <span class="module__chev" aria-hidden="true"></span>
         </button>
 
@@ -79,6 +77,7 @@
     .then((cfg) => {
       const macros = Array.isArray(cfg.macros) ? cfg.macros : [];
       mount.innerHTML = macros.map(buildMacro).join('');
+      window.dispatchEvent(new CustomEvent('ela:accordion-rendered', { detail: { count: macros.length } }));
     })
     .catch(() => {
       mount.innerHTML = '';
