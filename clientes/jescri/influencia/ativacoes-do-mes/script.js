@@ -29,7 +29,7 @@
   }
 
   function normalizeText(v){
-    return String(v||'').replace(/[\u2014\u2013]/g,'-').trim().toLowerCase();
+    return String(v||'').replace(/[—–]/g,'-').trim().toLowerCase();
   }
 
   function csvParseLine(line){

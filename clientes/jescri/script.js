@@ -106,7 +106,7 @@
     const targets = Array.from(document.querySelectorAll('[data-client-logo]'));
     if(!targets.length) return;
 
-    const url = '/assets/logo-jescri.svg';
+    const url = '/assets/jescri_logo.svg';
 
     let svgText = '';
     try{

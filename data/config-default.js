@@ -8,10 +8,10 @@ window.ELA_CONFIG_DEFAULT = {
     {
       id: "jescri",
       label: "jescri",
-      instagram: "jescri",
+      instagram: "@jescri",
       password: "jescri",
       redirect: "/clientes/jescri/",
-      logoPath: "/assets/logo-jescri.svg"
+      logoPath: "/clientes/jescri/assets/logo-jescri.svg"
     }
   ]
 };

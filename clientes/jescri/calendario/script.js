@@ -92,7 +92,7 @@
 
   function normalizeVisibleText(v){
     return String(v||'')
-      .replace(/[\u2014\u2013]/g, '-')
+      .replace(/[—–]/g, '-')
       .trim()
       .toLowerCase();
   }
