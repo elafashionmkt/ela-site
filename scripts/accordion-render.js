@@ -4,56 +4,9 @@
   const mount = document.querySelector('[data-ela-accordion]');
   if(!mount) return;
 
-  // fallback embutido: garante que o acordeão exista mesmo se o json estiver ausente,
-  // mal formatado ou com estrutura inesperada no ambiente de deploy.
-  const FALLBACK_CFG = {
-    macros: [
-      {
-        id: 'fundacao',
-        titleStrong: 'fundação:',
-        titleText: 'direção para marcas que querem crescer com consistência.',
-        paragraphs: [
-          'começamos organizando o que sustenta a sua comunicação: posicionamento, público, narrativa e prioridades de canal. desenhamos um plano anual de campanhas e um calendário que cabe na rotina. quando fizer sentido, criamos também a identidade visual para que cada ponto de contato tenha a mesma voz e o mesmo acabamento.'
-        ]
-      },
-      {
-        id: 'desejo',
-        titleStrong: 'desejo:',
-        titleText: 'estratégia que vira imagem, conteúdo e presença.',
-        paragraphs: [
-          'aqui a marca ganha corpo no feed e fora dele. criamos direção criativa, linguagem visual e editorial, produção de campanhas e peças para social, com conteúdo audiovisual e gestão de comunidade. o foco é manter o dna vivo com consistência e ritmo.'
-        ]
-      },
-      {
-        id: 'relacionamento',
-        titleStrong: 'relacionamento:',
-        titleText: 'parcerias que ampliam alcance e credibilidade.',
-        paragraphs: [
-          'mapeamos quem faz sentido para a marca e conduzimos convites, negociações e entregas. cuidamos de collabs e ativações com briefing, alinhamento e acompanhamento, para gerar conversa, lembrança e valor de longo prazo.'
-        ]
-      },
-      {
-        id: 'sensorial',
-        titleStrong: 'sensorial:',
-        titleText: 'a marca como experiência.',
-        paragraphs: [
-          'traduzimos o universo da marca em camadas que você sente. trilha sonora, identidade olfativa e unboxing pensado peça por peça, para que o público reconheça a marca antes mesmo de ler o nome.'
-        ]
-      },
-      {
-        id: 'performance',
-        titleStrong: 'performance:',
-        titleText: 'criatividade guiada por dados, com foco em resultado.',
-        paragraphs: [
-          'estruturamos mídia paga por funil, do reconhecimento à conversão, com testes e otimização contínua. conectamos criativo, dados e landing pages para reduzir ruído e manter consistência no crescimento.'
-        ]
-      }
-    ]
-  };
-
   const OV_KEY = 'ela_accordion_override';
-  // usa caminho relativo para funcionar em root e também quando o site estiver em subpasta
-  const SRC = 'data/accordion-config.json';
+  // usa caminhos relativos para funcionar bem em subpastas
+  const SRC_CANDIDATES = ['data/accordion-config.json', '/data/accordion-config.json'];
 
   function safeJsonParse(str){
     try{ return JSON.parse(str); }catch(e){ return null; }
@@ -79,15 +32,15 @@
     const bodyId = `module-${macroId}`;
     const triggerId = `module-${macroId}-trigger`;
 
-    const titleStrong = esc((macro.titleStrong || '').toLowerCase());
-    const titleText = esc((macro.titleText || '').toLowerCase());
+    // regra editorial: manter texto literal do pdf (sem reescrita)
+    const titleStrong = esc(macro.titleStrong || '');
+    const titleText = esc(macro.titleText || '');
 
     const paragraphs = Array.isArray(macro.paragraphs) ? macro.paragraphs : [];
     const itemsHtml = paragraphs.map((p) => {
-      const text = esc((p || '').toLowerCase());
       return `
         <div class="module__item">
-          <p>${text}</p>
+          <p>${esc(p)}</p>
         </div>
       `.trim();
     }).join('');
@@ -116,37 +69,31 @@
       return override;
     }
 
-    // tenta primeiro o caminho relativo; se falhar (ambiente legado), tenta o absoluto
-    const tryFetch = async (url) => {
-      const res = await fetch(url, { cache: 'no-store' });
-      if(!res.ok) return null;
-      return await res.json();
-    };
+    for(const src of SRC_CANDIDATES){
+      try{
+        const res = await fetch(src, { cache: 'no-store' });
+        if(!res.ok) continue;
+        const json = await res.json();
+        return json;
+      }catch(e){
+        // tenta o próximo candidato
+      }
+    }
 
-    const dataRel = await tryFetch(SRC);
-    if(dataRel && dataRel.macros) return dataRel;
-
-    const dataAbs = await tryFetch('/' + SRC);
-    if(dataAbs && dataAbs.macros) return dataAbs;
-
-    return FALLBACK_CFG;
+    return { macros: [] };
   }
 
   loadConfig()
     .then((cfg) => {
-      let macros = Array.isArray(cfg && cfg.macros) ? cfg.macros : [];
-
-      // se o json carregou mas veio vazio ou inválido, usa o fallback
-      if(!macros.length){
-        macros = FALLBACK_CFG.macros;
-      }
-
+      const macros = Array.isArray(cfg.macros) ? cfg.macros : [];
       mount.innerHTML = macros.map(buildMacro).join('');
-      window.dispatchEvent(new CustomEvent('ela:accordion-rendered', { detail: { count: macros.length } }));
+
+      // notifica o script principal para inicializar comportamento do acordeão
+      try{
+        window.dispatchEvent(new CustomEvent('ela:accordion-rendered', { detail: { mount } }));
+      }catch(e){}
     })
     .catch(() => {
-      // mesmo em erro total, mantém o fallback
-      mount.innerHTML = FALLBACK_CFG.macros.map(buildMacro).join('');
-      window.dispatchEvent(new CustomEvent('ela:accordion-rendered', { detail: { count: FALLBACK_CFG.macros.length } }));
+      mount.innerHTML = '';
     });
 })();

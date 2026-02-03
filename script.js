@@ -48,88 +48,97 @@
   // -----------------------------
   // 2) Accordion (single open) - FIXED
   // -----------------------------
+  const accordionMount = document.querySelector("[data-ela-accordion]");
+  const getModules = () =>
+    Array.from((accordionMount || document).querySelectorAll("[data-module]"));
+
+  const setOpen = (moduleEl, open) => {
+    const btn = moduleEl.querySelector(".module__head");
+    const body = moduleEl.querySelector(".module__body");
+    if (!btn || !body) return;
+
+    moduleEl.classList.toggle("is-open", open);
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+    body.setAttribute("aria-hidden", open ? "false" : "true");
+
+    // animação suave: controla altura e finaliza em auto
+    if (open) {
+      body.style.height = body.scrollHeight + "px";
+      const onEnd = (e) => {
+        if (e.propertyName !== "height") return;
+        body.removeEventListener("transitionend", onEnd);
+        if (moduleEl.classList.contains("is-open")) {
+          body.style.height = "auto";
+        }
+      };
+      body.addEventListener("transitionend", onEnd);
+    } else {
+      // se estava em auto, fixa a altura atual e então anima para 0
+      body.style.height = body.scrollHeight + "px";
+      // força reflow para aplicar a altura antes da transição
+      body.offsetHeight;
+      body.style.height = "0px";
+    }
+  };
+
+  const closeAllExcept = (keepEl) => {
+    getModules().forEach((m) => {
+      if (m !== keepEl) setOpen(m, false);
+    });
+  };
+
   const initAccordion = () => {
-    const modules = Array.from(document.querySelectorAll("[data-module]"));
+    const modules = getModules();
     if (!modules.length) return;
 
-    const setOpen = (moduleEl, open) => {
-      const btn = moduleEl.querySelector(".module__head");
-      const body = moduleEl.querySelector(".module__body");
-      if (!btn || !body) return;
-
-      moduleEl.classList.toggle("is-open", open);
-      btn.setAttribute("aria-expanded", open ? "true" : "false");
-      body.setAttribute("aria-hidden", open ? "false" : "true");
-
-      // anim: height 0 <-> scrollHeight, finaliza em auto para permitir conteúdo dinâmico
-      if (open) {
-        body.style.height = body.scrollHeight + "px";
-
-        const onEnd = (ev) => {
-          if (ev.propertyName !== "height") return;
-          body.removeEventListener("transitionend", onEnd);
-          if (moduleEl.classList.contains("is-open")) body.style.height = "auto";
-        };
-        body.addEventListener("transitionend", onEnd);
-      } else {
-        // se estava em auto, fixa no valor atual antes de animar para 0
-        if (body.style.height === "auto") {
-          body.style.height = body.scrollHeight + "px";
-          body.offsetHeight; // force reflow
-        }
-        body.style.height = "0px";
-      }
-    };
-
-    const closeAllExcept = (keepEl) => {
-      modules.forEach((m) => {
-        if (m !== keepEl) setOpen(m, false);
-      });
-    };
-
-    // listeners (apenas uma vez por módulo)
+    // garante visibilidade mesmo quando o acordeão é renderizado depois do reveal
     modules.forEach((m) => {
-      if (m.dataset.accordionInit === "true") return;
-      m.dataset.accordionInit = "true";
+      if (m.classList.contains("reveal")) m.classList.add("is-visible");
+    });
+
+    modules.forEach((m) => {
+      if (m.dataset.accordionInit === "1") return;
+      m.dataset.accordionInit = "1";
+
+      // estado inicial fechado
+      const body = m.querySelector(".module__body");
+      if (body) body.style.height = "0px";
+      setOpen(m, false);
 
       const btn = m.querySelector(".module__head");
-      const body = m.querySelector(".module__body");
-      if (!btn || !body) return;
+      if (!btn) return;
 
       btn.addEventListener("click", () => {
         const isOpen = m.classList.contains("is-open");
         closeAllExcept(m);
         setOpen(m, !isOpen);
       });
-
-      window.addEventListener("resize", () => {
-        if (!m.classList.contains("is-open")) return;
-        // se estiver em auto, recalcula (volta para px e retorna para auto após a transição)
-        if (body.style.height === "auto") {
-          body.style.height = body.scrollHeight + "px";
-          const onEnd = (ev) => {
-            if (ev.propertyName !== "height") return;
-            body.removeEventListener("transitionend", onEnd);
-            if (m.classList.contains("is-open")) body.style.height = "auto";
-          };
-          body.addEventListener("transitionend", onEnd);
-        } else {
-          body.style.height = body.scrollHeight + "px";
-        }
-      });
     });
 
-    // init: fecha todos e abre o primeiro
-    modules.forEach((m) => setOpen(m, false));
-    setOpen(modules[0], true);
+    // primeiro item aberto ao carregar (apenas uma vez)
+    if (accordionMount && accordionMount.dataset.accordionDefaultOpen !== "1") {
+      accordionMount.dataset.accordionDefaultOpen = "1";
+      const first = modules[0];
+      if (first) {
+        closeAllExcept(first);
+        setOpen(first, true);
+      }
+    }
   };
 
-  // roda quando o render do acordeão terminar
+  // init (para casos em que o html já existe)
+  initAccordion();
+
+  // init após render assíncrono do acordeão
   window.addEventListener("ela:accordion-rendered", initAccordion);
 
-  // fallback: caso já esteja no html (ou render muito rápido)
-  initAccordion();
-// -----------------------------
+  // fallback extra: observa inserção de itens no mount
+  if (accordionMount && "MutationObserver" in window) {
+    const mo = new MutationObserver(() => initAccordion());
+    mo.observe(accordionMount, { childList: true });
+  }
+
+  // -----------------------------
   // 3) Mobile menu (hamburger)
   // -----------------------------
   const isMobileNav = () =>
