@@ -17,6 +17,9 @@
 
   --container: 1180px;
   --nav-h: 190px;
+
+   .t-accent { color: var(--c-accent, #ffffff); }
+.t-muted { color: var(--c-muted, rgba(255,255,255,0.75)); 
 }
 
 /* ===========================
