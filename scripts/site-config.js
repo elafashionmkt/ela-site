@@ -1,13 +1,13 @@
-// site-config.js
-// carrega config do google sheets (apps script) e aplica:
-// - copy via [data-copy]
+// site-config.js (jsonp)
+// carrega config do apps script sem cors e aplica:
+// - copy via [data-copy] (innerHTML)
 // - tokens via :root
 // - assets via [data-asset]
 // - redirects simples via hash
 
 (function () {
   const CONFIG_URL = "https://script.google.com/macros/s/AKfycbwQk4-cTooI9NxcXfrf5Qjsa72mkArusNvNnEOBqjkVk2QoibzKoIhbvFq2Ty61AHdr/exec";
-  const CACHE_KEY = "ela_site_config_cache_v1";
+  const CACHE_KEY = "ela_site_config_cache_v2";
   const CACHE_TTL_MS = 5 * 60 * 1000;
 
   function now() { return Date.now(); }
@@ -31,32 +31,63 @@
     } catch (_) {}
   }
 
+  function jsonp(url) {
+    return new Promise((resolve, reject) => {
+      const cbName = "__elaCfgCb_" + Math.random().toString(36).slice(2);
+      const sep = url.indexOf("?") >= 0 ? "&" : "?";
+      const full = url + sep + "callback=" + encodeURIComponent(cbName);
+
+      let done = false;
+      const timer = setTimeout(() => {
+        if (done) return;
+        done = true;
+        cleanup();
+        reject(new Error("jsonp timeout"));
+      }, 8000);
+
+      function cleanup() {
+        try { delete window[cbName]; } catch (_) { window[cbName] = undefined; }
+        if (script && script.parentNode) script.parentNode.removeChild(script);
+        clearTimeout(timer);
+      }
+
+      window[cbName] = (data) => {
+        if (done) return;
+        done = true;
+        cleanup();
+        resolve(data);
+      };
+
+      const script = document.createElement("script");
+      script.src = full;
+      script.async = true;
+      script.onerror = () => {
+        if (done) return;
+        done = true;
+        cleanup();
+        reject(new Error("jsonp load error"));
+      };
+      document.head.appendChild(script);
+    });
+  }
+
   async function fetchConfig() {
     const cached = getCache();
     if (cached) return cached;
 
-    const res = await fetch(CONFIG_URL, { cache: "no-store" });
-    if (!res.ok) throw new Error("config fetch failed: " + res.status);
-    const data = await res.json();
+    const data = await jsonp(CONFIG_URL);
     setCache(data);
     return data;
   }
 
   function applyCopy(copy) {
     if (!copy) return;
-
-    const nodes = document.querySelectorAll("[data-copy]");
-    nodes.forEach((el) => {
+    document.querySelectorAll("[data-copy]").forEach((el) => {
       const key = (el.getAttribute("data-copy") || "").trim();
       if (!key) return;
-
       const item = copy[key];
-      if (!item) return;
-
-      // value_html permite <strong> e spans. responsabilidade do editor.
-      if (typeof item.value_html === "string") {
-        el.innerHTML = item.value_html;
-      }
+      if (!item || typeof item.value_html !== "string") return;
+      el.innerHTML = item.value_html;
     });
   }
 
@@ -72,12 +103,9 @@
 
   function applyAssets(assets) {
     if (!assets) return;
-
-    const nodes = document.querySelectorAll("[data-asset]");
-    nodes.forEach((el) => {
+    document.querySelectorAll("[data-asset]").forEach((el) => {
       const key = (el.getAttribute("data-asset") || "").trim();
       if (!key) return;
-
       const item = assets[key];
       if (!item || !item.src) return;
 
@@ -89,20 +117,15 @@
         return;
       }
 
-      // para elementos não-img (ex: div), aplica background-image
       el.style.backgroundImage = `url("${item.src}")`;
     });
   }
 
   function applyRedirects(redirects) {
     if (!Array.isArray(redirects) || !redirects.length) return;
-
-    // redirects de hash: se url atual bate em from, substitui por to
     const current = window.location.hash ? window.location.hash : "#";
     const hit = redirects.find((r) => r && r.enabled !== false && r.from === current);
     if (!hit || !hit.to) return;
-
-    // tipo 301/302: no client side é sempre replace para não poluir histórico
     window.location.replace(hit.to);
   }
 
@@ -115,7 +138,7 @@
         applyRedirects(cfg.redirects);
       })
       .catch(() => {
-        // falha silenciosa: site continua com conteúdo default
+        // silencioso
       });
   }
 
