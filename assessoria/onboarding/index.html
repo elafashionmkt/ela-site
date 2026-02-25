@@ -43,22 +43,13 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.04);
         }
         
-        .logo {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 32px;
-            color: var(--accent);
-        }
-        
-        .logo svg {
-            width: auto;
+        .logo-img {
             height: 72px;
+            width: auto;
+            margin: 0 auto 32px auto;
             display: block;
-        }
-        
-        .logo svg * {
-            fill: currentColor !important;
-            stroke: currentColor !important;
+            /* filtro css que transforma a cor original da imagem para o vermelho elã #cd0005 */
+            filter: brightness(0) saturate(100%) invert(13%) sepia(91%) saturate(6011%) hue-rotate(346deg) brightness(93%) contrast(106%);
         }
         
         h1 {
@@ -239,11 +230,7 @@
 
 <div class="container">
     
-    <div class="logo" aria-label="elã">
-        <svg viewBox="0 0 100 40" xmlns="http://www.w3.org/2000/svg">
-            <text x="50" y="28" font-family="sans-serif" font-size="28" font-weight="bold" text-anchor="middle">elã</text>
-        </svg>
-    </div>
+    <img src="/assets/logo-ela.svg" alt="elã" class="logo-img">
     
     <h1>[influenciadora] onboarding</h1>
     
